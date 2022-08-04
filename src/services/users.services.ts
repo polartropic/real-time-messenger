@@ -1,4 +1,4 @@
-import { set, ref, get } from 'firebase/database';
+import { set, ref, get, query, orderByChild, equalTo } from 'firebase/database';
 import { db } from '../config/firebase-config';
 
 export const createUserByUsername= (firstName: string, lastName: string, phoneNumber: string,
@@ -10,4 +10,8 @@ export const createUserByUsername= (firstName: string, lastName: string, phoneNu
 
 export const getUserByUsername = (username: string) => {
   return get(ref(db, `users/${username}`));
+};
+
+export const getUserData = (uid: string) => {
+  return get(query(ref(db, 'users'), orderByChild('uid'), equalTo(uid)));
 };
