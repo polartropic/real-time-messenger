@@ -1,0 +1,41 @@
+#register-form {
+  width: 300px;
+  height: fit-content;
+  background-color: #f2f1ec;
+  padding-left: 30px;
+  padding-right: 30px;
+  padding-bottom: 20px;
+  border-radius: 20px;
+  margin-top: 70px;
+  margin-bottom: 70px;
+  text-align: center;
+}
+
+#register-div {
+    display: flex;
+    flex-wrap: wrap;
+    justify-content: center;
+}
+
+#sign-up {
+    color: #2f455d;
+    font-size: 20px;
+    font-weight: bold;
+}
+
+#sign-up-btn {
+    padding: 10px;
+    border-radius: 10px;
+    border: 1px solid;
+    background-color: #2f455d;
+    color: #ffffff;
+    cursor: pointer;
+}
+
+#sign-in-btn {
+    border: none;
+    font-size: 18px;
+    font-weight: bold;
+    cursor: pointer;
+    text-decoration: underline;
+}

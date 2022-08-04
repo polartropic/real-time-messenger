@@ -1,5 +1,5 @@
 import './Login.css';
-import { Link } from 'react-router-dom';
+import { Link, useNavigate } from 'react-router-dom';
 import AppContext from '../../providers/AppContext';
 import { useContext, useState } from 'react';
 import { getUserByUsername, getUserData } from '../../services/users.services';
@@ -7,6 +7,7 @@ import { signIn } from '../../services/auth.services';
 
 const Login = (): JSX.Element => {
   const { setState } = useContext(AppContext);
+  const navigate = useNavigate();
 
   const [logInDetails, updateLogInDetails] = useState({
     username: '',
@@ -37,6 +38,7 @@ const Login = (): JSX.Element => {
                       userData: snapshot.val()[Object.keys(snapshot.val())[0]],
                     });
                     alert('Successful sign in!');
+                    navigate('/');
                   }
                 });
             })
