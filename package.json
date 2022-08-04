@@ -11,6 +11,7 @@
     "@types/node": "^16.11.47",
     "@types/react": "^18.0.15",
     "@types/react-dom": "^18.0.6",
+    "eslint-config-google": "^0.14.0",
     "firebase": "^9.9.1",
     "react": "^18.2.0",
     "react-dom": "^18.2.0",
@@ -27,8 +28,40 @@
   "eslintConfig": {
     "extends": [
       "react-app",
-      "react-app/jest"
-    ]
+      "react-app/jest",
+      "google"
+    ],
+    "rules": {
+      "indent": [
+        "error",
+        2
+      ],
+      "object-curly-spacing": [
+        1,
+        "always"
+      ],
+      "quotes": [
+        "error",
+        "single"
+      ],
+      "no-unused-vars": [
+        "warn",
+        {
+          "argsIgnorePattern": "^_",
+          "varsIgnorePattern": "^_"
+        }
+      ],
+      "max-len": [
+        "error",
+        {
+          "code": 150,
+          "ignoreComments": true,
+          "ignoreUrls": true,
+          "ignoreStrings": true,
+          "ignoreTemplateLiterals": true
+        }
+      ]
+    }
   },
   "browserslist": {
     "production": [
