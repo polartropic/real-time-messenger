@@ -1,6 +1,6 @@
-import './LandingPage.css';
+import './LoggedUser.css';
 
-const LandingPage = (): JSX.Element => {
+const LoggedUser = (): JSX.Element => {
   return (
     <div id="landing-page">
       <div id="chats-channels-list">
@@ -41,4 +41,4 @@ const LandingPage = (): JSX.Element => {
   );
 };
 
-export default LandingPage;
+export default LoggedUser;

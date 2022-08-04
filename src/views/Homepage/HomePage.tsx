@@ -1,7 +1,7 @@
 import './HomePage.css';
 import { useContext } from 'react';
 import AppContext from '../../providers/AppContext';
-import LandingPage from '../LandingPage/LandingPage';
+import LoggedUser from '../LoggedUser/LoggedUser';
 import Register from '../../components/Register/Register';
 
 const HomePage = (): JSX.Element => {
@@ -11,7 +11,7 @@ const HomePage = (): JSX.Element => {
   return (
     <>
       {user ?
-        <LandingPage /> :
+        <LoggedUser /> :
         <Register />
       }
     </>
