@@ -1,0 +1,44 @@
+.default-avatar {
+    height: 55px;
+    border-radius: 50%;
+    align-self: center;
+    cursor: pointer;
+    margin-left: 20px;
+}
+
+#header {
+    display: flex;
+    justify-content:space-between;
+    background-color: #2f455d;
+    height: 70px;
+    color: #ffffff;
+    padding-left: 30px;
+    padding-right: 30px;
+}
+
+#stats, #navigation{
+    display: flex;
+    flex-wrap: wrap;
+}
+
+#stats > h4 {
+    margin-left: 10px;
+    margin-right: 10px;
+    align-self: center;
+    font-size: 15px;
+}
+
+.header-btn {
+    background-color: #2f455d;
+    border: none;
+    color: #ffffff;
+    align-self: center;
+    font-size: 16px;
+    margin-left: 15px;
+    margin-right: 15px;
+}
+
+.header-btn:hover {
+  text-decoration: underline;
+  cursor: pointer;
+}
