@@ -20,7 +20,10 @@ const LoggedUser = (): JSX.Element => {
 
         <hr />
 
-        <h4>Click around to see your chats, teams or channels show up here.</h4>
+        {/* DYNAMIC DIV TO SHOW RESULTS FROM SEARCH AND VIEWING CHATS */}
+        <div id="content">
+          <h4>Click around to see your chats, teams or channels show up here.</h4>
+        </div>
       </div>
 
       <div id="participants-list">
@@ -34,7 +37,7 @@ const LoggedUser = (): JSX.Element => {
         <p>User4</p>
 
         <button>Add more participants</button>
-        <br />
+        <br /><br />
         <button>Leave chat/channel</button>
       </div>
     </div>
