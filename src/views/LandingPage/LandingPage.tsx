@@ -12,8 +12,9 @@ const LandingPage = (): JSX.Element => {
       </div>
 
       <div id="main-container">
-        <div id="view-and-search-users">
-          <button>View all users</button>
+        <button>View all users</button>
+
+        <div id="search-users">
           <input type="text" defaultValue="search users..." />
         </div>
 

@@ -11,8 +11,8 @@ const HomePage = (): JSX.Element => {
   return (
     <>
       {user ?
-        <LandingPage/> :
-        <Register/>
+        <LandingPage /> :
+        <Register />
       }
     </>
   );
