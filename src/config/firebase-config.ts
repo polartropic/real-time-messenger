@@ -15,7 +15,7 @@ const firebaseConfig = {
   storageBucket: 'thunderteam-99849.appspot.com',
   messagingSenderId: '97084125410',
   appId: '1:97084125410:web:c06c2cafc47d26cf31eebb',
-  databaseURL: 'https://console.firebase.google.com/project/thunderteam-99849/database/thunderteam-99849-default-rtdb/data/~2F',
+  databaseURL: 'https://thunderteam-99849-default-rtdb.europe-west1.firebasedatabase.app/',
 };
 
 // Initialize Firebase
