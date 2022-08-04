@@ -1,0 +1,46 @@
+#landing-page {
+  display: grid;
+  row-gap: 10px;
+}
+
+#view-and-search-users {
+  background-color: rgba(242, 241, 236, 1);
+  text-align: center;
+  padding: 20px;
+  margin: -1.2em -1.9em;
+}
+
+#main-container {
+  grid-row: 2;
+  grid-column: 2 / 4;
+  background-color: rgba(242, 241, 236, 1);
+  height: 600px;
+  padding-left: 30px;
+  padding-right: 30px;
+  padding-bottom: 20px;
+  padding-top: 20px;
+  text-align: center;
+}
+
+#chats-channels-list, #participants-list {
+  grid-row: 2;
+  background-color: rgba(47, 69, 93, 1);
+  height: auto;
+  text-align: center;
+  padding: 20px 30px;
+  color: white;
+}
+
+#chats-channels-list {
+  grid-column: 1;
+}
+
+#participants-list {
+  grid-column: 4;
+}
+
+hr{
+  height: 6px;
+  background: url(https://stardewvalley.net/wp-content/uploads/2017/12/hrspike.png) repeat-x 0 0;
+  border: 0;
+}
