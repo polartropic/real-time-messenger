@@ -1,13 +1,13 @@
-#landing-page {
+.landing-page {
   display: grid;
   grid-template-columns: 1fr 5fr 1fr;
 }
 
-#search-users {
+.search-users {
   display: inline;
 }
 
-#main-container {
+.main-container {
   grid-column: 2;
   grid-row: 1;
   background-color: rgba(242, 241, 236, 1);
@@ -16,8 +16,8 @@
   text-align: center;
 }
 
-#chats-channels-list,
-#participants-list {
+.chats-channels-list,
+.participants-list {
   grid-row: 1;
   background-color: rgba(47, 69, 93, 1);
   text-align: center;
@@ -25,11 +25,11 @@
   color: white;
 }
 
-#chats-channels-list {
+.chats-channels-list {
   grid-column: 1;
 }
 
-#participants-list {
+.participants-list {
   grid-column: 3;
 }
 

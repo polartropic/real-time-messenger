@@ -2,8 +2,8 @@ import './LoggedUser.css';
 
 const LoggedUser = (): JSX.Element => {
   return (
-    <div id="landing-page">
-      <div id="chats-channels-list">
+    <div className="landing-page">
+      <div className="chats-channels-list">
         <h4>Chats:</h4>
         <p>User1</p>
         <p>User2</p>
@@ -11,22 +11,22 @@ const LoggedUser = (): JSX.Element => {
         <p>User4</p>
       </div>
 
-      <div id="main-container">
+      <div className="main-container">
         <button>View all users</button>
 
-        <div id="search-users">
+        <div className="search-users">
           <input type="text" defaultValue="search users..." />
         </div>
 
         <hr />
 
         {/* DYNAMIC DIV TO SHOW RESULTS FROM SEARCH AND VIEWING CHATS */}
-        <div id="content">
+        <div className="content">
           <h4>Click around to see your chats, teams or channels show up here.</h4>
         </div>
       </div>
 
-      <div id="participants-list">
+      <div className="participants-list">
         <h4>Owner:</h4>
         <p>User0</p>
 
