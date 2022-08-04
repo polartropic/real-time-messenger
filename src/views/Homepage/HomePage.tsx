@@ -1,4 +1,5 @@
 import './HomePage.css';
+import { Link } from 'react-router-dom';
 
 const HomePage = (): JSX.Element => {
   return (
@@ -43,7 +44,9 @@ const HomePage = (): JSX.Element => {
           <input type="password" className="register-field" name="confirm-password" placeholder="confirm-password" required value='' />
           <br />
           <h3>Already have an account?
-            <button id="sign-in-btn">Sign in</button>
+            <Link to={'/login'}>
+              <button id="sign-in-btn">Sign in</button>
+            </Link>
           </h3>
           <button id="sign-up-btn">Sign up</button>
         </form>
