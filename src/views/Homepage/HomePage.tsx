@@ -42,7 +42,6 @@ const HomePage = (): JSX.Element => {
           <br />
           <input type="password" className="register-field" name="confirm-password" placeholder="confirm-password" required value='' />
           <br />
-          <br />
           <h3>Already have an account?
             <button id="sign-in-btn">Sign in</button>
           </h3>
