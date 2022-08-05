@@ -1,3 +1,4 @@
+// import CreateTeam from '../Create-a-team/CreateTeam';
 import './LoggedUser.css';
 
 const LoggedUser = (): JSX.Element => {
@@ -23,6 +24,7 @@ const LoggedUser = (): JSX.Element => {
         {/* DYNAMIC DIV TO SHOW RESULTS FROM SEARCH AND VIEWING CHATS */}
         <div className="content">
           <h4>Click around to see your chats, teams or channels show up here.</h4>
+          {/* <CreateTeam/> */}
         </div>
       </div>
 
