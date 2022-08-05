@@ -5,6 +5,7 @@ import { createUserByUsername, getUserByUsername } from '../../services/users.se
 import { createUser } from '../../services/auth.services';
 import React from 'react';
 import AppContext from '../../providers/AppContext';
+import { MAX_USERNAME_LENGTH, MIN_USERNAME_LENGTH } from '../../common/constants';
 
 const Register = (): JSX.Element => {
   const [regDetails, setRegDetails] = useState({
@@ -33,6 +34,11 @@ const Register = (): JSX.Element => {
     if (regDetails.password !== regDetails.confirmPassword) {
       return alert('Passwords do not match!');
     }
+
+    if (regDetails.username.length < MIN_USERNAME_LENGTH || regDetails.username.length > MAX_USERNAME_LENGTH) {
+      return alert('The username must be between 5 and 35 symbols');
+    }
+
 
     getUserByUsername(regDetails.username)
       .then((snapshot) => {
