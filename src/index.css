@@ -1,8 +1,15 @@
 body {
   margin: 0px;
+  background-color: rgba(47, 69, 93, 1);
 }
 
 button:hover,
 a:hover {
   cursor: pointer;
+}
+
+hr {
+  height: 6px;
+  background: url(https://stardewvalley.net/wp-content/uploads/2017/12/hrspike.png) repeat-x 0 0;
+  border: 0;
 }
