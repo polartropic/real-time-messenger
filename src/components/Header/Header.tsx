@@ -5,6 +5,7 @@ import AppContext from '../../providers/AppContext';
 import { useNavigate } from 'react-router-dom';
 import { getAllUsers } from '../../services/users.services';
 import { getAllTeams } from '../../services/teams.services';
+import { Link } from 'react-router-dom';
 import './Header.css';
 
 const Header = (): JSX.Element => {
@@ -52,7 +53,9 @@ const Header = (): JSX.Element => {
           <>
             <button className='header-btn'>My teams</button>
             <button onClick={handleLogOut} className='header-btn'>Log out</button>
-            <img className="default-avatar" src={DefaultAvatar} alt="default-avatar" />
+            <Link to={'/edit-profile'}>
+              <img className="default-avatar" src={DefaultAvatar} alt="default-avatar" />
+            </Link>
           </> :
           null
         }

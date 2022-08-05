@@ -1,0 +1,41 @@
+.edit-profile {
+  display: flex;
+  flex-wrap: wrap;
+  justify-content: center;
+}
+
+.edit-profile-forms {
+  width: 300px;
+  height: fit-content;
+  background-color: #f2f1ec;
+  padding-left: 30px;
+  padding-right: 30px;
+  padding-bottom: 20px;
+  border-radius: 20px;
+  margin-top: 70px;
+  margin-bottom: 70px;
+  text-align: center;
+} 
+
+.change-button-edit {
+  padding: 5px;
+  border-radius: 10px;
+  border: 1px solid;
+  background-color: #2f455d;
+  color: #ffffff;
+  cursor: pointer;
+}
+
+#go-back-btn-edit{
+    border: none;
+    font-size: 18px;
+    font-weight: bold;
+    cursor: pointer;
+    text-decoration: underline;
+}
+
+#edit-profile-title {
+    color: #2f455d;
+    font-size: 20px;
+    font-weight: bold;
+}

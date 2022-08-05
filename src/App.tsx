@@ -4,6 +4,7 @@ import './App.css';
 import AboutUs from './components/AboutUs/AboutUs';
 import Header from './components/Header/Header';
 import AppContext from './providers/AppContext';
+import EditProfile from './views/EditProfile/EditProfile';
 import HomePage from './views/Homepage/HomePage';
 import Login from './views/Login/Login';
 
@@ -23,6 +24,7 @@ function App() {
             <Route path="home-page" element={<HomePage />} />
             <Route path="login" element={<Login />} />
             <Route path="about-us" element={<AboutUs />} />
+            <Route path="edit-profile" element={<EditProfile />} />
           </Routes>
         </AppContext.Provider>
       </BrowserRouter>
