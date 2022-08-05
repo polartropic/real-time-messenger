@@ -1,12 +1,6 @@
-import { createContext, type Dispatch } from 'react';
+import { createContext } from 'react';
+import { ApplicationContext } from '../types/Interfaces';
 
-
-const AppContext = createContext({
-  appState: {
-    user: null,
-    userData: null,
-  },
-  setState: (() => undefined) as Dispatch<any>,
-});
+const AppContext = createContext<ApplicationContext>({} as ApplicationContext);
 
 export default AppContext;

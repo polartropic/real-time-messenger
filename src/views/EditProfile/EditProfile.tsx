@@ -1,9 +1,13 @@
 import './EditProfile.css';
 import DefaultAvatar from '../../assets/images/Default-avatar.jpg';
 import { useNavigate } from 'react-router-dom';
+import { useContext } from 'react';
+import AppContext from '../../providers/AppContext';
 
 const EditProfile = (): JSX.Element => {
   const navigate = useNavigate();
+  const { appState } = useContext(AppContext);
+  const user = appState.userData;
 
   return (
     <div className="edit-profile">
@@ -11,7 +15,7 @@ const EditProfile = (): JSX.Element => {
         <h3 id="edit-profile-title">Personal details</h3>
         <img className="default-avatar" src={DefaultAvatar} alt="default-avatar" />
         <form className="edit-form">
-          <label className="labels-edit" htmlFor="first-name">First Name:</label> <br />
+          <label className="labels-edit" htmlFor="first-name">First name: {user?.firstName}</label> <br />
           <input type="text" id="first-name" placeholder="first name"/>
           <input type="submit" className="change-button-edit" value="Change" />
         </form>
