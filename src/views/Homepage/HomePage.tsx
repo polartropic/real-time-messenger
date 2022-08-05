@@ -2,7 +2,7 @@ import './HomePage.css';
 import { useContext } from 'react';
 import AppContext from '../../providers/AppContext';
 import LoggedUser from '../LoggedUser/LoggedUser';
-import Register from '../../components/Register/Register';
+import Register from '../../views/Register/Register';
 
 const HomePage = (): JSX.Element => {
   const { appState } = useContext(AppContext);
