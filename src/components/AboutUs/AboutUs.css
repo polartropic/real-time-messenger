@@ -4,9 +4,9 @@
   margin: 30px auto;
   padding: 30px;
   text-align: center;
-  background-color: rgba(242, 241, 236, 1);
+  background-color: white;
   border-radius: 20px;
-  color: #2f455d;
+  color: rgba(47, 69, 93, 1);
 }
 
 .about-us img {

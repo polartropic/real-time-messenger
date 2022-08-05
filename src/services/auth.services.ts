@@ -1,4 +1,4 @@
-import { createUserWithEmailAndPassword, signInWithEmailAndPassword, signOut } from 'firebase/auth';
+import { createUserWithEmailAndPassword, signInWithEmailAndPassword, signOut, updateEmail, updatePassword } from 'firebase/auth';
 import { auth } from '../config/firebase-config';
 
 export const createUser = (email: string, password: string) => {
@@ -11,4 +11,11 @@ export const signIn = (email: string, password: string) => {
 
 export const logOut = () => {
   return signOut(auth);
+};
+
+export const updateUserEmail = (email: string) => {
+  return updateEmail(auth.currentUser!, email);
+};
+export const updateUserPassword = (password: string) => {
+  return updatePassword(auth.currentUser!, password);
 };
