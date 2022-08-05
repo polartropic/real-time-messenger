@@ -1,7 +1,7 @@
 import { createContext, type Dispatch } from 'react';
 
 
-const AppState = createContext({
+const AppContext = createContext({
   appState: {
     user: null,
     userData: null,
@@ -9,4 +9,4 @@ const AppState = createContext({
   setState: (() => undefined) as Dispatch<any>,
 });
 
-export default AppState;
+export default AppContext;
