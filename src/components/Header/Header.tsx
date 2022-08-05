@@ -1,14 +1,30 @@
-import { useContext } from 'react';
+import { useContext, useEffect, useState } from 'react';
 import DefaultAvatar from '../../assets/images/Default-avatar.jpg';
 import { logOut } from '../../services/auth.services';
-import './Header.css';
 import AppContext from '../../providers/AppContext';
 import { useNavigate } from 'react-router-dom';
+import { getUsersCount } from '../../services/users.services';
+import { getTeamsCount } from '../../services/teams.services';
+import './Header.css';
 
 const Header = (): JSX.Element => {
   const { appState, setState } = useContext(AppContext);
   const user = appState.user;
+
+  const [usersCount, setUsersCount] = useState(0);
+  const [teamsCount, setTeamsCount] = useState(0);
+
   const navigate = useNavigate();
+
+  useEffect(() => {
+    getUsersCount()
+      .then((users) => setUsersCount(users.size))
+      .catch(console.error);
+
+    getTeamsCount()
+      .then((teams) => setTeamsCount(teams.size))
+      .catch(console.error);
+  }, []);
 
   const handleLogOut = () => {
     setState({
@@ -25,8 +41,8 @@ const Header = (): JSX.Element => {
   return (
     <header id='header'>
       <div id='stats'>
-        <h4 className='stats'>Total active users: 10</h4>
-        <h4 className='stats'>Total active teams: 5</h4>
+        <h4 className='stats'>Total active users: {usersCount}</h4>
+        <h4 className='stats'>Total active teams: {teamsCount}</h4>
       </div>
 
       <div id='navigation'>
