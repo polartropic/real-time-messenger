@@ -16,6 +16,6 @@ export const getUserData = (uid: string) => {
   return get(query(ref(db, 'users'), orderByChild('uid'), equalTo(uid)));
 };
 
-export const getUsersCount = () => {
+export const getAllUsers = () => {
   return get(query(ref(db, 'users')));
 };

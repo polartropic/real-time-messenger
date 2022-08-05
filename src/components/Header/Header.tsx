@@ -3,8 +3,8 @@ import DefaultAvatar from '../../assets/images/Default-avatar.jpg';
 import { logOut } from '../../services/auth.services';
 import AppContext from '../../providers/AppContext';
 import { useNavigate } from 'react-router-dom';
-import { getUsersCount } from '../../services/users.services';
-import { getTeamsCount } from '../../services/teams.services';
+import { getAllUsers } from '../../services/users.services';
+import { getAllTeams } from '../../services/teams.services';
 import './Header.css';
 
 const Header = (): JSX.Element => {
@@ -17,11 +17,11 @@ const Header = (): JSX.Element => {
   const navigate = useNavigate();
 
   useEffect(() => {
-    getUsersCount()
+    getAllUsers()
       .then((users) => setUsersCount(users.size))
       .catch(console.error);
 
-    getTeamsCount()
+    getAllTeams()
       .then((teams) => setTeamsCount(teams.size))
       .catch(console.error);
   }, []);
