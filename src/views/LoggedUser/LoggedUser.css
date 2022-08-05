@@ -1,28 +1,30 @@
 .landing-page {
   display: grid;
   grid-template-columns: 2fr 5fr 2fr;
-}
-
-.search-users {
-  display: inline;
+  grid-template-rows: auto;
+  grid-gap: 30px;
+  width: 80vw;
+  margin: 0 auto;
 }
 
 .main-container {
   grid-column: 2;
-  grid-row: 1;
-  background-color: rgba(242, 241, 236, 1);
-  height: calc(100vh - 110px);
+  grid-row: 2 / 4;
+  background-color: white;
+  height: calc(100vh - 170px);
   padding: 20px 30px;
   text-align: center;
 
-  border-radius: 20px 20px 0 0;
+  border-radius: 20px;
 }
 
 .chats-channels-list,
 .participants-list {
-  grid-row: 1;
+  grid-row: 2 / 3;
   padding: 20px 30px;
   text-align: center;
+  background-color: white;
+  border-radius: 20px;
 }
 
 .chats-channels-list {
@@ -33,45 +35,33 @@
   grid-column: 3;
 }
 
-.chats-channels-inner,
-.owner-inner,
-.participants-inner {
-  background-color: rgba(242, 241, 236, 1);
-  padding: 0.1em;
-  border-radius: 20px;
-  height: fit-content;
-}
-
-.owner-inner {
-  margin-bottom: 30px;
-}
-
-.participants-inner {
-  margin-bottom: 15px;
-}
-
-.manage-participants-btns button {
+.manage-participants-btns button,
+.view-users-btn {
   background-color: rgba(47, 69, 93, 1);
-  border: 1px solid rgba(242, 241, 236, 1);
+  border: 1px solid white;
   border-radius: 20px;
-  padding: 15px;
-  color: rgba(255, 255, 255, 0.8);
+  padding: 12px;
+  color: white;
   transition: border-color 0.5s, background-color 0.5s, color 0.5s;
   margin: 0.5em;
 }
 
-.add-btn:hover {
-  background-color: rgba(242, 241, 236, 1);
-  border-color: transparent;
+.add-btn:hover,
+.view-users-btn:hover {
+  background-color: white;
+  border-color: rgba(47, 69, 93, 1);
   color: rgba(47, 69, 93, 1);
-  outline: 1px solid rgba(47, 69, 93, 1);
-  outline-offset: -5px;
 }
 
 .leave-btn:hover {
   background-color: rgba(183, 99, 105, 1);
   border-color: transparent;
-  color: rgba(255, 255, 255, 0.8);
-  outline: 1px solid rgba(47, 69, 93, 1);
-  outline-offset: -5px;
+  color: white;
+}
+
+.search-users > input {
+  border: none;
+  border-radius: 20px;
+  background-color: rgba(245, 247, 251, 1);
+  padding: 15px;
 }
