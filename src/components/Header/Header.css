@@ -3,14 +3,13 @@
   width: 55px;
   border-radius: 50%;
   align-self: center;
-  cursor: pointer;
   margin-left: 20px;
   object-fit: cover;
 }
 
 #header {
   display: flex;
-  justify-content:space-between;
+  justify-content: space-between;
   background-color: #2f455d;
   height: 70px;
   color: #ffffff;
@@ -43,5 +42,4 @@
 
 .header-btn:hover {
   text-decoration: underline;
-  cursor: pointer;
 }

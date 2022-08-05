@@ -1,39 +1,45 @@
 #login-div {
-    display: flex;
-    flex-wrap: wrap;
-    justify-content: center;
+  display: flex;
+  flex-wrap: wrap;
+  justify-content: center;
 }
 
 #login-form {
-    width: 300px;
-    height: fit-content;
-    background-color: #f2f1ec;
-    padding-left: 30px;
-    padding-right: 30px;
-    border-radius: 20px;
-    margin-top: 70px;
-    text-align: center;
+  width: 300px;
+  height: fit-content;
+  background-color: white;
+  padding-left: 30px;
+  padding-right: 30px;
+  border-radius: 20px;
+  margin-top: 70px;
+  text-align: center;
+}
+
+#login-form > input {
+  border: 1px solid rgba(47, 69, 93, 1);
+  border-radius: 5px;
+  background-color: rgba(245, 247, 251, 1);
+  padding: 2px;
 }
 
 #sign-in {
-    color: #2f455d;
-    font-size: 20px;
-    font-weight: bold;
+  color: rgba(47, 69, 93, 1);
+  font-size: 20px;
+  font-weight: bold;
 }
 
 #sign-in-button {
-    padding: 10px;
-    border-radius: 10px;
-    border: 1px solid;
-    background-color: #2f455d;
-    color: #ffffff;
-    cursor: pointer;
+  padding: 10px;
+  border-radius: 10px;
+  border: 1px solid;
+  background-color: rgba(47, 69, 93, 1);
+  color: white;
 }
 
 #go-back-register-btn {
-    border: none;
-    font-size: 16px;
-    font-weight: bold;
-    cursor: pointer;
-    text-decoration: underline;
+  border: none;
+  font-size: 16px;
+  font-weight: bold;
+  text-decoration: underline;
+  background-color: white;
 }
