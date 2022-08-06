@@ -18,7 +18,6 @@ const EditProfile = (): JSX.Element => {
   const [phoneNumber, setPhoneNumber] = useState('');
   const [email, setEmail] = useState('');
   const [password, setPassword] = useState('');
-  const hello = 'ABV';
   const [userData, setUserData] = useState<User | null>(null);
 
   useEffect(() => {
@@ -136,7 +135,7 @@ const EditProfile = (): JSX.Element => {
         </form>
         <br />
         <form className="edit-form" onSubmit={updateEmailFunc}>
-          <label className="labels-edit" htmlFor="e-mail">E-mail: {hello}</label> <br />
+          <label className="labels-edit" htmlFor="e-mail">E-mail:</label> <br />
           <input type="email" id="e-mail" placeholder="e-mail" defaultValue={userData?.email} onChange={(e) => setEmail(e.target.value)} />
           <input type="submit" className="change-button-edit" value="Change" />
         </form>
