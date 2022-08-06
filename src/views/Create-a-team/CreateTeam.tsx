@@ -5,6 +5,7 @@ import AppContext from '../../providers/AppContext';
 import { getTeamByName } from '../../services/teams.services';
 import { getAllUsers } from '../../services/users.services';
 import { Team, User } from '../../types/Interfaces';
+
 import './Create-team.css';
 
 
@@ -19,7 +20,7 @@ const CreateTeam = (): JSX.Element => {
 
   const [searchTerm, setSearchTerm] = useState('');
   const [allUsers, setAllUsers] = useState<User[]>([]);
-
+  const [addedUsers, setAddedUsers] = useState<User[]>([]);
   useEffect(() => {
     getAllUsers()
       .then((snapshot) => setAllUsers(Object.values(snapshot.val())));
@@ -67,28 +68,65 @@ const CreateTeam = (): JSX.Element => {
 
   const result = getUsersBySearchTerm(searchTerm, allUsers);
 
-  const mappingUser = (user: User): JSX.Element => {
-    return <> <UserComponent props={user} key={user.uid} /><br /></>;
+  const handleAddUser = (user: User): void => {
+    setAddedUsers([
+      ...addedUsers,
+      user,
+    ]);
   };
 
+  const mappingUser = (user: User): JSX.Element => {
+    console.log(user.uid);
+
+    return <> <UserComponent props={{ user }} key={user.uid} /><br /></>;
+  };
+
+  const mappingUserAddButton = (user: User): JSX.Element => {
+    const buttonEl: JSX.Element =
+      <button onClick={() => {
+        handleAddUser(user);
+      }} id='add-remove-user-btn'>
+        <img src="https://img.icons8.com/color/48/000000/add--v1.png" alt='add-btn' />
+      </button>;
+
+    return <>
+      <UserComponent props={{ user, buttonEl }} key={user.uid} />
+
+      <br />
+    </>;
+  };
+
+
   return (
-    <div className="participants-list">
-      <form id="participants-list" onSubmit={createTeam}>
-        <h4 id="create-team-title">Create a new team</h4>
-        <label htmlFor="first-name">Name of the Team:</label>
-        <br />
-        <input type="text" className="register-field" name="team-name" placeholder="name of your new Team" required defaultValue='' onChange={updateForm('team-name')} /> <br /> <br />
-        <div className="search-users">
-          <input type="text" defaultValue="" placeholder='search Users...' onChange={(event) => setSearchTerm(event.target.value)} />
+    <div className="create-team-view">
+      <div className='create-team-wrapper'>
+        <form id="create-team-form" onSubmit={createTeam}>
+          <h4 id="create-team-title">Create a new team</h4>
+          <label htmlFor="first-name">Name of the Team:</label><br />
+          <br />
+          <input type="text" className="create-team-title" name="team-name" placeholder="name of your new Team" required defaultValue='' onChange={updateForm('team-name')} /> <br /> <br />
+          <div className="search-users-create-team">
+            <input type="text" defaultValue="" placeholder='search Users...' onChange={(event) => setSearchTerm(event.target.value)} />
+          </div>
+        </form>
+        <div className='users-container'>
+          {searchTerm ?
+            result.length > 0 ?
+              result.map(mappingUserAddButton) :
+              <p>No users found</p> :
+            allUsers.map(mappingUserAddButton)
+          }
         </div>
-      </form>
-      <div className='users-container'>
-        {searchTerm ?
-          result.length > 0 ?
-            result.map(mappingUser) :
-            <p>No users found</p> :
-          allUsers.map(mappingUser)
-        }
+      </div>
+      <div className='list-of-added-participants'>
+        <ul>
+          <h4>Added users</h4>
+          <li>User1</li>
+          <li>User2</li>
+          <li>User3</li>
+          <li>User4</li>
+        </ul>
+
       </div>
     </div>
   );

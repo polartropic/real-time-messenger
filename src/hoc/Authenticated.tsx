@@ -1,7 +1,7 @@
 import { useContext } from 'react';
 import AppContext from '../providers/AppContext';
 import { Navigate, useLocation } from 'react-router-dom';
-import { ReactNode } from 'react';
+// import { ReactNode } from 'react';
 
 interface Props {
     children: JSX.Element

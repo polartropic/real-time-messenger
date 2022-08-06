@@ -7,7 +7,10 @@ import { UserProps } from '../../types/Interfaces';
 const UserComponent: FC<UserProps> = ({ props }): JSX.Element => {
   return (
     <div className="user-box" id="user-box">
-      <p> {<img src={props?.imgURL} alt="avatar" /> && <img src={DefaultAvatar} alt="avatar" />} @{props?.username} </p>
+      <p>
+        {<img src={props?.user.imgURL} alt="avatar" /> && <img src={DefaultAvatar} alt="avatar" />} @{props?.user.username}
+        {props?.buttonEl}
+      </p>
       {/* <p>@{props?.username}</p> */}
     </div>
   );

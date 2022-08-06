@@ -1,8 +1,12 @@
 .user-box {
   display: table-cell;
   align-items: center;
-  width: 200px;
+  align-content: space-between;
+  width: 300px;
   margin: 10px auto;
+  border: 1px solid rgba(47, 69, 93, 0.7);
+  border-radius: 10px;
+
 }
 
 .user-box img {
@@ -15,10 +19,22 @@
 .user-box p {
   line-height: 15px;
   height: 25px;
-  margin: 0px;
+  /* margin-bottom: 5px; */
   display: table-cell;
-  vertical-align: middle;
+  align-content: center;
   padding: 10px;
-  border: 1px solid rgba(47, 69, 93, 0.7);
-  border-radius: 10px;
+}
+
+.search-users {
+  margin-bottom: 25px;
+}
+
+#add-remove-user-btn {
+  border: none;
+  background: none;
+}
+
+#add-remove-user-btn img {
+  height: 30px;
+  width: 30px;
 }

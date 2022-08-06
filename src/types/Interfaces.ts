@@ -42,6 +42,8 @@ export interface Team {
 }
 
 export interface UserProps {
-  props: User,
+  props: {
+    user: User,
+    buttonEl?: JSX.Element
+  }
 }
-
