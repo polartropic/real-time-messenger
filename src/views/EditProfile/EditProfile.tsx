@@ -1,16 +1,16 @@
 import './EditProfile.css';
 import DefaultAvatar from '../../assets/images/Default-avatar.jpg';
 import { useNavigate } from 'react-router-dom';
-import { useContext, useState } from 'react';
+import { useContext, useEffect, useState } from 'react';
 import AppContext from '../../providers/AppContext';
-import { updateEmail, updateFirstName, updateLastName, updatePhoneNumber } from '../../services/users.services';
+import { getUserByUsername, updateEmail, updateFirstName, updateLastName, updatePhoneNumber } from '../../services/users.services';
 import { updateUserEmail, updateUserPassword } from '../../services/auth.services';
 import { MIN_PASSWORD_LENGTH } from '../../common/constants';
-
+import { User } from '../../types/Interfaces';
 
 const EditProfile = (): JSX.Element => {
   const navigate = useNavigate();
-  const { appState} = useContext(AppContext);
+  const { appState } = useContext(AppContext);
   const user = appState.userData;
 
   const [firstName, setFirstName] = useState('');
@@ -18,6 +18,15 @@ const EditProfile = (): JSX.Element => {
   const [phoneNumber, setPhoneNumber] = useState('');
   const [email, setEmail] = useState('');
   const [password, setPassword] = useState('');
+  const hello = 'ABV';
+  const [userData, setUserData] = useState<User | null>(null);
+
+  useEffect(() => {
+    if (user != null) {
+      getUserByUsername(user.username)
+        .then((res) => setUserData(res.val()));
+    }
+  }, [user?.username, user]);
 
   const updateFirstNameFunc = (e: React.FormEvent<HTMLFormElement>) => {
     e.preventDefault();
@@ -109,26 +118,26 @@ const EditProfile = (): JSX.Element => {
         <h3 id="edit-profile-title">Personal details</h3>
         <img className="default-avatar" src={DefaultAvatar} alt="default-avatar" />
         <form className="edit-form" onSubmit={updateFirstNameFunc}>
-          <label className="labels-edit" htmlFor="first-name">First Name:<br />  {user?.firstName}</label> <br />
-          <input type="text" id="first-name" placeholder="first name" onChange={(e) => setFirstName(e.target.value)}/>
+          <label className="labels-edit" htmlFor="first-name">First Name:</label> <br />
+          <input type="text" id="first-name" placeholder="first name" defaultValue={userData?.firstName} onChange={(e) => setFirstName(e.target.value)}/>
           <input type="submit" className="change-button-edit" value="Change" />
         </form>
         <br />
         <form className="edit-form" onSubmit={updateLastNameFunc}>
-          <label className="labels-edit" htmlFor="last-name">Last name: <br /> {user?.lastName}</label> <br />
-          <input type="text" id="last-name" placeholder="last name" onChange={(e) => setLastName(e.target.value)}/>
+          <label className="labels-edit" htmlFor="last-name">Last name:</label> <br />
+          <input type="text" id="last-name" placeholder="last name" defaultValue={userData?.lastName} onChange={(e) => setLastName(e.target.value)}/>
           <input type="submit" className="change-button-edit" value="Change" />
         </form>
         <br />
         <form className="edit-form" onSubmit={updatePhoneFunc}>
-          <label className="labels-edit" htmlFor="last-name">Phone number: <br /> {user?.phoneNumber} </label> <br />
-          <input type="text" id="last-name" placeholder="phone number" onChange={(e) => setPhoneNumber(e.target.value)} />
+          <label className="labels-edit" htmlFor="last-name">Phone number:</label> <br />
+          <input type="text" id="phone-number" placeholder="phone number" defaultValue={userData?.phoneNumber} onChange={(e) => setPhoneNumber(e.target.value)} />
           <input type="submit" className="change-button-edit" value="Change" />
         </form>
         <br />
         <form className="edit-form" onSubmit={updateEmailFunc}>
-          <label className="labels-edit" htmlFor="e-mail">E-mail: <br />  {user?.email}</label> <br />
-          <input type="email" id="e-mail" placeholder="e-mail" onChange={(e) => setEmail(e.target.value)} />
+          <label className="labels-edit" htmlFor="e-mail">E-mail: {hello}</label> <br />
+          <input type="email" id="e-mail" placeholder="e-mail" defaultValue={userData?.email} onChange={(e) => setEmail(e.target.value)} />
           <input type="submit" className="change-button-edit" value="Change" />
         </form>
         <br />
