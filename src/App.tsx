@@ -12,6 +12,7 @@ import { auth } from './config/firebase-config';
 import { getUserData } from './services/users.services';
 import CreateTeam from './views/Create-a-team/CreateTeam';
 import Authenticated from './hoc/Authenticated';
+import NotFound from './views/NotFound/NotFound';
 
 function App() {
   const [appState, setState] = useState({
@@ -50,6 +51,7 @@ function App() {
             <Route path="about-us" element={<AboutUs />} />
             <Route path="edit-profile" element={<Authenticated><EditProfile /></Authenticated>} />
             <Route path="create-team" element={<Authenticated><CreateTeam /></Authenticated>} />
+            <Route path="*" element={<NotFound />} />
           </Routes>
         </AppContext.Provider>
       </BrowserRouter>
