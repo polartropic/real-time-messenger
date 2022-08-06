@@ -1,19 +1,17 @@
-import { useContext } from 'react';
-import AppContext from '../../providers/AppContext';
+import { FC } from 'react';
+// import AppContext from '../../providers/AppContext';
 import DefaultAvatar from '../../assets/images/Default-avatar.jpg';
 import './User.css';
+import { UserProps } from '../../types/Interfaces';
 
-const User = (): JSX.Element => {
-  const { appState } = useContext(AppContext);
-  const user = appState.userData;
-
+const UserComponent: FC<UserProps> = ({ props }): JSX.Element => {
   return (
     <div className="user-box" id="user-box">
-      {<img src={user?.imgURL} alt="avatar" /> && <img src={DefaultAvatar} alt="avatar" />}
-      <p>{user?.firstName} {user?.lastName}</p>
-      <p>@{user?.username}</p>
+      {<img src={props?.imgURL} alt="avatar" /> && <img src={DefaultAvatar} alt="avatar" />}
+      <p>{props?.firstName} {props?.lastName}</p>
+      <p>@{props?.username}</p>
     </div>
   );
 };
 
-export default User;
+export default UserComponent;
