@@ -32,6 +32,7 @@
     font-weight: bold;
     cursor: pointer;
     text-decoration: underline;
+    background-color: white;
 }
 
 #edit-profile-title {
