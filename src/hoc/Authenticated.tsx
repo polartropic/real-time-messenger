@@ -4,7 +4,7 @@ import { Navigate, useLocation } from 'react-router-dom';
 import { ReactNode } from 'react';
 
 interface Props {
-    children: ReactNode
+    children: JSX.Element
 }
 
 const Authenticated = ({ children }: Props) => {
@@ -13,7 +13,7 @@ const Authenticated = ({ children }: Props) => {
   const location = useLocation();
 
   if (!user) {
-    return <Navigate to="/home" state={{ from: location }} />;
+    return <Navigate to="/home-page" state={{ from: location }} />;
   }
 
   return children;

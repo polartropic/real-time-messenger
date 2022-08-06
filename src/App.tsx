@@ -11,7 +11,7 @@ import { useAuthState } from 'react-firebase-hooks/auth';
 import { auth } from './config/firebase-config';
 import { getUserData } from './services/users.services';
 import CreateTeam from './views/Create-a-team/CreateTeam';
-
+import Authenticated from './hoc/Authenticated';
 
 function App() {
   const [appState, setState] = useState({
@@ -48,8 +48,8 @@ function App() {
             <Route path="home-page" element={<HomePage />} />
             <Route path="login" element={<Login />} />
             <Route path="about-us" element={<AboutUs />} />
-            <Route path="edit-profile" element={<EditProfile />} />
-            <Route path="create-team" element={<CreateTeam />} />
+            <Route path="edit-profile" element={<Authenticated><EditProfile /></Authenticated>} />
+            <Route path="create-team" element={<Authenticated><CreateTeam /></Authenticated>} />
           </Routes>
         </AppContext.Provider>
       </BrowserRouter>
