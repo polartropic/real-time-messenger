@@ -20,20 +20,8 @@ const LoggedUser = (): JSX.Element => {
 
       {/* DYNAMIC DIV TO SHOW RESULTS FROM SEARCH AND VIEWING CHATS */}
       <div className="main-container">
-        <button>View all users</button>
-
-        <div className="search-users">
-          <input type="text" defaultValue="search users..." />
-        </div>
-
-        <hr />
-
-        {/* DYNAMIC DIV TO SHOW RESULTS FROM SEARCH AND VIEWING CHATS */}
-        <div className="content">
-          <h4>Click around to see your chats, teams or channels show up here.</h4>
-          <CreateTeam/>
-        </div>
-        <Channel />
+        <CreateTeam/>
+        {/* <Channel /> */}
       </div>
 
       <div className="participants-list">
