@@ -33,10 +33,9 @@ export interface Channel {
 }
 
 export interface Team {
-  id: string | null,
   name: string,
   owner: string, // UserID
-  members: string[], // UserIDs
+  members: string[] | [], // UserIDs
   channels: string[], // ChannelIDs
 
 }

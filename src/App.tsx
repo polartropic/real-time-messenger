@@ -51,7 +51,7 @@ function App() {
             <Route path="about-us" element={<AboutUs />} />
             <Route path="edit-profile" element={<Authenticated><EditProfile /></Authenticated>} />
             <Route path="create-team" element={<Authenticated><CreateTeam /></Authenticated>} />
-            {/* <Route path="teams/: teamID" element={<Authenticated><CreateTeam /></Authenticated>} /> */}
+            {/* <Route path="teams/: team.name" element={<Authenticated><CreateTeam /></Authenticated>} /> */}
 
             <Route path="*" element={<NotFound />} />
           </Routes>

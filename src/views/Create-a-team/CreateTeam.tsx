@@ -4,7 +4,7 @@ import UserComponent from '../../components/User/User';
 import AppContext from '../../providers/AppContext';
 import { addTeamToDB, getTeamByName } from '../../services/teams.services';
 import { getAllUsers } from '../../services/users.services';
-import { Team, User } from '../../types/Interfaces';
+import { User } from '../../types/Interfaces';
 
 import './Create-team.css';
 import { ToastContainer, toast, Id } from 'react-toastify';
@@ -12,18 +12,12 @@ import 'react-toastify/dist/ReactToastify.css';
 // import { useNavigate } from 'react-router-dom';
 
 const CreateTeam = (): JSX.Element => {
-  const [teamDetails, setTeamDetails] = useState<Team>({
-    id: '',
-    name: '',
-    owner: '',
-    members: [],
-    channels: [],
-  });
-
   const [searchTerm, setSearchTerm] = useState('');
   const [allUsers, setAllUsers] = useState<User[]>([]);
   const [addedUsers, setAddedUsers] = useState<User[]>([]);
   const [name, setName] = useState('');
+  const [owner, setOwner] = useState('');
+
   useEffect(() => {
     getAllUsers()
       .then((snapshot) => setAllUsers(Object.values(snapshot.val())));
@@ -33,56 +27,35 @@ const CreateTeam = (): JSX.Element => {
 
   // const navigate = useNavigate();
 
-  // const updateForm = (e: React.FormEvent<HTMLInputElement>) => {
-  // setName(e.currentTarget.value);
-  console.log(name);
-  console.log(addedUsers);
-
-  // };
-
   const createTeam: React.MouseEventHandler<HTMLButtonElement> = (): Id | void => {
     if (name.length < MIN_TEAM_NAME_LENGTH || name.length > MAX_TEAM_NAME_LENGTH) {
       return toast.warning(`The name of the team must be between ${MIN_TEAM_NAME_LENGTH} and ${MAX_TEAM_NAME_LENGTH} symbols`);
     }
-    setTeamDetails({
-      ...teamDetails,
-      name: name,
-    });
 
-    getTeamByName(teamDetails.name)
+
+    getTeamByName(name)
       .then((snapshot) => {
         if (snapshot.exists()) {
-          return toast.warning(`This name ${teamDetails.name} already exists!`);
+          return toast.warning(`This name ${name} already exists!`);
         }
       })
       .catch(console.error);
 
     const currentUser = appState?.userData?.username;
-    console.log(currentUser);
+
 
     if (currentUser) {
-      setTeamDetails({
-        ...teamDetails,
-        owner: currentUser,
-      });
+      setOwner(currentUser);
     };
     if (addedUsers.length > 0) {
-      const membersIds = addedUsers.map((user) => user.uid);
-      setTeamDetails({
-        ...teamDetails,
-        members: membersIds,
-      });
-    }
-    addTeamToDB(teamDetails)
-      .then((res) => {
-        setTeamDetails({
-          ...teamDetails,
-          id: res.key,
-        });
-      });
-    // navigate(`/teams/${teamDetails.id}`);
-  };
+      const membersIds = addedUsers.map((user) => user.username);
 
+      addTeamToDB(name, owner, membersIds)
+        .then(() => toast.success('You have succesfully created a Team!'))
+        .catch(console.error);
+      // navigate(`/teams/${name}`);
+    };
+  };
   const getUsersBySearchTerm = (searchTerm: string, users: User[]) => {
     return users.filter((user) =>
       user.username.toLowerCase().includes(searchTerm) ||
