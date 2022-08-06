@@ -13,15 +13,7 @@
   width: 20px;
   border-radius: 50%;
   object-fit: cover;
-}
-
-.user-box p {
-  line-height: 15px;
-  height: 25px;
-  /* margin-bottom: 5px; */
-  display: table-cell;
-  align-content: center;
-  padding: 10px;
+  vertical-align: middle;
 }
 
 .search-users {
