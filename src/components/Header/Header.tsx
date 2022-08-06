@@ -14,6 +14,7 @@ const Header = (): JSX.Element => {
 
   const [usersCount, setUsersCount] = useState(0);
   const [teamsCount, setTeamsCount] = useState(0);
+  const [isOpen, setIsOpen] = useState(false);
 
   const navigate = useNavigate();
 
@@ -39,6 +40,8 @@ const Header = (): JSX.Element => {
     navigate('/');
   };
 
+  const toggling = () => setIsOpen(!isOpen);
+
   return (
     <header id='header'>
       <div id='stats'>
@@ -51,7 +54,17 @@ const Header = (): JSX.Element => {
 
         {user ?
           <>
-            <button className='header-btn'>My teams</button>
+            <button className='header-btn' onClick={toggling}>My teams</button>
+            {isOpen&&
+              <div id='dropdown-menu-myteams'>
+                <p className='team-item'>Mega Team</p>
+                <p className='team-item'>Giga Team</p>
+                <p className='team-item'>Top Team</p>
+                <Link to={'/create-team'}>
+                  <button id='create-a-team-btn-header'>Create a team</button>
+                </Link>
+              </div>
+            }
             <button onClick={handleLogOut} className='header-btn'>Log out</button>
             <Link to={'/edit-profile'}>
               <img className="default-avatar" src={DefaultAvatar} alt="default-avatar" />

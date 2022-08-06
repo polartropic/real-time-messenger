@@ -10,6 +10,7 @@ import Login from './views/Login/Login';
 import { useAuthState } from 'react-firebase-hooks/auth';
 import { auth } from './config/firebase-config';
 import { getUserData } from './services/users.services';
+import CreateTeam from './views/Create-a-team/CreateTeam';
 
 
 function App() {
@@ -48,6 +49,7 @@ function App() {
             <Route path="login" element={<Login />} />
             <Route path="about-us" element={<AboutUs />} />
             <Route path="edit-profile" element={<EditProfile />} />
+            <Route path="create-team" element={<CreateTeam />} />
           </Routes>
         </AppContext.Provider>
       </BrowserRouter>
