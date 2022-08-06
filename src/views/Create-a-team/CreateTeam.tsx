@@ -74,6 +74,15 @@ const CreateTeam = (): JSX.Element => {
       ...addedUsers,
       user,
     ]);
+    setAllUsers(allUsers.filter((u) => u.uid !== user.uid));
+  };
+
+  const handleRemoveUser = (user: User): void => {
+    setAddedUsers(addedUsers.filter((u) => u.uid !== user.uid));
+    setAllUsers([
+      ...allUsers,
+      user,
+    ] );
   };
 
   const mappingUser = (user: User): JSX.Element => {
@@ -88,6 +97,21 @@ const CreateTeam = (): JSX.Element => {
         handleAddUser(user);
       }} id='add-remove-user-btn'>
         <img src="https://img.icons8.com/color/48/000000/add--v1.png" alt='add-btn' />
+      </button>;
+
+    return <>
+      <UserComponent props={{ user, buttonEl }} key={user.uid} />
+
+      <br />
+    </>;
+  };
+
+  const mappingUserRemoveButton = (user: User): JSX.Element => {
+    const buttonEl: JSX.Element =
+      <button onClick={() => {
+        handleRemoveUser(user);
+      }} id='add-remove-user-btn'>
+        <img src="https://img.icons8.com/color/48/000000/delete-forever.png" alt='remove-btn' />
       </button>;
 
     return <>
@@ -120,16 +144,12 @@ const CreateTeam = (): JSX.Element => {
         </div>
       </div>
       <div className='list-of-added-participants'>
-        <ul>
-          <h4>Added users</h4>
-          <li>User1</li>
-          <li>User2</li>
-          <li>User3</li>
-          <li>User4</li>
-        </ul>
+        <h4>Added users to your Team</h4>
+        {addedUsers.map(mappingUserRemoveButton)}
+
 
       </div>
-      <ToastContainer/>
+      <ToastContainer />
     </div>
   );
 };
