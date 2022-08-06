@@ -5,6 +5,7 @@ import AppContext from '../../providers/AppContext';
 import { getTeamByName } from '../../services/teams.services';
 import { getAllUsers } from '../../services/users.services';
 import { Team, User } from '../../types/Interfaces';
+import './Create-team.css';
 
 
 const CreateTeam = (): JSX.Element => {
@@ -71,8 +72,8 @@ const CreateTeam = (): JSX.Element => {
   };
 
   return (
-    <div className="create-a-team">
-      <form id="register-form" onSubmit={createTeam}>
+    <div className="participants-list">
+      <form id="participants-list" onSubmit={createTeam}>
         <h4 id="create-team-title">Create a new team</h4>
         <label htmlFor="first-name">Name of the Team:</label>
         <br />

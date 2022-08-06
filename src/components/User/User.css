@@ -1,16 +1,24 @@
 .user-box {
-  display: flex;
-  flex-wrap: wrap;
+  display: table-cell;
   align-items: center;
+  width: 200px;
+  margin: 10px auto;
 }
 
 .user-box img {
-  height: 25px;
-  width: 25px;
+  height: 20px;
+  width: 20px;
   border-radius: 50%;
   object-fit: cover;
 }
 
 .user-box p {
-margin: 0 auto;
+  line-height: 15px;
+  height: 25px;
+  margin: 0px;
+  display: table-cell;
+  vertical-align: middle;
+  padding: 10px;
+  border: 1px solid rgba(47, 69, 93, 0.7);
+  border-radius: 10px;
 }
