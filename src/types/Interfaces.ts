@@ -4,11 +4,11 @@ import { User as FirebaseUser } from 'firebase/auth';
 import { User as AppUser } from '../types/Interfaces';
 
 export interface ApplicationContext {
-  appState : {
+  appState: {
     user: FirebaseUser | null,
     userData: AppUser | null
   },
-  setState : Dispatch<any>
+  setState: Dispatch<any>
 }
 
 export interface User {
@@ -19,15 +19,15 @@ export interface User {
   email: string,
   phoneNumber: string,
   imgURL: string,
-  teams: string [],
-  channels: string [],
+  teams: string[],
+  channels: string[],
   uid: string,
 };
 
 export interface Channel {
   id: string,
   title: string,
-  participants: string [], // UserIDs
+  participants: string[], // UserIDs
   isPublic: boolean,
 
 }
@@ -36,8 +36,12 @@ export interface Team {
   id: string,
   name: string,
   owner: string, // UserID
-  members: string [], // UserIDs
-  channels: string [], // ChannelIDs
+  members: string[], // UserIDs
+  channels: string[], // ChannelIDs
 
+}
+
+export interface UserProps {
+  props: User,
 }
 
