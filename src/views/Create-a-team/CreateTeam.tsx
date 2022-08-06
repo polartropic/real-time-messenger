@@ -18,21 +18,13 @@ const CreateTeam = (): JSX.Element => {
 
   const [searchTerm, setSearchTerm] = useState('');
   const [allUsers, setAllUsers] = useState<User[]>([]);
-  // const [filteredUsers, setFilteredUsers] = useState<User[]>([]);
 
   useEffect(() => {
     getAllUsers()
       .then((snapshot) => setAllUsers(Object.values(snapshot.val())));
   }, []);
 
-  //   useEffect(() => {
-  //     setFilteredUsers(filteredUsers));
-  // }, [setFilteredUsers, filteredUsers]);
-
   const { appState } = useContext(AppContext);
-
-  // console.log(appState);
-
 
   const updateForm = (prop: string) => (e: React.FormEvent<HTMLInputElement>) => {
     setTeamDetails({
@@ -44,11 +36,9 @@ const CreateTeam = (): JSX.Element => {
   const createTeam: React.FormEventHandler<HTMLFormElement> = (event: React.FormEvent<HTMLFormElement>) => {
     event.preventDefault();
 
-
     if (teamDetails.name.length < MIN_TEAM_NAME_LENGTH || teamDetails.name.length > MAX_TEAM_NAME_LENGTH) {
       return alert('The name of the team must be between 3 and 40 symbols');
     }
-
 
     getTeamByName(teamDetails.name)
       .then((snapshot) => {
@@ -77,7 +67,7 @@ const CreateTeam = (): JSX.Element => {
   const result = getUsersBySearchTerm(searchTerm, allUsers);
 
   const mappingUser = (user: User): JSX.Element => {
-    return <UserComponent props={user} key={user.uid} />;
+    return <> <UserComponent props={user} key={user.uid} /><br /></>;
   };
 
   return (
