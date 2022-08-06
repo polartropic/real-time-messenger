@@ -2,13 +2,14 @@ import React, { useContext, useState, useEffect } from 'react';
 import { MAX_TEAM_NAME_LENGTH, MIN_TEAM_NAME_LENGTH } from '../../common/constants';
 import UserComponent from '../../components/User/User';
 import AppContext from '../../providers/AppContext';
-import { getTeamByName } from '../../services/teams.services';
+import { addTeamToDB, getTeamByName } from '../../services/teams.services';
 import { getAllUsers } from '../../services/users.services';
 import { Team, User } from '../../types/Interfaces';
 
 import './Create-team.css';
-import { ToastContainer, toast } from 'react-toastify';
+import { ToastContainer, toast, Id } from 'react-toastify';
 import 'react-toastify/dist/ReactToastify.css';
+// import { useNavigate } from 'react-router-dom';
 
 const CreateTeam = (): JSX.Element => {
   const [teamDetails, setTeamDetails] = useState<Team>({
@@ -22,6 +23,7 @@ const CreateTeam = (): JSX.Element => {
   const [searchTerm, setSearchTerm] = useState('');
   const [allUsers, setAllUsers] = useState<User[]>([]);
   const [addedUsers, setAddedUsers] = useState<User[]>([]);
+  const [name, setName] = useState('');
   useEffect(() => {
     getAllUsers()
       .then((snapshot) => setAllUsers(Object.values(snapshot.val())));
@@ -29,34 +31,56 @@ const CreateTeam = (): JSX.Element => {
 
   const { appState } = useContext(AppContext);
 
-  const updateForm = (prop: string) => (e: React.FormEvent<HTMLInputElement>) => {
+  // const navigate = useNavigate();
+
+  // const updateForm = (e: React.FormEvent<HTMLInputElement>) => {
+  // setName(e.currentTarget.value);
+  console.log(name);
+  console.log(addedUsers);
+
+  // };
+
+  const createTeam: React.MouseEventHandler<HTMLButtonElement> = (): Id | void => {
+    if (name.length < MIN_TEAM_NAME_LENGTH || name.length > MAX_TEAM_NAME_LENGTH) {
+      return toast.warning(`The name of the team must be between ${MIN_TEAM_NAME_LENGTH} and ${MAX_TEAM_NAME_LENGTH} symbols`);
+    }
     setTeamDetails({
       ...teamDetails,
-      [prop]: e.currentTarget.value,
+      name: name,
     });
-  };
-
-  const createTeam: React.FormEventHandler<HTMLFormElement> = (event: React.FormEvent<HTMLFormElement>) => {
-    event.preventDefault();
-
-    if (teamDetails.name.length < MIN_TEAM_NAME_LENGTH || teamDetails.name.length > MAX_TEAM_NAME_LENGTH) {
-      return toast.warning('The name of the team must be between 3 and 40 symbols');
-    }
 
     getTeamByName(teamDetails.name)
       .then((snapshot) => {
         if (snapshot.exists()) {
           return toast.warning(`This name ${teamDetails.name} already exists!`);
         }
-        const currentUser = appState?.userData?.username;
-        if (currentUser) {
-          setTeamDetails({
-            ...teamDetails,
-            owner: currentUser,
-          });
-        };
       })
       .catch(console.error);
+
+    const currentUser = appState?.userData?.username;
+    console.log(currentUser);
+
+    if (currentUser) {
+      setTeamDetails({
+        ...teamDetails,
+        owner: currentUser,
+      });
+    };
+    if (addedUsers.length > 0) {
+      const membersIds = addedUsers.map((user) => user.uid);
+      setTeamDetails({
+        ...teamDetails,
+        members: membersIds,
+      });
+    }
+    addTeamToDB(teamDetails)
+      .then((res) => {
+        setTeamDetails({
+          ...teamDetails,
+          id: res.key,
+        });
+      });
+    // navigate(`/teams/${teamDetails.id}`);
   };
 
   const getUsersBySearchTerm = (searchTerm: string, users: User[]) => {
@@ -82,14 +106,12 @@ const CreateTeam = (): JSX.Element => {
     setAllUsers([
       ...allUsers,
       user,
-    ] );
+    ]);
   };
 
-  const mappingUser = (user: User): JSX.Element => {
-    console.log(user.uid);
-
-    return <> <UserComponent props={{ user }} key={user.uid} /><br /></>;
-  };
+  // const mappingUser = (user: User): JSX.Element => {
+  //   return <> <UserComponent props={{ user }} key={user.uid} /><br /></>;
+  // };
 
   const mappingUserAddButton = (user: User): JSX.Element => {
     const buttonEl: JSX.Element =
@@ -125,15 +147,12 @@ const CreateTeam = (): JSX.Element => {
   return (
     <div className="create-team-view">
       <div className='create-team-wrapper'>
-        <form id="create-team-form" onSubmit={createTeam}>
+        <div id="create-team-form" >
           <h4 id="create-team-title">Create a new team</h4>
-          <label htmlFor="first-name">Name of the Team:</label><br />
-          <br />
-          <input type="text" className="create-team-title" name="team-name" placeholder="name of your new Team" required defaultValue='' onChange={updateForm('team-name')} /> <br /> <br />
           <div className="search-users-create-team">
             <input type="text" defaultValue="" placeholder='search Users...' onChange={(event) => setSearchTerm(event.target.value)} />
           </div>
-        </form>
+        </div>
         <div className='users-container'>
           {searchTerm ?
             result.length > 0 ?
@@ -144,9 +163,13 @@ const CreateTeam = (): JSX.Element => {
         </div>
       </div>
       <div className='list-of-added-participants'>
+        <label htmlFor="name-of-the-team">Name of the Team:</label><br />
+        <br />
+        <input type="text" className="create-team-title" name="team-name" placeholder="name of your new Team" required defaultValue='' onChange={(e) => setName(e.target.value)} /> <br /> <br />
+
         <h4>Added users to your Team</h4>
         {addedUsers.map(mappingUserRemoveButton)}
-
+        <button className='create-a-team' onClick={createTeam}>Create team</button>
 
       </div>
       <ToastContainer />

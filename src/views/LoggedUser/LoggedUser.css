@@ -36,7 +36,8 @@
 }
 
 .manage-participants-btns button,
-.view-users-btn {
+.view-users-btn, 
+.create-a-team {
   background-color: rgba(47, 69, 93, 1);
   border: 1px solid white;
   border-radius: 20px;
@@ -47,7 +48,8 @@
 }
 
 .add-btn:hover,
-.view-users-btn:hover {
+.view-users-btn:hover,
+.create-a-team:hover {
   background-color: white;
   border-color: rgba(47, 69, 93, 1);
   color: rgba(47, 69, 93, 1);
