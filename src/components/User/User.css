@@ -1,12 +1,11 @@
 .user-box {
-  display: table-cell;
+  display: flex;
+  justify-content: space-between;
   align-items: center;
-  align-content: space-between;
   width: 300px;
   margin: 10px auto;
   border: 1px solid rgba(47, 69, 93, 0.7);
   border-radius: 10px;
-
 }
 
 .user-box img {
