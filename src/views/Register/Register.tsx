@@ -6,6 +6,8 @@ import { createUser } from '../../services/auth.services';
 import React from 'react';
 import AppContext from '../../providers/AppContext';
 import { MAX_USERNAME_LENGTH, MIN_USERNAME_LENGTH } from '../../common/constants';
+import { ToastContainer, toast } from 'react-toastify';
+import 'react-toastify/dist/ReactToastify.css';
 
 const Register = (): JSX.Element => {
   const [regDetails, setRegDetails] = useState({
@@ -32,11 +34,11 @@ const Register = (): JSX.Element => {
     event.preventDefault();
 
     if (regDetails.password !== regDetails.confirmPassword) {
-      return alert('Passwords do not match!');
+      return toast.warning('Passwords do not match!');
     }
 
     if (regDetails.username.length < MIN_USERNAME_LENGTH || regDetails.username.length > MAX_USERNAME_LENGTH) {
-      return alert('The username must be between 5 and 35 symbols');
+      return toast.warning('The username must be between 5 and 35 symbols');
     }
 
 
@@ -51,19 +53,19 @@ const Register = (): JSX.Element => {
             createUserByUsername(regDetails.firstName, regDetails.lastName,
               regDetails.phoneNumber, regDetails.username, u.user.email, u.user.uid)
               .then(() => {
-                alert('Successful sign up!');
+                toast.success('Successful sign up!');
               })
               .catch(console.error);
           })
           .catch((event) => {
             if (event.message.includes('email-already-in-use')) {
-              alert(`The e-mail ${regDetails.email} is already in use!`);
+              toast.warning(`The e-mail ${regDetails.email} is already in use!`);
             } else if (event.message.includes('invalid-email')) {
-              alert(`The e-mail ${regDetails.email} is invalid`);
+              toast.warning(`The e-mail ${regDetails.email} is invalid`);
             } else if (event.message.includes('weak-password')) {
-              alert('The password is too week! Please use a password with at least 6 characters.');
+              toast.warning('The password is too week! Please use a password with at least 6 characters.');
             } else {
-              alert(event.message);
+              toast.warning(event.message);
             }
           },
           );
@@ -119,6 +121,7 @@ const Register = (): JSX.Element => {
           <button id="sign-up-btn">Sign up</button>
         </form>
       </div>
+      <ToastContainer/>
     </div>
   );
 };

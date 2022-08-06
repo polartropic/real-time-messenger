@@ -4,6 +4,8 @@ import AppContext from '../../providers/AppContext';
 import { useContext, useState } from 'react';
 import { getUserByUsername, getUserData } from '../../services/users.services';
 import { signIn } from '../../services/auth.services';
+import { ToastContainer, toast } from 'react-toastify';
+import 'react-toastify/dist/ReactToastify.css';
 
 const Login = (): JSX.Element => {
   const { setState } = useContext(AppContext);
@@ -37,20 +39,20 @@ const Login = (): JSX.Element => {
                       user: u.user,
                       userData: snapshot.val()[Object.keys(snapshot.val())[0]],
                     });
-                    alert('Successful sign in!');
+                    toast.success('Successful sign in!');
                     navigate('/');
                   }
                 });
             })
             .catch((e) => {
               if (e.message.includes('wrong-password')) {
-                alert('Wrong password!');
+                toast.warning('Wrong password!');
               } else {
-                alert(e.message);
+                toast.error(e.message);
               }
             });
         } else {
-          alert(`The username ${logInDetails.username} is not registered!`);
+          toast.warning(`The username ${logInDetails.username} is not registered!`);
         }
       });
   };
@@ -76,6 +78,7 @@ const Login = (): JSX.Element => {
         </h3>
         <br />
       </form>
+      <ToastContainer/>
     </div>
   );
 };

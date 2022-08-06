@@ -7,6 +7,8 @@ import { getUserByUsername, updateEmail, updateFirstName, updateLastName, update
 import { updateUserEmail, updateUserPassword } from '../../services/auth.services';
 import { MIN_PASSWORD_LENGTH } from '../../common/constants';
 import { User } from '../../types/Interfaces';
+import { ToastContainer, toast } from 'react-toastify';
+import 'react-toastify/dist/ReactToastify.css';
 
 const EditProfile = (): JSX.Element => {
   const navigate = useNavigate();
@@ -31,15 +33,15 @@ const EditProfile = (): JSX.Element => {
     e.preventDefault();
 
     if (user?.firstName === firstName) {
-      return alert('This name is already registered in the account!');
+      return toast.warning('This name is already registered in the account!');
     }
 
     updateFirstName(user!.username, firstName)
       .then(() => {
-        alert('Successful change!');
+        toast.success('Successful change!');
       })
       .catch((error) => {
-        alert(error.message);
+        toast.error(error.message);
       });
   };
 
@@ -47,15 +49,15 @@ const EditProfile = (): JSX.Element => {
     e.preventDefault();
 
     if (user?.lastName === lastName) {
-      return alert('This name is already registered in the account!');
+      return toast.warning('This name is already registered in the account!');
     }
 
     updateLastName(user!.username, lastName)
       .then(() => {
-        alert('Successful change!');
+        toast.success('Successful change!');
       })
       .catch((error) => {
-        alert(error.message);
+        toast.error(error.message);
       });
   };
 
@@ -63,15 +65,15 @@ const EditProfile = (): JSX.Element => {
     e.preventDefault();
 
     if (user?.phoneNumber === phoneNumber) {
-      return alert('This phone is already registered in the account!');
+      return toast.warning('This phone number is already registered in the account!');
     }
 
     updatePhoneNumber(user!.username, phoneNumber)
       .then(() => {
-        alert('Successful change!');
+        toast.success('Successful change!');
       })
       .catch((error) => {
-        alert(error.message);
+        toast.error(error.message);
       });
   };
 
@@ -79,20 +81,20 @@ const EditProfile = (): JSX.Element => {
     e.preventDefault();
 
     if (user?.email === email) {
-      return alert('This e-mail is already registered in the account!');
+      return toast.error('This e-mail is already registered in the account!');
     }
 
     if (email!==undefined) {
       updateUserEmail(email)
         .then(() => {
           updateEmail(user!.username, email);
-          alert('Successful change!');
+          toast.success('Successful change!');
         })
         .catch((error) => {
           if (error.message.includes('already-in-use')) {
-            alert('This e-mail is already registered in our system!');
+            toast.warning('This e-mail is already registered in our system!');
           } else {
-            alert(error.message);
+            toast.error(error.message);
           }
         });
     }
@@ -102,12 +104,12 @@ const EditProfile = (): JSX.Element => {
     e.preventDefault();
 
     if (password.length < MIN_PASSWORD_LENGTH) {
-      return alert('The password is too short! Please use a password of at least 6 characters.');
+      return toast.warning('The password is too short! Please use a password of at least 6 characters.');
     }
 
     updateUserPassword(password)
       .then(() => {
-        alert('Successful change!');
+        toast.success('Successful change!');
       });
   };
 
@@ -148,7 +150,7 @@ const EditProfile = (): JSX.Element => {
         <br />
         <button id="go-back-btn-edit" onClick={() => navigate('/')}>Go back</button>
       </div>
-
+      <ToastContainer/>
     </div>
   );
 };

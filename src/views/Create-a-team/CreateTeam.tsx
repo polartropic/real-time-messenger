@@ -7,7 +7,8 @@ import { getAllUsers } from '../../services/users.services';
 import { Team, User } from '../../types/Interfaces';
 
 import './Create-team.css';
-
+import { ToastContainer, toast } from 'react-toastify';
+import 'react-toastify/dist/ReactToastify.css';
 
 const CreateTeam = (): JSX.Element => {
   const [teamDetails, setTeamDetails] = useState<Team>({
@@ -39,13 +40,13 @@ const CreateTeam = (): JSX.Element => {
     event.preventDefault();
 
     if (teamDetails.name.length < MIN_TEAM_NAME_LENGTH || teamDetails.name.length > MAX_TEAM_NAME_LENGTH) {
-      return alert('The name of the team must be between 3 and 40 symbols');
+      return toast.warning('The name of the team must be between 3 and 40 symbols');
     }
 
     getTeamByName(teamDetails.name)
       .then((snapshot) => {
         if (snapshot.exists()) {
-          return alert(`This name ${teamDetails.name} already exists!`);
+          return toast.warning(`This name ${teamDetails.name} already exists!`);
         }
         const currentUser = appState?.userData?.username;
         if (currentUser) {
@@ -128,6 +129,7 @@ const CreateTeam = (): JSX.Element => {
         </ul>
 
       </div>
+      <ToastContainer/>
     </div>
   );
 };
