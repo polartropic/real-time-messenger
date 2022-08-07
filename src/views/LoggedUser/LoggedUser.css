@@ -67,3 +67,16 @@
   background-color: rgba(245, 247, 251, 1);
   padding: 15px;
 }
+
+.chat-item {
+  background-color: #f2f1ec;
+  padding: 7px;
+  border-radius: 20px;
+  /* color: white; */
+  cursor: pointer;
+}
+
+.chat-item:hover {
+  border: 1px solid;
+  font-weight: bold;
+}

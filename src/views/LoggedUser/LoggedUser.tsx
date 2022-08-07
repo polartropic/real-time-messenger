@@ -1,22 +1,43 @@
-// import CreateTeam from '../Create-a-team/CreateTeam';
-// import Channel from '../Channel/Channel';
 import './LoggedUser.css';
 import { User } from '../../types/Interfaces';
-import { useEffect, useState } from 'react';
-import { getAllUsers, updateUserChats } from '../../services/users.services';
+import { ReactNode, useContext, useEffect, useState } from 'react';
+import { getAllUsers, getUserByUsername, updateUserChats } from '../../services/users.services';
 import UserComponent from '../../components/User/User';
 import { createChat } from '../../services/channels.services';
-// import Channel from '../Channel/Channel';
+import AppContext from '../../providers/AppContext';
+import Channel from '../Channel/Channel';
 
 const LoggedUser = (): JSX.Element => {
+  const { appState } = useContext(AppContext);
+  const userUsername = appState.userData?.username;
+
   const [allUsers, setAllUsers] = useState<User[]>([]);
   const [searchTerm, setSearchTerm] = useState('');
   const [isAllUsersClicked, setisAllUsersClicked] = useState(false);
+  const [isDetailedChatClicked, setisDetailedChatClicked] = useState(false);
+  console.log(isDetailedChatClicked);
+  const [userDetails, setUserDetails] = useState({
+    firstName: '',
+    lastName: '',
+    username: '',
+    email: '',
+    phoneNumber: '',
+    imgURL: '',
+    teams: [],
+    channels: [],
+    uid: '',
+  });
 
   useEffect(() => {
     getAllUsers()
       .then((snapshot) => setAllUsers(Object.values(snapshot.val())));
   }, []);
+
+  useEffect(() => {
+    getUserByUsername(userUsername!)
+      .then((res) => setUserDetails(res.val()))
+      .catch(console.error);
+  }, [userUsername]);
 
   const getUsersBySearchTerm = (searchTerm: string, users: User[]) => {
     return users.filter((user) =>
@@ -48,6 +69,12 @@ const LoggedUser = (): JSX.Element => {
     participants.map((participant) => updateUserChats(participant, chatName));
   };
 
+  const mappingChats = (chat: ReactNode) => {
+    return <>
+      <p onClick={() =>setisDetailedChatClicked(!isDetailedChatClicked)} className='chat-item'>{chat}</p>
+    </>;
+  };
+
   return (
     <div className="landing-page">
       <div className="chats-channels-list">
@@ -56,10 +83,7 @@ const LoggedUser = (): JSX.Element => {
           <button className="view-users-btn" onClick={() =>setisAllUsersClicked(!isAllUsersClicked)}>View all users</button>
         </div>
         <h4>Chats:</h4>
-        <p>User1</p>
-        <p>User2</p>
-        <p>User3</p>
-        <p>User4</p>
+        {Object.keys(userDetails.channels).map((chat)=> mappingChats(chat))}
       </div>
 
       {/* DYNAMIC DIV TO SHOW RESULTS FROM SEARCH AND VIEWING CHATS */}
@@ -74,8 +98,10 @@ const LoggedUser = (): JSX.Element => {
             null
 
           }
-          {/* <CreateTeam/> */}
-          {/* <Channel /> */}
+          {isDetailedChatClicked ?
+            <Channel/> :
+            null
+          }
         </>
       </div>
 
