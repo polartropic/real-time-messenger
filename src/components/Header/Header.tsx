@@ -64,7 +64,7 @@ const Header = (): JSX.Element => {
 
   const mappingTeam = (team: ReactNode) => {
     return <>
-      <p className='team-item'>{team}</p>
+      <p onClick={() =>setIsOpen(!isOpen)} className='team-item'>{team}</p>
     </>;
   };
 
@@ -86,7 +86,7 @@ const Header = (): JSX.Element => {
               <div id='dropdown-menu-myteams'>
                 {Object.keys(userDetails.teams).map((team)=> mappingTeam(team))}
                 <Link to={'/create-team'}>
-                  <button id='create-a-team-btn-header'>Create a team</button>
+                  <button id='create-a-team-btn-header' onClick={() =>setIsOpen(!isOpen)}>Create a team</button>
                 </Link>
               </div>
               }
