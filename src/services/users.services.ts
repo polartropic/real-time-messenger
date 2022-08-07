@@ -1,5 +1,6 @@
 import { set, ref, get, query, orderByChild, equalTo, update } from 'firebase/database';
 import { db } from '../config/firebase-config';
+import { User } from '../types/Interfaces';
 
 export const createUserByUsername = (firstName: string, lastName: string, phoneNumber: string,
   username: string, email: string | null, uid: string) => {
@@ -50,7 +51,7 @@ export const updateUserTeams = (username: string, teamName: string) => {
   return update(ref(db), updateTeams);
 };
 
-export const updateUserChats = (username: string, chatName: string) => {
+export const updateUserChats = (username: string | User, chatName: string) => {
   const updateChats: { [index: string]: boolean } = {};
   updateChats[`/users/${username}/channels/${chatName}`] = true;
   return update(ref(db), updateChats);

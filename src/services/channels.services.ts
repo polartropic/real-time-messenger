@@ -1,5 +1,6 @@
 import { ref, get, push } from 'firebase/database';
 import { db } from '../config/firebase-config';
+import { User } from '../types/Interfaces';
 
 export const getChatById = (id: string | null) => {
   return get(ref(db, `channels/${id}`))
@@ -24,7 +25,7 @@ export const getChatById = (id: string | null) => {
 };
 
 
-export const createChat = (title: string, participants: string[]) => {
+export const createChat = (title: string, participants: string[] | User[]) => {
   return push(ref(db, 'channels'), {
     title,
     participants,
