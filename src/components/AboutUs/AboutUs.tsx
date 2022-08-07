@@ -7,17 +7,19 @@ const AboutUs = (): JSX.Element => {
 
   return (
     <div className="about-us">
-      <button onClick={() => navigate('/')}>Go back</button>
+      <button onClick={() => navigate('/')} className='go-back-btn'>
+        <img src="https://img.icons8.com/color/48/000000/circled-left--v1.png" alt='go-back-icon' />
+      </button>
 
       <h1>About the developers</h1>
 
-      <img src={DefaultAvatar} alt="Avatar of creator"/>
+      <img src={DefaultAvatar} alt="Avatar of creator" />
       <h4>Emil Botev</h4>
 
-      <img src={DefaultAvatar} alt="Avatar of creator"/>
+      <img src={DefaultAvatar} alt="Avatar of creator" />
       <h4>Stefani Staneva</h4>
 
-      <img src={DefaultAvatar} alt="Avatar of creator"/>
+      <img src={DefaultAvatar} alt="Avatar of creator" />
       <h4>Teodora Yaneva</h4>
     </div>
   );

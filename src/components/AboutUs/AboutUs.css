@@ -15,3 +15,8 @@
   border-radius: 50%;
   object-fit: cover;
 }
+
+.go-back-btn img {
+  width: 45px;
+  height: 45px;
+}

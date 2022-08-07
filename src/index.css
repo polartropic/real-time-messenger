@@ -13,3 +13,9 @@ hr {
   background: url(https://stardewvalley.net/wp-content/uploads/2017/12/hrspike.png) repeat-x 0 0;
   border: 0;
 }
+
+.go-back-btn {
+  margin-top: 20px;
+  background: none;
+  border: none;
+}

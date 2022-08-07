@@ -9,7 +9,7 @@ import { User } from '../../types/Interfaces';
 import './Create-team.css';
 import { ToastContainer, toast, Id } from 'react-toastify';
 import 'react-toastify/dist/ReactToastify.css';
-// import { useNavigate } from 'react-router-dom';
+import { useNavigate } from 'react-router-dom';
 
 const CreateTeam = (): JSX.Element => {
   const [searchTerm, setSearchTerm] = useState('');
@@ -20,6 +20,7 @@ const CreateTeam = (): JSX.Element => {
   const { appState } = useContext(AppContext);
 
   const currentUser = appState.userData?.username;
+  const navigate = useNavigate();
 
   useEffect(() => {
     getAllUsers()
@@ -29,8 +30,6 @@ const CreateTeam = (): JSX.Element => {
   useEffect(() => {
     setOwner(currentUser!);
   }, [currentUser]);
-
-  // const navigate = useNavigate();
 
   const createTeam: React.MouseEventHandler<HTMLButtonElement> = (): Id | void => {
     if (name.length < MIN_TEAM_NAME_LENGTH || name.length > MAX_TEAM_NAME_LENGTH) {
@@ -53,7 +52,7 @@ const CreateTeam = (): JSX.Element => {
         }
       })
       .catch(console.error);
-    // navigate(`/teams/${name}`);
+    navigate(`/teams/${name}`);
   };
 
   const getUsersBySearchTerm = (searchTerm: string, users: User[]) => {
@@ -122,6 +121,9 @@ const CreateTeam = (): JSX.Element => {
   return (
     <div className="create-team-view">
       <div className='create-team-wrapper'>
+        <button onClick={() => navigate('/')} className='go-back-btn'>
+          <img src="https://img.icons8.com/color/48/000000/circled-left--v1.png" alt='go-back-icon' />
+        </button>
         <div id="create-team-form" >
           <h4 id="create-team-title">Create a new team</h4>
           <div className="search-users-create-team">

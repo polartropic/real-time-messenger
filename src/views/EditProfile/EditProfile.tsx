@@ -84,7 +84,7 @@ const EditProfile = (): JSX.Element => {
       return toast.error('This e-mail is already registered in the account!');
     }
 
-    if (email!==undefined) {
+    if (email !== undefined) {
       updateUserEmail(email)
         .then(() => {
           updateEmail(user!.username, email);
@@ -120,13 +120,13 @@ const EditProfile = (): JSX.Element => {
         <img className="default-avatar" src={DefaultAvatar} alt="default-avatar" />
         <form className="edit-form" onSubmit={updateFirstNameFunc}>
           <label className="labels-edit" htmlFor="first-name">First Name:</label> <br />
-          <input type="text" id="first-name" placeholder="first name" defaultValue={userData?.firstName} onChange={(e) => setFirstName(e.target.value)}/>
+          <input type="text" id="first-name" placeholder="first name" defaultValue={userData?.firstName} onChange={(e) => setFirstName(e.target.value)} />
           <input type="submit" className="change-button-edit" value="Change" />
         </form>
         <br />
         <form className="edit-form" onSubmit={updateLastNameFunc}>
           <label className="labels-edit" htmlFor="last-name">Last name:</label> <br />
-          <input type="text" id="last-name" placeholder="last name" defaultValue={userData?.lastName} onChange={(e) => setLastName(e.target.value)}/>
+          <input type="text" id="last-name" placeholder="last name" defaultValue={userData?.lastName} onChange={(e) => setLastName(e.target.value)} />
           <input type="submit" className="change-button-edit" value="Change" />
         </form>
         <br />
@@ -144,13 +144,15 @@ const EditProfile = (): JSX.Element => {
         <br />
         <form className="edit-form" onSubmit={updatePasswordFunc}>
           <label className="labels-edit" htmlFor="new-password">New Password:</label> <br />
-          <input type="password" id="new-password" placeholder="new password" onChange={(e) => setPassword(e.target.value)}/>
+          <input type="password" id="new-password" placeholder="new password" onChange={(e) => setPassword(e.target.value)} />
           <input type="submit" className="change-button-edit" value="Change" />
         </form>
         <br />
-        <button id="go-back-btn-edit" onClick={() => navigate('/')}>Go back</button>
+        <button className="go-back-btn" onClick={() => navigate('/')}>
+          <img src="https://img.icons8.com/color/48/000000/circled-left--v1.png" alt='go-back-icon' />
+        </button>
       </div>
-      <ToastContainer/>
+      <ToastContainer />
     </div>
   );
 };

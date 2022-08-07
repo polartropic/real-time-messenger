@@ -63,7 +63,7 @@ const Login = (): JSX.Element => {
         <h4 id="sign-in">Sign in</h4>
         <label htmlFor="username">Username:</label>
         <br />
-        <input onChange={updateForm('username')} type="text" id="username" placeholder='username' value={logInDetails.username}/>
+        <input onChange={updateForm('username')} type="text" id="username" placeholder='username' value={logInDetails.username} />
         <br /><br />
         <label htmlFor="password">Password:</label>
         <br />
@@ -73,12 +73,14 @@ const Login = (): JSX.Element => {
         <br />
         <h3>Don't have an account yet?
           <Link to={'/home-page'}>
-            <button id="go-back-register-btn">Go back to register</button>
+            <button id="go-back-register-btn" className='go-back-btn'>
+              <img src="https://img.icons8.com/color/48/000000/circled-left--v1.png" alt='go-back-icon' />
+            </button>
           </Link>
         </h3>
         <br />
       </form>
-      <ToastContainer/>
+      <ToastContainer />
     </div>
   );
 };
