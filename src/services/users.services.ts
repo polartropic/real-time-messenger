@@ -1,7 +1,7 @@
 import { set, ref, get, query, orderByChild, equalTo, update } from 'firebase/database';
 import { db } from '../config/firebase-config';
 
-export const createUserByUsername= (firstName: string, lastName: string, phoneNumber: string,
+export const createUserByUsername = (firstName: string, lastName: string, phoneNumber: string,
   username: string, email: string | null, uid: string) => {
   return set(ref(db, `users/${username}`),
     { firstName, lastName, phoneNumber, username, email, uid, teams: [], channels: [], friends: [] },
@@ -42,4 +42,10 @@ export const updateEmail = (username: string, email: string) => {
   return update(ref(db), {
     [`users/${username}/email`]: email,
   });
+};
+
+export const updateUserTeams = (username: string, teamName: string) => {
+  const updateTeams: { [index: string]: boolean } = {};
+  updateTeams[`/users/${username}/teams/${teamName}`] = true;
+  return update(ref(db), updateTeams);
 };

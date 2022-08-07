@@ -3,7 +3,7 @@ import { MAX_TEAM_NAME_LENGTH, MIN_TEAM_NAME_LENGTH } from '../../common/constan
 import UserComponent from '../../components/User/User';
 import AppContext from '../../providers/AppContext';
 import { addTeamToDB, getTeamByName } from '../../services/teams.services';
-import { getAllUsers } from '../../services/users.services';
+import { getAllUsers, updateUserTeams } from '../../services/users.services';
 import { User } from '../../types/Interfaces';
 
 import './Create-team.css';
@@ -45,12 +45,14 @@ const CreateTeam = (): JSX.Element => {
           console.log(owner);
           const membersIds = addedUsers.map((user) => user.username);
           addTeamToDB(name, owner, membersIds)
-            .then(() => toast.success('You have successfully created a Team!'))
+            .then(() => {
+              [...membersIds, owner].forEach((username) => updateUserTeams(username, name));
+              toast.success('You have successfully created a Team!');
+            })
             .catch(console.error);
         }
       })
       .catch(console.error);
-
     // navigate(`/teams/${name}`);
   };
 
