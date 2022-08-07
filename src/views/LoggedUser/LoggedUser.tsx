@@ -1,12 +1,11 @@
 // import CreateTeam from '../Create-a-team/CreateTeam';
-// import Channel from '../Channel/Channel';
+import Channel from '../Channel/Channel';
 import './LoggedUser.css';
 import { User } from '../../types/Interfaces';
 import { useEffect, useState } from 'react';
 import { getAllUsers, updateUserChats } from '../../services/users.services';
 import UserComponent from '../../components/User/User';
 import { createChat } from '../../services/channels.services';
-// import Channel from '../Channel/Channel';
 
 const LoggedUser = (): JSX.Element => {
   const [allUsers, setAllUsers] = useState<User[]>([]);
@@ -75,7 +74,7 @@ const LoggedUser = (): JSX.Element => {
 
           }
           {/* <CreateTeam/> */}
-          {/* <Channel /> */}
+          <Channel />
         </>
       </div>
 

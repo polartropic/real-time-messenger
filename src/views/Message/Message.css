@@ -1,0 +1,10 @@
+.message {
+  margin: 0;
+  background-color: rgba(47, 69, 93, 1);
+  color: white;
+  border-radius: 20px 0px 20px 20px;
+}
+
+.message img {
+  vertical-align: text-top;
+}

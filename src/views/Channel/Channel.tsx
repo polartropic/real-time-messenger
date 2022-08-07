@@ -1,3 +1,4 @@
+import Message from '../Message/Message';
 import './Channel.css';
 
 const Channel = () => {
@@ -6,9 +7,8 @@ const Channel = () => {
       <h4>Channel's title goes here.</h4>
       <hr />
 
-      <div>
-        <p>Messages go here</p>
-      </div>
+      <p>Messages go here</p>
+      <Message />
 
       <div className="message-box">
         <button className="emoji-btn"><i className="fa-regular fa-face-smile"></i></button>
