@@ -1,5 +1,5 @@
-import CreateTeam from '../Create-a-team/CreateTeam';
-import Channel from '../Channel/Channel';
+// import CreateTeam from '../Create-a-team/CreateTeam';
+// import Channel from '../Channel/Channel';
 import './LoggedUser.css';
 
 const LoggedUser = (): JSX.Element => {
@@ -20,7 +20,7 @@ const LoggedUser = (): JSX.Element => {
 
       {/* DYNAMIC DIV TO SHOW RESULTS FROM SEARCH AND VIEWING CHATS */}
       <div className="main-container">
-        <CreateTeam/>
+        {/* <CreateTeam/> */}
         {/* <Channel /> */}
       </div>
 

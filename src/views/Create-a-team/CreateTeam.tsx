@@ -17,13 +17,18 @@ const CreateTeam = (): JSX.Element => {
   const [addedUsers, setAddedUsers] = useState<User[]>([]);
   const [name, setName] = useState('');
   const [owner, setOwner] = useState('');
+  const { appState } = useContext(AppContext);
+
+  const currentUser = appState.userData?.username;
 
   useEffect(() => {
     getAllUsers()
       .then((snapshot) => setAllUsers(Object.values(snapshot.val())));
   }, []);
 
-  const { appState } = useContext(AppContext);
+  useEffect(() => {
+    setOwner(currentUser!);
+  }, [currentUser]);
 
   // const navigate = useNavigate();
 
@@ -32,30 +37,23 @@ const CreateTeam = (): JSX.Element => {
       return toast.warning(`The name of the team must be between ${MIN_TEAM_NAME_LENGTH} and ${MAX_TEAM_NAME_LENGTH} symbols`);
     }
 
-
     getTeamByName(name)
       .then((snapshot) => {
         if (snapshot.exists()) {
           return toast.warning(`This name ${name} already exists!`);
+        } else {
+          console.log(owner);
+          const membersIds = addedUsers.map((user) => user.username);
+          addTeamToDB(name, owner, membersIds)
+            .then(() => toast.success('You have successfully created a Team!'))
+            .catch(console.error);
         }
       })
       .catch(console.error);
 
-    const currentUser = appState?.userData?.username;
-
-
-    if (currentUser) {
-      setOwner(currentUser);
-    };
-    if (addedUsers.length > 0) {
-      const membersIds = addedUsers.map((user) => user.username);
-
-      addTeamToDB(name, owner, membersIds)
-        .then(() => toast.success('You have succesfully created a Team!'))
-        .catch(console.error);
-      // navigate(`/teams/${name}`);
-    };
+    // navigate(`/teams/${name}`);
   };
+
   const getUsersBySearchTerm = (searchTerm: string, users: User[]) => {
     return users.filter((user) =>
       user.username.toLowerCase().includes(searchTerm) ||
@@ -86,34 +84,36 @@ const CreateTeam = (): JSX.Element => {
   //   return <> <UserComponent props={{ user }} key={user.uid} /><br /></>;
   // };
 
-  const mappingUserAddButton = (user: User): JSX.Element => {
+  const mappingUserAddButton = (user: User): JSX.Element | undefined => {
     const buttonEl: JSX.Element =
       <button onClick={() => {
         handleAddUser(user);
       }} id='add-remove-user-btn'>
         <img src="https://img.icons8.com/color/48/000000/add--v1.png" alt='add-btn' />
       </button>;
+    if (user.username !== currentUser) {
+      return <>
+        <UserComponent props={{ user, buttonEl }} key={user.uid} />
 
-    return <>
-      <UserComponent props={{ user, buttonEl }} key={user.uid} />
-
-      <br />
-    </>;
+        <br />
+      </>;
+    }
   };
 
-  const mappingUserRemoveButton = (user: User): JSX.Element => {
+  const mappingUserRemoveButton = (user: User): JSX.Element | undefined => {
     const buttonEl: JSX.Element =
       <button onClick={() => {
         handleRemoveUser(user);
       }} id='add-remove-user-btn'>
         <img src="https://img.icons8.com/color/48/000000/delete-forever.png" alt='remove-btn' />
       </button>;
+    if (user.username !== currentUser) {
+      return <>
+        <UserComponent props={{ user, buttonEl }} key={user.uid} />
 
-    return <>
-      <UserComponent props={{ user, buttonEl }} key={user.uid} />
-
-      <br />
-    </>;
+        <br />
+      </>;
+    }
   };
 
 

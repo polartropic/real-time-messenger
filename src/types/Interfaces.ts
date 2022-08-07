@@ -1,12 +1,11 @@
 import { type Dispatch } from 'react';
 
 import { User as FirebaseUser } from 'firebase/auth';
-import { User as AppUser } from '../types/Interfaces';
 
 export interface ApplicationContext {
   appState: {
     user: FirebaseUser | null,
-    userData: AppUser | null
+    userData: User | null
   },
   setState: Dispatch<any>
 }
@@ -34,7 +33,7 @@ export interface Channel {
 
 export interface Team {
   name: string,
-  owner: string, // UserID
+  owner: string | undefined, // UserID
   members: string[] | [], // UserIDs
   channels: string[], // ChannelIDs
 
