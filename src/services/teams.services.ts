@@ -13,7 +13,7 @@ export const getTeamByName = (name: string) => {
   return get(query(ref(db, 'teams'), orderByChild('name'), equalTo(name)));
 };
 
-export const addTeamToDB = async ( name: string, owner: string, members: string[] | []): Promise<DatabaseReference> => {
+export const addTeamToDB = async (name: string, owner: string, members: string[] | []): Promise<DatabaseReference> => {
   const team: Team = {
     name: name,
     owner: owner,

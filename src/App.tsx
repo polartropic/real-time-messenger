@@ -13,6 +13,7 @@ import { getUserData } from './services/users.services';
 import CreateTeam from './views/Create-a-team/CreateTeam';
 import Authenticated from './hoc/Authenticated';
 import NotFound from './views/NotFound/NotFound';
+import MyTeam from './views/Team/Team';
 
 function App() {
   const [appState, setState] = useState({
@@ -51,7 +52,7 @@ function App() {
             <Route path="about-us" element={<AboutUs />} />
             <Route path="edit-profile" element={<Authenticated><EditProfile /></Authenticated>} />
             <Route path="create-team" element={<Authenticated><CreateTeam /></Authenticated>} />
-            {/* <Route path="teams/: team.name" element={<Authenticated><CreateTeam /></Authenticated>} /> */}
+            <Route path="teams/:name" element={<Authenticated><MyTeam /></Authenticated>} />
 
             <Route path="*" element={<NotFound />} />
           </Routes>
