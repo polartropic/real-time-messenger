@@ -1,23 +1,35 @@
-import { useContext, useEffect, useState } from 'react';
+import { ReactNode, useContext, useEffect, useState } from 'react';
 import DefaultAvatar from '../../assets/images/Default-avatar.jpg';
 import { logOut } from '../../services/auth.services';
 import AppContext from '../../providers/AppContext';
 import { useNavigate } from 'react-router-dom';
-import { getAllUsers } from '../../services/users.services';
+import { getAllUsers, getUserByUsername } from '../../services/users.services';
 import { getAllTeams } from '../../services/teams.services';
 import { Link } from 'react-router-dom';
 import './Header.css';
 import { ToastContainer, toast } from 'react-toastify';
 import 'react-toastify/dist/ReactToastify.css';
+import { User } from '../../types/Interfaces';
 
 const Header = (): JSX.Element => {
   const { appState, setState } = useContext(AppContext);
   const user = appState.user;
+  const userUsername = appState.userData?.username;
 
   const [usersCount, setUsersCount] = useState(0);
   const [teamsCount, setTeamsCount] = useState(0);
   const [isOpen, setIsOpen] = useState(false);
-
+  const [userDetails, setUserDetails] = useState({
+    firstName: '',
+    lastName: '',
+    username: '',
+    email: '',
+    phoneNumber: '',
+    imgURL: '',
+    teams: [],
+    channels: [],
+    uid: '',
+  });
   const navigate = useNavigate();
 
   useEffect(() => {
@@ -29,6 +41,12 @@ const Header = (): JSX.Element => {
       .then((teams) => setTeamsCount(teams.size))
       .catch(console.error);
   }, []);
+
+  useEffect(() => {
+    getUserByUsername(userUsername!)
+      .then((res) => setUserDetails(res.val()))
+      .catch(console.error);
+  }, [userUsername]);
 
   const handleLogOut = () => {
     setState({
@@ -43,6 +61,12 @@ const Header = (): JSX.Element => {
   };
 
   const toggling = () => setIsOpen(!isOpen);
+
+  const mappingTeam = (team: ReactNode) => {
+    return <>
+      <p className='team-item'>{team}</p>
+    </>;
+  };
 
   return (
     <>
@@ -60,9 +84,7 @@ const Header = (): JSX.Element => {
               <button className='header-btn' onClick={toggling}>My teams</button>
               {isOpen&&
               <div id='dropdown-menu-myteams'>
-                <p className='team-item'>Mega Team</p>
-                <p className='team-item'>Giga Team</p>
-                <p className='team-item'>Top Team</p>
+                {Object.keys(userDetails.teams).map((team)=> mappingTeam(team))}
                 <Link to={'/create-team'}>
                   <button id='create-a-team-btn-header'>Create a team</button>
                 </Link>
