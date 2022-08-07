@@ -3,8 +3,9 @@
 import './LoggedUser.css';
 import { User } from '../../types/Interfaces';
 import { useEffect, useState } from 'react';
-import { getAllUsers } from '../../services/users.services';
+import { getAllUsers, updateUserChats } from '../../services/users.services';
 import UserComponent from '../../components/User/User';
+import { createChat } from '../../services/channels.services';
 // import Channel from '../Channel/Channel';
 
 const LoggedUser = (): JSX.Element => {
@@ -40,6 +41,13 @@ const LoggedUser = (): JSX.Element => {
     </>;
   };
 
+  const createChatFunc = (chatName: string, participants: string []) => {
+    createChat(chatName, participants);
+    alert('Successful chat creation!');
+
+    participants.map((participant) => updateUserChats(participant, chatName));
+  };
+
   return (
     <div className="landing-page">
       <div className="chats-channels-list">
@@ -47,7 +55,6 @@ const LoggedUser = (): JSX.Element => {
           <input type="text" defaultValue="" placeholder='search users...' onChange={(event) => setSearchTerm(event.target.value)}/>
           <button className="view-users-btn" onClick={() =>setisAllUsersClicked(!isAllUsersClicked)}>View all users</button>
         </div>
-
         <h4>Chats:</h4>
         <p>User1</p>
         <p>User2</p>
