@@ -5,11 +5,10 @@ import AppContext from '../../providers/AppContext';
 import { addTeamToDB, getTeamByName } from '../../services/teams.services';
 import { getAllUsers, updateUserTeams } from '../../services/users.services';
 import { User } from '../../types/Interfaces';
-
-import './Create-team.css';
 import { ToastContainer, toast, Id } from 'react-toastify';
 import 'react-toastify/dist/ReactToastify.css';
 import { useNavigate } from 'react-router-dom';
+import './Create-team.css';
 
 const CreateTeam = (): JSX.Element => {
   const [searchTerm, setSearchTerm] = useState('');
@@ -122,7 +121,7 @@ const CreateTeam = (): JSX.Element => {
     <div className="create-team-view">
       <div className='create-team-wrapper'>
         <button onClick={() => navigate('/')} className='go-back-btn'>
-          <img src="https://img.icons8.com/color/48/000000/circled-left--v1.png" alt='go-back-icon' />
+          <img src="https://firebasestorage.googleapis.com/v0/b/thunderteam-99849.appspot.com/o/icons8-go-back-48.png?alt=media&token=7bdfef4c-cf94-4147-8f4d-fc55fd086b4a" alt='go-back-icon' />
         </button>
         <div id="create-team-form" >
           <h4 id="create-team-title">Create a new team</h4>

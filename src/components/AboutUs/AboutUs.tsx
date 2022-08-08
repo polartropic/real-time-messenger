@@ -8,7 +8,7 @@ const AboutUs = (): JSX.Element => {
   return (
     <div className="about-us">
       <button onClick={() => navigate('/')} className='go-back-btn'>
-        <img src="https://img.icons8.com/color/48/000000/circled-left--v1.png" alt='go-back-icon' />
+        <img src="https://firebasestorage.googleapis.com/v0/b/thunderteam-99849.appspot.com/o/icons8-go-back-48.png?alt=media&token=7bdfef4c-cf94-4147-8f4d-fc55fd086b4a" alt='go-back-icon' />
       </button>
 
       <h1>About the developers</h1>
