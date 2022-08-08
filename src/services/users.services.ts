@@ -1,6 +1,5 @@
 import { set, ref, get, query, orderByChild, equalTo, update } from 'firebase/database';
 import { db } from '../config/firebase-config';
-import { User } from '../types/Interfaces';
 
 export const createUserByUsername = (firstName: string, lastName: string, phoneNumber: string,
   username: string, email: string | null, uid: string) => {

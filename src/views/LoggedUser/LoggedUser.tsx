@@ -1,8 +1,6 @@
 import './LoggedUser.css';
-import { User } from '../../types/Interfaces';
 import { useContext, useEffect, useState } from 'react';
-import { getAllUsers, getUserByUsername } from '../../services/users.services';
-import UserComponent from '../../components/User/User';
+import { getUserByUsername } from '../../services/users.services';
 import { deleteUserFromChat, getChatById, getChatByName } from '../../services/channels.services';
 import AppContext from '../../providers/AppContext';
 import Channel from '../Channel/Channel';
@@ -14,9 +12,8 @@ const LoggedUser = (): JSX.Element => {
   const { appState } = useContext(AppContext);
   const userUsername = appState.userData?.username;
 
-  const [isAllUsersClicked, setisAllUsersClicked] = useState(false);
-  const [isDetailedChatClicked, setisDetailedChatClicked] = useState(false);
-  const [isCreateChatClicked, setisCreateChatClicked] = useState(false);
+  const [isDetailedChatClicked, setIsDetailedChatClicked] = useState(false);
+  const [isCreateChatClicked, setIsCreateChatClicked] = useState(false);
   const [currentChat, setCurrentChat] = useState({
     date: {},
     id: '',
@@ -52,15 +49,13 @@ const LoggedUser = (): JSX.Element => {
   };
 
   const openCreateChat = () => {
-    setisCreateChatClicked(true);
-    setisAllUsersClicked(false);
-    setisDetailedChatClicked(false);
+    setIsCreateChatClicked(true);
+    setIsDetailedChatClicked(false);
   };
 
   const openDetailedChat = (chat: string) => {
-    setisDetailedChatClicked(true);
-    setisCreateChatClicked(false);
-    setisAllUsersClicked(false);
+    setIsDetailedChatClicked(true);
+    setIsCreateChatClicked(false);
     getChatByName(chat)
       .then((res) => Object.keys(res.val()))
       .then((res) => getChatById(res[0]))
@@ -87,23 +82,13 @@ const LoggedUser = (): JSX.Element => {
       <div className="main-container">
         <>
           {isCreateChatClicked ?
-            // this should be create chat comp
             <Create props={{
               isCreateChatClicked,
-              setisCreateChatClicked,
+              setIsCreateChatClicked,
               string,
             }} /> :
             null
           }
-          {/* {searchTerm !== '' ?
-            result.map(mappingResult) :
-            null
-          } */}
-          {/* {isAllUsersClicked ?
-            allUsers.map(mappingResult) :
-            null
-
-          } */}
           {isDetailedChatClicked ?
             <Channel /> :
             null
