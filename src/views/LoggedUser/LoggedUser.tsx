@@ -3,7 +3,7 @@ import { User } from '../../types/Interfaces';
 import { ReactNode, useContext, useEffect, useState } from 'react';
 import { getAllUsers, getUserByUsername, updateUserChats } from '../../services/users.services';
 import UserComponent from '../../components/User/User';
-import { createChat } from '../../services/channels.services';
+import { createChat, deleteUserFromChat, getChatByName } from '../../services/channels.services';
 import AppContext from '../../providers/AppContext';
 import Channel from '../Channel/Channel';
 import { ToastContainer, toast } from 'react-toastify';
@@ -19,6 +19,11 @@ const LoggedUser = (): JSX.Element => {
   const [isDetailedChatClicked, setisDetailedChatClicked] = useState(false);
   const [isCreateChatClicked, setisCreateChatClicked] = useState(false);
   const [addedUsers, setAddedUsers] = useState<User[]>([]);
+  const [currentChat, setCurrentChat] = useState({
+    title: '',
+    participants: [],
+    isPublic: false,
+  });
   const [userDetails, setUserDetails] = useState({
     firstName: '',
     lastName: '',
@@ -31,7 +36,7 @@ const LoggedUser = (): JSX.Element => {
     uid: '',
   });
   const [chatDetails, setChatDetails] = useState({
-    title: 'string',
+    title: '',
     participants: [],
     isPublic: false,
   });
@@ -119,10 +124,31 @@ const LoggedUser = (): JSX.Element => {
     </>;
   };
 
-  const mappingChats = (chat: ReactNode) => {
+  const mappingChats = (chat: string) => {
     return <>
-      <p onClick={() =>setisDetailedChatClicked(!isDetailedChatClicked)} className='chat-item'>{chat}</p>
+      <p onClick={() =>openDetailedChat(chat)} className='chat-item'>{chat}</p>
     </>;
+  };
+
+  const openCreateChat = () => {
+    setisCreateChatClicked(true);
+    setisAllUsersClicked(false);
+    setisDetailedChatClicked(false);
+  };
+
+  const openDetailedChat = (chat: string) => {
+    setisDetailedChatClicked(true);
+    setisCreateChatClicked(false);
+    setisAllUsersClicked(false);
+    getChatByName(chat)
+      .then((res) => setCurrentChat(res.val()));
+  };
+
+  const leaveChat = (username: string | undefined, chatName: string) => {
+    deleteUserFromChat(username, chatName)
+      .then(() => {
+        toast.success(`You have successfully been removed from chat ${chatName}!`);
+      });
   };
 
   return (
@@ -130,7 +156,7 @@ const LoggedUser = (): JSX.Element => {
       <div className="chats-channels-list">
         <h4>Chats:</h4>
         {Object.keys(userDetails.channels).map((chat)=> mappingChats(chat))}
-        <button onClick={() =>setisCreateChatClicked(!isCreateChatClicked)} className='view-users-btn'>Create a Chat</button>
+        <button onClick={() =>openCreateChat()} className='view-users-btn'>Create a Chat</button>
       </div>
 
       {/* DYNAMIC DIV TO SHOW RESULTS FROM SEARCH AND VIEWING CHATS */}
