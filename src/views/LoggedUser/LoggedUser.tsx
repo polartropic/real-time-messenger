@@ -1,9 +1,9 @@
 import './LoggedUser.css';
 import { User } from '../../types/Interfaces';
-import { ReactNode, useContext, useEffect, useState } from 'react';
+import { useContext, useEffect, useState } from 'react';
 import { getAllUsers, getUserByUsername, updateUserChats } from '../../services/users.services';
 import UserComponent from '../../components/User/User';
-import { createChat, deleteUserFromChat, getChatByName } from '../../services/channels.services';
+import { createChat, deleteUserFromChat, getChatById, getChatByName } from '../../services/channels.services';
 import AppContext from '../../providers/AppContext';
 import Channel from '../Channel/Channel';
 import { ToastContainer, toast } from 'react-toastify';
@@ -20,10 +20,14 @@ const LoggedUser = (): JSX.Element => {
   const [isCreateChatClicked, setisCreateChatClicked] = useState(false);
   const [addedUsers, setAddedUsers] = useState<User[]>([]);
   const [currentChat, setCurrentChat] = useState({
-    title: '',
-    participants: [],
+    date: {},
+    id: '',
     isPublic: false,
+    participants: [],
+    title: '',
   });
+
+  console.log(currentChat);
   const [userDetails, setUserDetails] = useState({
     firstName: '',
     lastName: '',
@@ -141,7 +145,10 @@ const LoggedUser = (): JSX.Element => {
     setisCreateChatClicked(false);
     setisAllUsersClicked(false);
     getChatByName(chat)
-      .then((res) => setCurrentChat(res.val()));
+      .then((res) => Object.keys(res.val()))
+      .then((res) => getChatById(res[0]))
+      .then((res) => setCurrentChat(res))
+      .catch(console.error);
   };
 
   const leaveChat = (username: string | undefined, chatName: string) => {
@@ -195,7 +202,7 @@ const LoggedUser = (): JSX.Element => {
         <div className="manage-participants-btns">
           <button className="add-btn"><span>Add members</span></button>
           <br />
-          <button className="leave-btn">Leave channel</button>
+          <button onClick={() =>leaveChat(userUsername, currentChat.title)} className="leave-btn">Leave channel</button>
         </div>
       </div>
       <ToastContainer />
