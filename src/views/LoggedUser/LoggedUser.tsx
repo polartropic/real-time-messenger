@@ -3,11 +3,12 @@ import { User } from '../../types/Interfaces';
 import { ReactNode, useContext, useEffect, useState } from 'react';
 import { getAllUsers, getUserByUsername, updateUserChats } from '../../services/users.services';
 import UserComponent from '../../components/User/User';
-import { createChat } from '../../services/channels.services';
+// import { createChat } from '../../services/channels.services';
 import AppContext from '../../providers/AppContext';
 import Channel from '../Channel/Channel';
 import { ToastContainer, toast } from 'react-toastify';
-import { MAX_CHANNEL_NAME_LENGTH, MIN_CHANNEL_NAME_LENGTH, MIN_NUMBER_OF_CHAT_PARTICIPANTS } from '../../common/constants';
+// import { MAX_CHANNEL_NAME_LENGTH, MIN_CHANNEL_NAME_LENGTH, MIN_NUMBER_OF_CHAT_PARTICIPANTS } from '../../common/constants';
+import CreateChat from '../CreateChat/CreateChat';
 
 const LoggedUser = (): JSX.Element => {
   const { appState } = useContext(AppContext);
@@ -30,29 +31,33 @@ const LoggedUser = (): JSX.Element => {
     channels: [],
     uid: '',
   });
-  const [chatDetails, setChatDetails] = useState({
-    title: 'string',
-    participants: [],
-    isPublic: false,
-  });
 
-  const updateForm = (prop: string) => (e: React.FormEvent<HTMLInputElement>) => {
-    setChatDetails({
-      ...chatDetails,
-      [prop]: e.currentTarget.value,
-    });
-  };
 
+  // const [chatDetails, setChatDetails] = useState({
+  //   title: 'string',
+  //   participants: [],
+  //   isPublic: false,
+  // });
+
+  // This one stays here
   useEffect(() => {
     getAllUsers()
       .then((snapshot) => setAllUsers(Object.values(snapshot.val())));
   }, []);
 
+  // This one stays here!
   useEffect(() => {
     getUserByUsername(userUsername!)
       .then((res) => setUserDetails(res.val()))
       .catch(console.error);
   }, [userUsername]);
+
+  // const updateForm = (prop: string) => (e: React.FormEvent<HTMLInputElement>) => {
+  //   setChatDetails({
+  //     ...chatDetails,
+  //     [prop]: e.currentTarget.value,
+  //   });
+  // };
 
   const getUsersBySearchTerm = (searchTerm: string, users: User[]) => {
     return users.filter((user) =>
@@ -85,43 +90,46 @@ const LoggedUser = (): JSX.Element => {
     </>;
   };
 
-  const createChatFunc = (chatName: string, participants: string [] | User[]) => {
-    if (chatDetails.title.length < MIN_CHANNEL_NAME_LENGTH || chatDetails.title.length > MAX_CHANNEL_NAME_LENGTH) {
-      return toast.warning(`The name of the chat must be between ${MIN_CHANNEL_NAME_LENGTH} and ${MAX_CHANNEL_NAME_LENGTH} symbols`);
-    }
-    if (participants.length === MIN_NUMBER_OF_CHAT_PARTICIPANTS) {
-      return toast.warning('Please add at least one participant in the chat!');
-    }
-    createChat(chatName, participants)
-      .then(()=> {
-        toast.success('Successful chat creation!');
-        setSearchTerm('');
-        setisCreateChatClicked(!isCreateChatClicked);
-        participants.map((participant) => updateUserChats(participant, chatName));
-      })
-      .catch(console.error);
-  };
+  // const createChatFunc = (chatName: string, participants: string[] | User[]) => {
+  //   if (chatDetails.title.length < MIN_CHANNEL_NAME_LENGTH || chatDetails.title.length > MAX_CHANNEL_NAME_LENGTH) {
+  //     return toast.warning(`The name of the chat must be between ${MIN_CHANNEL_NAME_LENGTH} and ${MAX_CHANNEL_NAME_LENGTH} symbols`);
+  //   }
+  //   if (participants.length === MIN_NUMBER_OF_CHAT_PARTICIPANTS) {
+  //     return toast.warning('Please add at least one participant in the chat!');
+  //   }
+  //   createChat(chatName, participants)
+  //     .then(() => {
+  //       toast.success('Successful chat creation!');
+  //       setSearchTerm('');
+  //       setisCreateChatClicked(!isCreateChatClicked);
+  //       participants.map((participant) => updateUserChats(participant, chatName));
+  //     })
+  //     .catch(console.error);
+  // };
 
-  const createChatButtonFunc = () => {
-    return <>
-      <div className='create-chat-view'>
-        <div className='create-chat-form'>
-          <div className="search-users">
-            <label htmlFor="create-chat-title">Name of the chat:</label><br />
-            <input type="text" className="create-chat-title" name="create-chat-title" placeholder="The name of your new chat" required defaultValue='' onChange={updateForm('title')} /> <br /> <br />
-            <input type="text" defaultValue="" placeholder='search users...' onChange={(event) => setSearchTerm(event.target.value)}/> <br />
-            <button className="view-users-btn" onClick={() =>setisAllUsersClicked(!isAllUsersClicked)}>View all users</button>
-          </div>
-          {addedUsers.map(mappingResult)}
-          <button className='create-a-team' onClick={() => createChatFunc(chatDetails.title, addedUsers.map((user) => user.username))}>Create a Chat</button>
-        </div>
-      </div>
-    </>;
-  };
+  // This one is for create Chat
+  // const createChatButtonFunc = () => {
+  //   return <>
+  //     <div className='create-chat-view'>
+  //       <div className='create-chat-form'>
+  //         <div className="search-users">
+  //           <label htmlFor="create-chat-title">Name of the chat:</label><br />
+  //           <input type="text" className="create-chat-title" name="create-chat-title" placeholder="The name of your new chat" required defaultValue='' onChange={updateForm('title')} /> <br /> <br />
+  //           <input type="text" defaultValue="" placeholder='search users...' onChange={(event) => setSearchTerm(event.target.value)} /> <br />
+  //           <button className="view-users-btn" onClick={() => setisAllUsersClicked(!isAllUsersClicked)}>View all users</button>
+  //         </div>
+  //         {addedUsers.map(mappingResult)}
+  //         <button className='create-a-team' onClick={() => createChatFunc(chatDetails.title, addedUsers.map((user) => user.username))}>Create a Chat</button>
+  //       </div>
+  //     </div>
+  //   </>;
+  // };
+  // ends here
 
-  const mappingChats = (chat: ReactNode) => {
+  // This may be a simple chat box and will be mapped from chats comp according to props given
+  const mappingChats = (chat: string) => {
     return <>
-      <p onClick={() =>setisDetailedChatClicked(!isDetailedChatClicked)} className='chat-item'>{chat}</p>
+      <p onClick={() => setisDetailedChatClicked(!isDetailedChatClicked)} className='chat-item'>{chat}</p>
     </>;
   };
 
@@ -129,15 +137,26 @@ const LoggedUser = (): JSX.Element => {
     <div className="landing-page">
       <div className="chats-channels-list">
         <h4>Chats:</h4>
-        {Object.keys(userDetails.channels).map((chat)=> mappingChats(chat))}
-        <button onClick={() =>setisCreateChatClicked(!isCreateChatClicked)} className='view-users-btn'>Create a Chat</button>
+        {Object.keys(userDetails.channels).map((chat) => mappingChats(chat))}
+        <button onClick={() => setisCreateChatClicked(!isCreateChatClicked)} className='view-users-btn'>Create a Chat</button>
       </div>
 
       {/* DYNAMIC DIV TO SHOW RESULTS FROM SEARCH AND VIEWING CHATS */}
       <div className="main-container">
         <>
           {isCreateChatClicked ?
-            createChatButtonFunc() :
+            // this should be create chat comp
+            <CreateChat props={{
+              setSearchTerm,
+              searchTerm,
+              setisAllUsersClicked,
+              isAllUsersClicked,
+              addedUsers,
+              mappingResult,
+              isCreateChatClicked,
+              setisCreateChatClicked,
+
+            }} /> :
             null
           }
           {searchTerm !== '' ?
@@ -150,7 +169,7 @@ const LoggedUser = (): JSX.Element => {
 
           }
           {isDetailedChatClicked ?
-            <Channel/> :
+            <Channel /> :
             null
           }
         </>
