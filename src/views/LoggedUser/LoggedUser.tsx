@@ -7,18 +7,16 @@ import { deleteUserFromChat, getChatById, getChatByName } from '../../services/c
 import AppContext from '../../providers/AppContext';
 import Channel from '../Channel/Channel';
 import { ToastContainer, toast } from 'react-toastify';
-import CreateChat from '../CreateChat/CreateChat';
+import Create from '../../components/Create/Create';
+
 
 const LoggedUser = (): JSX.Element => {
   const { appState } = useContext(AppContext);
   const userUsername = appState.userData?.username;
 
-  const [allUsers, setAllUsers] = useState<User[]>([]);
-  const [searchTerm, setSearchTerm] = useState('');
   const [isAllUsersClicked, setisAllUsersClicked] = useState(false);
   const [isDetailedChatClicked, setisDetailedChatClicked] = useState(false);
   const [isCreateChatClicked, setisCreateChatClicked] = useState(false);
-  const [addedUsers, setAddedUsers] = useState<User[]>([]);
   const [currentChat, setCurrentChat] = useState({
     date: {},
     id: '',
@@ -26,7 +24,7 @@ const LoggedUser = (): JSX.Element => {
     participants: [],
     title: '',
   });
-
+  const string = 'chat';
   console.log(currentChat);
   const [userDetails, setUserDetails] = useState({
     firstName: '',
@@ -40,53 +38,16 @@ const LoggedUser = (): JSX.Element => {
     uid: '',
   });
 
-  // This one stays here
-  useEffect(() => {
-    getAllUsers()
-      .then((snapshot) => setAllUsers(Object.values(snapshot.val())));
-  }, []);
-
-  // This one stays here!
   useEffect(() => {
     getUserByUsername(userUsername!)
       .then((res) => setUserDetails(res.val()))
       .catch(console.error);
   }, [userUsername]);
 
-  const getUsersBySearchTerm = (searchTerm: string, users: User[]) => {
-    return users.filter((user) =>
-      user.username.toLowerCase().includes(searchTerm) ||
-      user.email.toLowerCase().includes(searchTerm) ||
-      user.firstName.toLowerCase().includes(searchTerm) ||
-      user.lastName.toLowerCase().includes(searchTerm));
-  };
-
-  const result = getUsersBySearchTerm(searchTerm, allUsers);
-
-  const handleAddUser = (user: User) => {
-    setAddedUsers([
-      ...addedUsers,
-      user,
-    ]);
-  };
-
-  const mappingResult = (user: User): JSX.Element | undefined => {
-    const buttonEl: JSX.Element =
-      <button onClick={() => {
-        handleAddUser(user);
-      }}
-      id='add-remove-user-btn'>
-        <img src="https://img.icons8.com/color/48/000000/add--v1.png" alt='add-btn' />
-      </button>;
-    return <>
-      <UserComponent props={{ user, buttonEl }} key={user.uid} />
-      <br />
-    </>;
-  };
 
   const mappingChats = (chat: string) => {
     return <>
-      <p onClick={() =>openDetailedChat(chat)} className='chat-item'>{chat}</p>
+      <p onClick={() => openDetailedChat(chat)} className='chat-item'>{chat}</p>
     </>;
   };
 
@@ -118,8 +79,8 @@ const LoggedUser = (): JSX.Element => {
     <div className="landing-page">
       <div className="chats-channels-list">
         <h4>Chats:</h4>
-        {Object.keys(userDetails.channels).map((chat)=> mappingChats(chat))}
-        <button onClick={() =>openCreateChat()} className='view-users-btn'>Create a Chat</button>
+        {Object.keys(userDetails.channels).map((chat) => mappingChats(chat))}
+        <button onClick={() => openCreateChat()} className='view-users-btn'>Create a Chat</button>
       </div>
 
       {/* DYNAMIC DIV TO SHOW RESULTS FROM SEARCH AND VIEWING CHATS */}
@@ -127,28 +88,22 @@ const LoggedUser = (): JSX.Element => {
         <>
           {isCreateChatClicked ?
             // this should be create chat comp
-            <CreateChat props={{
-              setSearchTerm,
-              searchTerm,
-              setisAllUsersClicked,
-              isAllUsersClicked,
-              addedUsers,
-              mappingResult,
+            <Create props={{
               isCreateChatClicked,
               setisCreateChatClicked,
-
+              string,
             }} /> :
             null
           }
-          {searchTerm !== '' ?
+          {/* {searchTerm !== '' ?
             result.map(mappingResult) :
             null
-          }
-          {isAllUsersClicked ?
+          } */}
+          {/* {isAllUsersClicked ?
             allUsers.map(mappingResult) :
             null
 
-          }
+          } */}
           {isDetailedChatClicked ?
             <Channel /> :
             null
@@ -169,7 +124,7 @@ const LoggedUser = (): JSX.Element => {
         <div className="manage-participants-btns">
           <button className="add-btn"><span>Add members</span></button>
           <br />
-          <button onClick={() =>leaveChat(userUsername, currentChat.title)} className="leave-btn">Leave channel</button>
+          <button onClick={() => leaveChat(userUsername, currentChat.title)} className="leave-btn">Leave channel</button>
         </div>
       </div>
       <ToastContainer />
