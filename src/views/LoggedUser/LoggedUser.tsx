@@ -7,7 +7,7 @@ import { createChat } from '../../services/channels.services';
 import AppContext from '../../providers/AppContext';
 import Channel from '../Channel/Channel';
 import { ToastContainer, toast } from 'react-toastify';
-import { MAX_CHANNEL_NAME_LENGTH, MIN_CHANNEL_NAME_LENGTH } from '../../common/constants';
+import { MAX_CHANNEL_NAME_LENGTH, MIN_CHANNEL_NAME_LENGTH, MIN_NUMBER_OF_CHAT_PARTICIPANTS } from '../../common/constants';
 
 const LoggedUser = (): JSX.Element => {
   const { appState } = useContext(AppContext);
@@ -87,7 +87,10 @@ const LoggedUser = (): JSX.Element => {
 
   const createChatFunc = (chatName: string, participants: string [] | User[]) => {
     if (chatDetails.title.length < MIN_CHANNEL_NAME_LENGTH || chatDetails.title.length > MAX_CHANNEL_NAME_LENGTH) {
-      return toast.warning(`The name of the team must be between ${MIN_CHANNEL_NAME_LENGTH} and ${MAX_CHANNEL_NAME_LENGTH} symbols`);
+      return toast.warning(`The name of the chat must be between ${MIN_CHANNEL_NAME_LENGTH} and ${MAX_CHANNEL_NAME_LENGTH} symbols`);
+    }
+    if (participants.length === MIN_NUMBER_OF_CHAT_PARTICIPANTS) {
+      return toast.warning('Please add at least one participant in the chat!');
     }
     createChat(chatName, participants)
       .then(()=> {
