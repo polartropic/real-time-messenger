@@ -77,6 +77,7 @@ const Header = (): JSX.Element => {
         </div>
 
         <div id='navigation'>
+          <button className='header-btn' onClick={() => navigate('/')}>Home</button>
           <button className='header-btn' onClick={() => navigate('/about-us')}>About us</button>
 
           {user ?
