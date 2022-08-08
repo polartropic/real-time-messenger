@@ -87,12 +87,13 @@ const Create = ({ props }: any): JSX.Element => {
     if (participants.length === MIN_NUMBER_OF_CHAT_PARTICIPANTS) {
       return toast.warning('Please add at least one participant in the chat!');
     }
-    createChat(chatName, participants)
+    const userIDs = participants.map((user) => user.username);
+    createChat(chatName, [...userIDs, currentUser!])
       .then(() => {
         toast.success('Successful chat creation!');
         setSearchTerm('');
         props.setisCreateChatClicked(!props.isCreateChatClicked);
-        participants.map((participant) => updateUserChats(participant.username, chatName));
+        [...userIDs, currentUser!].map((participant) => updateUserChats(participant, chatName));
       })
       .catch(console.error);
   };
@@ -141,7 +142,7 @@ const Create = ({ props }: any): JSX.Element => {
           <img src="https://firebasestorage.googleapis.com/v0/b/thunderteam-99849.appspot.com/o/icons8-go-back-48.png?alt=media&token=7bdfef4c-cf94-4147-8f4d-fc55fd086b4a" alt='go-back-icon' />
         </button>
         <div id="create-team-form" >
-          <h4 id="create-team-title">Create a new ${props.string}</h4>
+          <h4 id="create-team-title">Create a new {props.string}</h4>
           <div className="search-users-create-team">
             <input type="text" defaultValue="" placeholder='search Users...' onChange={(event) => setSearchTerm(event.target.value)} />
           </div>

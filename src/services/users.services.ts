@@ -51,7 +51,7 @@ export const updateUserTeams = (username: string, teamName: string) => {
   return update(ref(db), updateTeams);
 };
 
-export const updateUserChats = (username: string | User, chatName: string) => {
+export const updateUserChats = (username: string, chatName: string) => {
   const updateChats: { [index: string]: boolean } = {};
   updateChats[`/users/${username}/channels/${chatName}`] = true;
   return update(ref(db), updateChats);
