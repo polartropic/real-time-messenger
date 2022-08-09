@@ -10,12 +10,12 @@ import './Header.css';
 import { ToastContainer, toast } from 'react-toastify';
 import 'react-toastify/dist/ReactToastify.css';
 import { User } from '../../types/Interfaces';
+import { uid } from 'uid';
 
 const Header = (): JSX.Element => {
-  const { appState, setState } = useContext(AppContext);
+  const { appState, setState, isCreateTeamView, setIsCreateTeamView } = useContext(AppContext);
   const user = appState.user;
   const userUsername = appState.userData?.username;
-
   const [usersCount, setUsersCount] = useState(0);
   const [teamsCount, setTeamsCount] = useState(0);
   const [isOpen, setIsOpen] = useState(false);
@@ -31,6 +31,10 @@ const Header = (): JSX.Element => {
     uid: '',
   });
   const navigate = useNavigate();
+
+  // useEffect(() => {
+  //   setIsCreateTeamView(!isCreateTeamView);
+  // }, []);
 
   useEffect(() => {
     getAllUsers()
@@ -62,10 +66,17 @@ const Header = (): JSX.Element => {
 
   const toggling = () => setIsOpen(!isOpen);
 
-  const mappingTeam = (team: ReactNode) => {
+
+  const mappingTeam = (team: ReactNode, key: string | number) => {
+    key = uid();
     return <>
-      <p onClick={() =>setIsOpen(!isOpen)} className='team-item'>{team}</p>
+      <p key={key} onClick={() =>setIsOpen(!isOpen)} className='team-item'>{team}</p>
     </>;
+  };
+
+  const handleCreateTeam = () => {
+    setIsOpen(!isOpen);
+    setIsCreateTeamView(!isCreateTeamView);
   };
 
   return (
@@ -84,12 +95,13 @@ const Header = (): JSX.Element => {
             <>
               <button className='header-btn' onClick={toggling}>My teams</button>
               {isOpen&&
-              <div id='dropdown-menu-myteams'>
-                {Object.keys(userDetails.teams).map((team)=> mappingTeam(team))}
-                <Link to={'/create-team'}>
-                  <button id='create-a-team-btn-header' onClick={() =>setIsOpen(!isOpen)}>Create a team</button>
-                </Link>
-              </div>
+                <div id='dropdown-menu-myteams'>
+                  {Object.keys(userDetails.teams).map((team, key)=> mappingTeam(team, key))}
+                  {/* <Link to={'/create-team'}> */}
+                  <button id='create-a-team-btn-header' onClick={handleCreateTeam}>Create a team</button>
+                  {/* </Link> */}
+                </div>
+
               }
               <button onClick={handleLogOut} className='header-btn'>Log out</button>
               <Link to={'/edit-profile'}>

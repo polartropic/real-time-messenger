@@ -9,7 +9,7 @@ import Create from '../../components/Create/Create';
 
 
 const LoggedUser = (): JSX.Element => {
-  const { appState } = useContext(AppContext);
+  const { appState, isCreateTeamView } = useContext(AppContext);
   const userUsername = appState.userData?.username;
 
   const [isDetailedChatClicked, setIsDetailedChatClicked] = useState(false);
@@ -21,8 +21,8 @@ const LoggedUser = (): JSX.Element => {
     participants: [],
     title: '',
   });
-  const string = 'chat';
-  console.log(currentChat);
+  const string = 'team';
+
   const [userDetails, setUserDetails] = useState({
     firstName: '',
     lastName: '',
@@ -85,12 +85,19 @@ const LoggedUser = (): JSX.Element => {
             <Create props={{
               isCreateChatClicked,
               setIsCreateChatClicked,
-              string,
             }} /> :
             null
           }
           {isDetailedChatClicked ?
             <Channel /> :
+            null
+          }
+          {isCreateTeamView ?
+            <Create props={{
+              isCreateChatClicked,
+              setIsCreateChatClicked,
+              string,
+            }} /> :
             null
           }
         </>
