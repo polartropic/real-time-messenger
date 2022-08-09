@@ -92,7 +92,7 @@ const Create = ({ props }: any): JSX.Element => {
       .then(() => {
         toast.success('Successful chat creation!');
         setSearchTerm('');
-        props.setisCreateChatClicked(!props.isCreateChatClicked);
+        props.setIsCreateChatClicked(!props.isCreateChatClicked);
         [...userIDs, currentUser!].map((participant) => updateUserChats(participant, chatName));
       })
       .catch(console.error);
