@@ -10,6 +10,7 @@ import 'react-toastify/dist/ReactToastify.css';
 import { useNavigate } from 'react-router-dom';
 import '../../views/Create-a-team/Create-team.css';
 import { createChat } from '../../services/channels.services';
+import { uid } from 'uid';
 
 const Create = ({ props }: any): JSX.Element => {
   const [searchTerm, setSearchTerm] = useState('');
@@ -111,7 +112,7 @@ const Create = ({ props }: any): JSX.Element => {
       </button>;
     if (user.username !== currentUser) {
       return <>
-        <UserComponent props={{ user, buttonEl }} key={user.uid} />
+        <UserComponent props={{ user, buttonEl }} key={uid()} />
 
         <br />
       </>;
@@ -127,7 +128,7 @@ const Create = ({ props }: any): JSX.Element => {
       </button>;
     if (user.username !== currentUser) {
       return <>
-        <UserComponent props={{ user, buttonEl }} key={user.uid} />
+        <UserComponent props={{ user, buttonEl }} key={uid()} />
 
         <br />
       </>;
