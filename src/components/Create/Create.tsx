@@ -10,6 +10,7 @@ import 'react-toastify/dist/ReactToastify.css';
 import { useNavigate } from 'react-router-dom';
 import '../../views/Create-a-team/Create-team.css';
 import { createChat } from '../../services/channels.services';
+import { uid } from 'uid';
 
 const Create = ({ props }: any): JSX.Element => {
   const [searchTerm, setSearchTerm] = useState('');
@@ -17,7 +18,7 @@ const Create = ({ props }: any): JSX.Element => {
   const [addedUsers, setAddedUsers] = useState<User[]>([]);
   const [name, setName] = useState('');
   const [owner, setOwner] = useState('');
-  const { appState } = useContext(AppContext);
+  const { appState, isCreateTeamView, setIsCreateTeamView } = useContext(AppContext);
 
   const currentUser = appState.userData?.username;
   const navigate = useNavigate();
@@ -51,7 +52,8 @@ const Create = ({ props }: any): JSX.Element => {
         }
       })
       .catch(console.error);
-    navigate(`/teams/${name}`);
+    setIsCreateTeamView(!isCreateTeamView);
+    // navigate(`/teams/${name}`);
   };
 
   const getUsersBySearchTerm = (searchTerm: string, users: User[]) => {
@@ -111,7 +113,7 @@ const Create = ({ props }: any): JSX.Element => {
       </button>;
     if (user.username !== currentUser) {
       return <>
-        <UserComponent props={{ user, buttonEl }} key={user.uid} />
+        <UserComponent props={{ user, buttonEl }} key={uid()} />
 
         <br />
       </>;
@@ -127,18 +129,25 @@ const Create = ({ props }: any): JSX.Element => {
       </button>;
     if (user.username !== currentUser) {
       return <>
-        <UserComponent props={{ user, buttonEl }} key={user.uid} />
+        <UserComponent props={{ user, buttonEl }} key={uid()} />
 
         <br />
       </>;
     }
   };
 
+  const handleGoBack = () => {
+    if (props.string) {
+      setIsCreateTeamView(!isCreateTeamView);
+    } else {
+      props.setIsCreateChatClicked(!props.isCreateChatClicked);
+    }
+  };
 
   return (
     <div className="create-team-view">
       <div className='create-team-wrapper'>
-        <button onClick={() => navigate('/')} className='go-back-btn'>
+        <button onClick={handleGoBack} className='go-back-btn'>
           <img src="https://firebasestorage.googleapis.com/v0/b/thunderteam-99849.appspot.com/o/icons8-go-back-48.png?alt=media&token=7bdfef4c-cf94-4147-8f4d-fc55fd086b4a" alt='go-back-icon' />
         </button>
         <div id="create-team-form" >
