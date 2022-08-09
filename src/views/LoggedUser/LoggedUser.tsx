@@ -94,7 +94,7 @@ const LoggedUser = (): JSX.Element => {
             null
           }
           {isDetailedChatClicked ?
-            <Channel /> :
+            <Channel currentChannel={currentChat}/> :
             null
           }
           {isCreateTeamView ?

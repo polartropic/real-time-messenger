@@ -51,3 +51,13 @@ export interface UserProps {
     buttonEl?: JSX.Element
   }
 }
+
+export interface ChannelProps {
+  currentChannel: {
+    date: object,
+    id: string,
+    isPublic: boolean,
+    participants: string[],
+    title: string,
+  }
+}

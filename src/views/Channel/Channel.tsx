@@ -1,10 +1,11 @@
 import Message from '../Message/Message';
 import './Channel.css';
+import { ChannelProps } from '../../types/Interfaces';
 
-const Channel = () => {
+const Channel = ({ currentChannel }: ChannelProps) => {
   return (
     <div className="channel-container">
-      <h4>Channel's title goes here.</h4>
+      <h4>Channel's title: {currentChannel.title}</h4>
       <hr />
 
       <p>Messages go here</p>
