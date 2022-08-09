@@ -1,11 +1,11 @@
 import './LoggedUser.css';
 import { useContext, useEffect, useState } from 'react';
 import { getUserByUsername } from '../../services/users.services';
-import { deleteUserFromChat, getChatById, getChatByName } from '../../services/channels.services';
+import { getChatById, getChatByName } from '../../services/channels.services';
 import AppContext from '../../providers/AppContext';
 import Channel from '../Channel/Channel';
-import { ToastContainer, toast } from 'react-toastify';
 import Create from '../../components/Create/Create';
+import ChatParticipants from '../../components/ChatParticipants/ChatParticipants';
 
 
 const LoggedUser = (): JSX.Element => {
@@ -68,13 +68,6 @@ const LoggedUser = (): JSX.Element => {
       .catch(console.error);
   };
 
-  const leaveChat = (username: string | undefined, chatName: string) => {
-    deleteUserFromChat(username, chatName)
-      .then(() => {
-        toast.success(`You have successfully been removed from chat ${chatName}!`);
-      });
-  };
-
   return (
     <div className="landing-page">
       <div className="chats-channels-list">
@@ -107,24 +100,7 @@ const LoggedUser = (): JSX.Element => {
           }
         </>
       </div>
-
-      <div className="participants-list">
-        <h4>Owner:</h4>
-        <p>User0</p>
-
-        <h4>Participants of chat/team:</h4>
-        <p>User1</p>
-        <p>User2</p>
-        <p>User3</p>
-        <p>User4</p>
-
-        <div className="manage-participants-btns">
-          <button className="add-btn"><span>Add members</span></button>
-          <br />
-          <button onClick={() => leaveChat(userUsername, currentChat.title)} className="leave-btn">Leave channel</button>
-        </div>
-      </div>
-      <ToastContainer />
+      <ChatParticipants currentChannel={currentChat}/>
     </div>
   );
 };

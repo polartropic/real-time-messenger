@@ -14,9 +14,9 @@ export const getChatById = (id: string | null) => {
       chat.date = new Date(chat.date);
 
       if (!chat.participants) {
-        chat.participants = [];
+        chat.participants = {};
       } else {
-        chat.participants = Object.keys(chat.participants);
+        chat.participants = Object.values(chat.participants);
       }
 
       return chat;

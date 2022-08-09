@@ -57,7 +57,7 @@ export interface ChannelProps {
     date: object,
     id: string,
     isPublic: boolean,
-    participants: string[],
+    participants: string [],
     title: string,
   }
 }
