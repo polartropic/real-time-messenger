@@ -21,6 +21,8 @@ function App() {
     userData: null,
   });
 
+  const [isCreateTeamView, setIsCreateTeamView] = useState(false);
+
   const [user]: any = useAuthState(auth);
 
   useEffect(() => {
@@ -43,7 +45,7 @@ function App() {
   return (
     <div className="App">
       <BrowserRouter>
-        <AppContext.Provider value={{ appState, setState }}>
+        <AppContext.Provider value={{ appState, setState, isCreateTeamView, setIsCreateTeamView }}>
           <Header />
           <Routes>
             <Route path="/" element={<Navigate to="/home-page" />} />

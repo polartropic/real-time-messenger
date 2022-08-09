@@ -5,9 +5,11 @@ import { User as FirebaseUser } from 'firebase/auth';
 export interface ApplicationContext {
   appState: {
     user: FirebaseUser | null,
-    userData: User | null
+    userData: User | null,
   },
-  setState: Dispatch<any>
+  isCreateTeamView: boolean,
+  setIsCreateTeamView: Dispatch<any>,
+  setState: Dispatch<any>,
 }
 
 export interface User {
