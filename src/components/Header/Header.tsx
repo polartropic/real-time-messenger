@@ -9,11 +9,15 @@ import { Link } from 'react-router-dom';
 import './Header.css';
 import { ToastContainer, toast } from 'react-toastify';
 import 'react-toastify/dist/ReactToastify.css';
-import { User } from '../../types/Interfaces';
 import { uid } from 'uid';
 
 const Header = (): JSX.Element => {
-  const { appState, setState, isCreateTeamView, setIsCreateTeamView } = useContext(AppContext);
+  const { appState,
+    setState,
+    setIsCreateTeamView,
+    setIsCreateChatClicked,
+    setIsDetailedChatClicked,
+  } = useContext(AppContext);
   const user = appState.user;
   const userUsername = appState.userData?.username;
   const [usersCount, setUsersCount] = useState(0);
@@ -31,10 +35,6 @@ const Header = (): JSX.Element => {
     uid: '',
   });
   const navigate = useNavigate();
-
-  // useEffect(() => {
-  //   setIsCreateTeamView(!isCreateTeamView);
-  // }, []);
 
   useEffect(() => {
     getAllUsers()
@@ -70,13 +70,15 @@ const Header = (): JSX.Element => {
   const mappingTeam = (team: ReactNode, key: string | number) => {
     key = uid();
     return <>
-      <p key={key} onClick={() =>setIsOpen(!isOpen)} className='team-item'>{team}</p>
+      <p key={key} onClick={() => setIsOpen(!isOpen)} className='team-item'>{team}</p>
     </>;
   };
 
   const handleCreateTeam = () => {
     setIsOpen(!isOpen);
-    setIsCreateTeamView(!isCreateTeamView);
+    setIsCreateTeamView(true);
+    setIsCreateChatClicked(false);
+    setIsDetailedChatClicked(false);
   };
 
   return (
@@ -94,12 +96,10 @@ const Header = (): JSX.Element => {
           {user ?
             <>
               <button className='header-btn' onClick={toggling}>My teams</button>
-              {isOpen&&
+              {isOpen &&
                 <div id='dropdown-menu-myteams'>
-                  {Object.keys(userDetails.teams).map((team, key)=> mappingTeam(team, key))}
-                  {/* <Link to={'/create-team'}> */}
+                  {Object.keys(userDetails.teams).map((team, key) => mappingTeam(team, key))}
                   <button id='create-a-team-btn-header' onClick={handleCreateTeam}>Create a team</button>
-                  {/* </Link> */}
                 </div>
 
               }
@@ -112,7 +112,7 @@ const Header = (): JSX.Element => {
           }
         </div>
       </header>
-      <ToastContainer/>
+      <ToastContainer />
     </>
   );
 };

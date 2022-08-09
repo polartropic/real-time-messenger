@@ -1,4 +1,4 @@
-import React, { useEffect, useState } from 'react';
+import { useEffect, useState } from 'react';
 import { BrowserRouter, Routes, Route, Navigate } from 'react-router-dom';
 import './App.css';
 import AboutUs from './components/AboutUs/AboutUs';
@@ -22,6 +22,9 @@ function App() {
   });
 
   const [isCreateTeamView, setIsCreateTeamView] = useState(false);
+  const [isDetailedChatClicked, setIsDetailedChatClicked] = useState(false);
+  const [isCreateChatClicked, setIsCreateChatClicked] = useState(false);
+
 
   const [user]: any = useAuthState(auth);
 
@@ -45,7 +48,16 @@ function App() {
   return (
     <div className="App">
       <BrowserRouter>
-        <AppContext.Provider value={{ appState, setState, isCreateTeamView, setIsCreateTeamView }}>
+        <AppContext.Provider value={{
+          appState,
+          setState,
+          isCreateTeamView,
+          setIsCreateTeamView,
+          setIsCreateChatClicked,
+          isCreateChatClicked,
+          setIsDetailedChatClicked,
+          isDetailedChatClicked,
+        }}>
           <Header />
           <Routes>
             <Route path="/" element={<Navigate to="/home-page" />} />

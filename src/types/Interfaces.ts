@@ -8,6 +8,10 @@ export interface ApplicationContext {
     userData: User | null,
   },
   isCreateTeamView: boolean,
+  isDetailedChatClicked: boolean,
+  isCreateChatClicked: boolean,
+  setIsCreateChatClicked: Dispatch<any>,
+  setIsDetailedChatClicked: Dispatch<any>,
   setIsCreateTeamView: Dispatch<any>,
   setState: Dispatch<any>,
 }

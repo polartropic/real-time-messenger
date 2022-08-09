@@ -9,11 +9,15 @@ import Create from '../../components/Create/Create';
 
 
 const LoggedUser = (): JSX.Element => {
-  const { appState, isCreateTeamView } = useContext(AppContext);
+  const { appState,
+    isCreateTeamView,
+    isDetailedChatClicked,
+    isCreateChatClicked,
+    setIsCreateChatClicked,
+    setIsDetailedChatClicked,
+    setIsCreateTeamView,
+  } = useContext(AppContext);
   const userUsername = appState.userData?.username;
-
-  const [isDetailedChatClicked, setIsDetailedChatClicked] = useState(false);
-  const [isCreateChatClicked, setIsCreateChatClicked] = useState(false);
   const [currentChat, setCurrentChat] = useState({
     date: {},
     id: '',
@@ -51,6 +55,7 @@ const LoggedUser = (): JSX.Element => {
   const openCreateChat = () => {
     setIsCreateChatClicked(true);
     setIsDetailedChatClicked(false);
+    setIsCreateTeamView(false);
   };
 
   const openDetailedChat = (chat: string) => {
@@ -73,9 +78,9 @@ const LoggedUser = (): JSX.Element => {
   return (
     <div className="landing-page">
       <div className="chats-channels-list">
+        <button onClick={openCreateChat} className='view-users-btn'>Create a Chat</button>
         <h4>Chats:</h4>
         {Object.keys(userDetails.channels).map((chat) => mappingChats(chat))}
-        <button onClick={() => openCreateChat()} className='view-users-btn'>Create a Chat</button>
       </div>
 
       {/* DYNAMIC DIV TO SHOW RESULTS FROM SEARCH AND VIEWING CHATS */}
