@@ -53,7 +53,7 @@ const Create = ({ props }: any): JSX.Element => {
       })
       .catch(console.error);
     setIsCreateTeamView(!isCreateTeamView);
-    // navigate(`/teams/${name}`);
+    navigate(`/teams/${name}`);
   };
 
   const getUsersBySearchTerm = (searchTerm: string, users: User[]) => {
@@ -99,10 +99,6 @@ const Create = ({ props }: any): JSX.Element => {
       })
       .catch(console.error);
   };
-
-  // const mappingUser = (user: User): JSX.Element => {
-  //   return <> <UserComponent props={{ user }} key={user.uid} /><br /></>;
-  // };
 
   const mappingUserAddButton = (user: User): JSX.Element | undefined => {
     const buttonEl: JSX.Element =
