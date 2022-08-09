@@ -9,7 +9,7 @@ import Create from '../../components/Create/Create';
 
 
 const LoggedUser = (): JSX.Element => {
-  const { appState, isCreateTeamView } = useContext(AppContext);
+  const { appState, isCreateTeamView, setIsCreateTeamView } = useContext(AppContext);
   const userUsername = appState.userData?.username;
 
   const [isDetailedChatClicked, setIsDetailedChatClicked] = useState(false);
@@ -51,6 +51,7 @@ const LoggedUser = (): JSX.Element => {
   const openCreateChat = () => {
     setIsCreateChatClicked(true);
     setIsDetailedChatClicked(false);
+    setIsCreateTeamView(!isCreateTeamView);
   };
 
   const openDetailedChat = (chat: string) => {
