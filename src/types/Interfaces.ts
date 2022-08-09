@@ -61,3 +61,14 @@ export interface ChannelProps {
     title: string,
   }
 }
+
+export interface ChannelsListProps {
+  props: {
+    userDetails?: User,
+    team?: Team,
+    setIsCreateChatClicked: Dispatch<any>,
+    setIsDetailedChatClicked: Dispatch<any>,
+    setIsCreateTeamView: Dispatch<any>,
+    setCurrentChat: Dispatch<any>
+  }
+}
