@@ -1,4 +1,4 @@
-import { ref, get, push, update, query, equalTo, orderByChild, DataSnapshot } from 'firebase/database';
+import { ref, get, push, update, query, equalTo, orderByChild } from 'firebase/database';
 import { db } from '../config/firebase-config';
 import { User } from '../types/Interfaces';
 
@@ -24,15 +24,14 @@ export const getChatById = (id: string | null) => {
     .catch(console.error);
 };
 
-
 export const createChat = (title: string, participants: string[] | User[]) => {
   return push(ref(db, 'channels'), {
     title,
     participants,
+    messages: [],
     isPublic: false,
-
   })
-    .then((res) => getChatById(res.key))
+    .then((result) => getChatById(result.key))
     .catch(console.error);
 };
 
