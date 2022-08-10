@@ -17,7 +17,6 @@ export interface ApplicationContext {
 }
 
 export interface User {
-
   firstName: string,
   lastName: string,
   username: string,
@@ -33,8 +32,8 @@ export interface Channel {
   id: string,
   title: string,
   participants: string[], // UserIDs
+  messages: Object[],
   isPublic: boolean,
-
 }
 
 export interface Team {
@@ -42,7 +41,6 @@ export interface Team {
   owner: string | undefined, // UserID
   members: string[] | [], // UserIDs
   channels: string[], // ChannelIDs
-
 }
 
 export interface UserProps {
