@@ -100,7 +100,7 @@ const Header = (): JSX.Element => {
               <button className='header-btn' onClick={toggling}>My teams</button>
               {isOpen &&
                 <div id='dropdown-menu-myteams'>
-                  {Object.keys(userDetails.teams).map((team, key) => mappingTeam(team, key))}
+                  { userDetails.teams && Object.keys(userDetails.teams).map((team, key) => mappingTeam(team, key))}
                   <button id='create-a-team-btn-header' onClick={handleCreateTeam}>Create a team</button>
                 </div>
 

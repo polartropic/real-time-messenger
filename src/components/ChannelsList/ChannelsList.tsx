@@ -33,10 +33,9 @@ const ChannelsList = (
       <button onClick={openCreateChat} className='view-users-btn'>Create a Chat</button>
       <h4>Chats:</h4>
       {props.userDetails ?
-        Object.keys(props.userDetails!.channels).map((chat) => mappingChats(chat)) :
-        props.team?.channels ?
-          Object.keys((props.team!)?.channels).map((chat) => mappingChats(chat)) :
-          null}
+        props.userDetails.channels && Object.keys(props.userDetails!.channels).map((chat) => mappingChats(chat)) :
+        props.team?.channels && Object.keys((props.team!)?.channels).map((chat) => mappingChats(chat))
+      }
 
     </div>
   );
