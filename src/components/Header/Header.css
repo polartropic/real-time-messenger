@@ -64,6 +64,15 @@
   background-color: rgba(245, 247, 251, 1);
 }
 
+.team-item{
+  color: white;
+  text-decoration: none!;
+  border: 1px solid white;
+  border-radius: 5px;
+  padding: 8px;
+  margin: 0 5px 0 5px
+}
+
 .team-item:hover {
   font-weight: bold;
 }

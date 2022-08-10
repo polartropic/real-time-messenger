@@ -68,7 +68,7 @@ export interface ChannelsListProps {
     team?: Team,
     setIsCreateChatClicked: Dispatch<any>,
     setIsDetailedChatClicked: Dispatch<any>,
-    setIsCreateTeamView: Dispatch<any>,
+    setIsCreateTeamView?: Dispatch<any>,
     setCurrentChat: Dispatch<any>
   }
 }

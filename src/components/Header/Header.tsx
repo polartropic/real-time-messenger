@@ -70,7 +70,9 @@ const Header = (): JSX.Element => {
   const mappingTeam = (team: ReactNode, key: string | number) => {
     key = uid();
     return <>
-      <p key={key} onClick={() => setIsOpen(!isOpen)} className='team-item'>{team}</p>
+      <Link to={`/teams/${team}`} >
+        <p key={key} onClick={() => setIsOpen(!isOpen)} className='team-item'>{team}</p>
+      </Link>
     </>;
   };
 

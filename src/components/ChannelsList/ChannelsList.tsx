@@ -13,7 +13,9 @@ const ChannelsList = (
   const openCreateChat = () => {
     props.setIsCreateChatClicked(true);
     props.setIsDetailedChatClicked(false);
-    props.setIsCreateTeamView(false);
+    if (props.setIsCreateTeamView) {
+      props.setIsCreateTeamView(false);
+    }
   };
   const openDetailedChat = (chat: string) => {
     props.setIsDetailedChatClicked(true);
@@ -30,7 +32,11 @@ const ChannelsList = (
     <div className="chats-channels-list">
       <button onClick={openCreateChat} className='view-users-btn'>Create a Chat</button>
       <h4>Chats:</h4>
-      {Object.keys(props.userDetails!.channels).map((chat) => mappingChats(chat))}
+      {props.userDetails ?
+        Object.keys(props.userDetails!.channels).map((chat) => mappingChats(chat)) :
+        props.team?.channels ?
+          Object.keys((props.team!)?.channels).map((chat) => mappingChats(chat)) :
+          null}
 
     </div>
   );

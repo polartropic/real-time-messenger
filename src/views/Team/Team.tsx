@@ -1,8 +1,12 @@
 import { useEffect, useState } from 'react';
 import { useParams } from 'react-router-dom';
+import ChannelsList from '../../components/ChannelsList/ChannelsList';
+import ChatParticipants from '../../components/ChatParticipants/ChatParticipants';
+import Create from '../../components/Create/Create';
 import { getTeamByName } from '../../services/teams.services';
 import { Team } from '../../types/Interfaces';
-import './Team.css';
+import Channel from '../Channel/Channel';
+// import './Team.css'
 
 const MyTeam = (): JSX.Element => {
   const [team, setTeam] = useState<Team>({
@@ -11,6 +15,9 @@ const MyTeam = (): JSX.Element => {
     members: [], // UserIDs
     channels: [], // ChannelIDs
   });
+  const [isDetailedChatClicked, setIsDetailedChatClicked] = useState(false);
+  const [isCreateChatClicked, setIsCreateChatClicked] = useState(false);
+
 
   const [currentChat, setCurrentChat] = useState({
     date: {},
@@ -20,11 +27,13 @@ const MyTeam = (): JSX.Element => {
     title: '',
   });
 
-  const { name } = useParams<{ name?: string }>();
+  const { name } = useParams<{ name: string }>();
+  console.log(name);
 
   useEffect(() => {
     getTeamByName(name!)
       .then((snapshot) => {
+        console.log(snapshot.val());
         setTeam(snapshot.val());
       })
       .catch(console.error);
@@ -33,18 +42,29 @@ const MyTeam = (): JSX.Element => {
 
   return (
     <div className='landing-page'>
-      <div className='chats-channels-list'>
-        <p>Here's a paragraph in channels list</p>
-      </div>
+      {team?.channels ?
+        <ChannelsList props={{ team, setIsCreateChatClicked, setIsDetailedChatClicked, setCurrentChat }} /> :
+        null}
+      <ChannelsList props={{ team, setIsCreateChatClicked, setIsDetailedChatClicked, setCurrentChat }} />
+
       <div className='main-container'>
-        <p>Here's a paragraph in detailed chat</p>
-
+        <>
+          {isCreateChatClicked ?
+            <Create props={{
+              isCreateChatClicked,
+              setIsCreateChatClicked,
+            }} /> :
+            null
+          }
+          {isDetailedChatClicked ?
+            <Channel currentChannel={currentChat} /> :
+            null
+          }
+        </>
       </div>
-      <div className='participants-list'>
-        <p>Here's a paragraph in participants list</p>
+      <ChatParticipants currentChannel={currentChat} />
 
-      </div>
-    </div>
+    </div >
   );
 };
 
