@@ -1,4 +1,4 @@
-import { DataSnapshot, get, onValue, push, ref } from 'firebase/database';
+import { DataSnapshot, equalTo, get, onValue, orderByChild, push, query, ref, update } from 'firebase/database';
 import { db } from '../config/firebase-config';
 
 export const getLiveMessages = (listen: (_snapshot: DataSnapshot) => void) => {
@@ -20,15 +20,24 @@ export const fromMessagesDocument = (snapshot: DataSnapshot) => {
   });
 };
 
-
-export const addMessage = (content: string, username: string) => {
-  return push(ref(db, 'messages'), { content, author: username, createdOn: Date.now() })
+export const addMessage = (username: string, content: string) => {
+  return push(ref(db, 'messages'), {
+    author: username,
+    content,
+    createdOn: Date.now(),
+  })
     .then((res)=> {
-      return getMessageByID(res.key!);
+      return getMessageById(res.key);
     });
 };
 
-export const getMessageByID = (id: string) => {
+export const editMessage = (id: string, content: string) => {
+  return update(ref(db), {
+    [`messages/${id}/content`]: content,
+  });
+};
+
+export const getMessageById = (id: string | null) => {
   return get(ref(db, `messages/${id}`))
     .then((res) => {
       if (!res.exists()) {
@@ -38,6 +47,7 @@ export const getMessageByID = (id: string) => {
       const message = res.val();
       message.id = id;
       message.createdOn = new Date(message.createdOn);
+
       if (!message.likedBy) {
         message.likedBy = [];
       } else {
@@ -46,4 +56,31 @@ export const getMessageByID = (id: string) => {
 
       return message;
     });
+};
+
+export const getMessagesByAuthor = (username: string) => {
+  return get(query(ref(db, 'messages'), orderByChild('author'), equalTo(username)))
+    .then((snapshot: DataSnapshot) => {
+      if (!snapshot.exists()) return [];
+
+      return fromMessagesDocument(snapshot);
+    });
+};
+
+export const likeMessage = (username: string, messageId: string) => {
+  const updateLikes: any = {};
+
+  updateLikes[`/messages/${messageId}/likedBy/${username}`] = true;
+  updateLikes[`/users/${username}/likedMessages/${messageId}`] = true;
+
+  return update(ref(db), updateLikes);
+};
+
+export const unlikeMessage = (username: string, messageId: string) => {
+  const updateLikes: any = {};
+
+  updateLikes[`/messages/${messageId}/likedBy/${username}`] = null;
+  updateLikes[`/users/${username}/likedMessages/${messageId}`] = null;
+
+  return update(ref(db), updateLikes);
 };
