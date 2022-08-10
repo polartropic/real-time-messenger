@@ -20,25 +20,25 @@ export const fromMessagesDocument = (snapshot: DataSnapshot) => {
   });
 };
 
-export const addMessage = (channelId: string, username: string, content: string) => {
-  return push(ref(db, `channels/${channelId}/messages`), {
+export const addMessage = (chatId: string, username: string, content: string) => {
+  return push(ref(db, `channels/${chatId}/messages`), {
     author: username,
     content,
     createdOn: Date.now(),
   })
     .then((res)=> {
-      return getMessageById(channelId, res.key);
+      return getMessageById(chatId, res.key);
     });
 };
 
-export const editMessage = (channelId: string, messageId: string, content: string) => {
+export const editMessage = (chatId: string, messageId: string, content: string) => {
   return update(ref(db), {
-    [`channels/${channelId}/messages/${messageId}/content`]: content,
+    [`channels/${chatId}/messages/${messageId}/content`]: content,
   });
 };
 
-export const getMessageById = (channelId: string, messageId: string | null) => {
-  return get(ref(db, `channels/${channelId}/messages/${messageId}`))
+export const getMessageById = (chatId: string, messageId: string | null) => {
+  return get(ref(db, `channels/${chatId}/messages/${messageId}`))
     .then((res) => {
       if (!res.exists()) {
         throw new Error(`Message with id ${messageId} does not exist!`);
@@ -58,8 +58,8 @@ export const getMessageById = (channelId: string, messageId: string | null) => {
     });
 };
 
-export const getMessagesByAuthor = (channelId: string, username: string) => {
-  return get(query(ref(db, `channels/${channelId}/messages`), orderByChild('author'), equalTo(username)))
+export const getMessagesByAuthor = (chatId: string, username: string) => {
+  return get(query(ref(db, `channels/${chatId}/messages`), orderByChild('author'), equalTo(username)))
     .then((snapshot: DataSnapshot) => {
       if (!snapshot.exists()) return [];
 
@@ -67,19 +67,19 @@ export const getMessagesByAuthor = (channelId: string, username: string) => {
     });
 };
 
-export const likeMessage = (channelId: string, messageId: string, username: string) => {
+export const likeMessage = (chatId: string, messageId: string, username: string) => {
   const updateLikes: any = {};
 
-  updateLikes[`channels/${channelId}/messages/${messageId}/likedBy/${username}`] = true;
+  updateLikes[`channels/${chatId}/messages/${messageId}/likedBy/${username}`] = true;
   updateLikes[`users/${username}/likedMessages/${messageId}`] = true;
 
   return update(ref(db), updateLikes);
 };
 
-export const unlikeMessage = (channelId: string, messageId: string, username: string) => {
+export const unlikeMessage = (chatId: string, messageId: string, username: string) => {
   const updateLikes: any = {};
 
-  updateLikes[`channels/${channelId}/messages/${messageId}/likedBy/${username}`] = null;
+  updateLikes[`channels/${chatId}/messages/${messageId}/likedBy/${username}`] = null;
   updateLikes[`users/${username}/likedMessages/${messageId}`] = null;
 
   return update(ref(db), updateLikes);
