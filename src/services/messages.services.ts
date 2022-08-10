@@ -20,32 +20,32 @@ export const fromMessagesDocument = (snapshot: DataSnapshot) => {
   });
 };
 
-export const addMessage = (username: string, content: string) => {
-  return push(ref(db, 'messages'), {
+export const addMessage = (channelId: string, username: string, content: string) => {
+  return push(ref(db, `channels/${channelId}/messages`), {
     author: username,
     content,
     createdOn: Date.now(),
   })
     .then((res)=> {
-      return getMessageById(res.key);
+      return getMessageById(channelId, res.key);
     });
 };
 
-export const editMessage = (id: string, content: string) => {
+export const editMessage = (channelId: string, messageId: string, content: string) => {
   return update(ref(db), {
-    [`messages/${id}/content`]: content,
+    [`channels/${channelId}/messages/${messageId}/content`]: content,
   });
 };
 
-export const getMessageById = (id: string | null) => {
-  return get(ref(db, `messages/${id}`))
+export const getMessageById = (channelId: string, messageId: string | null) => {
+  return get(ref(db, `channels/${channelId}/messages/${messageId}`))
     .then((res) => {
       if (!res.exists()) {
-        throw new Error(`Message with id ${id} does not exist!`);
+        throw new Error(`Message with id ${messageId} does not exist!`);
       }
 
       const message = res.val();
-      message.id = id;
+      message.id = messageId;
       message.createdOn = new Date(message.createdOn);
 
       if (!message.likedBy) {
@@ -58,8 +58,8 @@ export const getMessageById = (id: string | null) => {
     });
 };
 
-export const getMessagesByAuthor = (username: string) => {
-  return get(query(ref(db, 'messages'), orderByChild('author'), equalTo(username)))
+export const getMessagesByAuthor = (channelId: string, username: string) => {
+  return get(query(ref(db, `channels/${channelId}/messages`), orderByChild('author'), equalTo(username)))
     .then((snapshot: DataSnapshot) => {
       if (!snapshot.exists()) return [];
 
@@ -67,20 +67,20 @@ export const getMessagesByAuthor = (username: string) => {
     });
 };
 
-export const likeMessage = (username: string, messageId: string) => {
+export const likeMessage = (channelId: string, messageId: string, username: string) => {
   const updateLikes: any = {};
 
-  updateLikes[`/messages/${messageId}/likedBy/${username}`] = true;
-  updateLikes[`/users/${username}/likedMessages/${messageId}`] = true;
+  updateLikes[`channels/${channelId}/messages/${messageId}/likedBy/${username}`] = true;
+  updateLikes[`users/${username}/likedMessages/${messageId}`] = true;
 
   return update(ref(db), updateLikes);
 };
 
-export const unlikeMessage = (username: string, messageId: string) => {
+export const unlikeMessage = (channelId: string, messageId: string, username: string) => {
   const updateLikes: any = {};
 
-  updateLikes[`/messages/${messageId}/likedBy/${username}`] = null;
-  updateLikes[`/users/${username}/likedMessages/${messageId}`] = null;
+  updateLikes[`channels/${channelId}/messages/${messageId}/likedBy/${username}`] = null;
+  updateLikes[`users/${username}/likedMessages/${messageId}`] = null;
 
   return update(ref(db), updateLikes);
 };
