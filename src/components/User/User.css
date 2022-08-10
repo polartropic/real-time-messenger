@@ -2,10 +2,11 @@
   display: flex;
   justify-content: space-between;
   align-items: center;
-  width: 250px;
+  width: auto;
   margin: 10px auto;
   border: 1px solid rgba(47, 69, 93, 0.7);
   border-radius: 10px;
+  background-color: white;
 }
 
 .user-box img {
