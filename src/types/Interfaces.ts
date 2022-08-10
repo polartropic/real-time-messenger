@@ -72,3 +72,11 @@ export interface ChannelsListProps {
     setCurrentChat: Dispatch<any>
   }
 }
+
+export interface Message {
+  id: string,
+  content: string,
+  author: string
+  createdOn: object,
+  likedBy: string[],
+}

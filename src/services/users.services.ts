@@ -55,3 +55,9 @@ export const updateUserChats = (username: string, chatName: string) => {
   updateChats[`/users/${username}/channels/${chatName}`] = true;
   return update(ref(db), updateChats);
 };
+
+export const updateUserMessages = (username: string, messageID: string) => {
+  const updateMessages: { [index: string]: boolean } = {};
+  updateMessages[`/users/${username}/messages/${messageID}`] = true;
+  return update(ref(db), updateMessages);
+};
