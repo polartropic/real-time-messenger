@@ -9,15 +9,15 @@ import { ToastContainer, toast, Id } from 'react-toastify';
 import 'react-toastify/dist/ReactToastify.css';
 import { useNavigate } from 'react-router-dom';
 import '../../views/Create-a-team/Create-team.css';
-import { createChat } from '../../services/channels.services';
+import { createChat, createTeamChat } from '../../services/channels.services';
 import { uid } from 'uid';
 
 const Create = ({ props }: any): JSX.Element => {
   const [searchTerm, setSearchTerm] = useState('');
   const [allUsers, setAllUsers] = useState<User[]>([]);
   const [addedUsers, setAddedUsers] = useState<User[]>([]);
-  const [name, setName] = useState('');
-  const [owner, setOwner] = useState('');
+  const [name, setName] = useState<string>('');
+  const [owner, setOwner] = useState<string>('');
   const { appState, isCreateTeamView, setIsCreateTeamView } = useContext(AppContext);
 
   const currentUser = appState.userData?.username;
@@ -25,8 +25,21 @@ const Create = ({ props }: any): JSX.Element => {
 
   useEffect(() => {
     getAllUsers()
-      .then((snapshot) => setAllUsers(Object.values(snapshot.val())));
-  }, []);
+      .then((snapshot) => {
+        if (props.teamID) {
+          if (!props.members) {
+            setAllUsers([]);
+          } else {
+            const allUsers: User[] = Object.values(snapshot.val());
+            const teamUsers = allUsers.filter((user: User) => props.members.includes(user.username));
+            setAllUsers(teamUsers);
+          }
+        } else {
+          setAllUsers(Object.values(snapshot.val()));
+        }
+      })
+      .catch(console.error);
+  }, [props.members, props.teamID]);
 
   useEffect(() => {
     setOwner(currentUser!);
@@ -43,7 +56,7 @@ const Create = ({ props }: any): JSX.Element => {
           return toast.warning(`This name ${name} already exists!`);
         } else {
           const membersIds = addedUsers.map((user) => user.username);
-          addTeamToDB(name, owner, membersIds)
+          addTeamToDB(name.trim(), owner, membersIds)
             .then(() => {
               [...membersIds, owner].forEach((username) => updateUserTeams(username, name));
               toast.success('You have successfully created a Team!');
@@ -89,15 +102,26 @@ const Create = ({ props }: any): JSX.Element => {
     if (participants.length === MIN_NUMBER_OF_CHAT_PARTICIPANTS) {
       return toast.warning('Please add at least one participant in the chat!');
     }
-    const userIDs = participants.map((user) => user.username);
-    createChat(chatName, [...userIDs, currentUser!])
-      .then(() => {
-        toast.success('Successful chat creation!');
-        setSearchTerm('');
-        props.setIsCreateChatClicked(!props.isCreateChatClicked);
-        [...userIDs, currentUser!].map((participant) => updateUserChats(participant, chatName));
-      })
-      .catch(console.error);
+    if (props?.teamID) {
+      createTeamChat(props.teamID, chatName, [...props.members, currentUser!])
+        .then(() => {
+          toast.success('Successful chat creation!');
+          setSearchTerm('');
+          props.setIsCreateChatClicked(!props.isCreateChatClicked);
+          [...props.members, currentUser!].map((participant) => updateUserChats(participant, chatName));
+        });
+    } else {
+      const userIDs = participants.map((user) => user.username);
+
+      createChat(chatName, [...userIDs, currentUser!])
+        .then(() => {
+          toast.success('Successful chat creation!');
+          setSearchTerm('');
+          props.setIsCreateChatClicked(!props.isCreateChatClicked);
+          [...userIDs, currentUser!].map((participant) => updateUserChats(participant, chatName));
+        })
+        .catch(console.error);
+    }
   };
 
   const mappingUserAddButton = (user: User): JSX.Element | undefined => {
@@ -164,7 +188,7 @@ const Create = ({ props }: any): JSX.Element => {
       <div className='list-of-added-participants'>
         <label htmlFor="name-of-the-team">Name:</label><br />
         <br />
-        <input type="text" className={'create-chat-title'} name="team-name" placeholder={'name'} required defaultValue='' onChange={(e) => setName(e.target.value)} /> <br /> <br />
+        <input type="text" className={'create-chat-title'} name="team-name" placeholder={'name'} required defaultValue='' onChange={(e) => setName(e.target.value.trim())} /> <br /> <br />
 
         <h4>Added users:</h4>
         {addedUsers.map(mappingUserRemoveButton)}
