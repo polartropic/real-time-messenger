@@ -83,6 +83,13 @@ const Header = (): JSX.Element => {
     setIsDetailedChatClicked(false);
   };
 
+  const handleGoToHomPage = () => {
+    setIsDetailedChatClicked(false);
+    setIsCreateTeamView(false);
+    setIsCreateChatClicked(false);
+    navigate('/');
+  };
+
   return (
     <>
       <header id='header'>
@@ -92,7 +99,7 @@ const Header = (): JSX.Element => {
         </div>
 
         <div id='navigation'>
-          <button className='header-btn' onClick={() => navigate('/')}>Home</button>
+          <button className='header-btn' onClick={handleGoToHomPage}>Home</button>
           <button className='header-btn' onClick={() => navigate('/about-us')}>About us</button>
 
           {user ?
