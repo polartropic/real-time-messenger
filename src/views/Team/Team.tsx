@@ -3,9 +3,11 @@ import { useParams } from 'react-router-dom';
 import ChannelsList from '../../components/ChannelsList/ChannelsList';
 import ChatParticipants from '../../components/ChatParticipants/ChatParticipants';
 import Create from '../../components/Create/Create';
+import { getAllChannels } from '../../services/channels.services';
 import { getTeamByName } from '../../services/teams.services';
 import { Team } from '../../types/Interfaces';
 import Channel from '../Channel/Channel';
+import { Channel as IChannel } from '../../types/Interfaces';
 // import './Team.css'
 
 const MyTeam = (): JSX.Element => {
@@ -17,42 +19,60 @@ const MyTeam = (): JSX.Element => {
   });
   const [isDetailedChatClicked, setIsDetailedChatClicked] = useState(false);
   const [isCreateChatClicked, setIsCreateChatClicked] = useState(false);
-
-
-  const [currentChat, setCurrentChat] = useState({
-    date: {},
+  const [chatList, setChatList] = useState<IChannel[]>([]);
+  const [members, setMembers] = useState<string[]>([]);
+  const [currentChat, setCurrentChat] = useState<IChannel>({
     id: '',
-    isPublic: false,
-    participants: [],
     title: '',
+    participants: [], // UserIDs
+    messages: [],
+    isPublic: false,
+    teamID: '',
   });
 
   const { name } = useParams<{ name: string }>();
-  console.log(name);
 
   useEffect(() => {
     getTeamByName(name!)
       .then((snapshot) => {
-        console.log(snapshot.val());
-        setTeam(snapshot.val());
+        const team = snapshot.val();
+        setTeam(team);
       })
       .catch(console.error);
   }, [name]);
-  console.log(team);
+
+  const teamID = Object.keys(team)[0];
+
+  useEffect(() => {
+    getAllChannels()
+      .then((snapshot) => {
+        const allChannels : IChannel[] = Object.values(snapshot.val());
+        const currentChatsList = allChannels.filter((channel: IChannel) => channel.teamID && channel.teamID === teamID);
+        setChatList(currentChatsList);
+      })
+      .catch(console.error);
+  }, [teamID]);
+
+  useEffect(() => {
+    setMembers(Object.values(team)[0].members);
+  }, [team]);
 
   return (
     <div className='landing-page'>
       {team?.channels ?
-        <ChannelsList props={{ team, setIsCreateChatClicked, setIsDetailedChatClicked, setCurrentChat }} /> :
+        <ChannelsList props={{ chatList, setIsCreateChatClicked, setIsDetailedChatClicked, setCurrentChat }} /> :
         null}
-      <ChannelsList props={{ team, setIsCreateChatClicked, setIsDetailedChatClicked, setCurrentChat }} />
+      <ChannelsList props={{ chatList, setIsCreateChatClicked, setIsDetailedChatClicked, setCurrentChat }} />
 
       <div className='main-container'>
         <>
           {isCreateChatClicked ?
-            <Create props={{
+
+            < Create props={{
               isCreateChatClicked,
               setIsCreateChatClicked,
+              teamID,
+              members,
             }} /> :
             null
           }
