@@ -6,18 +6,20 @@ export const getLiveMessages = (listen: (_snapshot: DataSnapshot) => void) => {
 };
 
 export const fromMessagesDocument = (snapshot: DataSnapshot) => {
-  const messagesDocument = snapshot.val();
+  if (snapshot.exists()) {
+    const messagesDocument = snapshot.val();
 
-  return Object.keys(messagesDocument).map((key) => {
-    const message = messagesDocument[key];
+    return Object.keys(messagesDocument).map((key) => {
+      const message = messagesDocument[key];
 
-    return {
-      ...message,
-      id: key,
-      createdOn: new Date(message.createdOn),
-      likedBy: message.likedBy ? Object.keys(message.likedBy) : [],
-    };
-  });
+      return {
+        ...message,
+        id: key,
+        createdOn: new Date(message.createdOn),
+        likedBy: message.likedBy ? Object.keys(message.likedBy) : [],
+      };
+    });
+  };
 };
 
 export const addMessage = (chatId: string, username: string, content: string) => {
@@ -26,7 +28,7 @@ export const addMessage = (chatId: string, username: string, content: string) =>
     content,
     createdOn: Date.now(),
   })
-    .then((res)=> {
+    .then((res) => {
       return getMessageById(chatId, res.key);
     });
 };
