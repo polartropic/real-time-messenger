@@ -1,11 +1,12 @@
 import { DataSnapshot, equalTo, get, onValue, orderByChild, push, query, ref, update } from 'firebase/database';
 import { db } from '../config/firebase-config';
+import { Message } from '../types/Interfaces';
 
 export const getLiveMessages = (listen: (_snapshot: DataSnapshot) => void) => {
   return onValue(ref(db, 'messages'), listen);
 };
 
-export const fromMessagesDocument = (snapshot: DataSnapshot) => {
+export const fromMessagesDocument = (snapshot: DataSnapshot): Message [] => {
   if (snapshot.exists()) {
     const messagesDocument = snapshot.val();
 
@@ -20,6 +21,7 @@ export const fromMessagesDocument = (snapshot: DataSnapshot) => {
       };
     });
   };
+  return [];
 };
 
 export const addMessage = (chatId: string, username: string, content: string) => {
