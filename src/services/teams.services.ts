@@ -23,4 +23,3 @@ export const addTeamToDB = async (name: string, owner: string, members: string[]
   return push(ref(db, 'teams'), team);
   // .then((res) => getTeamByID(res.key))
 };
-
