@@ -1,10 +1,9 @@
 import './Register.css';
 import { Link } from 'react-router-dom';
-import { useContext, useState } from 'react';
+import { useState } from 'react';
 import { createUserByUsername, getUserByUsername } from '../../services/users.services';
 import { createUser } from '../../services/auth.services';
 import React from 'react';
-import AppContext from '../../providers/AppContext';
 import { MAX_USERNAME_LENGTH, MIN_USERNAME_LENGTH } from '../../common/constants';
 import { ToastContainer, toast } from 'react-toastify';
 import 'react-toastify/dist/ReactToastify.css';
@@ -19,9 +18,6 @@ const Register = (): JSX.Element => {
     password: '',
     confirmPassword: '',
   });
-
-  const { appState } = useContext(AppContext);
-  console.log(appState);
 
   const updateForm = (prop: string) => (e: React.FormEvent<HTMLInputElement>) => {
     setRegDetails({
