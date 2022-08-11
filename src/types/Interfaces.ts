@@ -34,6 +34,8 @@ export interface Channel {
   participants: string[], // UserIDs
   messages: Object[],
   isPublic: boolean,
+
+  teamID?: string,
 }
 
 export interface Team {
@@ -51,19 +53,13 @@ export interface UserProps {
 }
 
 export interface ChannelProps {
-  currentChannel: {
-    date: object,
-    id: string,
-    isPublic: boolean,
-    participants: string [],
-    title: string,
-  }
+  currentChannel: Channel
 }
 
 export interface ChannelsListProps {
   props: {
     userDetails?: User,
-    team?: Team,
+    chatList?: Channel [],
     setIsCreateChatClicked: Dispatch<any>,
     setIsDetailedChatClicked: Dispatch<any>,
     setIsCreateTeamView?: Dispatch<any>,
