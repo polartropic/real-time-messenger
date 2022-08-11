@@ -70,9 +70,16 @@ export interface ChannelsListProps {
 export interface Message {
   id: string,
   content: string,
-  author: string
+  author: string,
   createdOn: object,
   likedBy: string[],
+}
+
+export interface MessageProps {
+  message: {
+    author: string,
+    content: string,
+  }
 }
 
 export interface emojiObject {

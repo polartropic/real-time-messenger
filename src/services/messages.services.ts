@@ -68,7 +68,14 @@ export const getMessagesByAuthor = (chatId: string, username: string) => {
 };
 
 export const getMessagesInChat = (chatId: string) => {
-  return get(query(ref(db, `channels/${chatId}/messages`)));
+  return get(query(ref(db, `channels/${chatId}/messages`)))
+    .then((snapshot) => {
+      if (!snapshot.exists()) {
+        return [];
+      }
+
+      return fromMessagesDocument(snapshot);
+    });
 };
 
 export const likeMessage = (chatId: string, messageId: string, username: string) => {
