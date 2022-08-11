@@ -64,9 +64,11 @@ const Create = ({ props }: any): JSX.Element => {
             .catch(console.error);
         }
       })
+      .then(() => {
+        setIsCreateTeamView(!isCreateTeamView);
+        navigate(`/teams/${name}`);
+      })
       .catch(console.error);
-    setIsCreateTeamView(!isCreateTeamView);
-    navigate(`/teams/${name}`);
   };
 
   const getUsersBySearchTerm = (searchTerm: string, users: User[]) => {
