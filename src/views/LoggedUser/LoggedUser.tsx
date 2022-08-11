@@ -1,9 +1,9 @@
 import './LoggedUser.css';
 import { useContext, useEffect, useState } from 'react';
-import { getUserByUsername } from '../../services/users.services';
+import { getUserChannels } from '../../services/users.services';
 import AppContext from '../../providers/AppContext';
 import Channel from '../Channel/Channel';
-import { Channel as IChannel } from '../../types/Interfaces';
+import { Channel as IChannel, User } from '../../types/Interfaces';
 
 import Create from '../../components/Create/Create';
 import ChatParticipants from '../../components/ChatParticipants/ChatParticipants';
@@ -19,7 +19,8 @@ const LoggedUser = (): JSX.Element => {
     setIsDetailedChatClicked,
     setIsCreateTeamView,
   } = useContext(AppContext);
-  const userUsername = appState.userData?.username;
+  const userDetails: User | null = appState.userData;
+
   const [currentChat, setCurrentChat] = useState<IChannel>({
     id: '',
     title: '',
@@ -28,29 +29,25 @@ const LoggedUser = (): JSX.Element => {
     isPublic: false,
     teamID: '',
   });
+  const [channels, setChannels] = useState<IChannel []>([]);
+
   const string = 'team';
 
-  const [userDetails, setUserDetails] = useState({
-    firstName: '',
-    lastName: '',
-    username: '',
-    email: '',
-    phoneNumber: '',
-    imgURL: '',
-    teams: [],
-    channels: [],
-    uid: '',
-  });
+  // useEffect(() => {
+  //   const unsubscribe = getLiveChannelsByUsername(userDetails!.username, (snapshot) => {
+  //     setChannels(snapshot.val());
+  //   });
+  //   return () => unsubscribe();
+  // });
 
   useEffect(() => {
-    getUserByUsername(userUsername!)
-      .then((res) => setUserDetails(res.val()))
-      .catch(console.error);
-  }, [userUsername]);
+    getUserChannels(userDetails?.username!)
+      .then((res) => setChannels(res.val()));
+  }, [userDetails?.username]);
 
   return (
     <div className="landing-page">
-      <ChannelsList props={{ userDetails, setIsCreateChatClicked, setIsDetailedChatClicked, setIsCreateTeamView, setCurrentChat }}/>
+      <ChannelsList props={{ channels, setIsCreateChatClicked, setIsDetailedChatClicked, setIsCreateTeamView, setCurrentChat }}/>
 
       {/* DYNAMIC DIV TO SHOW RESULTS FROM SEARCH AND VIEWING CHATS */}
       <div className="main-container">

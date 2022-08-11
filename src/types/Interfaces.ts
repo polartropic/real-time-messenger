@@ -58,7 +58,7 @@ export interface ChannelProps {
 
 export interface ChannelsListProps {
   props: {
-    userDetails?: User,
+    channels?: Channel [],
     chatList?: Channel [],
     setIsCreateChatClicked: Dispatch<any>,
     setIsDetailedChatClicked: Dispatch<any>,

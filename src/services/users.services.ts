@@ -1,4 +1,4 @@
-import { set, ref, get, query, orderByChild, equalTo, update } from 'firebase/database';
+import { set, ref, get, query, orderByChild, equalTo, update, onValue, DataSnapshot } from 'firebase/database';
 import { db } from '../config/firebase-config';
 
 export const createUserByUsername = (firstName: string, lastName: string, phoneNumber: string,
@@ -12,8 +12,16 @@ export const getUserByUsername = (username: string) => {
   return get(ref(db, `users/${username}`));
 };
 
+export const getLiveChannelsByUsername = (username: string, listen: (_snapshot: DataSnapshot) => void) => {
+  return onValue(ref(db, `users/${username}/channels`), listen);
+};
+
 export const getUserData = (uid: string) => {
   return get(query(ref(db, 'users'), orderByChild('uid'), equalTo(uid)));
+};
+
+export const getUserChannels = (username: string) => {
+  return get(query(ref(db, `users/${username}/channels`)));
 };
 
 export const getAllUsers = () => {

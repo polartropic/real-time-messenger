@@ -5,9 +5,9 @@ import { ChannelsListProps } from '../../types/Interfaces';
 
 const ChannelsList = (
   { props }: ChannelsListProps) => {
-  const mappingChats = (chatName: string) => {
+  const mappingChats = (chatName: string, key: string) => {
     return <>
-      <p onClick={() => openDetailedChat(chatName)} className='chat-item' key={uid()}>{chatName}</p>
+      <p onClick={() => openDetailedChat(chatName)} className='chat-item' key={key}>{chatName}</p>
     </>;
   };
 
@@ -37,9 +37,9 @@ const ChannelsList = (
     <div className="chats-channels-list">
       <button onClick={openCreateChat} className='view-users-btn'>Create a Chat</button>
       <h4>Chats:</h4>
-      {props.userDetails ?
-        props.userDetails.channels && Object.keys(props.userDetails!.channels).map((chat) => mappingChats(chat)) :
-        props.chatList && props.chatList.map((chat) => mappingChats(chat.title))
+      {props.channels ?
+        props.channels && Object.keys(props.channels).map((chat) => mappingChats(chat, uid())) :
+        props.chatList && props.chatList.map((chat) => mappingChats(chat.title, uid()))
       }
 
     </div>
