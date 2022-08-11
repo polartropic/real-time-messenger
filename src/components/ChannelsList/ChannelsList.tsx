@@ -21,6 +21,10 @@ const ChannelsList = (
   const openDetailedChat = (chatName: string) => {
     props.setIsDetailedChatClicked(true);
     props.setIsCreateChatClicked(false);
+    if (props.setIsCreateTeamView) {
+      props.setIsCreateTeamView(false);
+    }
+
     getChatByName(chatName)
       .then((res) => Object.keys(res.val()))
       .then((res) => getChatById(res[0]))
