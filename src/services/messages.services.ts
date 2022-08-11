@@ -67,6 +67,10 @@ export const getMessagesByAuthor = (chatId: string, username: string) => {
     });
 };
 
+export const getMessagesInChat = (chatId: string) => {
+  return get(query(ref(db, `channels/${chatId}/messages`)));
+};
+
 export const likeMessage = (chatId: string, messageId: string, username: string) => {
   const updateLikes: any = {};
 
