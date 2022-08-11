@@ -74,3 +74,7 @@ export interface Message {
   createdOn: object,
   likedBy: string[],
 }
+
+export interface emojiObject {
+  emoji: string
+}
