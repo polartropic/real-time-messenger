@@ -1,12 +1,13 @@
+import { uid } from 'uid';
 import { getChatById, getChatByName } from '../../services/channels.services';
 import { ChannelsListProps } from '../../types/Interfaces';
 
 
 const ChannelsList = (
   { props }: ChannelsListProps) => {
-  const mappingChats = (chat: string) => {
+  const mappingChats = (chatName: string) => {
     return <>
-      <p onClick={() => openDetailedChat(chat)} className='chat-item'>{chat}</p>
+      <p onClick={() => openDetailedChat(chatName)} className='chat-item' key={uid()}>{chatName}</p>
     </>;
   };
 
@@ -17,10 +18,10 @@ const ChannelsList = (
       props.setIsCreateTeamView(false);
     }
   };
-  const openDetailedChat = (chat: string) => {
+  const openDetailedChat = (chatName: string) => {
     props.setIsDetailedChatClicked(true);
     props.setIsCreateChatClicked(false);
-    getChatByName(chat)
+    getChatByName(chatName)
       .then((res) => Object.keys(res.val()))
       .then((res) => getChatById(res[0]))
       .then((res) => props.setCurrentChat(res))
@@ -34,7 +35,7 @@ const ChannelsList = (
       <h4>Chats:</h4>
       {props.userDetails ?
         props.userDetails.channels && Object.keys(props.userDetails!.channels).map((chat) => mappingChats(chat)) :
-        props.team?.channels && Object.keys((props.team!)?.channels).map((chat) => mappingChats(chat))
+        props.chatList && props.chatList.map((chat) => mappingChats(chat.title))
       }
 
     </div>
