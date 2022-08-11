@@ -2,6 +2,10 @@ import { ref, get, push, update, query, equalTo, orderByChild } from 'firebase/d
 import { db } from '../config/firebase-config';
 import { User } from '../types/Interfaces';
 
+export const getAllChannels = () => {
+  return get(query(ref(db, 'channels')));
+};
+
 export const getChatById = (id: string | null) => {
   return get(ref(db, `channels/${id}`))
     .then((result) => {
@@ -31,6 +35,21 @@ export const createChat = (title: string, participants: string[] | User[]) => {
     messages: [],
     isPublic: false,
   })
+    .then((result) => getChatById(result.key))
+    .catch(console.error);
+};
+
+export const createTeamChat = (teamID: string, title: string, participants: string[]) => {
+  const updateTeamChats: { [index: string]: boolean } = {};
+  updateTeamChats[`/teams/${teamID}/channels/${title}`] = true;
+  return update(ref(db), updateTeamChats)
+    .then(() => push(ref(db, 'channels'), {
+      title,
+      participants,
+      messages: [],
+      isPublic: false,
+      teamID: teamID,
+    }))
     .then((result) => getChatById(result.key))
     .catch(console.error);
 };
