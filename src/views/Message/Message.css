@@ -1,9 +1,17 @@
-.message {
-  margin: 0;
-  background-color: rgba(47, 69, 93, 1);
+#message {
   color: white;
-  border-radius: 20px 0px 20px 20px;
   margin: 10px;
+  width: 70%;
+}
+
+.message-1 {
+  background-color: rgba(47, 69, 93, 1);
+  border-radius: 20px 0px 20px 20px;
+}
+
+.message-2 {
+  background-color: gray;
+  border-radius: 0px 20px 20px 20px;
 }
 
 .message img {
