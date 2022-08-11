@@ -134,11 +134,9 @@ const Create = ({ props }: any): JSX.Element => {
         <img src="https://img.icons8.com/color/48/000000/add--v1.png" alt='add-btn' />
       </button>;
     if (user.username !== currentUser) {
-      return <>
-        <UserComponent props={{ user, buttonEl }} key={uid()} />
-
-        <br />
-      </>;
+      return <div key={uid()}>
+        <UserComponent props={{ user, buttonEl }} />
+      </div>;
     }
   };
 
@@ -150,11 +148,9 @@ const Create = ({ props }: any): JSX.Element => {
         <img src="https://img.icons8.com/color/48/000000/delete-forever.png" alt='remove-btn' />
       </button>;
     if (user.username !== currentUser) {
-      return <>
-        <UserComponent props={{ user, buttonEl }} key={uid()} />
-
-        <br />
-      </>;
+      return <div key={uid()}>
+        <UserComponent props={{ user, buttonEl }} />
+      </div>;
     }
   };
 

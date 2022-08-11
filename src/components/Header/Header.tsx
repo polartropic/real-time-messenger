@@ -68,12 +68,11 @@ const Header = (): JSX.Element => {
 
 
   const mappingTeam = (team: ReactNode, key: string | number) => {
-    key = uid();
-    return <>
+    return <div key={key}>
       <Link to={`/teams/${team}`} >
         <p key={key} onClick={() => setIsOpen(!isOpen)} className='team-item'>{team}</p>
       </Link>
-    </>;
+    </div>;
   };
 
   const handleCreateTeam = () => {
@@ -107,7 +106,7 @@ const Header = (): JSX.Element => {
               <button className='header-btn' onClick={toggling}>My teams</button>
               {isOpen &&
                 <div id='dropdown-menu-myteams'>
-                  { userDetails.teams && Object.keys(userDetails.teams).map((team, key) => mappingTeam(team, key))}
+                  { userDetails.teams && Object.keys(userDetails.teams).map((team) => mappingTeam(team, uid()))}
                   <button id='create-a-team-btn-header' onClick={handleCreateTeam}>Create a team</button>
                 </div>
 

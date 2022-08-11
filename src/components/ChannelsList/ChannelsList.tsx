@@ -6,9 +6,9 @@ import { ChannelsListProps } from '../../types/Interfaces';
 const ChannelsList = (
   { props }: ChannelsListProps) => {
   const mappingChats = (chatName: string, key: string) => {
-    return <>
-      <p onClick={() => openDetailedChat(chatName)} className='chat-item' key={key}>{chatName}</p>
-    </>;
+    return <div key={key}>
+      <p onClick={() => openDetailedChat(chatName)} className='chat-item'>{chatName}</p>
+    </div>;
   };
 
   const openCreateChat = () => {

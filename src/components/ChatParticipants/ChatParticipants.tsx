@@ -3,6 +3,7 @@ import { ToastContainer, toast } from 'react-toastify';
 import { ChannelProps } from '../../types/Interfaces';
 import { useContext } from 'react';
 import AppContext from '../../providers/AppContext';
+import { uid } from 'uid';
 
 const ChatParticipants = ({ currentChannel }: ChannelProps): JSX.Element => {
   const { appState } = useContext(AppContext);
@@ -15,10 +16,10 @@ const ChatParticipants = ({ currentChannel }: ChannelProps): JSX.Element => {
       });
   };
 
-  const mappingParticipants = (participant: string) => {
-    return <>
+  const mappingParticipants = (participant: string, key: string) => {
+    return <div key={key}>
       <p className='participant-item'>{participant}</p>
-    </>;
+    </div>;
   };
 
   return (
@@ -27,7 +28,7 @@ const ChatParticipants = ({ currentChannel }: ChannelProps): JSX.Element => {
       <p>User0</p>
 
       <h4>Participants of chat/team:</h4>
-      {Object.values(currentChannel.participants).map((participant) => mappingParticipants(participant))}
+      {Object.values(currentChannel.participants).map((participant) => mappingParticipants(participant, uid()))}
 
       <div className="manage-participants-btns">
         <button className="add-btn"><span>Add members</span></button>
