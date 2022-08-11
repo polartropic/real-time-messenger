@@ -3,6 +3,8 @@ import { useContext, useEffect, useState } from 'react';
 import { getUserByUsername } from '../../services/users.services';
 import AppContext from '../../providers/AppContext';
 import Channel from '../Channel/Channel';
+import { Channel as IChannel } from '../../types/Interfaces';
+
 import Create from '../../components/Create/Create';
 import ChatParticipants from '../../components/ChatParticipants/ChatParticipants';
 import ChannelsList from '../../components/ChannelsList/ChannelsList';
@@ -18,12 +20,13 @@ const LoggedUser = (): JSX.Element => {
     setIsCreateTeamView,
   } = useContext(AppContext);
   const userUsername = appState.userData?.username;
-  const [currentChat, setCurrentChat] = useState({
-    date: {},
+  const [currentChat, setCurrentChat] = useState<IChannel>({
     id: '',
-    isPublic: false,
-    participants: [],
     title: '',
+    participants: [], // UserIDs
+    messages: [],
+    isPublic: false,
+    teamID: '',
   });
   const string = 'team';
 
