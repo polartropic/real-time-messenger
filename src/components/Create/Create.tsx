@@ -8,9 +8,9 @@ import { User } from '../../types/Interfaces';
 import { ToastContainer, toast, Id } from 'react-toastify';
 import 'react-toastify/dist/ReactToastify.css';
 import { useNavigate } from 'react-router-dom';
-import '../../views/Create-a-team/Create-team.css';
 import { createChat, createTeamChat } from '../../services/channels.services';
 import { uid } from 'uid';
+import './Create.css';
 
 const Create = ({ props }: any): JSX.Element => {
   const [searchTerm, setSearchTerm] = useState('');
