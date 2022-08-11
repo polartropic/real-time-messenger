@@ -17,14 +17,12 @@ const CreateMessage = ({ currentChannel }: ChannelProps) => {
     setShowPicker(false);
   };
 
-  const sendMessage = async (event: any) => {
+  const sendMessage = (event: any) => {
     event.preventDefault();
 
-    try {
-      await addMessage(currentChannel?.id, user?.username!, message);
-    } catch (error) {
-      console.error(error);
-    }
+    addMessage(currentChannel?.id, user?.username!, message)
+      .then(() => setMessage(''))
+      .catch(console.error);
   };
 
   return (
