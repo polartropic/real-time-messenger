@@ -15,6 +15,9 @@ export const getUserByUsername = (username: string) => {
 export const getLiveChannelsByUsername = (username: string, listen: (_snapshot: DataSnapshot) => void) => {
   return onValue(ref(db, `users/${username}/channels`), listen);
 };
+export const getLiveTeamsByUsername = (username: string, listen: (_snapshot: DataSnapshot) => void) => {
+  return onValue(ref(db, `users/${username}/teams`), listen);
+};
 
 export const getUserData = (uid: string) => {
   return get(query(ref(db, 'users'), orderByChild('uid'), equalTo(uid)));
