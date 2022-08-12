@@ -1,6 +1,6 @@
 import './LoggedUser.css';
 import { useContext, useEffect, useState } from 'react';
-import { getUserChannels } from '../../services/users.services';
+import { getLiveChannelsByUsername } from '../../services/users.services';
 import AppContext from '../../providers/AppContext';
 import Channel from '../Channel/Channel';
 import { Channel as IChannel, User } from '../../types/Interfaces';
@@ -33,16 +33,13 @@ const LoggedUser = (): JSX.Element => {
 
   const string = 'team';
 
-  // useEffect(() => {
-  //   const unsubscribe = getLiveChannelsByUsername(userDetails!.username, (snapshot) => {
-  //     setChannels(snapshot.val());
-  //   });
-  //   return () => unsubscribe();
-  // });
-
   useEffect(() => {
-    getUserChannels(userDetails?.username!)
-      .then((res) => setChannels(res.val()));
+    if (userDetails?.username != null) {
+      const unsubscribe = getLiveChannelsByUsername(userDetails.username, (snapshot) => {
+        setChannels(snapshot.val());
+      });
+      return () => unsubscribe();
+    }
   }, [userDetails?.username]);
 
   return (
