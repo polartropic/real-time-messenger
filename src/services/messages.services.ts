@@ -2,8 +2,8 @@ import { DataSnapshot, equalTo, get, onValue, orderByChild, push, query, ref, up
 import { db } from '../config/firebase-config';
 import { Message } from '../types/Interfaces';
 
-export const getLiveMessages = (listen: (_snapshot: DataSnapshot) => void) => {
-  return onValue(ref(db, 'messages'), listen);
+export const getLiveMessages = (chatId: string, listen: (_snapshot: DataSnapshot) => void) => {
+  return onValue(ref(db, `channels/${chatId}/messages`), listen);
 };
 
 export const fromMessagesDocument = (snapshot: DataSnapshot): Message [] => {

@@ -1,6 +1,6 @@
 import { ChannelProps, Message as IMessage } from '../../types/Interfaces';
 import { useEffect, useState } from 'react';
-import { fromMessagesDocument, getLiveMessages, getMessagesInChat } from '../../services/messages.services';
+import { fromMessagesDocument, getLiveMessages } from '../../services/messages.services';
 import CreateMessage from '../CreateMessage/CreateMessage';
 import Message from '../Message/Message';
 import './Channel.css';
@@ -9,18 +9,15 @@ const Channel = ({ currentChannel }: ChannelProps) => {
   const [messages, setMessages] = useState<IMessage []>([]);
 
   useEffect(() => {
-    const unsubscribe = getLiveMessages((snapshot) => {
-      setMessages(fromMessagesDocument(snapshot));
+    if (currentChannel.id === '') return;
+
+    const unsubscribe = getLiveMessages(currentChannel.id, (snapshot) => {
+      const processedMessages = fromMessagesDocument(snapshot);
+      setMessages(processedMessages);
     });
 
     return () => unsubscribe();
-  }, []);
-
-  useEffect(() => {
-    getMessagesInChat(currentChannel.id)
-      .then((snapshot) => setMessages(snapshot))
-      .catch(console.error);
-  }, [currentChannel.id]);
+  });
 
   return (
     <div className='channel-container'>
