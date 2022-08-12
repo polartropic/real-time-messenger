@@ -3,8 +3,7 @@ import { useParams } from 'react-router-dom';
 import ChannelsList from '../../components/ChannelsList/ChannelsList';
 import ChatParticipants from '../../components/ChatParticipants/ChatParticipants';
 import Create from '../../components/Create/Create';
-import { getAllChannels } from '../../services/channels.services';
-import { getTeamByName } from '../../services/teams.services';
+import { getLiveTeamChannels, getTeamByName } from '../../services/teams.services';
 import { Team } from '../../types/Interfaces';
 import Channel from '../Channel/Channel';
 import { Channel as IChannel } from '../../types/Interfaces';
@@ -44,13 +43,10 @@ const MyTeam = (): JSX.Element => {
   const teamID = Object.keys(team)[0];
 
   useEffect(() => {
-    getAllChannels()
-      .then((snapshot) => {
-        const allChannels : IChannel[] = Object.values(snapshot.val());
-        const currentChatsList = allChannels.filter((channel: IChannel) => channel.teamID && channel.teamID === teamID);
-        setChatList(currentChatsList);
-      })
-      .catch(console.error);
+    const unsubscribe = getLiveTeamChannels(teamID, (snapshot) => {
+      setChatList(snapshot.val());
+    });
+    return () => unsubscribe();
   }, [teamID]);
 
   useEffect(() => {
