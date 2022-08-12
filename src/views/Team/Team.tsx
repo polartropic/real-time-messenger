@@ -78,7 +78,7 @@ const MyTeam = (): JSX.Element => {
           }
         </>
       </div>
-      <ChatParticipants currentChannel={currentChat} />
+      <ChatParticipants currentChannel={currentChat} isDetailedChatClicked={isDetailedChatClicked} />
 
     </div >
   );

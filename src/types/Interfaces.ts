@@ -55,6 +55,10 @@ export interface UserProps {
 export interface ChannelProps {
   currentChannel: Channel
 }
+export interface ChatParticipantsProps {
+  currentChannel: Channel,
+  isDetailedChatClicked: boolean,
+}
 
 export interface ChannelsListProps {
   props: {
