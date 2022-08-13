@@ -3,8 +3,8 @@ import DefaultAvatar from '../../assets/images/Default-avatar.jpg';
 import { logOut } from '../../services/auth.services';
 import AppContext from '../../providers/AppContext';
 import { useNavigate } from 'react-router-dom';
-import { getAllUsers, getLiveTeamsByUsername } from '../../services/users.services';
-import { getAllTeams } from '../../services/teams.services';
+import { getAllUsersLive, getLiveTeamsByUsername } from '../../services/users.services';
+import { getAllTeamsLive } from '../../services/teams.services';
 import { Link } from 'react-router-dom';
 import './Header.css';
 import { ToastContainer, toast } from 'react-toastify';
@@ -28,13 +28,17 @@ const Header = (): JSX.Element => {
   const navigate = useNavigate();
 
   useEffect(() => {
-    getAllUsers()
-      .then((users) => setUsersCount(users.size))
-      .catch(console.error);
+    const unsubscribe = getAllUsersLive((snapshot) => {
+      setUsersCount(snapshot.size);
+    });
+    return () => unsubscribe();
+  }, []);
 
-    getAllTeams()
-      .then((teams) => setTeamsCount(teams.size))
-      .catch(console.error);
+  useEffect(() => {
+    const unsubscribe = getAllTeamsLive((snapshot) => {
+      setTeamsCount(snapshot.size);
+    });
+    return () => unsubscribe();
   }, []);
 
   useEffect(() => {
