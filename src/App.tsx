@@ -15,7 +15,7 @@ import NotFound from './views/NotFound/NotFound';
 import MyTeam from './views/Team/Team';
 import Create from './components/Create/Create';
 import { iAppState } from './types/Interfaces';
-import Meetings from './components/Meetings/Meetings';
+import Meetings from './views/Meetings/Meetings';
 
 function App() {
   const [appState, setState] = useState<iAppState>({

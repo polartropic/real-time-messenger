@@ -55,6 +55,7 @@
   padding: 20px;
   border-radius: 10px;
   text-align: center;
+  z-index: 3;
 }
 
 #create-a-team-btn-header {
