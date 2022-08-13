@@ -71,15 +71,12 @@ export interface Message {
   id: string,
   content: string,
   author: string,
-  createdOn: object,
+  createdOn: Date,
   likedBy: string[],
 }
 
 export interface MessageProps {
-  message: {
-    author: string,
-    content: string,
-  }
+  message: Message,
 }
 
 export interface emojiObject {
