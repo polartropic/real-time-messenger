@@ -1,7 +1,7 @@
 import { useEffect, useState } from 'react';
 import { BrowserRouter, Routes, Route, Navigate } from 'react-router-dom';
 import './App.css';
-import AboutUs from './components/AboutUs/AboutUs';
+import AboutUs from './views/AboutUs/AboutUs';
 import Header from './components/Header/Header';
 import AppContext from './providers/AppContext';
 import EditProfile from './views/EditProfile/EditProfile';
