@@ -42,7 +42,7 @@ const Header = (): JSX.Element => {
   }, []);
 
   useEffect(() => {
-    if (userUsername!== undefined) {
+    if (userUsername !== undefined) {
       const unsubscribe = getLiveTeamsByUsername(userUsername, (snapshot) => {
         setTeams(snapshot.val());
       });
@@ -64,6 +64,7 @@ const Header = (): JSX.Element => {
 
   const toggling = () => setIsOpen(!isOpen);
 
+  const URL = window.location.href;
 
   const mappingTeam = (team: ReactNode, key: string | number) => {
     return <div key={key}>
@@ -78,6 +79,9 @@ const Header = (): JSX.Element => {
     setIsCreateTeamView(true);
     setIsCreateChatClicked(false);
     setIsDetailedChatClicked(false);
+    if (!URL.includes('home-page')) {
+      navigate('/');
+    };
   };
 
   const handleGoToHomPage = () => {
