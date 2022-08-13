@@ -1,4 +1,4 @@
-import { deleteUserFromChat } from '../../services/channels.services';
+import { deleteUserFromChat, removeUserFromChannel } from '../../services/channels.services';
 import { createMeeting } from '../../services/meetings.services';
 import { ToastContainer, toast } from 'react-toastify';
 import { ChatParticipantsProps } from '../../types/Interfaces';
@@ -17,7 +17,7 @@ const ChatParticipants = ({ currentChannel, isDetailedChatClicked }: ChatPartici
   const [startingHour, setStartingHour] = useState<any>('10:00');
   const [endingHour, setEndingHour] = useState<any>('10:00');
   const [name, setName] = useState<string>('');
-  console.log(endingHour);
+
   const handleCreateMeeting = (e: React.FormEvent<HTMLFormElement>) => {
     e.preventDefault();
     const convertedDate = date.toLocaleDateString('en-GB');
@@ -30,7 +30,12 @@ const ChatParticipants = ({ currentChannel, isDetailedChatClicked }: ChatPartici
       .then(() => {
         toast.success(`You have successfully been removed from chat ${chatName}!`);
       });
+
+    const currentUserIndex = currentChannel.participants.indexOf(userUsername!);
+
+    removeUserFromChannel(currentChannel.id, currentUserIndex);
   };
+
 
   const mappingParticipants = (participant: string, key: string) => {
     return <div key={key}>
