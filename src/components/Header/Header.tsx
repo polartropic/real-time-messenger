@@ -3,8 +3,8 @@ import DefaultAvatar from '../../assets/images/Default-avatar.jpg';
 import { logOut } from '../../services/auth.services';
 import AppContext from '../../providers/AppContext';
 import { useNavigate } from 'react-router-dom';
-import { getAllUsers, getLiveTeamsByUsername } from '../../services/users.services';
-import { getAllTeams } from '../../services/teams.services';
+import { getAllUsersLive, getLiveTeamsByUsername } from '../../services/users.services';
+import { getAllTeamsLive } from '../../services/teams.services';
 import { Link } from 'react-router-dom';
 import './Header.css';
 import { ToastContainer, toast } from 'react-toastify';
@@ -28,17 +28,21 @@ const Header = (): JSX.Element => {
   const navigate = useNavigate();
 
   useEffect(() => {
-    getAllUsers()
-      .then((users) => setUsersCount(users.size))
-      .catch(console.error);
-
-    getAllTeams()
-      .then((teams) => setTeamsCount(teams.size))
-      .catch(console.error);
+    const unsubscribe = getAllUsersLive((snapshot) => {
+      setUsersCount(snapshot.size);
+    });
+    return () => unsubscribe();
   }, []);
 
   useEffect(() => {
-    if (userUsername!== undefined) {
+    const unsubscribe = getAllTeamsLive((snapshot) => {
+      setTeamsCount(snapshot.size);
+    });
+    return () => unsubscribe();
+  }, []);
+
+  useEffect(() => {
+    if (userUsername !== undefined) {
       const unsubscribe = getLiveTeamsByUsername(userUsername, (snapshot) => {
         setTeams(snapshot.val());
       });
@@ -60,6 +64,7 @@ const Header = (): JSX.Element => {
 
   const toggling = () => setIsOpen(!isOpen);
 
+  const URL = window.location.href;
 
   const mappingTeam = (team: ReactNode, key: string | number) => {
     return <div key={key}>
@@ -74,6 +79,9 @@ const Header = (): JSX.Element => {
     setIsCreateTeamView(true);
     setIsCreateChatClicked(false);
     setIsDetailedChatClicked(false);
+    if (!URL.includes('home-page')) {
+      navigate('/');
+    };
   };
 
   const handleGoToHomPage = () => {
@@ -105,6 +113,9 @@ const Header = (): JSX.Element => {
                 </div>
 
               }
+              <Link to={'/my-meetings'}>
+                <button className='header-btn' id='my-meetings'>My meetings</button>
+              </Link>
               <button onClick={handleLogOut} className='header-btn'>Log out</button>
               <Link to={'/edit-profile'}>
                 <img className="default-avatar" src={DefaultAvatar} alt="default-avatar" />

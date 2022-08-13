@@ -64,3 +64,10 @@ export const deleteUserFromChat = (username: string | undefined, chatName: strin
 export const getChatByName = (chatName: string) => {
   return get(query(ref(db, 'channels'), orderByChild('title'), equalTo(chatName)));
 };
+
+export const removeUserFromChannel = (channelID: string, userIndex: number) => {
+  return update(ref(db), {
+    [`channels/${channelID}/participants/${userIndex}`]: null,
+  })
+    .catch(console.error);
+};

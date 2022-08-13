@@ -1,8 +1,13 @@
 import { equalTo, get, orderByChild, query, ref, push, DatabaseReference, DataSnapshot, onValue } from 'firebase/database';
 import { db } from '../config/firebase-config';
 import { Team } from '../types/Interfaces';
+
 export const getAllTeams = () => {
   return get(query(ref(db, 'teams')));
+};
+
+export const getAllTeamsLive = (listen: (_snapshot: DataSnapshot) => void) => {
+  return onValue(ref(db, 'teams'), listen);
 };
 
 export const getTeamByID = (id: string) => {

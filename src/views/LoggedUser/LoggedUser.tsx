@@ -2,7 +2,7 @@ import './LoggedUser.css';
 import { useContext, useEffect, useState } from 'react';
 import { getLiveChannelsByUsername } from '../../services/users.services';
 import AppContext from '../../providers/AppContext';
-import Channel from '../Channel/Channel';
+import Channel from '../../components/Channel/Channel';
 import { Channel as IChannel, User } from '../../types/Interfaces';
 
 import Create from '../../components/Create/Create';
@@ -70,7 +70,7 @@ const LoggedUser = (): JSX.Element => {
           }
         </>
       </div>
-      <ChatParticipants currentChannel={currentChat}/>
+      <ChatParticipants currentChannel={currentChat} isDetailedChatClicked={isDetailedChatClicked}/>
     </div>
   );
 };

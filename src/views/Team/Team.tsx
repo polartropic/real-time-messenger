@@ -5,7 +5,7 @@ import ChatParticipants from '../../components/ChatParticipants/ChatParticipants
 import Create from '../../components/Create/Create';
 import { getLiveTeamChannels, getTeamByName } from '../../services/teams.services';
 import { Team } from '../../types/Interfaces';
-import Channel from '../Channel/Channel';
+import Channel from '../../components/Channel/Channel';
 import { Channel as IChannel } from '../../types/Interfaces';
 // import './Team.css'
 
@@ -78,7 +78,7 @@ const MyTeam = (): JSX.Element => {
           }
         </>
       </div>
-      <ChatParticipants currentChannel={currentChat} />
+      <ChatParticipants currentChannel={currentChat} isDetailedChatClicked={isDetailedChatClicked} />
 
     </div >
   );

@@ -31,6 +31,10 @@ export const getAllUsers = () => {
   return get(query(ref(db, 'users')));
 };
 
+export const getAllUsersLive = (listen: (_snapshot: DataSnapshot) => void) => {
+  return onValue(ref(db, 'users'), listen);
+};
+
 export const updateFirstName = (username: string, firstName: string) => {
   return update(ref(db), {
     [`users/${username}/firstName`]: firstName,
