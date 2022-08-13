@@ -1,6 +1,6 @@
 .about-us {
   width: 70%;
-  height: fit-content;
+  height: calc(100vh - 190px);
   margin: 30px auto;
   padding: 30px;
   text-align: center;
