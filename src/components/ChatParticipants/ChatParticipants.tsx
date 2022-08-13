@@ -5,23 +5,22 @@ import { ChatParticipantsProps } from '../../types/Interfaces';
 import { useContext, useState } from 'react';
 import AppContext from '../../providers/AppContext';
 import { uid } from 'uid';
-import DatePicker from 'react-date-picker';
-import TimePicker from 'react-time-picker';
-
+import DateTimePicker from 'react-datetime-picker';
 import './ChatParticipants.css';
 const ChatParticipants = ({ currentChannel, isDetailedChatClicked }: ChatParticipantsProps): JSX.Element | null => {
   const { appState } = useContext(AppContext);
   const userUsername = appState.userData?.username;
   const [isMeetingClicked, setIsMeetingClicked] = useState(false);
-  const [date, setDate] = useState<Date>(new Date());
-  const [startingHour, setStartingHour] = useState<Date | string>('10:00');
-  const [endingHour, setEndingHour] = useState<Date | string>('10:00');
   const [name, setName] = useState<string>('');
+  const [start, setStart] = useState<Date>(new Date());
+  const [end, setEnd] = useState<Date>(new Date());
 
   const handleCreateMeeting = (e: React.FormEvent<HTMLFormElement>) => {
     e.preventDefault();
-    const convertedDate = date.toLocaleDateString('en-GB');
-    createMeeting(name, convertedDate, startingHour, endingHour, currentChannel.participants)
+
+    const convertedStart = start.toISOString();
+    const convertedEnd = end.toISOString();
+    createMeeting(name, convertedStart, convertedEnd, currentChannel.participants)
       .then(() => toast.success('Successfully scheduled meeting!'));
   };
 
@@ -48,20 +47,17 @@ const ChatParticipants = ({ currentChannel, isDetailedChatClicked }: ChatPartici
       <div className="participants-list">
         <button onClick={() => setIsMeetingClicked(!isMeetingClicked)} className="view-users-btn">Create a meeting</button>
         {isMeetingClicked?
-          <form id='create-a-meeting' onSubmit={(e) => handleCreateMeeting(e)}>
+          <form id='create-a-meeting' onSubmit={handleCreateMeeting}>
             <h4>Create a meeting with chat participants:</h4>
             <p>Meeting name:
               <label htmlFor='content'></label>
               <input type="text" required placeholder="Input meeting's name" value={name} onChange={(e) => setName(e.target.value)}/>
             </p>
-            <p>Meeting date:
-              <DatePicker locale='en-GB' onChange={ setDate } value={date} />
-            </p>
             <p>Meeting start:
-              <TimePicker locale='en-GB' onChange={ setStartingHour} value={startingHour} />
+              <DateTimePicker onChange={setStart} value={start} />
             </p>
             <p>Meeting end:
-              <TimePicker locale='en-GB' onChange={ setEndingHour} value={endingHour} />
+              <DateTimePicker onChange={setEnd} value={end} />
             </p>
             <button className="view-users-btn">Schedule meeting</button>
           </form> :
