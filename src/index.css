@@ -19,3 +19,20 @@ hr {
   background: none;
   border: none;
 }
+
+::-webkit-scrollbar {
+  width: 5px;
+}
+
+::-webkit-scrollbar-track {
+  background: rgba(245, 247, 251, 1);
+}
+
+::-webkit-scrollbar-thumb {
+  background: rgba(47, 69, 93, 1);
+  border-radius: 5px;
+}
+
+::-webkit-scrollbar-thumb:hover {
+  background: rgba(47, 69, 93, 0.5);
+}
