@@ -23,7 +23,7 @@ export const getMeetingByID = (id: string | null) => {
 };
 
 
-export const createMeeting = (name: string, date: Date, startingHour: string, endingHour: string, participants: string[]) => {
+export const createMeeting = (name: string, date: Date | string, startingHour: string | Date, endingHour: string | Date, participants: string[]) => {
   return push(ref(db, 'meetings'), {
     name,
     date,

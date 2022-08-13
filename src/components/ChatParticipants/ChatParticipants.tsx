@@ -13,9 +13,9 @@ const ChatParticipants = ({ currentChannel, isDetailedChatClicked }: ChatPartici
   const { appState } = useContext(AppContext);
   const userUsername = appState.userData?.username;
   const [isMeetingClicked, setIsMeetingClicked] = useState(false);
-  const [date, setDate] = useState<any>(new Date());
-  const [startingHour, setStartingHour] = useState<any>('10:00');
-  const [endingHour, setEndingHour] = useState<any>('10:00');
+  const [date, setDate] = useState<Date>(new Date());
+  const [startingHour, setStartingHour] = useState<Date | string>('10:00');
+  const [endingHour, setEndingHour] = useState<Date | string>('10:00');
   const [name, setName] = useState<string>('');
 
   const handleCreateMeeting = (e: React.FormEvent<HTMLFormElement>) => {
@@ -55,13 +55,13 @@ const ChatParticipants = ({ currentChannel, isDetailedChatClicked }: ChatPartici
               <input type="text" required placeholder="Input meeting's name" value={name} onChange={(e) => setName(e.target.value)}/>
             </p>
             <p>Meeting date:
-              <DatePicker locale='en-GB' onChange={setDate} value={date} />
+              <DatePicker locale='en-GB' onChange={ setDate } value={date} />
             </p>
             <p>Meeting start:
               <TimePicker locale='en-GB' onChange={ setStartingHour} value={startingHour} />
             </p>
             <p>Meeting end:
-              <TimePicker locale='en-GB' onChange={(event) => setEndingHour(event)} value={endingHour} />
+              <TimePicker locale='en-GB' onChange={ setEndingHour} value={endingHour} />
             </p>
             <button className="view-users-btn">Schedule meeting</button>
           </form> :
