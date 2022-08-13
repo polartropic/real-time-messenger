@@ -1,4 +1,4 @@
-import { ref, push, get } from 'firebase/database';
+import { ref, push, get, query } from 'firebase/database';
 import { db } from '../config/firebase-config';
 
 export const getMeetingByID = (id: string | null) => {
@@ -23,14 +23,17 @@ export const getMeetingByID = (id: string | null) => {
 };
 
 
-export const createMeeting = (name: string, date: Date | string, startingHour: string | Date, endingHour: string | Date, participants: string[]) => {
+export const createMeeting = (title: string, start: string, end: string, participants: string[]) => {
   return push(ref(db, 'meetings'), {
-    name,
-    date,
-    startingHour,
-    endingHour,
+    title,
+    start,
+    end,
     participants,
   })
     .then((res) => getMeetingByID(res.key))
     .catch(console.error);
+};
+
+export const getAllMeetings = () => {
+  return get(query(ref(db, 'meetings')));
 };
