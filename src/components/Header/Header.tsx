@@ -109,6 +109,9 @@ const Header = (): JSX.Element => {
                 </div>
 
               }
+              <Link to={'/my-meetings'}>
+                <button className='header-btn' id='my-meetings'>My meetings</button>
+              </Link>
               <button onClick={handleLogOut} className='header-btn'>Log out</button>
               <Link to={'/edit-profile'}>
                 <img className="default-avatar" src={DefaultAvatar} alt="default-avatar" />

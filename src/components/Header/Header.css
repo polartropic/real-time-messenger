@@ -50,7 +50,7 @@
 #dropdown-menu-myteams {
   background-color: rgba(47, 69, 93, 0.9);
   position: absolute;
-  margin-left: 155px;
+  margin-left: 130px;
   margin-top: 75px;
   padding: 20px;
   border-radius: 10px;
@@ -76,4 +76,8 @@
 
 .team-item:hover {
   font-weight: bold;
+}
+
+#my-meetings {
+  padding-top: 25px;
 }
