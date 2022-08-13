@@ -83,7 +83,7 @@ export const getMessagesInChat = (chatId: string) => {
 };
 
 export const likeMessage = (chatId: string, messageId: string, username: string) => {
-  const updateLikes: any = {};
+  const updateLikes: { [index: string]: boolean } = {};
 
   updateLikes[`channels/${chatId}/messages/${messageId}/likedBy/${username}`] = true;
   updateLikes[`users/${username}/likedMessages/${messageId}`] = true;
@@ -92,7 +92,7 @@ export const likeMessage = (chatId: string, messageId: string, username: string)
 };
 
 export const unlikeMessage = (chatId: string, messageId: string, username: string) => {
-  const updateLikes: any = {};
+  const updateLikes: { [index: string]: boolean | null } = {};
 
   updateLikes[`channels/${chatId}/messages/${messageId}/likedBy/${username}`] = null;
   updateLikes[`users/${username}/likedMessages/${messageId}`] = null;

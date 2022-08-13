@@ -23,7 +23,7 @@ const CreateMessage = ({ currentChannel }: ChannelProps) => {
     setShowPicker(false);
   };
 
-  const sendMessage = (event?: any) => {
+  const sendMessage = (event?: React.MouseEvent) => {
     event?.preventDefault();
 
 

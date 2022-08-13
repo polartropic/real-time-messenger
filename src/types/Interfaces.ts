@@ -1,19 +1,22 @@
-import { type Dispatch } from 'react';
+import { SetStateAction, type Dispatch } from 'react';
 
 import { User as FirebaseUser } from 'firebase/auth';
 
+export interface iAppState {
+  user: FirebaseUser | null,
+  userData: User | null,
+
+}
+
 export interface ApplicationContext {
-  appState: {
-    user: FirebaseUser | null,
-    userData: User | null,
-  },
+  appState: iAppState,
   isCreateTeamView: boolean,
   isDetailedChatClicked: boolean,
   isCreateChatClicked: boolean,
-  setIsCreateChatClicked: Dispatch<any>,
-  setIsDetailedChatClicked: Dispatch<any>,
-  setIsCreateTeamView: Dispatch<any>,
-  setState: Dispatch<any>,
+  setIsCreateChatClicked: Dispatch<boolean>,
+  setIsDetailedChatClicked: Dispatch<boolean>,
+  setIsCreateTeamView: Dispatch<boolean>,
+  setState: Dispatch<SetStateAction<any>>,
 }
 
 export interface User {
@@ -62,12 +65,12 @@ export interface ChatParticipantsProps {
 
 export interface ChannelsListProps {
   props: {
-    channels?: Channel [],
-    chatList?: Channel [],
-    setIsCreateChatClicked: Dispatch<any>,
-    setIsDetailedChatClicked: Dispatch<any>,
-    setIsCreateTeamView?: Dispatch<any>,
-    setCurrentChat: Dispatch<any>
+    channels?: Channel[],
+    chatList?: Channel[],
+    setIsCreateChatClicked: Dispatch<boolean>,
+    setIsDetailedChatClicked: Dispatch<boolean>,
+    setIsCreateTeamView?: Dispatch<boolean>,
+    setCurrentChat: Dispatch<SetStateAction<Channel>>
   }
 }
 
