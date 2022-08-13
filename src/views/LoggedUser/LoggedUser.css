@@ -79,6 +79,7 @@
 
 .chat-item {
   background-color: #f2f1ec;
+  border: 1px solid #f2f1ec;
   padding: 7px;
   border-radius: 20px;
   cursor: pointer;
@@ -86,6 +87,6 @@
 }
 
 .chat-item:hover {
-  border: 1px solid;
+  border: 1px solid black;
   font-weight: bold;
 }
