@@ -1,4 +1,4 @@
-import { useContext, useState } from 'react';
+import React, { useContext, useState } from 'react';
 import AppContext from '../../providers/AppContext';
 import { addMessage } from '../../services/messages.services';
 import { ChannelProps, emojiObject } from '../../types/Interfaces';
@@ -12,13 +12,20 @@ const CreateMessage = ({ currentChannel }: ChannelProps) => {
   const [showPicker, setShowPicker] = useState(false);
   const [message, setMessage] = useState('');
 
-  const onEmojiClick = (event: React.MouseEvent<Element, MouseEvent>, emojiObject: emojiObject) => {
+  const handleKeyDown = (e: React.KeyboardEvent) => {
+    if (e.key === 'Enter') {
+      sendMessage();
+    }
+  };
+
+  const onEmojiClick = (_: React.MouseEvent<Element, MouseEvent>, emojiObject: emojiObject) => {
     setMessage((previousInput) => previousInput + emojiObject.emoji);
     setShowPicker(false);
   };
 
-  const sendMessage = (event: any) => {
-    event.preventDefault();
+  const sendMessage = (event?: any) => {
+    event?.preventDefault();
+
 
     addMessage(currentChannel?.id, user?.username!, message)
       .then(() => setMessage(''))
@@ -32,7 +39,7 @@ const CreateMessage = ({ currentChannel }: ChannelProps) => {
         onEmojiClick={onEmojiClick} />}
       <button onClick={() => setShowPicker((val) => !val)} className='emoji-btn'><i className='fa-regular fa-face-smile'></i></button>
       <label htmlFor='content'></label>
-      <textarea className='message-textarea' placeholder='Write a message here...' value={message} onChange={(e) => setMessage(e.target.value)}></textarea>
+      <textarea className='message-textarea' placeholder='Write a message here...' value={message} onKeyDown={handleKeyDown} onChange={(e) => setMessage(e.target.value)}></textarea>
       <button type='submit' className='send-btn' value=''><i className='fa-solid fa-paper-plane' onClick={sendMessage}></i></button>
     </div>
   );
