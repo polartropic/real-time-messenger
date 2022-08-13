@@ -92,3 +92,10 @@ export interface MessageProps {
 export interface emojiObject {
   emoji: string
 }
+
+export interface Meeting {
+  title: string,
+  start: Date,
+  end: Date,
+  participants: string []
+};
