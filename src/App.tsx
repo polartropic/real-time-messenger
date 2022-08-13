@@ -7,16 +7,18 @@ import AppContext from './providers/AppContext';
 import EditProfile from './views/EditProfile/EditProfile';
 import HomePage from './views/Homepage/HomePage';
 import Login from './views/Login/Login';
-import { useAuthState } from 'react-firebase-hooks/auth';
+import { AuthStateHook, useAuthState } from 'react-firebase-hooks/auth';
 import { auth } from './config/firebase-config';
 import { getUserData } from './services/users.services';
 import Authenticated from './hoc/Authenticated';
 import NotFound from './views/NotFound/NotFound';
 import MyTeam from './views/Team/Team';
 import Create from './components/Create/Create';
+import { iAppState } from './types/Interfaces';
+
 
 function App() {
-  const [appState, setState] = useState({
+  const [appState, setState] = useState<iAppState>({
     user: null,
     userData: null,
   });
@@ -25,8 +27,7 @@ function App() {
   const [isDetailedChatClicked, setIsDetailedChatClicked] = useState(false);
   const [isCreateChatClicked, setIsCreateChatClicked] = useState(false);
 
-
-  const [user]: any = useAuthState(auth);
+  const [user]: AuthStateHook = useAuthState(auth);
 
   useEffect(() => {
     if (user === null || user === undefined) return;

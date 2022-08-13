@@ -16,7 +16,7 @@ export interface ApplicationContext {
   setIsCreateChatClicked: Dispatch<boolean>,
   setIsDetailedChatClicked: Dispatch<boolean>,
   setIsCreateTeamView: Dispatch<boolean>,
-  setState: Dispatch<SetStateAction<any>>,
+  setState: Dispatch<SetStateAction<iAppState>>,
 }
 
 export interface User {
