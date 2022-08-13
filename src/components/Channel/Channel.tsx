@@ -24,11 +24,13 @@ const Channel = ({ currentChannel }: ChannelProps) => {
       <h4>Channel's title: {currentChannel.title}</h4>
       <hr />
 
-      {
-        messages.length === 0 ?
-          <p>No messages to show.</p> :
-          messages.map((message, key) => <Message message={message} key={key} />)
-      }
+      <div className='messages-container'>
+        {
+          messages.length === 0 ?
+            <p>No messages to show.</p> :
+            messages.map((message, key) => <Message message={message} key={key} />)
+        }
+      </div>
 
       <CreateMessage currentChannel={currentChannel}/>
     </div>

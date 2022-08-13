@@ -7,9 +7,11 @@ import AppContext from '../../providers/AppContext';
 import { uid } from 'uid';
 import DateTimePicker from 'react-datetime-picker';
 import './ChatParticipants.css';
+
 const ChatParticipants = ({ currentChannel, isDetailedChatClicked }: ChatParticipantsProps): JSX.Element | null => {
   const { appState } = useContext(AppContext);
   const userUsername = appState.userData?.username;
+
   const [isMeetingClicked, setIsMeetingClicked] = useState(false);
   const [name, setName] = useState<string>('');
   const [start, setStart] = useState<Date>(new Date());
@@ -34,7 +36,6 @@ const ChatParticipants = ({ currentChannel, isDetailedChatClicked }: ChatPartici
 
     removeUserFromChannel(currentChannel.id, currentUserIndex);
   };
-
 
   const mappingParticipants = (participant: string, key: string) => {
     return <div key={key}>
@@ -68,7 +69,9 @@ const ChatParticipants = ({ currentChannel, isDetailedChatClicked }: ChatPartici
         <h5>User0</h5>
 
         <h4>Participants of chat/team:</h4>
-        {Object.values(currentChannel.participants).map((participant) => mappingParticipants(participant, uid()))}
+        <div className='participants'>
+          {Object.values(currentChannel.participants).map((participant) => mappingParticipants(participant, uid()))}
+        </div>
 
         <div className="manage-participants-btns">
           <button className="add-btn"><span>Add members</span></button>

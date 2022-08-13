@@ -9,6 +9,10 @@
   width: 50%;
 }
 
+.messages-container {
+  overflow-y: auto;
+}
+
 .message-box {
   display: flex;
   align-items: center;
