@@ -5,6 +5,8 @@ import { useContext, useEffect, useState } from 'react';
 import { getAllMeetings } from '../../services/meetings.services';
 import AppContext from '../../providers/AppContext';
 import { Meeting } from '../../types/Interfaces';
+import './Meetings.css';
+
 const localizer = momentLocalizer(moment);
 
 const Meetings = (): JSX.Element => {
@@ -12,6 +14,8 @@ const Meetings = (): JSX.Element => {
   const userUsername = appState.userData?.username;
   const [events, setEvents] = useState<Meeting[]>([]);
   const [myMeetings, setMyMeetings] = useState<Meeting[]>([]);
+  const [selectedEvent, setSelectedEvent] = useState<Meeting | undefined>(undefined);
+  const [modalState, setModalState] = useState(false);
 
   useEffect(() => {
     getAllMeetings()
@@ -33,13 +37,35 @@ const Meetings = (): JSX.Element => {
     setMyMeetings(result);
   }, [events, userUsername]);
 
+  const onSelectEvent = (event: Meeting) => {
+    setSelectedEvent(event);
+    setModalState(true);
+  };
+
+  const MeetingDetails = () => {
+    return (
+      <div id='meeting-details'>
+        <h4 id='meeting-details-title'>Meeting details:</h4>
+        Title: {selectedEvent?.title} <br />
+        Start: {selectedEvent?.start.toLocaleTimeString('en-GB')}<br />
+        End: {selectedEvent?.end.toLocaleTimeString('en-GB')}<br />
+        Participants: {selectedEvent?.participants.join(', ')} <br />
+        <button id='join-meeting-btn'>Join meeting</button>
+      </div>
+    );
+  };
 
   return <div>
+    {modalState === true ?
+      <MeetingDetails/> :
+      null}
     <Calendar
       localizer={localizer}
       events={myMeetings}
       startAccessor="start"
       endAccessor="end"
+      selectable
+      onSelectEvent={(e) => onSelectEvent(e)}
       style={{ height: 500 }} />
   </div>;
 };
