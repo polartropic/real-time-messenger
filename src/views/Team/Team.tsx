@@ -7,6 +7,7 @@ import { getLiveTeamChannels, getTeamByName } from '../../services/teams.service
 import { Team } from '../../types/Interfaces';
 import Channel from '../../components/Channel/Channel';
 import { Channel as IChannel } from '../../types/Interfaces';
+import TeamParticipants from '../../components/TeamParticipants/TeamParticipants';
 // import './Team.css'
 
 const MyTeam = (): JSX.Element => {
@@ -28,14 +29,19 @@ const MyTeam = (): JSX.Element => {
     isPublic: false,
     teamID: '',
   });
+  const [teamProps, setTeamProps] = useState<Team>();
 
   const { name } = useParams<{ name: string }>();
 
   useEffect(() => {
     getTeamByName(name!)
       .then((snapshot) => {
-        const team = snapshot.val();
-        setTeam(team);
+        if (snapshot.exists()) {
+          const team: Team = snapshot.val();
+          setTeam(team);
+          setMembers(Object.values(team)[0].members);
+          setTeamProps(Object.values(team)[0]);
+        }
       })
       .catch(console.error);
   }, [name]);
@@ -48,10 +54,6 @@ const MyTeam = (): JSX.Element => {
     });
     return () => unsubscribe();
   }, [teamID]);
-
-  useEffect(() => {
-    setMembers(Object.values(team)[0].members);
-  }, [team]);
 
   return (
     <div className='landing-page'>
@@ -78,7 +80,13 @@ const MyTeam = (): JSX.Element => {
           }
         </>
       </div>
-      <ChatParticipants currentChannel={currentChat} isDetailedChatClicked={isDetailedChatClicked} />
+      {
+        isDetailedChatClicked ?
+          <ChatParticipants currentChannel={currentChat} isDetailedChatClicked={isDetailedChatClicked}
+            setIsDetailedChatClicked={setIsDetailedChatClicked} /> :
+          <TeamParticipants team={teamProps} isDetailedChatClicked={isDetailedChatClicked}
+            setIsDetailedChatClicked={setIsDetailedChatClicked} />
+      }
 
     </div >
   );

@@ -8,7 +8,7 @@ import { uid } from 'uid';
 import DateTimePicker from 'react-datetime-picker';
 import './ChatParticipants.css';
 
-const ChatParticipants = ({ currentChannel, isDetailedChatClicked }: ChatParticipantsProps): JSX.Element | null => {
+const ChatParticipants = ({ currentChannel, isDetailedChatClicked, setIsDetailedChatClicked }: ChatParticipantsProps): JSX.Element | null => {
   const { appState } = useContext(AppContext);
   const userUsername = appState.userData?.username;
 
@@ -16,6 +16,7 @@ const ChatParticipants = ({ currentChannel, isDetailedChatClicked }: ChatPartici
   const [name, setName] = useState<string>('');
   const [start, setStart] = useState<Date>(new Date());
   const [end, setEnd] = useState<Date>(new Date());
+  const URL = window.location.href;
 
   const handleCreateMeeting = (e: React.FormEvent<HTMLFormElement>) => {
     e.preventDefault();
@@ -47,12 +48,12 @@ const ChatParticipants = ({ currentChannel, isDetailedChatClicked }: ChatPartici
     isDetailedChatClicked ?
       <div className="participants-list">
         <button onClick={() => setIsMeetingClicked(!isMeetingClicked)} className="view-users-btn">Create a meeting</button>
-        {isMeetingClicked?
+        {isMeetingClicked ?
           <form id='create-a-meeting' onSubmit={handleCreateMeeting}>
             <h4>Create a meeting with chat participants:</h4>
             <p>Meeting name:
               <label htmlFor='content'></label>
-              <input type="text" required placeholder="Input meeting's name" value={name} onChange={(e) => setName(e.target.value)}/>
+              <input type="text" required placeholder="Input meeting's name" value={name} onChange={(e) => setName(e.target.value)} />
             </p>
             <p>Meeting start:
               <DateTimePicker onChange={setStart} value={start} />
@@ -65,16 +66,18 @@ const ChatParticipants = ({ currentChannel, isDetailedChatClicked }: ChatPartici
           null
         }
 
-        <h4>Owner:</h4>
-        <h5>User0</h5>
+        <h4>Chat:</h4>
+        <h5>{currentChannel.title}</h5>
 
-        <h4>Participants of chat/team:</h4>
+        <h4>Participants of chat:</h4>
         <div className='participants'>
           {Object.values(currentChannel.participants).map((participant) => mappingParticipants(participant, uid()))}
         </div>
 
         <div className="manage-participants-btns">
-          <button className="add-btn"><span>Add members</span></button>
+          {URL.includes('/teams/') ?
+            <button className="add-btn" onClick={() => setIsDetailedChatClicked(false)}><span>Team details</span></button> :
+            null}
           <br />
           <button onClick={() => leaveChat(userUsername, currentChannel.title)} className="leave-btn">Leave channel</button>
         </div>

@@ -61,8 +61,13 @@ export interface ChannelProps {
 export interface ChatParticipantsProps {
   currentChannel: Channel,
   isDetailedChatClicked: boolean,
+  setIsDetailedChatClicked: Dispatch<boolean>,
 }
-
+export interface TeamParticipantsProps {
+  team: Team | undefined;
+  isDetailedChatClicked: boolean,
+  setIsDetailedChatClicked: Dispatch<boolean>,
+}
 export interface ChannelsListProps {
   props: {
     channels?: Channel[],

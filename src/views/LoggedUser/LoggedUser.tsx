@@ -29,7 +29,7 @@ const LoggedUser = (): JSX.Element => {
     isPublic: false,
     teamID: '',
   });
-  const [channels, setChannels] = useState<IChannel []>([]);
+  const [channels, setChannels] = useState<IChannel[]>([]);
 
   const string = 'team';
 
@@ -44,7 +44,7 @@ const LoggedUser = (): JSX.Element => {
 
   return (
     <div className="landing-page">
-      <ChannelsList props={{ channels, setIsCreateChatClicked, setIsDetailedChatClicked, setIsCreateTeamView, setCurrentChat }}/>
+      <ChannelsList props={{ channels, setIsCreateChatClicked, setIsDetailedChatClicked, setIsCreateTeamView, setCurrentChat }} />
 
       {/* DYNAMIC DIV TO SHOW RESULTS FROM SEARCH AND VIEWING CHATS */}
       <div className="main-container">
@@ -57,7 +57,7 @@ const LoggedUser = (): JSX.Element => {
             null
           }
           {isDetailedChatClicked ?
-            <Channel currentChannel={currentChat}/> :
+            <Channel currentChannel={currentChat} /> :
             null
           }
           {isCreateTeamView ?
@@ -70,7 +70,8 @@ const LoggedUser = (): JSX.Element => {
           }
         </>
       </div>
-      <ChatParticipants currentChannel={currentChat} isDetailedChatClicked={isDetailedChatClicked}/>
+      <ChatParticipants currentChannel={currentChat} isDetailedChatClicked={isDetailedChatClicked}
+        setIsDetailedChatClicked={setIsDetailedChatClicked} />
     </div>
   );
 };
