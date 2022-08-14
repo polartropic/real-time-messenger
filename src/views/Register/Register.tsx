@@ -1,12 +1,15 @@
 import './Register.css';
 import { Link } from 'react-router-dom';
-import { useState } from 'react';
+import { useState, useEffect } from 'react';
 import { createUserByUsername, getUserByUsername } from '../../services/users.services';
 import { createUser } from '../../services/auth.services';
 import React from 'react';
 import { MAX_USERNAME_LENGTH, MIN_USERNAME_LENGTH } from '../../common/constants';
 import { ToastContainer, toast } from 'react-toastify';
 import 'react-toastify/dist/ReactToastify.css';
+import { getAllTeamsLive } from '../../services/teams.services';
+import { getAllUsersLive } from '../../services/users.services';
+
 
 const Register = (): JSX.Element => {
   const [regDetails, setRegDetails] = useState({
@@ -18,6 +21,24 @@ const Register = (): JSX.Element => {
     password: '',
     confirmPassword: '',
   });
+
+  const [usersCount, setUsersCount] = useState(0);
+  const [teamsCount, setTeamsCount] = useState(0);
+
+  useEffect(() => {
+    const unsubscribe = getAllUsersLive((snapshot) => {
+      setUsersCount(snapshot.size);
+    });
+    return () => unsubscribe();
+  }, []);
+
+  useEffect(() => {
+    const unsubscribe = getAllTeamsLive((snapshot) => {
+      setTeamsCount(snapshot.size);
+    });
+    return () => unsubscribe();
+  }, []);
+
 
   const updateForm = (prop: string) => (e: React.FormEvent<HTMLInputElement>) => {
     setRegDetails({
@@ -77,12 +98,12 @@ const Register = (): JSX.Element => {
           <h4 id="sign-up">Sign up</h4>
           <label htmlFor="first-name">First Name:</label>
           <br />
-          <input type="text"className="register-field" name="first-name" placeholder="first name" required value={regDetails.firstName} onChange={updateForm('firstName')}/>
+          <input type="text" className="register-field" name="first-name" placeholder="first name" required value={regDetails.firstName} onChange={updateForm('firstName')} />
           <br />
           <br />
           <label htmlFor="last-name">Last Name:</label>
           <br />
-          <input type="text"className="register-field" name="last-name" placeholder="last name" required value={regDetails.lastName} onChange={updateForm('lastName')}/>
+          <input type="text" className="register-field" name="last-name" placeholder="last name" required value={regDetails.lastName} onChange={updateForm('lastName')} />
           <br />
           <br />
           <label htmlFor="phone-number">Phone number:</label>
@@ -92,17 +113,17 @@ const Register = (): JSX.Element => {
           <br />
           <label htmlFor="username">Username:</label>
           <br />
-          <input type="text" className="register-field" name="username" placeholder="username" required value={regDetails.username} onChange={updateForm('username')}/>
+          <input type="text" className="register-field" name="username" placeholder="username" required value={regDetails.username} onChange={updateForm('username')} />
           <br />
           <br />
           <label htmlFor="email">E-mail:</label>
           <br />
-          <input type="email" className="register-field" name="email" placeholder="e-mail" required value={regDetails.email} onChange={updateForm('email')}/>
+          <input type="email" className="register-field" name="email" placeholder="e-mail" required value={regDetails.email} onChange={updateForm('email')} />
           <br />
           <br />
           <label htmlFor="password">Password:</label>
           <br />
-          <input type="password" className="register-field" name="password" placeholder="password" required value={regDetails.password} onChange={updateForm('password')}/>
+          <input type="password" className="register-field" name="password" placeholder="password" required value={regDetails.password} onChange={updateForm('password')} />
           <br />
           <br />
           <label htmlFor="confirm-password">Confirm Password:</label>
@@ -115,9 +136,13 @@ const Register = (): JSX.Element => {
             </Link>
           </h3>
           <button id="sign-up-btn">Sign up</button>
+          <div>
+            <p className='stats'> Join the ThunderTeam community!</p>
+            <p className='stats'>Registered users: {usersCount}   Teams: {teamsCount}</p>
+          </div>
         </form>
       </div>
-      <ToastContainer/>
+      <ToastContainer />
     </div>
   );
 };
