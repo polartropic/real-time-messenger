@@ -56,3 +56,20 @@
 
   padding-left: 0.5em;
 }
+
+.reactions-2 {
+  background-color: #f2f1ec;
+  margin: 0px;
+  padding: 0px;
+  border: 0px;
+  font-size: 12px;
+}
+.reactions-1 {
+  background-color: rgba(47, 69, 93, 1);
+  color: white;
+  margin: 0px;
+  padding: 0px;
+  border: 0px;
+  font-size: 12px;
+}
+

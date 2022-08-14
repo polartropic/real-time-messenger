@@ -84,11 +84,16 @@ export interface Message {
   content: string,
   author: string,
   createdOn: Date,
-  likedBy: string[],
+  reactions: {
+    yes: number,
+    no: number,
+    heart: number,
+  }
 }
 
 export interface MessageProps {
   message: Message,
+  currentChannel: Channel,
 }
 
 export interface emojiObject {

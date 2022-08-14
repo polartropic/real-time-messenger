@@ -29,6 +29,11 @@ export const addMessage = (chatId: string, username: string, content: string) =>
     author: username,
     content,
     createdOn: Date.now(),
+    reactions: {
+      yes: 0,
+      no: 0,
+      heart: 0,
+    },
   })
     .then((res) => {
       return getMessageById(chatId, res.key);
@@ -98,4 +103,20 @@ export const unlikeMessage = (chatId: string, messageId: string, username: strin
   updateLikes[`users/${username}/likedMessages/${messageId}`] = null;
 
   return update(ref(db), updateLikes);
+};
+
+export const reactWithYes = (chatID: string, messageID: string, count: number) => {
+  return update(ref(db), {
+    [`channels/${chatID}/messages/${messageID}/reactions/yes`]: count,
+  });
+};
+export const reactWithNo = (chatID: string, messageID: string, count: number) => {
+  return update(ref(db), {
+    [`channels/${chatID}/messages/${messageID}/reactions/no`]: count,
+  });
+};
+export const reactWithHeart = (chatID: string, messageID: string, count: number) => {
+  return update(ref(db), {
+    [`channels/${chatID}/messages/${messageID}/reactions/heart`]: count,
+  });
 };
