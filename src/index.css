@@ -25,7 +25,7 @@ hr {
 }
 
 ::-webkit-scrollbar-track {
-  background: rgba(245, 247, 251, 1);
+  background: transparent;
 }
 
 ::-webkit-scrollbar-thumb {
@@ -35,4 +35,14 @@ hr {
 
 ::-webkit-scrollbar-thumb:hover {
   background: rgba(47, 69, 93, 0.5);
+}
+
+::-webkit-scrollbar-track-piece:end {
+  background: transparent;
+  margin-bottom: 10px; 
+}
+
+::-webkit-scrollbar-track-piece:start {
+  background: transparent;
+  margin-top: 10px;
 }

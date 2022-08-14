@@ -20,10 +20,10 @@
 .chats-channels-list,
 .participants-list {
   grid-row: 2 / 3;
-  padding: 20px 30px;
+  padding: 20px 3px 20px 7px;
   text-align: center;
   background-color: white;
-  border-radius: 20px;
+  border-radius: 10px;
 }
 
 .chats {
@@ -81,9 +81,9 @@
   background-color: #f2f1ec;
   border: 1px solid #f2f1ec;
   padding: 7px;
-  border-radius: 20px;
+  border-radius: 8px;
   cursor: pointer;
-  margin-right: 10px;
+  margin-right: 5px;
 }
 
 .chat-item:hover {

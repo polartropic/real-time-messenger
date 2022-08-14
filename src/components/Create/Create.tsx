@@ -168,8 +168,8 @@ const Create = ({ props }: any): JSX.Element => {
         <button onClick={handleGoBack} className='go-back-btn'>
           <img src="https://firebasestorage.googleapis.com/v0/b/thunderteam-99849.appspot.com/o/icons8-go-back-48.png?alt=media&token=7bdfef4c-cf94-4147-8f4d-fc55fd086b4a" alt='go-back-icon' />
         </button>
+        <h4 id="create-team-title">Create a new {props.string || 'chat'}</h4>
         <div id="create-team-form" >
-          <h4 id="create-team-title">Create a new {props.string || 'chat'}</h4>
           <div className="search-users-create-team">
             <input type="text" defaultValue="" placeholder='search Users...' onChange={(event) => setSearchTerm(event.target.value)} />
           </div>
@@ -184,17 +184,19 @@ const Create = ({ props }: any): JSX.Element => {
         </div>
       </div>
       <div className='list-of-added-participants'>
-        <label htmlFor="name-of-the-team">Name:</label><br />
-        <br />
-        <input type="text" className={'create-chat-title'} name="team-name" placeholder={'name'} required defaultValue='' onChange={(e) => setName(e.target.value.trim())} /> <br /> <br />
+        <br/>
+        <input type="text" className={'create-chat-title'} name="team-name" placeholder='Please, add a title...' required defaultValue='' onChange={(e) => setName(e.target.value.trim())} />
 
         <h4>Added users:</h4>
-        {addedUsers.map(mappingUserRemoveButton)}
         {
           props.string === 'team' ?
             <button className='create-a-team' onClick={createTeam}>Create team</button> :
             <button className='create-a-team' onClick={() => createChatFunc(name, addedUsers)}>Create a Chat</button>
         }
+        <div className='users-container-added'>
+
+          {addedUsers.map(mappingUserRemoveButton)}
+        </div>
 
       </div>
       <ToastContainer />
