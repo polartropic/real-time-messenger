@@ -1,5 +1,6 @@
 import { ReactNode, useContext, useEffect, useState } from 'react';
 import DefaultAvatar from '../../assets/images/Default-avatar.jpg';
+import ThunderTeamLogo from '../../assets/images/ThunderTeamLogo-noBackground.png';
 import { logOut } from '../../services/auth.services';
 import AppContext from '../../providers/AppContext';
 import { useNavigate } from 'react-router-dom';
@@ -97,6 +98,7 @@ const Header = (): JSX.Element => {
         <div id='stats'>
           <h4 className='stats'>Total active users: {usersCount}</h4>
           <h4 className='stats'>Total active teams: {teamsCount}</h4>
+          <img src={ThunderTeamLogo} alt='logo' className='main-logo'></img>
         </div>
 
         <div id='navigation'>
