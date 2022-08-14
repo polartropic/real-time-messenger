@@ -4,8 +4,7 @@ import ThunderTeamLogo from '../../assets/images/ThunderTeamLogo-noBackground.pn
 import { logOut } from '../../services/auth.services';
 import AppContext from '../../providers/AppContext';
 import { useNavigate } from 'react-router-dom';
-import { getAllUsersLive, getLiveTeamsByUsername } from '../../services/users.services';
-import { getAllTeamsLive } from '../../services/teams.services';
+import { getLiveTeamsByUsername } from '../../services/users.services';
 import { Link } from 'react-router-dom';
 import './Header.css';
 import { ToastContainer, toast } from 'react-toastify';
@@ -22,25 +21,9 @@ const Header = (): JSX.Element => {
   } = useContext(AppContext);
   const user = appState.user;
   const userUsername = appState.userData?.username;
-  const [usersCount, setUsersCount] = useState(0);
-  const [teamsCount, setTeamsCount] = useState(0);
   const [isOpen, setIsOpen] = useState(false);
   const [teams, setTeams] = useState<Team[]>([]);
   const navigate = useNavigate();
-
-  useEffect(() => {
-    const unsubscribe = getAllUsersLive((snapshot) => {
-      setUsersCount(snapshot.size);
-    });
-    return () => unsubscribe();
-  }, []);
-
-  useEffect(() => {
-    const unsubscribe = getAllTeamsLive((snapshot) => {
-      setTeamsCount(snapshot.size);
-    });
-    return () => unsubscribe();
-  }, []);
 
   useEffect(() => {
     if (userUsername !== undefined) {
@@ -96,8 +79,6 @@ const Header = (): JSX.Element => {
     <>
       <header id='header'>
         <div id='stats'>
-          <h4 className='stats'>Total active users: {usersCount}</h4>
-          <h4 className='stats'>Total active teams: {teamsCount}</h4>
           <img src={ThunderTeamLogo} alt='logo' className='main-logo'></img>
         </div>
 

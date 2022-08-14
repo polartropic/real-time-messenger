@@ -16,6 +16,7 @@ import MyTeam from './views/Team/Team';
 import Create from './components/Create/Create';
 import { iAppState } from './types/Interfaces';
 import Meetings from './views/Meetings/Meetings';
+import Footer from './components/Footer/Footer';
 
 function App() {
   const [appState, setState] = useState<iAppState>({
@@ -71,6 +72,7 @@ function App() {
             <Route path="my-meetings" element={<Authenticated><Meetings /></Authenticated>} />
             <Route path="*" element={<NotFound />} />
           </Routes>
+          <Footer />
         </AppContext.Provider>
       </BrowserRouter>
     </div>

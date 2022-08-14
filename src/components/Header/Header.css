@@ -88,5 +88,6 @@
 
 .main-logo {
   height: 60px;
-  margin-left: 300px;
+  margin-left: 15px;
+  display: flexbox;
 }
