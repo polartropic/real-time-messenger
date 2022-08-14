@@ -20,8 +20,6 @@ const Message = ({ message }: MessageProps): JSX.Element => {
           <img src={DefaultAvatar} alt='avatar' className='default-avatar' />
           <br />
           {message.createdOn.toLocaleTimeString([], { hour: '2-digit', minute: '2-digit' })}
-          <br />
-          {message.createdOn.toLocaleDateString()}
         </div>
       </div>
     );
@@ -33,8 +31,6 @@ const Message = ({ message }: MessageProps): JSX.Element => {
         <img src={DefaultAvatar} alt='avatar' className='default-avatar' />
         <br />
         {message.createdOn.toLocaleTimeString([], { hour: '2-digit', minute: '2-digit' })}
-        <br />
-        {message.createdOn.toLocaleDateString()}
       </div>
 
       <div className='message-content-2'>

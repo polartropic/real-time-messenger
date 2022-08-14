@@ -1,6 +1,10 @@
-/* #message {
-  padding: 1em;
-} */
+#message {
+  padding-bottom: 0.3em;
+}
+
+#message img {
+  margin: 0;
+}
 
 .message-header-1 {
   grid-column: 2;
@@ -15,7 +19,7 @@
 
 .message-header-2 {
   grid-column: 1;
-  place-self: center;
+  place-self: start center;
 }
 
 .message-content-2 {
@@ -35,17 +39,20 @@
   background-color: rgba(47, 69, 93, 1);
   border-radius: 20px 0px 20px 20px;
   margin-left: auto; 
-  margin-right: 0;
+  margin-right: 10px;
+
+  padding-right: 0.5em;
 }
 
 .message-2 {
   display: grid;
   grid-template-columns: 1fr 5fr;
   grid-template-rows: auto;
-  color: white;
   margin: 10px;
   width: 70%;
 
-  background-color: gray;
+  background-color: #f2f1ec;
   border-radius: 0px 20px 20px 20px;
+
+  padding-left: 0.5em;
 }

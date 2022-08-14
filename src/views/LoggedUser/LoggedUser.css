@@ -14,7 +14,6 @@
   height: calc(100vh - 170px);
   padding: 20px 30px;
   text-align: center;
-
   border-radius: 20px;
 }
 
@@ -25,6 +24,16 @@
   text-align: center;
   background-color: white;
   border-radius: 20px;
+}
+
+.chats {
+  height: calc(100vh - 285px);
+  overflow-y: auto;
+}
+
+.participants {
+  height: calc(100vh - 485px);
+  overflow-y: auto;
 }
 
 .chats-channels-list {
@@ -70,13 +79,14 @@
 
 .chat-item {
   background-color: #f2f1ec;
+  border: 1px solid #f2f1ec;
   padding: 7px;
   border-radius: 20px;
-  /* color: white; */
   cursor: pointer;
+  margin-right: 10px;
 }
 
 .chat-item:hover {
-  border: 1px solid;
+  border: 1px solid black;
   font-weight: bold;
 }
