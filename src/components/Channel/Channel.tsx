@@ -28,7 +28,7 @@ const Channel = ({ currentChannel }: ChannelProps) => {
         {
           messages.length === 0 ?
             <p>No messages to show.</p> :
-            messages.map((message, key) => <Message message={message} key={key} />)
+            messages.map((message, key) => <Message currentChannel={currentChannel} message={message} key={key} />)
         }
       </div>
 
