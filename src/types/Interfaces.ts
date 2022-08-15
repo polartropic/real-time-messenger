@@ -19,6 +19,14 @@ export interface ApplicationContext {
   setState: Dispatch<SetStateAction<iAppState>>,
 }
 
+export interface UsersListProps {
+  leftSide: User[],
+  setLeftSide: Dispatch<SetStateAction<User[]>>,
+  rightSide: User[],
+  setRightSide: Dispatch<SetStateAction<User[]>>,
+
+}
+
 export interface User {
   firstName: string,
   lastName: string,
@@ -62,6 +70,7 @@ export interface ChatParticipantsProps {
   currentChannel: Channel,
   isDetailedChatClicked: boolean,
   setIsDetailedChatClicked: Dispatch<boolean>,
+
 }
 export interface TeamParticipantsProps {
   team: Team | undefined;
@@ -104,5 +113,5 @@ export interface Meeting {
   title: string,
   start: Date,
   end: Date,
-  participants: string []
+  participants: string[]
 };

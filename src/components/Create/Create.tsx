@@ -184,7 +184,7 @@ const Create = ({ props }: any): JSX.Element => {
         </div>
       </div>
       <div className='list-of-added-participants'>
-        <br/>
+        <br />
         <input type="text" className={'create-chat-title'} name="team-name" placeholder='Please, add a title...' required defaultValue='' onChange={(e) => setName(e.target.value.trim())} />
 
         <h4>Added users:</h4>
