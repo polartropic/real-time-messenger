@@ -1,4 +1,4 @@
-import { DataSnapshot, equalTo, get, onValue, orderByChild, push, query, ref, update } from 'firebase/database';
+import { DataSnapshot, equalTo, get, limitToLast, onValue, orderByChild, push, query, ref, update } from 'firebase/database';
 import { db } from '../config/firebase-config';
 import { Message } from '../types/Interfaces';
 
@@ -45,6 +45,15 @@ export const editMessage = (chatId: string, messageId: string, content: string) 
     [`channels/${chatId}/messages/${messageId}/content`]: content,
   });
 };
+
+// export const editLastMessage = (chatId: string, content: string) => {
+//   return get(query(ref(db, 'channels'), orderByChild('messages'), limitToLast(1)))
+//     .then((lastMessage) => {
+//       return update(ref(db), {
+//         [`channels/${chatId}/messages/${lastMessage}/content`]: content,
+//       });
+//     });
+// };
 
 export const getMessageById = (chatId: string, messageId: string | null) => {
   return get(ref(db, `channels/${chatId}/messages/${messageId}`))

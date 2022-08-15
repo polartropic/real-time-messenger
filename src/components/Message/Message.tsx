@@ -24,17 +24,30 @@ const Message = ({ message, currentChannel }: MessageProps): JSX.Element => {
   if (message.author === currentUser?.username) {
     return (
       <div id='message' className='message-1'>
-        <div className='message-content-1'>
-          <p className='message-author-1'>@{message.author}</p>
-          <p>{message.content}</p>
+        <div className='edit-message'>
+          <button className='edit-message-btn'>Edit</button>
         </div>
-        <div className='message-header-1'>
+
+        <div className='message-date-1'>
+          {message.createdOn.toLocaleDateString('en-GB')} at {message.createdOn.toLocaleTimeString([], { hour: '2-digit', minute: '2-digit' })}
+        </div>
+
+        <div className='message-author-1'>
+          @{message.author}
+        </div>
+
+        <div className='message-avatar-1'>
           <img src={DefaultAvatar} alt='avatar' className='default-avatar' />
-          {message.createdOn.toLocaleTimeString([], { hour: '2-digit', minute: '2-digit' })}
+        </div>
+
+        <div className='message-content-1'>
+          {message.content}
+        </div>
+
+        <div className='react-btns-1'>
           <button className='reactions-1'>{`👍${message.reactions.yes}`}</button>
           <button className='reactions-1'>{`👎${message.reactions.no}`}</button>
           <button className='reactions-1'>{`❤️${message.reactions.heart}`}</button>
-          <br />
         </div>
       </div>
     );
@@ -42,18 +55,26 @@ const Message = ({ message, currentChannel }: MessageProps): JSX.Element => {
 
   return (
     <div id='message' className='message-2'>
-      <div className='message-header-2'>
+      <div className='message-avatar-2'>
         <img src={DefaultAvatar} alt='avatar' className='default-avatar' />
-        <br />
-        {message.createdOn.toLocaleTimeString([], { hour: '2-digit', minute: '2-digit' })}
-        <button onClick={handleYes} className='reactions-2'>{`👍${message.reactions.yes}`}</button>
-        <button onClick={handleNo} className='reactions-2'>{`👎${message.reactions.no}`}</button>
-        <button onClick={handleHeart} className='reactions-2'>{`❤️${message.reactions.heart}`}</button>
+      </div>
+
+      <div className='message-author-2'>
+        @{message.author}
+      </div>
+
+      <div className='message-date-2'>
+        {message.createdOn.toLocaleDateString('en-GB')} at {message.createdOn.toLocaleTimeString([], { hour: '2-digit', minute: '2-digit' })}
       </div>
 
       <div className='message-content-2'>
-        <p className='message-author-2'>@{message.author}</p>
-        <p>{message.content}</p>
+        {message.content}
+      </div>
+
+      <div className='react-btns-2'>
+        <button onClick={handleYes} className='reactions-2'>{`👍${message.reactions.yes}`}</button>
+        <button onClick={handleNo} className='reactions-2'>{`👎${message.reactions.no}`}</button>
+        <button onClick={handleHeart} className='reactions-2'>{`❤️${message.reactions.heart}`}</button>
       </div>
     </div>
   );
