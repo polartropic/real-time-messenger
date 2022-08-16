@@ -21,12 +21,13 @@ export const getMeetingByID = (id: string | null) => {
     });
 };
 
-export const createMeeting = (title: string, start: string, end: string, participants: string[]) => {
+export const createMeeting = (title: string, start: string, end: string, participants: string[], id: string) => {
   return push(ref(db, 'meetings'), {
     title,
     start,
     end,
     participants,
+    id,
   })
     .then((res) => getMeetingByID(res.key));
 };
