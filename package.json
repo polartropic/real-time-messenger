@@ -3,6 +3,8 @@
   "version": "0.1.0",
   "private": true,
   "dependencies": {
+    "@dytesdk/react-ui-kit": "^1.21.0",
+    "@dytesdk/react-web-core": "^1.6.1",
     "@testing-library/jest-dom": "^5.16.4",
     "@testing-library/react": "^13.3.0",
     "@testing-library/user-event": "^13.5.0",
@@ -15,6 +17,8 @@
     "@types/react-dom": "^18.0.6",
     "@types/react-router-dom": "^5.3.3",
     "@types/react-toastify": "^4.1.0",
+    "axios": "^0.27.2",
+    "dyte-client": "^0.36.10",
     "emoji-picker-react": "^3.6.1",
     "eslint-config-google": "^0.14.0",
     "firebase": "^9.9.1",
