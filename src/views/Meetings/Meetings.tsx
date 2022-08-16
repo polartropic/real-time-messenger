@@ -31,6 +31,7 @@ const Meetings = (): JSX.Element => {
         start: new Date(meeting.start),
         end: new Date(meeting.end),
         participants: meeting.participants,
+        id: meeting.id,
       };
     });
 
@@ -50,6 +51,7 @@ const Meetings = (): JSX.Element => {
         Start: {selectedEvent?.start.toLocaleTimeString('en-GB')}<br />
         End: {selectedEvent?.end.toLocaleTimeString('en-GB')}<br />
         Participants: {selectedEvent?.participants.join(', ')} <br />
+        Meeting ID: {selectedEvent?.id} <br />
         <button id='join-meeting-btn'>Join meeting</button>
       </div>
     );
