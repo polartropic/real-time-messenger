@@ -13,6 +13,9 @@ const ChannelsList = (
   const openCreateChat = () => {
     props.setIsCreateChatClicked(true);
     props.setIsDetailedChatClicked(false);
+    if (props.setIsDetailedTeamClicked) {
+      props.setIsDetailedTeamClicked(false);
+    }
     if (props.setIsCreateTeamView) {
       props.setIsCreateTeamView(false);
     }
@@ -21,6 +24,10 @@ const ChannelsList = (
   const openDetailedChat = (chatName: string) => {
     props.setIsDetailedChatClicked(true);
     props.setIsCreateChatClicked(false);
+    if (props.setIsDetailedTeamClicked) {
+      props.setIsDetailedTeamClicked(false);
+    }
+
     if (props.setIsCreateTeamView) {
       props.setIsCreateTeamView(false);
     }

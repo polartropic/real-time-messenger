@@ -15,16 +15,15 @@
 }
 
 .create-team-wrapper,
-.list-of-added-participants  {
+.list-of-added-participants {
   border: 1px solid rgba(47, 69, 93, 1);
-  height: calc(90vh - 170px);
+  height: calc(80vh - 170px);
   border-radius: 10px;
   padding: 10%;
   background-color: rgba(47, 69, 93, 0.1);
 }
 
-.search-users-create-team>input,
-input.create-chat-title {
+input {
   border: none;
   border-radius: 10px;
   background-color: rgba(245, 247, 251, 1);
@@ -33,7 +32,8 @@ input.create-chat-title {
   border: 1px solid rgba(47, 69, 93, 1);
 }
 
-.users-container, .users-container-added {
+.users-container,
+.users-container-added {
   overflow-y: auto;
   height: calc(65vh - 170px);
   padding-right: 10px;

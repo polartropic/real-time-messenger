@@ -1,13 +1,13 @@
-import { useContext, useEffect, useState } from 'react';
+import { useEffect, useState } from 'react';
 import { uid } from 'uid';
-import AppContext from '../../providers/AppContext';
 import { TeamParticipantsProps } from '../../types/Interfaces';
 
-const TeamParticipants = ({ team, setIsDetailedChatClicked }: TeamParticipantsProps): JSX.Element => {
+const TeamParticipants = ({ team,
+  setIsDetailedChatClicked,
+  setIsDetailedTeamClicked,
+  setIsCreateChatClicked }: TeamParticipantsProps): JSX.Element => {
   const [members, setMembers] = useState<string[]>([]);
 
-  const { appState } = useContext(AppContext);
-  const loggedUser = appState.userData?.username;
   useEffect(() => {
     if (team) {
       setMembers(team.members);
@@ -17,6 +17,15 @@ const TeamParticipants = ({ team, setIsDetailedChatClicked }: TeamParticipantsPr
     return <div key={key}>
       <p className='participant-item'>{participant}</p>
     </div>;
+  };
+  const loadDetailedChat = () => {
+    setIsDetailedChatClicked(true);
+    if (setIsDetailedTeamClicked) {
+      setIsDetailedTeamClicked(false);
+    };
+    if (setIsCreateChatClicked) {
+      setIsCreateChatClicked(false);
+    };
   };
 
   return (
@@ -31,10 +40,7 @@ const TeamParticipants = ({ team, setIsDetailedChatClicked }: TeamParticipantsPr
       </div>
 
       <div className="manage-participants-btns">
-        {loggedUser === team?.owner ?
-          <button className="add-btn"><span>Add members</span></button> :
-          null}
-        <button className="add-btn" onClick={() => setIsDetailedChatClicked(true)}><span>Chat details</span></button>
+        <button className="add-btn" onClick={() => loadDetailedChat()}><span>Chat details</span></button>
 
       </div>
     </div>
