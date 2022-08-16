@@ -70,12 +70,15 @@ export interface ChatParticipantsProps {
   currentChannel: Channel,
   isDetailedChatClicked: boolean,
   setIsDetailedChatClicked: Dispatch<boolean>,
-
+  setIsDetailedTeamClicked?: Dispatch<boolean>,
+  setIsCreateChatClicked?: Dispatch<boolean>
 }
 export interface TeamParticipantsProps {
   team: Team | undefined;
   isDetailedChatClicked: boolean,
   setIsDetailedChatClicked: Dispatch<boolean>,
+  setIsDetailedTeamClicked?: Dispatch<boolean>,
+  setIsCreateChatClicked?: Dispatch<boolean>,
 }
 export interface ChannelsListProps {
   props: {
@@ -84,7 +87,8 @@ export interface ChannelsListProps {
     setIsCreateChatClicked: Dispatch<boolean>,
     setIsDetailedChatClicked: Dispatch<boolean>,
     setIsCreateTeamView?: Dispatch<boolean>,
-    setCurrentChat: Dispatch<SetStateAction<Channel>>
+    setCurrentChat: Dispatch<SetStateAction<Channel>>,
+    setIsDetailedTeamClicked?: Dispatch<boolean>,
   }
 }
 

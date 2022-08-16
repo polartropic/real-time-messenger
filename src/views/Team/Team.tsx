@@ -36,6 +36,7 @@ const MyTeam = (): JSX.Element => {
   const [chatList, setChatList] = useState<IChannel[]>([]);
   const [members, setMembers] = useState<string[]>([]);
   const [title, setTitle] = useState<string>('');
+  const [isDetailedTeamClicked, setIsDetailedTeamClicked] = useState<boolean>(false);
 
   const [teamMembersObjects, setTeamMembersObject] = useState<User[]>([]);
   const [addedToChat, setAddedToChat] = useState<User[]>([]);
@@ -48,13 +49,18 @@ const MyTeam = (): JSX.Element => {
   useEffect(() => {
     if (isCreateChatClicked) {
       setIsDetailedChatClicked(false);
-      setIsCreateChatClicked(true);
+      setIsDetailedTeamClicked(false);
     }
     if (isDetailedChatClicked) {
       setIsCreateChatClicked(false);
+      setIsDetailedTeamClicked(false);
       setIsDetailedChatClicked(true);
     }
-  }, [isCreateChatClicked, isDetailedChatClicked]);
+    if (isDetailedTeamClicked) {
+      setIsDetailedChatClicked(false);
+      setIsCreateChatClicked(false);
+    }
+  }, [isCreateChatClicked, isDetailedChatClicked, isDetailedTeamClicked]);
 
   useEffect(() => {
     getTeamByName(name!)
@@ -110,6 +116,7 @@ const MyTeam = (): JSX.Element => {
   };
 
   const createChatFunc = () => {
+    setIsDetailedTeamClicked(false);
     if (title.length < MIN_CHANNEL_NAME_LENGTH || title.length > MAX_CHANNEL_NAME_LENGTH) {
       return toast.warning(`The name of the chat must be between ${MIN_CHANNEL_NAME_LENGTH} and ${MAX_CHANNEL_NAME_LENGTH} symbols`);
     }
@@ -125,15 +132,16 @@ const MyTeam = (): JSX.Element => {
         });
     }
   };
+  console.log(isDetailedTeamClicked, 'detailedTeam', isDetailedChatClicked, 'detailedChat', isCreateChatClicked, 'createChat');
 
   return (
     <div className='landing-page'>
       {team?.channels ?
         <>
-          <ChannelsList props={{ chatList, setIsCreateChatClicked, setIsDetailedChatClicked, setCurrentChat }} />
+          <ChannelsList props={{ chatList, setIsCreateChatClicked, setIsDetailedChatClicked, setCurrentChat, setIsDetailedTeamClicked }} />
         </> :
         null}
-      <ChannelsList props={{ chatList, setIsCreateChatClicked, setIsDetailedChatClicked, setCurrentChat }} />
+      <ChannelsList props={{ chatList, setIsCreateChatClicked, setIsDetailedChatClicked, setCurrentChat, setIsDetailedTeamClicked }} />
 
       <div className='main-container'>
         <>
@@ -146,19 +154,13 @@ const MyTeam = (): JSX.Element => {
                 setLeftSide={setTeamMembersObject}
                 rightSide={addedToChat} setRightSide={setAddedToChat} />
             </> :
-            // team.owner === currentUser ?
-            //   <>
-            //     <ManiPulateUsersLists
-            //       leftSide={allUsers}
-            //       setLeftSide={setAllUsers}
-            //       rightSide={teamMembersObjects}
-            //       setRightSide={setTeamMembersObject} />
-            //   </> :
             null
-
           }
           {isDetailedChatClicked ?
             <Channel currentChannel={currentChat} /> :
+            null
+          }
+          {isDetailedTeamClicked && Object.values(team)[0].owner === currentUser ?
             <>
               <h4>{team.name}</h4>
               <button className='create-a-team' onClick={updateTeam}>Update users</button>
@@ -167,15 +169,14 @@ const MyTeam = (): JSX.Element => {
                 setLeftSide={setAllUsers}
                 rightSide={teamMembersObjects}
                 setRightSide={setTeamMembersObject} />
-            </>
-
-          }
+            </> :
+            null}
         </>
       </div>
       {
         isDetailedChatClicked ?
           <ChatParticipants currentChannel={currentChat} isDetailedChatClicked={isDetailedChatClicked}
-            setIsDetailedChatClicked={setIsDetailedChatClicked} /> :
+            setIsDetailedChatClicked={setIsDetailedChatClicked} setIsDetailedTeamClicked={setIsDetailedTeamClicked} /> :
           <TeamParticipants team={teamProps} isDetailedChatClicked={isDetailedChatClicked}
             setIsDetailedChatClicked={setIsDetailedChatClicked}
           />

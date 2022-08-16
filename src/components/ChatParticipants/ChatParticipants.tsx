@@ -8,7 +8,11 @@ import { uid } from 'uid';
 import DateTimePicker from 'react-datetime-picker';
 import './ChatParticipants.css';
 
-const ChatParticipants = ({ currentChannel, isDetailedChatClicked, setIsDetailedChatClicked }: ChatParticipantsProps): JSX.Element | null => {
+const ChatParticipants = ({ currentChannel,
+  isDetailedChatClicked,
+  setIsDetailedChatClicked,
+  setIsDetailedTeamClicked,
+  setIsCreateChatClicked }: ChatParticipantsProps): JSX.Element | null => {
   const { appState } = useContext(AppContext);
   const userUsername = appState.userData?.username;
 
@@ -27,10 +31,10 @@ const ChatParticipants = ({ currentChannel, isDetailedChatClicked, setIsDetailed
       .then(() => toast.success('Successfully scheduled meeting!'));
   };
 
-  const leaveChat = (username: string | undefined, chatName: string) => {
-    deleteUserFromChat(username, chatName)
+  const leaveChat = () => {
+    deleteUserFromChat(userUsername, currentChannel.title)
       .then(() => {
-        toast.success(`You have successfully been removed from chat ${chatName}!`);
+        toast.success(`You have successfully been removed from chat ${currentChannel.title}!`);
       });
 
     const currentUserIndex = currentChannel.participants.indexOf(userUsername!);
@@ -42,6 +46,16 @@ const ChatParticipants = ({ currentChannel, isDetailedChatClicked, setIsDetailed
     return <div key={key}>
       <p className='participant-item'>{participant}</p>
     </div>;
+  };
+
+  const loadTeamDetails = () => {
+    setIsDetailedChatClicked(false);
+    if (setIsCreateChatClicked) {
+      setIsCreateChatClicked(false);
+    }
+    if (setIsDetailedTeamClicked) {
+      setIsDetailedTeamClicked(true);
+    }
   };
 
   return (
@@ -76,10 +90,10 @@ const ChatParticipants = ({ currentChannel, isDetailedChatClicked, setIsDetailed
 
         <div className="manage-participants-btns">
           {URL.includes('/teams/') ?
-            <button className="add-btn" onClick={() => setIsDetailedChatClicked(false)}><span>Team details</span></button> :
+            <button className="add-btn" onClick={() => loadTeamDetails()}><span>Team details</span></button> :
             null}
           <br />
-          <button onClick={() => leaveChat(userUsername, currentChannel.title)} className="leave-btn">Leave channel</button>
+          <button onClick={() => leaveChat()} className="leave-btn">Leave channel</button>
         </div>
         <ToastContainer />
       </div> :
