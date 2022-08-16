@@ -18,10 +18,8 @@ export const getMeetingByID = (id: string | null) => {
       }
 
       return meeting;
-    })
-    .catch(console.error);
+    });
 };
-
 
 export const createMeeting = (title: string, start: string, end: string, participants: string[]) => {
   return push(ref(db, 'meetings'), {
@@ -30,8 +28,7 @@ export const createMeeting = (title: string, start: string, end: string, partici
     end,
     participants,
   })
-    .then((res) => getMeetingByID(res.key))
-    .catch(console.error);
+    .then((res) => getMeetingByID(res.key));
 };
 
 export const getAllMeetings = () => {

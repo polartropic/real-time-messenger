@@ -25,8 +25,8 @@ export const addTeamToDB = async (name: string, owner: string, members: string[]
     members: members || [],
     channels: [],
   };
+
   return push(ref(db, 'teams'), team);
-  // .then((res) => getTeamByID(res.key))
 };
 
 export const getLiveTeamChannels = (teamID: string, listen: (_snapshot: DataSnapshot) => void) => {

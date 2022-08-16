@@ -5,7 +5,7 @@ export const createUserByUsername = (firstName: string, lastName: string, phoneN
   username: string, email: string | null, uid: string) => {
   return set(ref(db, `users/${username}`),
     { firstName, lastName, phoneNumber, username, email, uid, teams: [], channels: [], friends: [] },
-  ).catch((e) => console.log(e));
+  );
 };
 
 export const getUserByUsername = (username: string) => {
@@ -15,6 +15,7 @@ export const getUserByUsername = (username: string) => {
 export const getLiveChannelsByUsername = (username: string, listen: (_snapshot: DataSnapshot) => void) => {
   return onValue(ref(db, `users/${username}/channels`), listen);
 };
+
 export const getLiveTeamsByUsername = (username: string, listen: (_snapshot: DataSnapshot) => void) => {
   return onValue(ref(db, `users/${username}/teams`), listen);
 };
