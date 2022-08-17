@@ -16,6 +16,7 @@ import MyTeam from './views/Team/Team';
 import Create from './components/Create/Create';
 import { iAppState } from './types/Interfaces';
 import Meetings from './views/Meetings/Meetings';
+import DetailedMeeting from './views/DetailedMeeting/DetailedMeeting';
 
 function App() {
   const [appState, setState] = useState<iAppState>({
@@ -68,6 +69,7 @@ function App() {
             <Route path="edit-profile" element={<Authenticated><EditProfile /></Authenticated>} />
             <Route path="create-team" element={<Authenticated><Create /></Authenticated>} />
             <Route path="teams/:name" element={<Authenticated><MyTeam /></Authenticated>} />
+            <Route path="my-meetings/:meetingID" element={<Authenticated><DetailedMeeting /></Authenticated>} />
             <Route path="my-meetings" element={<Authenticated><Meetings /></Authenticated>} />
             <Route path="*" element={<NotFound />} />
           </Routes>
