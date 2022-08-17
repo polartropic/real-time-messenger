@@ -6,6 +6,7 @@ import { getAllMeetings } from '../../services/meetings.services';
 import AppContext from '../../providers/AppContext';
 import { Meeting } from '../../types/Interfaces';
 import './Meetings.css';
+import { Link } from 'react-router-dom';
 
 const localizer = momentLocalizer(moment);
 
@@ -51,8 +52,10 @@ const Meetings = (): JSX.Element => {
         Start: {selectedEvent?.start.toLocaleTimeString('en-GB')}<br />
         End: {selectedEvent?.end.toLocaleTimeString('en-GB')}<br />
         Participants: {selectedEvent?.participants.join(', ')} <br />
-        Meeting ID: {selectedEvent?.id} <br />
-        <button id='join-meeting-btn'>Join meeting</button>
+        Meeting ID: {selectedEvent?.id}
+        <Link to={`/my-meetings/${selectedEvent?.id}`}>
+          <button id='join-meeting-btn'>Join meeting</button>
+        </Link>
       </div>
     );
   };
