@@ -8,7 +8,7 @@ import Channel from '../../components/Channel/Channel';
 import { Channel as IChannel } from '../../types/Interfaces';
 import TeamParticipants from '../../components/TeamParticipants/TeamParticipants';
 import ManiPulateUsersLists from '../../components/ManipulateUsersLists/ManiPulateUsersLists';
-import { getAllUsers, getUserByUsername, updateUserChats } from '../../services/users.services';
+import { getAllUsers, updateUserChats } from '../../services/users.services';
 import { toast } from 'react-toastify';
 import { MIN_CHANNEL_NAME_LENGTH, MAX_CHANNEL_NAME_LENGTH, MIN_NUMBER_OF_CHAT_PARTICIPANTS } from '../../common/constants';
 import { createTeamChat } from '../../services/channels.services';
@@ -77,26 +77,6 @@ const MyTeam = (): JSX.Element => {
       .catch(console.error);
   }, [name]);
 
-  // useEffect(() => {
-  //   const resultArr = members
-  //     .map((member) => {
-  //       return getUserByUsername(member)
-  //         .then((snapshot) => {
-  //           if (snapshot.exists()) {
-  //             return snapshot.val();
-  //           }
-  //         })
-  //         .catch(console.error);
-  //     });
-  //   Promise.all(resultArr)
-  //     .then((res) => {
-  //       setTeamMembersObject(res);
-  //       setUsersToRemove(res);
-  //       setInitialChatParticipants(teamMembersObjects);
-  //     });
-  // }, [members, teamMembersObjects]);
-
-
   const teamID = Object.keys(team)[0];
   useEffect(() => {
     const unsubscribe = getLiveTeamChannels(teamID, (snapshot) => {
@@ -112,7 +92,7 @@ const MyTeam = (): JSX.Element => {
         console.log(members);
         const allUsersInTeam = Object.values(usersObj)
           .filter((userA) => [...members].includes(userA.username));
-        // setTeamMembersObject(allUsersInTeam);
+        setTeamMembersObject(allUsersInTeam);
         setUsersToRemove(allUsersInTeam);
         setInitialChatParticipants(allUsersInTeam);
 
@@ -126,8 +106,12 @@ const MyTeam = (): JSX.Element => {
 
   const updateTeam = () => {
     const stringMembers = userstoRemove.map((member) => member.username);
-    updateTeamMembers(teamID, stringMembers);
-    manageTeamMembersUpdateUsers(outerUsers, userstoRemove, Object.values(team)[0], teamID);
+    updateTeamMembers(teamID, stringMembers)
+      .then(() => {
+        manageTeamMembersUpdateUsers(outerUsers, userstoRemove, Object.values(team)[0], teamID);
+      })
+      .then(() => toast.success('You have succesfully updated your team!'))
+      .catch((err) => toast.warning(err));
     // TODO not finished. I need to update somehow the teams of the deleted or added users...
   };
 
@@ -147,14 +131,12 @@ const MyTeam = (): JSX.Element => {
       createTeamChat(teamID, title, [...membersToAdd, currentUser!])
         .then(() => {
           toast.success('Successful chat creation!');
-          // setIsCreateChatClicked(false);
           [...members, currentUser!].map((participant) => updateUserChats(participant, title));
           setAddedToChat([]);
           setInitialChatParticipants(teamMembersObjects);
         });
     }
   };
-  // console.log(isDetailedTeamClicked, 'detailedTeam', isDetailedChatClicked, 'detailedChat', isCreateChatClicked, 'createChat');
 
   return (
     <div className='landing-page'>
