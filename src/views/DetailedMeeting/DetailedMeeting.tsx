@@ -28,23 +28,13 @@ const DetailedMeeting = (): JSX.Element => {
     const dyteMeetingCreation = {
       method: 'GET',
       url: `${BASE_URL}/organizations/${ORGANIZATION_ID}/meetings/${meetingID}`,
-      // eslint-disable-next-line quote-props
-      headers: { 'Content-Type': 'application/json', Authorization: `${API_KEY}`, 'Access-Control-Allow-Origin': '*' },
+      headers: { 'Content-Type': 'application/json', 'Authorization': `${API_KEY}`, 'Access-Control-Allow-Origin': '*' },
     };
 
-    axios.request(dyteMeetingCreation).then(function(response) {
-      setReceivedMeeting(response.data.data.meeting);
-    }).catch(function(error) {
-      console.error(error);
-    });
-  }, [meetingID]);
-
-  useEffect(() => {
     const dyteParticipantCreation = {
       method: 'POST',
       url: `${BASE_URL}/organizations/${ORGANIZATION_ID}/meetings/${meetingID}/participant`,
-      // eslint-disable-next-line quote-props
-      headers: { 'Content-Type': 'application/json', Authorization: `${API_KEY}`, 'Access-Control-Allow-Origin': '*' },
+      headers: { 'Content-Type': 'application/json', 'Authorization': `${API_KEY}`, 'Access-Control-Allow-Origin': '*' },
       data: {
         clientSpecificId: userData?.username,
         userDetails: {
@@ -54,13 +44,15 @@ const DetailedMeeting = (): JSX.Element => {
         roleName: 'host',
       },
     };
-    axios.request(dyteParticipantCreation).then(function(response) {
-      setAddedUser(response.data.data.authResponse.authToken);
-    }).catch(function(error) {
-      console.error(error);
-    });
-  }, [meetingID, userData?.firstName, userData?.username]);
 
+    axios.request(dyteMeetingCreation)
+      .then((response) => setReceivedMeeting(response.data.data.meeting))
+      .catch((error) => console.error(error));
+
+    axios.request(dyteParticipantCreation)
+      .then((response)=> setAddedUser(response.data.data.authResponse.authToken))
+      .catch((error) => console.error(error));
+  }, [meetingID, userData?.firstName, userData?.username]);
 
   const [meeting, initMeeting] = useDyteClient();
 
@@ -75,7 +67,7 @@ const DetailedMeeting = (): JSX.Element => {
     });
   }, [addedUser, receivedMeeting.roomName]);
 
-  function MyMeeting() {
+  const MyMeeting = () => {
     const { meeting } = useDyteMeeting();
 
     useEffect(() => {
@@ -87,7 +79,7 @@ const DetailedMeeting = (): JSX.Element => {
         <DyteMeeting showSetupScreen={true} mode="fill" meeting={meeting!} />
       </div>
     );
-  }
+  };
 
   return (
     <DyteProvider value={meeting}>
