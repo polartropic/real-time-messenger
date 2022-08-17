@@ -16,3 +16,4 @@ export const MIN_PASSWORD_LENGTH = 6;
 
 export const ORGANIZATION_ID = 'b7838bf7-5f4b-4e40-b240-8f61e3e85edf';
 export const API_KEY = '444a80545af3c6898c9b';
+export const BASE_URL = 'https://api.cluster.dyte.in/v1';
