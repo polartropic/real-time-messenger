@@ -1,6 +1,6 @@
 import { ref, get, push, update, query, equalTo, orderByChild } from 'firebase/database';
 import { db } from '../config/firebase-config';
-import { User } from '../types/Interfaces';
+import { Channel, Team, User } from '../types/Interfaces';
 
 export const getAllChannels = () => {
   return get(query(ref(db, 'channels')));
@@ -52,6 +52,13 @@ export const createTeamChat = (teamID: string, title: string, participants: stri
     }))
     .then((result) => getChatById(result.key))
     .catch(console.error);
+};
+
+export const getChatsByTeam = (team: Team) => {
+  return getAllChannels()
+    .then((snapshot) => console.log(Object.values(snapshot.val())
+      .filter((ch: any) => Object.keys(team.channels).includes(ch.title))));
+  // .filter((ch: Channel) => Object.keys(team.channels).includes(ch.title)));
 };
 
 export const deleteUserFromChat = (username: string | undefined, chatName: string) => {

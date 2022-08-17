@@ -2,7 +2,7 @@ import { useContext, useEffect, useState } from 'react';
 import { useParams } from 'react-router-dom';
 import ChannelsList from '../../components/ChannelsList/ChannelsList';
 import ChatParticipants from '../../components/ChatParticipants/ChatParticipants';
-import { getLiveTeamChannels, getTeamByName, updateTeamMembers } from '../../services/teams.services';
+import { getLiveTeamChannels, getTeamByName, manageTeamMembersUpdateUsers, updateTeamMembers } from '../../services/teams.services';
 import { Team, User } from '../../types/Interfaces';
 import Channel from '../../components/Channel/Channel';
 import { Channel as IChannel } from '../../types/Interfaces';
@@ -20,7 +20,7 @@ const MyTeam = (): JSX.Element => {
   const [team, setTeam] = useState<Team>({
     name: '',
     owner: '', // UserID
-    members: [], // UserIDs
+    members: [], // Users
     channels: [], // ChannelIDs
   });
   const [currentChat, setCurrentChat] = useState<IChannel>({
@@ -40,10 +40,12 @@ const MyTeam = (): JSX.Element => {
 
   const [teamMembersObjects, setTeamMembersObject] = useState<User[]>([]);
   const [addedToChat, setAddedToChat] = useState<User[]>([]);
+  const [initialChatParticipants, setInitialChatParticipants] = useState<User[]>([]);
   const [teamProps, setTeamProps] = useState<Team>();
   const { name } = useParams<{ name: string }>();
   const { appState } = useContext(AppContext);
-  const [allUsers, setAllUsers] = useState<User[]>([]);
+  const [outerUsers, setOuterUsers] = useState<User[]>([]);
+  const [userstoRemove, setUsersToRemove] = useState<User[]>([]);
   const currentUser = appState.userData?.username;
 
   useEffect(() => {
@@ -75,20 +77,24 @@ const MyTeam = (): JSX.Element => {
       .catch(console.error);
   }, [name]);
 
-  useEffect(() => {
-    const resultArr = members
-      .map((member) => {
-        return getUserByUsername(member)
-          .then((snapshot) => {
-            if (snapshot.exists()) {
-              return snapshot.val();
-            }
-          })
-          .catch(console.error);
-      });
-    Promise.all(resultArr)
-      .then((res) => setTeamMembersObject(res));
-  }, [members]);
+  // useEffect(() => {
+  //   const resultArr = members
+  //     .map((member) => {
+  //       return getUserByUsername(member)
+  //         .then((snapshot) => {
+  //           if (snapshot.exists()) {
+  //             return snapshot.val();
+  //           }
+  //         })
+  //         .catch(console.error);
+  //     });
+  //   Promise.all(resultArr)
+  //     .then((res) => {
+  //       setTeamMembersObject(res);
+  //       setUsersToRemove(res);
+  //       setInitialChatParticipants(teamMembersObjects);
+  //     });
+  // }, [members, teamMembersObjects]);
 
 
   const teamID = Object.keys(team)[0];
@@ -103,15 +109,25 @@ const MyTeam = (): JSX.Element => {
     getAllUsers()
       .then((snapshot) => {
         const usersObj: object = snapshot.val();
+        console.log(members);
+        const allUsersInTeam = Object.values(usersObj)
+          .filter((userA) => [...members].includes(userA.username));
+        // setTeamMembersObject(allUsersInTeam);
+        setUsersToRemove(allUsersInTeam);
+        setInitialChatParticipants(allUsersInTeam);
+
+
         const allUsersOutOfTeam: User[] = Object.values(usersObj)
-          .filter((user) => ![...members, team.owner].includes(user.username));
-        setAllUsers(allUsersOutOfTeam);
+          .filter((userA) => ![...members, team.owner].includes(userA.username));
+        console.log(allUsersOutOfTeam);
+        setOuterUsers(allUsersOutOfTeam);
       });
   }, [members, team.owner]);
 
   const updateTeam = () => {
-    const stringMembers = teamMembersObjects.map((member) => member.username);
+    const stringMembers = userstoRemove.map((member) => member.username);
     updateTeamMembers(teamID, stringMembers);
+    manageTeamMembersUpdateUsers(outerUsers, userstoRemove, Object.values(team)[0], teamID);
     // TODO not finished. I need to update somehow the teams of the deleted or added users...
   };
 
@@ -124,19 +140,25 @@ const MyTeam = (): JSX.Element => {
       return toast.warning('Please add at least one participant in the chat!');
     }
     if (teamID) {
-      createTeamChat(teamID, title, [...members, currentUser!])
+      console.log(addedToChat);
+
+      const membersToAdd = addedToChat.map((mem) => mem.username);
+
+      createTeamChat(teamID, title, [...membersToAdd, currentUser!])
         .then(() => {
           toast.success('Successful chat creation!');
           // setIsCreateChatClicked(false);
           [...members, currentUser!].map((participant) => updateUserChats(participant, title));
+          setAddedToChat([]);
+          setInitialChatParticipants(teamMembersObjects);
         });
     }
   };
-  console.log(isDetailedTeamClicked, 'detailedTeam', isDetailedChatClicked, 'detailedChat', isCreateChatClicked, 'createChat');
+  // console.log(isDetailedTeamClicked, 'detailedTeam', isDetailedChatClicked, 'detailedChat', isCreateChatClicked, 'createChat');
 
   return (
     <div className='landing-page'>
-      {team?.channels ?
+      {team.channels ?
         <>
           <ChannelsList props={{ chatList, setIsCreateChatClicked, setIsDetailedChatClicked, setCurrentChat, setIsDetailedTeamClicked }} />
         </> :
@@ -146,12 +168,11 @@ const MyTeam = (): JSX.Element => {
       <div className='main-container'>
         <>
           {isCreateChatClicked ?
-
             <>
               <input type="text" className={'create-chat-title'} name="team-name" placeholder='Please, add a title...' required defaultValue='' onChange={(e) => setTitle(e.target.value.trim())} />
               <button className='create-a-team' onClick={createChatFunc}>Create a Chat</button>
-              <ManiPulateUsersLists leftSide={teamMembersObjects}
-                setLeftSide={setTeamMembersObject}
+              <ManiPulateUsersLists leftSide={initialChatParticipants}
+                setLeftSide={setInitialChatParticipants}
                 rightSide={addedToChat} setRightSide={setAddedToChat} />
             </> :
             null
@@ -165,10 +186,10 @@ const MyTeam = (): JSX.Element => {
               <h4>{team.name}</h4>
               <button className='create-a-team' onClick={updateTeam}>Update users</button>
               <ManiPulateUsersLists
-                leftSide={allUsers}
-                setLeftSide={setAllUsers}
-                rightSide={teamMembersObjects}
-                setRightSide={setTeamMembersObject} />
+                leftSide={outerUsers}
+                setLeftSide={setOuterUsers}
+                rightSide={userstoRemove}
+                setRightSide={setUsersToRemove} />
             </> :
             null}
         </>

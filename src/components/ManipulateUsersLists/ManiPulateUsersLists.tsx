@@ -6,8 +6,6 @@ import UserComponent from '../User/User';
 import './../Create/Create.css';
 
 const ManiPulateUsersLists = ({ leftSide, setLeftSide, rightSide, setRightSide }: UsersListProps): JSX.Element => {
-  // const [leftSideUsers, setLeftSideUsers] = useState<User[]>([]);
-  // const [rightSideUsers, setRightSideUsers] = useState<User[]>([]);
   const [searchTermLeft, setSearchTermLeft] = useState<string>('');
   const [searchTermRight, setSearchTermRight] = useState<string>('');
 
@@ -75,10 +73,6 @@ const ManiPulateUsersLists = ({ leftSide, setLeftSide, rightSide, setRightSide }
   return (
     <div className='create-team-view'>
       <div className='create-team-wrapper'>
-        {/* <button onClick={handleGoBack} className='go-back-btn'>
-          <img src="https://firebasestorage.googleapis.com/v0/b/thunderteam-99849.appspot.com/o/icons8-go-back-48.png?alt=media&token=7bdfef4c-cf94-4147-8f4d-fc55fd086b4a" alt='go-back-icon' />
-        </button> */}
-        {/* <h4 id="create-team-title">Create a new {props.string || 'chat'}</h4> */}
         <div id="create-team-form" >
           <div className="search-users-create-team">
             <input type="text" defaultValue="" placeholder='search Users...' onChange={(event) => setSearchTermLeft(event.target.value)} />
