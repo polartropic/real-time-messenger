@@ -1,4 +1,4 @@
-import { DataSnapshot, equalTo, get, limitToLast, onValue, orderByChild, push, query, ref, update } from 'firebase/database';
+import { DataSnapshot, equalTo, get, onValue, orderByChild, push, query, ref, update } from 'firebase/database';
 import { db } from '../config/firebase-config';
 import { Message } from '../types/Interfaces';
 
@@ -7,21 +7,20 @@ export const getLiveMessages = (chatId: string, listen: (_snapshot: DataSnapshot
 };
 
 export const fromMessagesDocument = (snapshot: DataSnapshot): Message [] => {
-  if (snapshot.exists()) {
-    const messagesDocument = snapshot.val();
+  if (!snapshot.exists()) return [];
 
-    return Object.keys(messagesDocument).map((key) => {
-      const message = messagesDocument[key];
+  const messagesDocument = snapshot.val();
 
-      return {
-        ...message,
-        id: key,
-        createdOn: new Date(message.createdOn),
-        likedBy: message.likedBy ? Object.keys(message.likedBy) : [],
-      };
-    });
-  };
-  return [];
+  return Object.keys(messagesDocument).map((key) => {
+    const message = messagesDocument[key];
+
+    return {
+      ...message,
+      id: key,
+      createdOn: new Date(message.createdOn),
+      likedBy: message.likedBy ? Object.keys(message.likedBy) : [],
+    };
+  });
 };
 
 export const addMessage = (chatId: string, username: string, content: string) => {
@@ -45,15 +44,6 @@ export const editMessage = (chatId: string, messageId: string, content: string) 
     [`channels/${chatId}/messages/${messageId}/content`]: content,
   });
 };
-
-// export const editLastMessage = (chatId: string, content: string) => {
-//   return get(query(ref(db, 'channels'), orderByChild('messages'), limitToLast(1)))
-//     .then((lastMessage) => {
-//       return update(ref(db), {
-//         [`channels/${chatId}/messages/${lastMessage}/content`]: content,
-//       });
-//     });
-// };
 
 export const getMessageById = (chatId: string, messageId: string | null) => {
   return get(ref(db, `channels/${chatId}/messages/${messageId}`))
@@ -88,9 +78,7 @@ export const getMessagesByAuthor = (chatId: string, username: string) => {
 export const getMessagesInChat = (chatId: string) => {
   return get(query(ref(db, `channels/${chatId}/messages`)))
     .then((snapshot) => {
-      if (!snapshot.exists()) {
-        return [];
-      }
+      if (!snapshot.exists()) return [];
 
       return fromMessagesDocument(snapshot);
     });
@@ -119,11 +107,13 @@ export const reactWithYes = (chatID: string, messageID: string, count: number) =
     [`channels/${chatID}/messages/${messageID}/reactions/yes`]: count,
   });
 };
+
 export const reactWithNo = (chatID: string, messageID: string, count: number) => {
   return update(ref(db), {
     [`channels/${chatID}/messages/${messageID}/reactions/no`]: count,
   });
 };
+
 export const reactWithHeart = (chatID: string, messageID: string, count: number) => {
   return update(ref(db), {
     [`channels/${chatID}/messages/${messageID}/reactions/heart`]: count,

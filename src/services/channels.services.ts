@@ -1,7 +1,6 @@
 import { ref, get, push, update, query, equalTo, orderByChild } from 'firebase/database';
 import { db } from '../config/firebase-config';
-import { Channel, Team, User } from '../types/Interfaces';
-
+import { Team, User } from '../types/Interfaces';
 export const getAllChannels = () => {
   return get(query(ref(db, 'channels')));
 };
@@ -24,10 +23,8 @@ export const getChatById = (id: string | null) => {
       }
 
       return chat;
-    })
-    .catch(console.error);
+    });
 };
-
 export const createChat = (title: string, participants: string[] | User[]) => {
   return push(ref(db, 'channels'), {
     title,
@@ -35,10 +32,8 @@ export const createChat = (title: string, participants: string[] | User[]) => {
     messages: [],
     isPublic: false,
   })
-    .then((result) => getChatById(result.key))
-    .catch(console.error);
+    .then((result) => getChatById(result.key));
 };
-
 export const createTeamChat = (teamID: string, title: string, participants: string[]) => {
   const updateTeamChats: { [index: string]: boolean } = {};
   updateTeamChats[`/teams/${teamID}/channels/${title}`] = true;
@@ -50,8 +45,7 @@ export const createTeamChat = (teamID: string, title: string, participants: stri
       isPublic: false,
       teamID: teamID,
     }))
-    .then((result) => getChatById(result.key))
-    .catch(console.error);
+    .then((result) => getChatById(result.key));
 };
 
 export const getChatsByTeam = (team: Team) => {
@@ -64,17 +58,13 @@ export const getChatsByTeam = (team: Team) => {
 export const deleteUserFromChat = (username: string | undefined, chatName: string) => {
   return update(ref(db), {
     [`users/${username}/channels/${chatName}`]: null,
-  })
-    .catch(console.error);
+  });
 };
-
 export const getChatByName = (chatName: string) => {
   return get(query(ref(db, 'channels'), orderByChild('title'), equalTo(chatName)));
 };
-
 export const removeUserFromChannel = (channelID: string, userIndex: number) => {
   return update(ref(db), {
     [`channels/${channelID}/participants/${userIndex}`]: null,
-  })
-    .catch(console.error);
+  });
 };

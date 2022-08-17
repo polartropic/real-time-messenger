@@ -1,3 +1,4 @@
+import axios from 'axios';
 import { deleteUserFromChat, removeUserFromChannel } from '../../services/channels.services';
 import { createMeeting } from '../../services/meetings.services';
 import { ToastContainer, toast } from 'react-toastify';
@@ -7,6 +8,7 @@ import AppContext from '../../providers/AppContext';
 import { uid } from 'uid';
 import DateTimePicker from 'react-datetime-picker';
 import './ChatParticipants.css';
+import { API_KEY, ORGANIZATION_ID } from '../../common/constants';
 
 const ChatParticipants = ({ currentChannel,
   isDetailedChatClicked,
@@ -20,15 +22,29 @@ const ChatParticipants = ({ currentChannel,
   const [name, setName] = useState<string>('');
   const [start, setStart] = useState<Date>(new Date());
   const [end, setEnd] = useState<Date>(new Date());
+
   const URL = window.location.href;
 
   const handleCreateMeeting = (e: React.FormEvent<HTMLFormElement>) => {
     e.preventDefault();
+    const meetingCreation = {
+      method: 'POST',
+      url: `https://api.cluster.dyte.in/v1/organizations/${ORGANIZATION_ID}/meeting`,
+      // eslint-disable-next-line quote-props
+      headers: { 'Content-Type': 'application/json', Authorization: `${API_KEY}` },
+      data: { title: name, authorization: { waitingRoom: false } },
+    };
 
-    const convertedStart = start.toISOString();
-    const convertedEnd = end.toISOString();
-    createMeeting(name, convertedStart, convertedEnd, currentChannel.participants)
-      .then(() => toast.success('Successfully scheduled meeting!'));
+    axios.request(meetingCreation).then(function(response) {
+      console.log(response.data);
+      const convertedStart = start.toISOString();
+      const convertedEnd = end.toISOString();
+      createMeeting(name, convertedStart, convertedEnd, currentChannel.participants, response.data.data.meeting.id)
+        .then(() => toast.success('Successfully scheduled meeting!'));
+    })
+      .catch(function(error) {
+        console.error(error);
+      });
   };
 
   const leaveChat = () => {
