@@ -32,7 +32,7 @@ const ChatParticipants = ({ currentChannel,
       url: `https://api.cluster.dyte.in/v1/organizations/${ORGANIZATION_ID}/meeting`,
       // eslint-disable-next-line quote-props
       headers: { 'Content-Type': 'application/json', Authorization: `${API_KEY}` },
-      data: { title: name, authorization: { waitingRoom: true } },
+      data: { title: name, authorization: { waitingRoom: false } },
     };
 
     axios.request(meetingCreation).then(function(response) {
