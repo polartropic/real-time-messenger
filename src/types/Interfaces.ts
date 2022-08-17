@@ -120,3 +120,13 @@ export interface Meeting {
   participants: string[],
   id: string,
 };
+
+export interface ReceivedMeeting {
+  createdAt: string,
+  id: string,
+  liveStreamOnStart: boolean,
+  recordOnStart: boolean,
+  roomName: string,
+  status: string,
+  title: string,
+};
