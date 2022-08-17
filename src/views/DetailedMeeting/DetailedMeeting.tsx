@@ -1,6 +1,6 @@
 // import { DyteProvider, useDyteClient } from "@dytesdk/react-web-core";
 // import { useEffect } from "react";
-import { DyteMeeting } from '@dytesdk/react-ui-kit';
+import { DyteMeeting, DyteParticipantsAudio } from '@dytesdk/react-ui-kit';
 import { DyteProvider, useDyteClient, useDyteMeeting } from '@dytesdk/react-web-core';
 import axios from 'axios';
 import { useContext, useEffect, useState } from 'react';
@@ -62,7 +62,7 @@ const DetailedMeeting = (): JSX.Element => {
       roomName: receivedMeeting.roomName,
       authToken: addedUser,
       defaults: {
-        audio: false,
+        audio: true,
         video: false,
       },
     });
@@ -72,7 +72,7 @@ const DetailedMeeting = (): JSX.Element => {
     const { meeting } = useDyteMeeting();
 
     useEffect(() => {
-      meeting!.joinRoom();
+      meeting?.joinRoom();
     }, [meeting]);
 
     return (
@@ -84,7 +84,9 @@ const DetailedMeeting = (): JSX.Element => {
 
   return (
     <DyteProvider value={meeting}>
+      {/* <DyteParticipantsAudio meeting={meeting!}> */}
       <MyMeeting />
+      {/* </DyteParticipantsAudio> */}
     </DyteProvider>
   );
 };
