@@ -1,26 +1,33 @@
-// import { DyteProvider, useDyteClient } from "@dytesdk/react-web-core";
-// import { useEffect } from "react";
-import { DyteMeeting, DyteParticipantsAudio } from '@dytesdk/react-ui-kit';
+import { DyteMeeting } from '@dytesdk/react-ui-kit';
 import { DyteProvider, useDyteClient, useDyteMeeting } from '@dytesdk/react-web-core';
 import axios from 'axios';
 import { useContext, useEffect, useState } from 'react';
 import { useParams } from 'react-router-dom';
-import { API_KEY, ORGANIZATION_ID } from '../../common/constants';
+import { API_KEY, BASE_URL, ORGANIZATION_ID } from '../../common/constants';
 import AppContext from '../../providers/AppContext';
+import { ReceivedMeeting } from '../../types/Interfaces';
 
 const DetailedMeeting = (): JSX.Element => {
   const { meetingID } = useParams();
   const { appState } = useContext(AppContext);
   const userData = appState.userData;
-  const [receivedMeeting, setReceivedMeeting] = useState<any>({});
-  const [addedUser, setAddedUser] = useState<any>({});
+  const [receivedMeeting, setReceivedMeeting] = useState<ReceivedMeeting>({
+    createdAt: '',
+    id: '',
+    liveStreamOnStart: false,
+    recordOnStart: false,
+    roomName: '',
+    status: '',
+    title: '',
+  });
+  const [addedUser, setAddedUser] = useState('');
   console.log(receivedMeeting.roomName);
   console.log(addedUser);
 
   useEffect(() => {
     const dyteMeetingCreation = {
       method: 'GET',
-      url: `https://api.cluster.dyte.in/v1/organizations/${ORGANIZATION_ID}/meetings/${meetingID}`,
+      url: `${BASE_URL}/organizations/${ORGANIZATION_ID}/meetings/${meetingID}`,
       // eslint-disable-next-line quote-props
       headers: { 'Content-Type': 'application/json', Authorization: `${API_KEY}`, 'Access-Control-Allow-Origin': '*' },
     };
@@ -35,7 +42,7 @@ const DetailedMeeting = (): JSX.Element => {
   useEffect(() => {
     const dyteParticipantCreation = {
       method: 'POST',
-      url: 'https://api.cluster.dyte.in/v1/organizations/b7838bf7-5f4b-4e40-b240-8f61e3e85edf/meetings/c263ab82-a074-4a41-a779-c3b2580af880/participant',
+      url: `${BASE_URL}/organizations/${ORGANIZATION_ID}/meetings/${meetingID}/participant`,
       // eslint-disable-next-line quote-props
       headers: { 'Content-Type': 'application/json', Authorization: `${API_KEY}`, 'Access-Control-Allow-Origin': '*' },
       data: {
@@ -52,7 +59,7 @@ const DetailedMeeting = (): JSX.Element => {
     }).catch(function(error) {
       console.error(error);
     });
-  }, []);
+  }, [meetingID, userData?.firstName, userData?.username]);
 
 
   const [meeting, initMeeting] = useDyteClient();
@@ -84,9 +91,7 @@ const DetailedMeeting = (): JSX.Element => {
 
   return (
     <DyteProvider value={meeting}>
-      {/* <DyteParticipantsAudio meeting={meeting!}> */}
       <MyMeeting />
-      {/* </DyteParticipantsAudio> */}
     </DyteProvider>
   );
 };
