@@ -6,7 +6,7 @@ import { getAllMeetings } from '../../services/meetings.services';
 import AppContext from '../../providers/AppContext';
 import { Meeting } from '../../types/Interfaces';
 import './Meetings.css';
-import { Link } from 'react-router-dom';
+import SelectedMeeting from '../../components/SelectedMeeting/SelectedMeeting';
 
 const localizer = momentLocalizer(moment);
 
@@ -15,7 +15,13 @@ const Meetings = (): JSX.Element => {
   const userUsername = appState.userData?.username;
   const [events, setEvents] = useState<Meeting[]>([]);
   const [myMeetings, setMyMeetings] = useState<Meeting[]>([]);
-  const [selectedEvent, setSelectedEvent] = useState<Meeting | undefined>(undefined);
+  const [selectedEvent, setSelectedEvent] = useState<Meeting>({
+    title: '',
+    start: new Date(),
+    end: new Date(),
+    participants: [],
+    id: '',
+  });
   const [modalState, setModalState] = useState(false);
 
   useEffect(() => {
@@ -44,25 +50,9 @@ const Meetings = (): JSX.Element => {
     setModalState(true);
   };
 
-  const MeetingDetails = () => {
-    return (
-      <div id='meeting-details'>
-        <h4 id='meeting-details-title'>Meeting details:</h4>
-        Title: {selectedEvent?.title} <br />
-        Start: {selectedEvent?.start.toLocaleTimeString('en-GB')}<br />
-        End: {selectedEvent?.end.toLocaleTimeString('en-GB')}<br />
-        Participants: {selectedEvent?.participants.join(', ')} <br />
-        Meeting ID: {selectedEvent?.id}
-        <Link to={`/my-meetings/${selectedEvent?.id}`}>
-          <button id='join-meeting-btn'>Join meeting</button>
-        </Link>
-      </div>
-    );
-  };
-
   return <div>
     {modalState === true ?
-      <MeetingDetails/> :
+      <SelectedMeeting selectedEvent={selectedEvent}/> :
       null}
     <Calendar
       localizer={localizer}
