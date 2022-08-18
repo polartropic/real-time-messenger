@@ -6,6 +6,7 @@ import { useParams } from 'react-router-dom';
 import { API_KEY, BASE_URL, ORGANIZATION_ID } from '../../common/constants';
 import AppContext from '../../providers/AppContext';
 import { ReceivedMeeting } from '../../types/Interfaces';
+import Loading from '../../assets/images/Loading.gif';
 
 const DetailedMeeting = (): JSX.Element => {
   const { meetingID } = useParams();
@@ -21,8 +22,7 @@ const DetailedMeeting = (): JSX.Element => {
     title: '',
   });
   const [addedUser, setAddedUser] = useState('');
-  console.log(receivedMeeting.roomName);
-  console.log(addedUser);
+
 
   useEffect(() => {
     const dyteMeetingCreation = {
@@ -47,31 +47,35 @@ const DetailedMeeting = (): JSX.Element => {
 
     axios.request(dyteMeetingCreation)
       .then((response) => setReceivedMeeting(response.data.data.meeting))
-      .catch((error) => console.error(error));
-
-    axios.request(dyteParticipantCreation)
-      .then((response)=> setAddedUser(response.data.data.authResponse.authToken))
+      .then(() =>
+        axios.request(dyteParticipantCreation)
+          .then((response)=> setAddedUser(response.data.data.authResponse.authToken))
+          .catch((error) => console.error(error)))
       .catch((error) => console.error(error));
   }, [meetingID, userData?.firstName, userData?.username]);
 
   const [meeting, initMeeting] = useDyteClient();
 
   useEffect(() => {
-    initMeeting({
-      roomName: receivedMeeting.roomName,
-      authToken: addedUser,
-      defaults: {
-        audio: true,
-        video: false,
-      },
-    });
+    if (addedUser && receivedMeeting.roomName) {
+      initMeeting({
+        roomName: receivedMeeting.roomName,
+        authToken: addedUser,
+        defaults: {
+          audio: true,
+          video: false,
+        },
+      });
+    }
   }, [addedUser, receivedMeeting.roomName]);
 
   const MyMeeting = () => {
     const { meeting } = useDyteMeeting();
 
     useEffect(() => {
-      meeting?.joinRoom();
+      if (meeting) {
+        meeting.joinRoom();
+      }
     }, [meeting]);
 
     return (
@@ -82,9 +86,13 @@ const DetailedMeeting = (): JSX.Element => {
   };
 
   return (
-    <DyteProvider value={meeting}>
-      <MyMeeting />
-    </DyteProvider>
+    !meeting?
+      <>
+        <img src={Loading} alt='loader'></img>
+      </>:
+      <DyteProvider value={meeting}>
+        <MyMeeting />
+      </DyteProvider>
   );
 };
 
