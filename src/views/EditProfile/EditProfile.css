@@ -18,22 +18,14 @@
 } 
 
 .change-button-edit {
-  padding: 5px;
-  border-radius: 10px;
+  padding: 10px;
+  border-radius: 13px;
   border: 1px solid;
   background-color: #2f455d;
   color: #ffffff;
   cursor: pointer;
+  margin-left: 5px;
 }
-
-/* #go-back-btn-edit{
-    border: none;
-    font-size: 18px;
-    font-weight: bold;
-    cursor: pointer;
-    text-decoration: underline;
-    background-color: white;
-} */
 
 #edit-profile-title {
     color: #2f455d;

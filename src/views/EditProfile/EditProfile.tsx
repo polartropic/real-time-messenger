@@ -123,31 +123,26 @@ const EditProfile = (): JSX.Element => {
           <input type="text" id="first-name" placeholder="first name" defaultValue={userData?.firstName} onChange={(e) => setFirstName(e.target.value)} />
           <input type="submit" className="change-button-edit" value="Change" />
         </form>
-        <br />
         <form className="edit-form" onSubmit={updateLastNameFunc}>
           <label className="labels-edit" htmlFor="last-name">Last name:</label> <br />
           <input type="text" id="last-name" placeholder="last name" defaultValue={userData?.lastName} onChange={(e) => setLastName(e.target.value)} />
           <input type="submit" className="change-button-edit" value="Change" />
         </form>
-        <br />
         <form className="edit-form" onSubmit={updatePhoneFunc}>
           <label className="labels-edit" htmlFor="last-name">Phone number:</label> <br />
           <input type="text" id="phone-number" placeholder="phone number" defaultValue={userData?.phoneNumber} onChange={(e) => setPhoneNumber(e.target.value)} />
           <input type="submit" className="change-button-edit" value="Change" />
         </form>
-        <br />
         <form className="edit-form" onSubmit={updateEmailFunc}>
           <label className="labels-edit" htmlFor="e-mail">E-mail:</label> <br />
           <input type="email" id="e-mail" placeholder="e-mail" defaultValue={userData?.email} onChange={(e) => setEmail(e.target.value)} />
           <input type="submit" className="change-button-edit" value="Change" />
         </form>
-        <br />
         <form className="edit-form" onSubmit={updatePasswordFunc}>
           <label className="labels-edit" htmlFor="new-password">New Password:</label> <br />
           <input type="password" id="new-password" placeholder="new password" onChange={(e) => setPassword(e.target.value)} />
           <input type="submit" className="change-button-edit" value="Change" />
         </form>
-        <br />
         <button className="go-back-btn" onClick={() => navigate('/')}>
           <img src="https://firebasestorage.googleapis.com/v0/b/thunderteam-99849.appspot.com/o/icons8-go-back-48.png?alt=media&token=7bdfef4c-cf94-4147-8f4d-fc55fd086b4a" alt='go-back-icon' />
         </button>
