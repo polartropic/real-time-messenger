@@ -1,35 +1,28 @@
-import React, { useContext, useState } from 'react';
-import AppContext from '../../providers/AppContext';
-import { addMessage } from '../../services/messages.services';
-import { ChannelProps, emojiObject } from '../../types/Interfaces';
-import './CreateMessage.css';
+import React, { useEffect, useState } from 'react';
+import { CreateMessageProps, emojiObject } from '../../types/Interfaces';
 import Picker from 'emoji-picker-react';
+import './CreateMessage.css';
 
-const CreateMessage = ({ currentChannel }: ChannelProps) => {
-  const { appState } = useContext(AppContext);
-  const user = appState.userData;
-
+const CreateMessage = ({ handleSubmit, existingMessage }: CreateMessageProps) => {
   const [showPicker, setShowPicker] = useState(false);
   const [message, setMessage] = useState('');
 
   const handleKeyDown = (e: React.KeyboardEvent) => {
-    if (e.key === 'Enter') {
-      sendMessage();
-    }
+    if (e.key === 'Enter') sendMessage();
   };
+
+  useEffect(() => {
+    if (existingMessage) setMessage(existingMessage);
+  }, [existingMessage]);
 
   const onEmojiClick = (_: React.MouseEvent<Element, MouseEvent>, emojiObject: emojiObject) => {
     setMessage((previousInput) => previousInput + emojiObject.emoji);
     setShowPicker(false);
   };
 
-  const sendMessage = (event?: React.MouseEvent) => {
-    event?.preventDefault();
-
-
-    addMessage(currentChannel?.id, user?.username!, message)
-      .then(() => setMessage(''))
-      .catch(console.error);
+  const sendMessage = () => {
+    handleSubmit(message);
+    setMessage('');
   };
 
   return (
@@ -40,7 +33,7 @@ const CreateMessage = ({ currentChannel }: ChannelProps) => {
       <button onClick={() => setShowPicker((val) => !val)} className='emoji-btn'><i className='fa-regular fa-face-smile'></i></button>
       <label htmlFor='content'></label>
       <textarea className='message-textarea' placeholder='Write a message here...' value={message} onKeyDown={handleKeyDown} onChange={(e) => setMessage(e.target.value)}></textarea>
-      <button type='submit' className='send-btn' value=''><i className='fa-solid fa-paper-plane' onClick={sendMessage}></i></button>
+      <button className='send-btn' value=''><i className='fa-solid fa-paper-plane' onClick={sendMessage}></i></button>
     </div>
   );
 };

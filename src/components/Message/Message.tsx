@@ -5,7 +5,7 @@ import { reactWithHeart, reactWithNo, reactWithYes } from '../../services/messag
 import { MessageProps } from '../../types/Interfaces';
 import './Message.css';
 
-const Message = ({ message, currentChannel }: MessageProps): JSX.Element => {
+const Message = ({ message, currentChannel, handleEditMessage }: MessageProps): JSX.Element => {
   const { appState } = useContext(AppContext);
   const currentUser = appState.userData;
 
@@ -21,11 +21,15 @@ const Message = ({ message, currentChannel }: MessageProps): JSX.Element => {
     reactWithHeart(currentChannel.id, message.id, (message.reactions.heart + 1));
   };
 
+  const handleEdit = () => {
+    handleEditMessage(message);
+  };
+
   if (message.author === currentUser?.username) {
     return (
       <div id='message' className='message-1'>
         <div className='edit-message'>
-          <button className='edit-message-btn'>Edit</button>
+          <button className='edit-message-btn' onClick={handleEdit}>Edit</button>
         </div>
 
         <div className='message-date-1'>

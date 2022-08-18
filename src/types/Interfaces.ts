@@ -1,11 +1,9 @@
 import { SetStateAction, type Dispatch } from 'react';
-
 import { User as FirebaseUser } from 'firebase/auth';
 
 export interface iAppState {
   user: FirebaseUser | null,
   userData: User | null,
-
 }
 
 export interface ApplicationContext {
@@ -24,7 +22,6 @@ export interface UsersListProps {
   setLeftSide: Dispatch<SetStateAction<User[]>>,
   rightSide: User[],
   setRightSide: Dispatch<SetStateAction<User[]>>,
-
 }
 
 export interface User {
@@ -37,7 +34,7 @@ export interface User {
   teams: string[],
   channels: string[],
   uid: string,
-};
+}
 
 export interface Channel {
   id: string,
@@ -59,28 +56,36 @@ export interface Team {
 export interface UserProps {
   props: {
     user: User,
-    buttonEl?: JSX.Element
-  }
+    buttonEl?: JSX.Element,
+  },
 }
 
 export interface ChannelProps {
-  currentChannel: Channel
+  currentChannel: Channel,
 }
+
+export interface CreateMessageProps {
+  handleSubmit: (message: string) => void,
+  existingMessage: string | undefined,
+}
+
 export interface ChatParticipantsProps {
   currentChannel: Channel,
   isDetailedChatClicked: boolean,
   isDetailedTeamClicked?: boolean,
   setIsDetailedChatClicked: Dispatch<boolean>,
   setIsDetailedTeamClicked?: Dispatch<boolean>,
-  setIsCreateChatClicked?: Dispatch<boolean>
+  setIsCreateChatClicked?: Dispatch<boolean>,
 }
+
 export interface TeamParticipantsProps {
-  team: Team | undefined;
-  isDetailedChatClicked?: boolean
+  team: Team | undefined,
+  isDetailedChatClicked?: boolean,
   setIsDetailedChatClicked: Dispatch<boolean>,
   setIsDetailedTeamClicked?: Dispatch<boolean>,
   setIsCreateChatClicked?: Dispatch<boolean>,
 }
+
 export interface ChannelsListProps {
   props: {
     channels?: Channel[],
@@ -90,7 +95,7 @@ export interface ChannelsListProps {
     setIsCreateTeamView?: Dispatch<boolean>,
     setCurrentChat: Dispatch<SetStateAction<Channel>>,
     setIsDetailedTeamClicked?: Dispatch<boolean>,
-  }
+  },
 }
 
 export interface Message {
@@ -102,16 +107,17 @@ export interface Message {
     yes: number,
     no: number,
     heart: number,
-  }
+  },
 }
 
 export interface MessageProps {
   message: Message,
   currentChannel: Channel,
+  handleEditMessage: (message: Message) => void,
 }
 
 export interface emojiObject {
-  emoji: string
+  emoji: string,
 }
 
 export interface Meeting {
@@ -120,7 +126,7 @@ export interface Meeting {
   end: Date,
   participants: string[],
   id: string,
-};
+}
 
 export interface SelectedMeetingProps {
   selectedEvent: {
@@ -129,8 +135,8 @@ export interface SelectedMeetingProps {
     end: Date,
     participants: string[],
     id: string,
-  }
-};
+  },
+}
 
 export interface ReceivedMeeting {
   createdAt: string,
@@ -140,4 +146,4 @@ export interface ReceivedMeeting {
   roomName: string,
   status: string,
   title: string,
-};
+}
