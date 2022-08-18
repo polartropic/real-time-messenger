@@ -64,14 +64,14 @@ const Login = (): JSX.Element => {
         <label htmlFor="username">Username:</label>
         <br />
         <input onChange={updateForm('username')} type="text" id="username" placeholder='username' value={logInDetails.username} />
-        <br /><br />
+        <br />
         <label htmlFor="password">Password:</label>
         <br />
         <input onChange={updateForm('password')} type="password" id="password" placeholder='password' value={logInDetails.password} />
-        <br /><br />
+        <br />
         <button id="sign-in-button" className='user-btn'>Sign in</button>
         <br />
-        <h3>Don't have an account yet?
+        <h3 id='dont-have-acc'>Don't have an account yet?
           <Link to={'/home-page'}>
             <button id="go-back-register-btn" className='go-back-btn'>
               <img src="https://firebasestorage.googleapis.com/v0/b/thunderteam-99849.appspot.com/o/icons8-go-back-48.png?alt=media&token=7bdfef4c-cf94-4147-8f4d-fc55fd086b4a" alt='go-back-icon' />

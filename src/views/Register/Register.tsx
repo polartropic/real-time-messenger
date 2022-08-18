@@ -100,31 +100,25 @@ const Register = (): JSX.Element => {
           <br />
           <input type="text" className="register-field" name="first-name" placeholder="first name" required value={regDetails.firstName} onChange={updateForm('firstName')} />
           <br />
-          <br />
           <label htmlFor="last-name">Last Name:</label>
           <br />
           <input type="text" className="register-field" name="last-name" placeholder="last name" required value={regDetails.lastName} onChange={updateForm('lastName')} />
-          <br />
           <br />
           <label htmlFor="phone-number">Phone number:</label>
           <br />
           <input type="tel" className="register-field" name="phone-number" placeholder="phone number" required value={regDetails.phoneNumber} onChange={updateForm('phoneNumber')} />
           <br />
-          <br />
           <label htmlFor="username">Username:</label>
           <br />
           <input type="text" className="register-field" name="username" placeholder="username" required value={regDetails.username} onChange={updateForm('username')} />
-          <br />
           <br />
           <label htmlFor="email">E-mail:</label>
           <br />
           <input type="email" className="register-field" name="email" placeholder="e-mail" required value={regDetails.email} onChange={updateForm('email')} />
           <br />
-          <br />
           <label htmlFor="password">Password:</label>
           <br />
           <input type="password" className="register-field" name="password" placeholder="password" required value={regDetails.password} onChange={updateForm('password')} />
-          <br />
           <br />
           <label htmlFor="confirm-password">Confirm Password:</label>
           <br />
