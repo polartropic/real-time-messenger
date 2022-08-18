@@ -122,6 +122,16 @@ export interface Meeting {
   id: string,
 };
 
+export interface SelectedMeetingProps {
+  selectedEvent: {
+    title: string,
+    start: Date,
+    end: Date,
+    participants: string[],
+    id: string,
+  }
+};
+
 export interface ReceivedMeeting {
   createdAt: string,
   id: string,
