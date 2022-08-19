@@ -121,7 +121,7 @@ const MyTeam = (): JSX.Element => {
       return toast.warning('Please add at least one participant in the chat!');
     }
     if (teamID) {
-      const membersToAdd = addedToChat.map((mem) => mem.username);
+      const membersToAdd = addedToChat.map((m) => m.username);
 
       createTeamChat(teamID, title, [...membersToAdd, currentUser!])
         .then(() => {
