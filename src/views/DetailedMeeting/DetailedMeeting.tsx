@@ -1,4 +1,4 @@
-import { DyteMeeting } from '@dytesdk/react-ui-kit';
+import { DyteMeeting, provideDyteDesignSystem } from '@dytesdk/react-ui-kit';
 import { DyteProvider, useDyteClient, useDyteMeeting } from '@dytesdk/react-web-core';
 import axios from 'axios';
 import { useContext, useEffect, useState } from 'react';
@@ -76,11 +76,25 @@ const DetailedMeeting = (): JSX.Element => {
     useEffect(() => {
       if (meeting) {
         meeting.joinRoom();
+
+        provideDyteDesignSystem(document.body, {
+          theme: 'light',
+          colors: {
+            'danger': '#2f455d',
+            'brand': {
+              300: '#2f455d',
+            },
+            'text': '#071428',
+            'text-on-brand': '#ffffff',
+            'video-bg': '#E5E7EB',
+          },
+          borderRadius: 'extra-rounded',
+        });
       }
     }, [meeting]);
 
     return (
-      <div style={{ height: '80vh' }}>
+      <div style={{ height: '91vh'}}>
         <DyteMeeting showSetupScreen={true} mode="fill" meeting={meeting!} />
       </div>
     );
