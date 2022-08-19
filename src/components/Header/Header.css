@@ -48,33 +48,50 @@
 }
 
 #dropdown-menu-myteams {
-  background-color: rgba(47, 69, 93, 0.9);
+  background-color: rgba(47, 69, 93, 0.85);
   position: absolute;
-  margin-left: 130px;
+  margin-left: 140px;
   margin-top: 75px;
-  padding: 20px;
+  padding-top: 15px;
+  padding-bottom: 20px;
   border-radius: 10px;
   text-align: center;
   z-index: 11;
+  /* max-height: 39.5%; */
+  /* overflow-y: auto; */
+  width: 220px;
+  border: 1px solid rgba(47, 69, 93);
 }
 
 #create-a-team-btn-header {
-  border-radius: 10px;
-  padding: 7px;
-  margin-top: 9px;
-  border: none;
-  background-color: rgba(245, 247, 251, 1);
+  background-image: linear-gradient(to right, #16222A 0%, #2f455d 51%, #16222A  100%);
+  margin-bottom: 7px; 
+  padding: 11px;
+  text-align: center;
+  transition: 0.5s;
+  background-size: 200% auto;
+  color: white;            
+  border-radius: 15px;   
+  border: 1px solid black;
+  position: sticky;      
+}
+
+#create-a-team-btn-header:hover {
+  background-position: right center; 
+  color: #fff;
+  text-decoration: none;
 }
 
 .team-item{
+  background-color: rgba(47, 69, 93, 0.9);
   color: white;
   text-decoration: none!;
-  border: 1px solid white;
-  border-radius: 5px;
+  border-radius: 12px;
   padding: 8px;
-  margin: 0 5px 0 5px;
+  margin: 10px 6px 10px 6px;
   word-break: break-all;
   width: 190px;
+  font-size: 15px;
 }
 
 .team-item:hover {
@@ -90,4 +107,9 @@
   height: 60px;
   margin-left: 15px;
   display: flexbox;
+}
+
+#mapping-teams{
+  overflow-y: auto;
+  height: 270px;
 }

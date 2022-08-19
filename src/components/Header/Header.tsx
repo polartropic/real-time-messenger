@@ -91,8 +91,10 @@ const Header = (): JSX.Element => {
               <button className='header-btn' onClick={toggling}>My teams</button>
               {isOpen &&
                 <div id='dropdown-menu-myteams'>
-                  {teams !== null ? Object.keys(teams).map((team) => mappingTeam(team, uid())) : <p>No teams to show</p>}
                   <button id='create-a-team-btn-header' onClick={handleCreateTeam}>Create a team</button>
+                  <div id='mapping-teams'>
+                    {teams !== null ? Object.keys(teams).map((team) => mappingTeam(team, uid())) : <p>No teams to show</p>}
+                  </div>
                 </div>
 
               }
