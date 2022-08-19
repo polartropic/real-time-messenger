@@ -45,7 +45,7 @@ const MyTeam = (): JSX.Element => {
   const { name } = useParams<{ name: string }>();
   const { appState } = useContext(AppContext);
   const [outerUsers, setOuterUsers] = useState<User[]>([]);
-  const [userstoRemove, setUsersToRemove] = useState<User[]>([]);
+  const [usersToRemove, setUsersToRemove] = useState<User[]>([]);
   const currentUser = appState.userData?.username;
 
   useEffect(() => {
@@ -56,7 +56,6 @@ const MyTeam = (): JSX.Element => {
     if (isDetailedChatClicked) {
       setIsCreateChatClicked(false);
       setIsDetailedTeamClicked(false);
-      setIsDetailedChatClicked(true);
     }
     if (isDetailedTeamClicked) {
       setIsDetailedChatClicked(false);
@@ -89,7 +88,6 @@ const MyTeam = (): JSX.Element => {
     getAllUsers()
       .then((snapshot) => {
         const usersObj: object = snapshot.val();
-        console.log(members);
         const allUsersInTeam = Object.values(usersObj)
           .filter((userA) => [...members].includes(userA.username));
         setTeamMembersObject(allUsersInTeam);
@@ -99,16 +97,15 @@ const MyTeam = (): JSX.Element => {
 
         const allUsersOutOfTeam: User[] = Object.values(usersObj)
           .filter((userA) => ![...members, team.owner].includes(userA.username));
-        console.log(allUsersOutOfTeam);
         setOuterUsers(allUsersOutOfTeam);
       });
   }, [members, team.owner]);
 
   const updateTeam = () => {
-    const stringMembers = userstoRemove.map((member) => member.username);
+    const stringMembers = usersToRemove.map((member) => member.username);
     updateTeamMembers(teamID, stringMembers)
       .then(() => {
-        manageTeamMembersUpdateUsers(outerUsers, userstoRemove, Object.values(team)[0], teamID);
+        manageTeamMembersUpdateUsers(outerUsers, usersToRemove, Object.values(team)[0], teamID);
       })
       .then(() => toast.success('You have succesfully updated your team!'))
       .catch((err) => toast.warning(err));
@@ -124,8 +121,6 @@ const MyTeam = (): JSX.Element => {
       return toast.warning('Please add at least one participant in the chat!');
     }
     if (teamID) {
-      console.log(addedToChat);
-
       const membersToAdd = addedToChat.map((mem) => mem.username);
 
       createTeamChat(teamID, title, [...membersToAdd, currentUser!])
@@ -142,7 +137,13 @@ const MyTeam = (): JSX.Element => {
     <div className='landing-page'>
       {team.channels ?
         <>
-          <ChannelsList props={{ chatList, setIsCreateChatClicked, setIsDetailedChatClicked, setCurrentChat, setIsDetailedTeamClicked }} />
+          <ChannelsList props={{
+            chatList,
+            setIsCreateChatClicked,
+            setIsDetailedChatClicked,
+            setCurrentChat,
+            setIsDetailedTeamClicked,
+          }} />
         </> :
         null}
       <ChannelsList props={{ chatList, setIsCreateChatClicked, setIsDetailedChatClicked, setCurrentChat, setIsDetailedTeamClicked }} />
@@ -170,7 +171,7 @@ const MyTeam = (): JSX.Element => {
               <ManiPulateUsersLists
                 leftSide={outerUsers}
                 setLeftSide={setOuterUsers}
-                rightSide={userstoRemove}
+                rightSide={usersToRemove}
                 setRightSide={setUsersToRemove} />
             </> :
             null}
@@ -178,11 +179,11 @@ const MyTeam = (): JSX.Element => {
       </div>
       {
         isDetailedChatClicked ?
-          <ChatParticipants currentChannel={currentChat} isDetailedChatClicked={isDetailedChatClicked}
-            setIsDetailedChatClicked={setIsDetailedChatClicked} setIsDetailedTeamClicked={setIsDetailedTeamClicked} /> :
-          <TeamParticipants team={teamProps} isDetailedChatClicked={isDetailedChatClicked}
+          <ChatParticipants currentChannel={currentChat}
+            isDetailedChatClicked={isDetailedChatClicked}
             setIsDetailedChatClicked={setIsDetailedChatClicked}
-          />
+            setIsDetailedTeamClicked={setIsDetailedTeamClicked} /> :
+          <TeamParticipants team={teamProps!}/>
       }
 
     </div >
