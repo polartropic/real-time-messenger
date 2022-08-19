@@ -7,6 +7,7 @@ import { API_KEY, BASE_URL, ORGANIZATION_ID } from '../../common/constants';
 import AppContext from '../../providers/AppContext';
 import { ReceivedMeeting } from '../../types/Interfaces';
 import Loading from '../../assets/images/Loading.gif';
+import './DetailedMeeting.css';
 
 const DetailedMeeting = (): JSX.Element => {
   const { meetingID } = useParams();
@@ -88,7 +89,7 @@ const DetailedMeeting = (): JSX.Element => {
   return (
     !meeting?
       <>
-        <img src={Loading} alt='loader'></img>
+        <img id="loader" src={Loading} alt='loader'></img>
       </>:
       <DyteProvider value={meeting}>
         <MyMeeting />
