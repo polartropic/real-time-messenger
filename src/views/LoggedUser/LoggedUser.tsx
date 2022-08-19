@@ -43,6 +43,14 @@ const LoggedUser = (): JSX.Element => {
   const navigate = useNavigate();
 
   // const string = 'team';
+  useEffect(() => {
+    if (userDetails?.username != null) {
+      const unsubscribe = getLiveChannelsByUsername(userDetails.username, (snapshot) => {
+        setChannels(snapshot.val());
+      });
+      return () => unsubscribe();
+    }
+  }, [userDetails?.username]);
 
   useEffect(() => {
     getAllUsers()
@@ -54,16 +62,6 @@ const LoggedUser = (): JSX.Element => {
       .catch(console.error);
   }, []);
 
-
-  useEffect(() => {
-    if (userDetails?.username != null) {
-      const unsubscribe = getLiveChannelsByUsername(userDetails.username, (snapshot) => {
-        setChannels(snapshot.val());
-      });
-      return () => unsubscribe();
-    }
-  }, [userDetails?.username]);
-
   const createChatFunc = () => {
     if (title.length < MIN_CHANNEL_NAME_LENGTH || title.length > MAX_CHANNEL_NAME_LENGTH) {
       return toast.warning(`The name of the chat must be between ${MIN_CHANNEL_NAME_LENGTH} and ${MAX_CHANNEL_NAME_LENGTH} symbols`);
@@ -71,7 +69,6 @@ const LoggedUser = (): JSX.Element => {
     if (addedParticipants.length === MIN_NUMBER_OF_CHAT_PARTICIPANTS) {
       return toast.warning('Please add at least one participant in the chat!');
     }
-
     const userIDs = addedParticipants.map((user) => user.username);
     createChat(title, [...userIDs, userDetails?.username!])
       .then(() => {

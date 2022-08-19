@@ -33,7 +33,7 @@ const MyTeam = (): JSX.Element => {
   });
   const [isDetailedChatClicked, setIsDetailedChatClicked] = useState(false);
   const [isCreateChatClicked, setIsCreateChatClicked] = useState(false);
-  const [chatList, setChatList] = useState<IChannel[]>([]);
+  const [channels, setChannels] = useState<IChannel[]>([]);
   const [members, setMembers] = useState<string[]>([]);
   const [title, setTitle] = useState<string>('');
   const [isDetailedTeamClicked, setIsDetailedTeamClicked] = useState<boolean>(false);
@@ -79,7 +79,7 @@ const MyTeam = (): JSX.Element => {
   const teamID = Object.keys(team)[0];
   useEffect(() => {
     const unsubscribe = getLiveTeamChannels(teamID, (snapshot) => {
-      setChatList(snapshot.val());
+      setChannels(snapshot.val());
     });
     return () => unsubscribe();
   }, [teamID]);
@@ -138,7 +138,7 @@ const MyTeam = (): JSX.Element => {
       {team.channels ?
         <>
           <ChannelsList props={{
-            chatList,
+            channels,
             setIsCreateChatClicked,
             setIsDetailedChatClicked,
             setCurrentChat,
@@ -146,7 +146,7 @@ const MyTeam = (): JSX.Element => {
           }} />
         </> :
         null}
-      <ChannelsList props={{ chatList, setIsCreateChatClicked, setIsDetailedChatClicked, setCurrentChat, setIsDetailedTeamClicked }} />
+      <ChannelsList props={{ channels, setIsCreateChatClicked, setIsDetailedChatClicked, setCurrentChat, setIsDetailedTeamClicked }} />
 
       <div className='main-container'>
         <>

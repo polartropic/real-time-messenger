@@ -46,8 +46,8 @@ const ChannelsList = (
       <div className='chats'>
         {props.channels ?
           props.channels && Object.keys(props.channels).map((chat) => mappingChats(chat, uid())) :
-          props.chatList && Object.keys(props.chatList).map((chat) => mappingChats(chat, uid()))
-        }
+          // props.chatList && Object.keys(props.chatList).map((chat) => mappingChats(chat, uid()))
+          null}
       </div>
     </div>
   );
