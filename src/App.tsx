@@ -13,7 +13,6 @@ import { getUserData } from './services/users.services';
 import Authenticated from './hoc/Authenticated';
 import NotFound from './views/NotFound/NotFound';
 import MyTeam from './views/Team/Team';
-import Create from './components/Create/Create';
 import { iAppState } from './types/Interfaces';
 import Meetings from './views/Meetings/Meetings';
 import DetailedMeeting from './views/DetailedMeeting/DetailedMeeting';
@@ -67,7 +66,6 @@ function App() {
             <Route path="login" element={<Login />} />
             <Route path="about-us" element={<AboutUs />} />
             <Route path="edit-profile" element={<Authenticated><EditProfile /></Authenticated>} />
-            <Route path="create-team" element={<Authenticated><Create /></Authenticated>} />
             <Route path="teams/:name" element={<Authenticated><MyTeam /></Authenticated>} />
             <Route path="my-meetings/:meetingID" element={<Authenticated><DetailedMeeting /></Authenticated>} />
             <Route path="my-meetings" element={<Authenticated><Meetings /></Authenticated>} />
