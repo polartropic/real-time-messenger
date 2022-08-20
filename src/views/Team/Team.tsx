@@ -47,7 +47,7 @@ const MyTeam = (): JSX.Element => {
   const [outerUsers, setOuterUsers] = useState<User[]>([]);
   const [usersToRemove, setUsersToRemove] = useState<User[]>([]);
   const currentUser = appState.userData?.username;
-
+  const [ownerObj, setOwnerObject] = useState<User>();
   useEffect(() => {
     if (isCreateChatClicked) {
       setIsDetailedChatClicked(false);
@@ -75,16 +75,15 @@ const MyTeam = (): JSX.Element => {
       })
       .catch(console.error);
   }, [name]);
-  console.log(teamProps);
 
   const teamID = Object.keys(team)[0];
+
   useEffect(() => {
-    const unsubscribe = getLiveTeamChannels(teamID, (snapshot) => {
+    const unsubscribe = getLiveTeamChannels(teamID!, (snapshot) => {
       setChannels(Object.keys(snapshot.val()));
     });
     return () => unsubscribe();
   }, [teamID]);
-  console.log(channels);
 
   useEffect(() => {
     getAllUsers()
@@ -92,16 +91,19 @@ const MyTeam = (): JSX.Element => {
         const usersObj: object = snapshot.val();
         const allUsersInTeam = Object.values(usersObj)
           .filter((userA) => [...members].includes(userA.username));
+        const ownerOfTeam: User [] = Object.values(usersObj)
+          .filter((user: User) => user.username === teamProps?.owner);
         setTeamMembersObject(allUsersInTeam);
         setUsersToRemove(allUsersInTeam);
         setInitialChatParticipants(allUsersInTeam);
+        setOwnerObject(ownerOfTeam[0]);
 
 
         const allUsersOutOfTeam: User[] = Object.values(usersObj)
-          .filter((userA) => ![...members, team.owner].includes(userA.username));
+          .filter((userA) => ![...members, teamProps?.owner].includes(userA.username));
         setOuterUsers(allUsersOutOfTeam);
       });
-  }, [members, team.owner]);
+  }, [members, teamProps?.owner]);
 
   const updateTeam = () => {
     const stringMembers = usersToRemove.map((member) => member.username);
@@ -137,7 +139,7 @@ const MyTeam = (): JSX.Element => {
 
   return (
     <div className='landing-page'>
-      {team.channels ?
+      {Object.values(team)[0].channels ?
         <>
           <ChannelsList props={{
             channels,
@@ -185,8 +187,8 @@ const MyTeam = (): JSX.Element => {
             isDetailedChatClicked={isDetailedChatClicked}
             setIsDetailedChatClicked={setIsDetailedChatClicked}
             setIsDetailedTeamClicked={setIsDetailedTeamClicked}
-            allUsers={teamMembersObjects} /> : null
-        // <TeamParticipants team={teamProps!} allUsers={teamMembersObjects} />
+            allUsers={teamMembersObjects} /> :
+          <TeamParticipants owner={ownerObj!} allUsers={teamMembersObjects} />
       }
 
     </div >

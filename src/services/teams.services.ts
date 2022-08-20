@@ -55,7 +55,6 @@ export const deleteMemberFromTeam = (teamID: string, userIndex: number | null) =
     .catch(console.error);
 };
 export const manageTeamMembersUpdateUsers = (usersOut: User[], usersIn: User[], team: Team, teamID: string) => {
-  // console.log(usersOut);
   const usersToUpdate = usersOut.filter((user) => user.username !== team.owner);
   usersToUpdate.forEach((user) => {
     deleteUsersTeam(user.username, team.name)

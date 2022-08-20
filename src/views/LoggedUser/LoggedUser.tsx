@@ -35,22 +35,22 @@ const LoggedUser = (): JSX.Element => {
     isPublic: false,
     teamID: '',
   });
-  const [channels, setChannels] = useState<IChannel[]>([]);
+  const [channels, setChannels] = useState<string[]>([]);
   const [allUsers, setAllUsers] = useState<User[]>([]);
   const [initialParticipants, setInitialParticipants] = useState<User[]>([]);
   const [addedParticipants, setAddedParticipants] = useState<User[]>([]);
   const [title, setTitle] = useState<string>('');
+  const [loggedUser, setLoggedUser] = useState<string>('');
   const navigate = useNavigate();
-
-  // const string = 'team';
   useEffect(() => {
-    if (userDetails?.username != null) {
-      const unsubscribe = getLiveChannelsByUsername(userDetails.username, (snapshot) => {
-        setChannels(snapshot.val());
+    setLoggedUser(appState.userData?.username!);
+    const unsubscribe = getLiveChannelsByUsername(appState.userData?.username!,
+      (snapshot) => {
+        setChannels(Object.keys(snapshot.val()));
       });
-      return () => unsubscribe();
-    }
-  }, [userDetails?.username]);
+    return () => unsubscribe();
+    // }
+  }, [appState.userData?.username!, loggedUser]);
 
   useEffect(() => {
     getAllUsers()
@@ -150,7 +150,7 @@ const LoggedUser = (): JSX.Element => {
         </>
       </div>
       <ChatParticipants currentChannel={currentChat} isDetailedChatClicked={isDetailedChatClicked}
-        setIsDetailedChatClicked={setIsDetailedChatClicked} />
+        setIsDetailedChatClicked={setIsDetailedChatClicked} allUsers={allUsers} />
     </div>
   );
 };

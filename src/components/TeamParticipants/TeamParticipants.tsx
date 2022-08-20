@@ -1,15 +1,12 @@
-import { useEffect, useState } from 'react';
 import { uid } from 'uid';
-import { TeamParticipantsProps } from '../../types/Interfaces';
+import { TeamParticipantsProps, User } from '../../types/Interfaces';
+import UserComponent from '../User/User';
 
-const TeamParticipants = ({ team }: TeamParticipantsProps): JSX.Element => {
-  const [members, setMembers] = useState<string[]>([]);
-  console.log(team);
-
-  setMembers(team.members);
-  const mappingParticipants = (participant: string, key: string) => {
+const TeamParticipants = ({ owner,
+  allUsers }: TeamParticipantsProps): JSX.Element | null => {
+  const mappingParticipants = (participant: User, key: string) => {
     return <div key={key}>
-      <p className='participant-item'>{participant}</p>
+      <UserComponent props={{ user: participant }} />
     </div>;
   };
 
@@ -17,11 +14,11 @@ const TeamParticipants = ({ team }: TeamParticipantsProps): JSX.Element => {
     <div className="participants-list">
 
       <h4>Owner:</h4>
-      <h5>{team?.owner}</h5>
+      <UserComponent props={{ user: owner }} />
 
       <h4>Participants of team:</h4>
       <div className='participants'>
-        {members.map((participant) => mappingParticipants(participant, uid()))}
+        {allUsers.map((participant) => mappingParticipants(participant, uid()))}
       </div>
 
     </div>
