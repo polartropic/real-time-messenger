@@ -1,5 +1,6 @@
 import axios from 'axios';
 import { deleteUserFromChat, removeUserFromChannel } from '../../services/channels.services';
+import { dyteMeetingCreationFunc } from '../../services/dyte.services';
 import { createMeeting } from '../../services/meetings.services';
 import { ToastContainer, toast } from 'react-toastify';
 import { ChatParticipantsProps, User } from '../../types/Interfaces';
@@ -8,7 +9,7 @@ import AppContext from '../../providers/AppContext';
 import { uid } from 'uid';
 import DateTimePicker from 'react-datetime-picker';
 import './ChatParticipants.css';
-import { API_KEY, ORGANIZATION_ID } from '../../common/constants';
+import { API_KEY, BASE_URL, ORGANIZATION_ID } from '../../common/constants';
 import { getAllUsers } from '../../services/users.services';
 import UserComponent from '../User/User';
 
@@ -42,24 +43,15 @@ const ChatParticipants = ({ currentChannel,
 
   const handleCreateMeeting = (e: React.FormEvent<HTMLFormElement>) => {
     e.preventDefault();
-    const meetingCreation = {
-      method: 'POST',
-      url: `https://api.cluster.dyte.in/v1/organizations/${ORGANIZATION_ID}/meeting`,
-      // eslint-disable-next-line quote-props
-      headers: { 'Content-Type': 'application/json', Authorization: `${API_KEY}` },
-      data: { title: name, authorization: { waitingRoom: false } },
-    };
 
-    axios.request(meetingCreation).then(function(response) {
-      console.log(response.data);
-      const convertedStart = start.toISOString();
-      const convertedEnd = end.toISOString();
-      createMeeting(name, convertedStart, convertedEnd, currentChannel.participants, response.data.data.meeting.id)
-        .then(() => toast.success('Successfully scheduled meeting!'));
-    })
-      .catch(function(error) {
-        console.error(error);
-      });
+    axios.request(dyteMeetingCreationFunc(BASE_URL, ORGANIZATION_ID, API_KEY, name))
+      .then((response) => {
+        const convertedStart = start.toISOString();
+        const convertedEnd = end.toISOString();
+        createMeeting(name, convertedStart, convertedEnd, currentChannel.participants, response.data.data.meeting.id)
+          .then(() => toast.success('Successfully scheduled meeting!'));
+      })
+      .catch((error) => console.error(error));
   };
 
   const leaveChat = () => {

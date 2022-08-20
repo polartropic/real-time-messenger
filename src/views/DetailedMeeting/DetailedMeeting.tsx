@@ -8,6 +8,7 @@ import AppContext from '../../providers/AppContext';
 import { ReceivedMeeting } from '../../types/Interfaces';
 import Loading from '../../assets/images/Loading.gif';
 import './DetailedMeeting.css';
+import { dyteMeetingFunc, dyteParticipantFunc } from '../../services/dyte.services';
 
 const DetailedMeeting = (): JSX.Element => {
   const { meetingID } = useParams();
@@ -24,32 +25,11 @@ const DetailedMeeting = (): JSX.Element => {
   });
   const [addedUser, setAddedUser] = useState('');
 
-
   useEffect(() => {
-    const dyteMeetingCreation = {
-      method: 'GET',
-      url: `${BASE_URL}/organizations/${ORGANIZATION_ID}/meetings/${meetingID}`,
-      headers: { 'Content-Type': 'application/json', 'Authorization': `${API_KEY}`, 'Access-Control-Allow-Origin': '*' },
-    };
-
-    const dyteParticipantCreation = {
-      method: 'POST',
-      url: `${BASE_URL}/organizations/${ORGANIZATION_ID}/meetings/${meetingID}/participant`,
-      headers: { 'Content-Type': 'application/json', 'Authorization': `${API_KEY}`, 'Access-Control-Allow-Origin': '*' },
-      data: {
-        clientSpecificId: userData?.username,
-        userDetails: {
-          name: userData?.firstName,
-          picture: 'https://images.rawpixel.com/image_png_600/czNmcy1wcml2YXRlL3Jhd3BpeGVsX2ltYWdlcy93ZWJzaXRlX2NvbnRlbnQvbHIvdjc5MS10YW5nLTEzLnBuZw.png',
-        },
-        roleName: 'host',
-      },
-    };
-
-    axios.request(dyteMeetingCreation)
+    axios.request(dyteMeetingFunc(BASE_URL, ORGANIZATION_ID, meetingID, API_KEY ))
       .then((response) => setReceivedMeeting(response.data.data.meeting))
       .then(() =>
-        axios.request(dyteParticipantCreation)
+        axios.request(dyteParticipantFunc(BASE_URL, ORGANIZATION_ID, meetingID, API_KEY, userData?.username, userData?.firstName))
           .then((response)=> setAddedUser(response.data.data.authResponse.authToken))
           .catch((error) => console.error(error)))
       .catch((error) => console.error(error));
@@ -75,7 +55,9 @@ const DetailedMeeting = (): JSX.Element => {
 
     useEffect(() => {
       if (meeting) {
-        meeting.joinRoom();
+        meeting.meta.on('roomJoined', () => {
+          meeting.joinRoom();
+        });
 
         provideDyteDesignSystem(document.body, {
           theme: 'light',
@@ -90,11 +72,14 @@ const DetailedMeeting = (): JSX.Element => {
           },
           borderRadius: 'extra-rounded',
         });
+        meeting.meta.on('roomLeft', () => {
+          meeting.leaveRoom();
+        });
       }
     }, [meeting]);
 
     return (
-      <div style={{ height: '91vh'}}>
+      <div style={{ height: '91vh' }}>
         <DyteMeeting showSetupScreen={true} mode="fill" meeting={meeting!} />
       </div>
     );
