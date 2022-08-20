@@ -10,7 +10,6 @@ import { uid } from 'uid';
 import DateTimePicker from 'react-datetime-picker';
 import './ChatParticipants.css';
 import { API_KEY, BASE_URL, ORGANIZATION_ID } from '../../common/constants';
-import { getAllUsers } from '../../services/users.services';
 import UserComponent from '../User/User';
 
 const ChatParticipants = ({ currentChannel,
