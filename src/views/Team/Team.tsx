@@ -2,13 +2,13 @@ import { useContext, useEffect, useState } from 'react';
 import { useParams } from 'react-router-dom';
 import ChannelsList from '../../components/ChannelsList/ChannelsList';
 import ChatParticipants from '../../components/ChatParticipants/ChatParticipants';
-import { getLiveTeamChannels, getTeamByName, manageTeamMembersUpdateUsers, updateTeamMembers } from '../../services/teams.services';
+import { getTeamByName, manageTeamMembersUpdateUsers, updateTeamMembers } from '../../services/teams.services';
 import { Team, User } from '../../types/Interfaces';
 import Channel from '../../components/Channel/Channel';
 import { Channel as IChannel } from '../../types/Interfaces';
 import TeamParticipants from '../../components/TeamParticipants/TeamParticipants';
 import ManiPulateUsersLists from '../../components/ManipulateUsersLists/ManiPulateUsersLists';
-import { getAllUsers, updateUserChats } from '../../services/users.services';
+import { getAllUsers, getLiveChannelsByUsername, updateUserChats } from '../../services/users.services';
 import { toast } from 'react-toastify';
 import { MIN_CHANNEL_NAME_LENGTH, MAX_CHANNEL_NAME_LENGTH, MIN_NUMBER_OF_CHAT_PARTICIPANTS } from '../../common/constants';
 import { createTeamChat } from '../../services/channels.services';
@@ -17,12 +17,7 @@ import AppContext from '../../providers/AppContext';
 // import './Team.css'
 
 const MyTeam = (): JSX.Element => {
-  const [team, setTeam] = useState<Team>({
-    name: '',
-    owner: '', // UserID
-    members: [], // Users
-    channels: [], // ChannelIDs
-  });
+  const [team, setTeam] = useState<object>({});
   const [currentChat, setCurrentChat] = useState<IChannel>({
     id: '',
     title: '',
@@ -48,26 +43,12 @@ const MyTeam = (): JSX.Element => {
   const [usersToRemove, setUsersToRemove] = useState<User[]>([]);
   const currentUser = appState.userData?.username;
   const [ownerObj, setOwnerObject] = useState<User>();
-  useEffect(() => {
-    if (isCreateChatClicked) {
-      setIsDetailedChatClicked(false);
-      setIsDetailedTeamClicked(false);
-    }
-    if (isDetailedChatClicked) {
-      setIsCreateChatClicked(false);
-      setIsDetailedTeamClicked(false);
-    }
-    if (isDetailedTeamClicked) {
-      setIsDetailedChatClicked(false);
-      setIsCreateChatClicked(false);
-    }
-  }, [isCreateChatClicked, isDetailedChatClicked, isDetailedTeamClicked]);
 
   useEffect(() => {
     getTeamByName(name!)
       .then((snapshot) => {
         if (snapshot.exists()) {
-          const team: Team = snapshot.val();
+          const team: object = snapshot.val();
           setTeam(team);
           setMembers(Object.values(team)[0].members);
           setTeamProps(Object.values(team)[0]);
@@ -79,11 +60,16 @@ const MyTeam = (): JSX.Element => {
   const teamID = Object.keys(team)[0];
 
   useEffect(() => {
-    const unsubscribe = getLiveTeamChannels(teamID!, (snapshot) => {
-      setChannels(Object.keys(snapshot.val()));
-    });
+    const unsubscribe = getLiveChannelsByUsername(appState.userData?.username!,
+      (snapshot) => {
+        const allUserChannels = Object.keys(snapshot.val());
+        const inTeamUserChannels = allUserChannels
+          .filter((channel) => Object.keys(teamProps?.channels!).includes(channel));
+        setChannels(inTeamUserChannels);
+      });
+
     return () => unsubscribe();
-  }, [teamID]);
+  }, [appState.userData?.username, teamProps?.channels]);
 
   useEffect(() => {
     getAllUsers()
@@ -101,8 +87,24 @@ const MyTeam = (): JSX.Element => {
         const allUsersOutOfTeam: User[] = Object.values(usersObj)
           .filter((userA) => ![...members, teamProps?.owner].includes(userA.username));
         setOuterUsers(allUsersOutOfTeam);
-      });
+      })
+      .catch(console.error);
   }, [members, teamProps?.owner]);
+
+  useEffect(() => {
+    if (isCreateChatClicked) {
+      setIsDetailedChatClicked(false);
+      setIsDetailedTeamClicked(false);
+    }
+    if (isDetailedChatClicked) {
+      setIsCreateChatClicked(false);
+      setIsDetailedTeamClicked(false);
+    }
+    if (isDetailedTeamClicked) {
+      setIsDetailedChatClicked(false);
+      setIsCreateChatClicked(false);
+    }
+  }, [isCreateChatClicked, isDetailedChatClicked, isDetailedTeamClicked]);
 
   const updateTeam = () => {
     const stringMembers = usersToRemove.map((member) => member.username);
@@ -137,18 +139,14 @@ const MyTeam = (): JSX.Element => {
 
   return (
     <div className='landing-page'>
-      {Object.values(team)[0].channels ?
-        <>
-          <ChannelsList props={{
-            channels,
-            setIsCreateChatClicked,
-            setIsDetailedChatClicked,
-            setCurrentChat,
-            setIsDetailedTeamClicked,
-          }} />
-        </> :
-        null}
-      <ChannelsList props={{ channels, setIsCreateChatClicked, setIsDetailedChatClicked, setCurrentChat, setIsDetailedTeamClicked }} />
+      {channels && <ChannelsList props={{
+        channels,
+        setIsCreateChatClicked,
+        setIsDetailedChatClicked,
+        setCurrentChat,
+        setIsDetailedTeamClicked,
+      }} />
+      }
 
       <div className='main-container'>
         <>
@@ -168,7 +166,7 @@ const MyTeam = (): JSX.Element => {
           }
           {isDetailedTeamClicked && Object.values(team)[0].owner === currentUser ?
             <>
-              <h4>{team.name}</h4>
+              <h4>{teamProps?.name}</h4>
               <button className='create-a-team' onClick={updateTeam}>Update users</button>
               <ManiPulateUsersLists
                 leftSide={outerUsers}

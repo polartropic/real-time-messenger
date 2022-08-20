@@ -27,6 +27,10 @@ const ChatParticipants = ({ currentChannel,
   const [end, setEnd] = useState<Date>(new Date());
 
   const URL = window.location.href;
+  if (currentChannel.participants.includes(userUsername!) &&
+  allUsers.every((user) => user.username !== userUsername)) {
+    allUsers = [...allUsers, appState.userData!];
+  }
 
   const handleCreateMeeting = (e: React.FormEvent<HTMLFormElement>) => {
     e.preventDefault();
@@ -54,7 +58,7 @@ const ChatParticipants = ({ currentChannel,
 
   const mappingParticipants = (participant: User, key: string) => {
     return <div key={key}>
-      <UserComponent props={{ user: participant }}/>
+      <UserComponent props={{ user: participant }} />
     </div>;
   };
 
