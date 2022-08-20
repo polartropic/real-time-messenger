@@ -2,13 +2,15 @@ import axios from 'axios';
 import { deleteUserFromChat, removeUserFromChannel } from '../../services/channels.services';
 import { createMeeting } from '../../services/meetings.services';
 import { ToastContainer, toast } from 'react-toastify';
-import { ChatParticipantsProps } from '../../types/Interfaces';
-import { useContext, useState } from 'react';
+import { ChatParticipantsProps, User } from '../../types/Interfaces';
+import { useContext, useEffect, useState } from 'react';
 import AppContext from '../../providers/AppContext';
 import { uid } from 'uid';
 import DateTimePicker from 'react-datetime-picker';
 import './ChatParticipants.css';
 import { API_KEY, ORGANIZATION_ID } from '../../common/constants';
+import { getAllUsers } from '../../services/users.services';
+import UserComponent from '../User/User';
 
 const ChatParticipants = ({ currentChannel,
   isDetailedChatClicked,
@@ -22,8 +24,21 @@ const ChatParticipants = ({ currentChannel,
   const [name, setName] = useState<string>('');
   const [start, setStart] = useState<Date>(new Date());
   const [end, setEnd] = useState<Date>(new Date());
-
+  const [channelUsers, setChannelUsers] = useState<User[]>([]);
   const URL = window.location.href;
+
+  useEffect(() => {
+    getAllUsers()
+      .then((snapshot) => {
+        const allUsers: User [] = Object.values(snapshot.val());
+        const currentChannelUsers = allUsers.filter((user) =>
+          currentChannel.participants.includes(user.username));
+        setChannelUsers(currentChannelUsers);
+      });
+  }, [currentChannel.participants]);
+
+  console.log(channelUsers);
+
 
   const handleCreateMeeting = (e: React.FormEvent<HTMLFormElement>) => {
     e.preventDefault();
@@ -58,9 +73,9 @@ const ChatParticipants = ({ currentChannel,
     removeUserFromChannel(currentChannel.id, currentUserIndex);
   };
 
-  const mappingParticipants = (participant: string, key: string) => {
+  const mappingParticipants = (participant: User, key: string) => {
     return <div key={key}>
-      <p className='participant-item'>{participant}</p>
+      <UserComponent props={{ user: participant }}/>
     </div>;
   };
 
@@ -101,7 +116,7 @@ const ChatParticipants = ({ currentChannel,
 
         <h4>Participants of chat:</h4>
         <div className='participants'>
-          {Object.values(currentChannel.participants).map((participant) => mappingParticipants(participant, uid()))}
+          {channelUsers.map((participant) => mappingParticipants(participant, uid()))}
         </div>
 
         <div className="manage-participants-btns">
