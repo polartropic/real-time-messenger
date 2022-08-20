@@ -25,60 +25,37 @@ const Message = ({ message, currentChannel, handleEditMessage }: MessageProps): 
     handleEditMessage(message);
   };
 
-  if (message.author === currentUser?.username) {
-    return (
-      <div className='my-message'>
-        <div className='edit-my-message'>
-          <button className='edit-message-btn' onClick={handleEdit}>Edit</button>
-        </div>
+  const isCurrentUserAuthor = currentUser?.username === message.author;
+  const reactionsClassName = isCurrentUserAuthor ? 'my-reactions' : 'others-reactions';
 
-        <div className='my-message-date'>
-          {message.createdOn.toLocaleDateString('en-GB')} at {message.createdOn.toLocaleTimeString([], { hour: '2-digit', minute: '2-digit' })}
-        </div>
-
-        <div className='my-message-author'>
-          @{message.author}
-        </div>
-
-        <div className='my-message-avatar'>
-          <img src={DefaultAvatar} alt='avatar' className='default-avatar' />
-        </div>
-
-        <div className='my-message-content'>
-          {message.content}
-        </div>
-
-        <div className='my-react-btns'>
-          <button className='my-reactions'>{`👍${message.reactions.yes}`}</button>
-          <button className='my-reactions'>{`👎${message.reactions.no}`}</button>
-          <button className='my-reactions'>{`❤️${message.reactions.heart}`}</button>
-        </div>
-      </div>
-    );
-  }
+  const editButton = (
+    <div className='edit-my-message'>
+      <button className='edit-message-btn' onClick={handleEdit}>Edit</button>
+    </div>
+  );
 
   return (
-    <div className='others-message'>
-      <div className='others-message-avatar'>
+    <div className='message'>
+      {isCurrentUserAuthor ? editButton : null}
+
+      <div className='message-avatar'>
         <img src={DefaultAvatar} alt='avatar' className='default-avatar' />
       </div>
 
-      <div className='others-message-author'>
-        @{message.author}
-      </div>
+      <div className={isCurrentUserAuthor ? 'my-message' : 'others-message'}>
+        <div className='message-author'>
+          @{message.author}
+        </div>
 
-      <div className='others-message-date'>
-        {message.createdOn.toLocaleDateString('en-GB')} at {message.createdOn.toLocaleTimeString([], { hour: '2-digit', minute: '2-digit' })}
-      </div>
+        <div className='message-content'>
+          {message.content}
+        </div>
 
-      <div className='others-message-content'>
-        {message.content}
-      </div>
-
-      <div className='others-react-btns'>
-        <button onClick={handleYes} className='others-reactions'>{`👍${message.reactions.yes}`}</button>
-        <button onClick={handleNo} className='others-reactions'>{`👎${message.reactions.no}`}</button>
-        <button onClick={handleHeart} className='others-reactions'>{`❤️${message.reactions.heart}`}</button>
+        <div className='react-btns'>
+          <button onClick={isCurrentUserAuthor ? undefined : handleYes} className={reactionsClassName}>{`👍${message.reactions.yes}`}</button>
+          <button onClick={isCurrentUserAuthor ? undefined : handleNo} className={reactionsClassName}>{`👎${message.reactions.no}`}</button>
+          <button onClick={isCurrentUserAuthor ? undefined : handleHeart} className={reactionsClassName}>{`❤️${message.reactions.heart}`}</button>
+        </div>
       </div>
     </div>
   );
