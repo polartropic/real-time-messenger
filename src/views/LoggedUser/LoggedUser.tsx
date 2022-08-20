@@ -49,7 +49,6 @@ const LoggedUser = (): JSX.Element => {
         setChannels(Object.keys(snapshot.val()));
       });
     return () => unsubscribe();
-    // }
   }, [appState.userData?.username!, loggedUser]);
 
   useEffect(() => {
