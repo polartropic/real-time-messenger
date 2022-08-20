@@ -4,6 +4,8 @@ import { ChannelsListProps } from '../../types/Interfaces';
 
 const ChannelsList = (
   { props }: ChannelsListProps) => {
+  console.log(props);
+
   const mappingChats = (chatName: string, key: string) => {
     return <div key={key}>
       <p onClick={() => openDetailedChat(chatName)} className='chat-item'>{chatName}</p>
@@ -44,10 +46,7 @@ const ChannelsList = (
       <button onClick={openCreateChat} className='view-users-btn'>Create a Chat</button>
       <h4>Chats:</h4>
       <div className='chats'>
-        {props.channels ?
-          props.channels && Object.keys(props.channels).map((chat) => mappingChats(chat, uid())) :
-          // props.chatList && Object.keys(props.chatList).map((chat) => mappingChats(chat, uid()))
-          null}
+        {props.channels && props.channels.map((chat) => mappingChats(chat, uid()))}
       </div>
     </div>
   );

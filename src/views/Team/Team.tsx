@@ -33,7 +33,7 @@ const MyTeam = (): JSX.Element => {
   });
   const [isDetailedChatClicked, setIsDetailedChatClicked] = useState(false);
   const [isCreateChatClicked, setIsCreateChatClicked] = useState(false);
-  const [channels, setChannels] = useState<IChannel[]>([]);
+  const [channels, setChannels] = useState<string[]>([]);
   const [members, setMembers] = useState<string[]>([]);
   const [title, setTitle] = useState<string>('');
   const [isDetailedTeamClicked, setIsDetailedTeamClicked] = useState<boolean>(false);
@@ -75,14 +75,16 @@ const MyTeam = (): JSX.Element => {
       })
       .catch(console.error);
   }, [name]);
+  console.log(teamProps);
 
   const teamID = Object.keys(team)[0];
   useEffect(() => {
     const unsubscribe = getLiveTeamChannels(teamID, (snapshot) => {
-      setChannels(snapshot.val());
+      setChannels(Object.keys(snapshot.val()));
     });
     return () => unsubscribe();
   }, [teamID]);
+  console.log(channels);
 
   useEffect(() => {
     getAllUsers()
@@ -182,8 +184,9 @@ const MyTeam = (): JSX.Element => {
           <ChatParticipants currentChannel={currentChat}
             isDetailedChatClicked={isDetailedChatClicked}
             setIsDetailedChatClicked={setIsDetailedChatClicked}
-            setIsDetailedTeamClicked={setIsDetailedTeamClicked} /> :
-          <TeamParticipants team={teamProps!}/>
+            setIsDetailedTeamClicked={setIsDetailedTeamClicked}
+            allUsers={teamMembersObjects} /> : null
+        // <TeamParticipants team={teamProps!} allUsers={teamMembersObjects} />
       }
 
     </div >
