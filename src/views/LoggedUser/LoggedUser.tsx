@@ -119,11 +119,6 @@ const LoggedUser = (): JSX.Element => {
       <div className="main-container">
         <>
           {isCreateChatClicked ?
-            // <Create props={{
-            //   isCreateChatClicked,
-            //   setIsCreateChatClicked,
-            // }} /> :
-            // null
             <>
               <input type="text" className={'create-chat-title'} name="team-name" placeholder='Please, add a title...' required defaultValue='' onChange={(e) => setTitle(e.target.value.trim())} />
               <button className='create-a-team' onClick={createChatFunc}>Create a Chat</button>
@@ -140,12 +135,6 @@ const LoggedUser = (): JSX.Element => {
             null
           }
           {isCreateTeamView ?
-            // <Create props={{
-            //   isCreateChatClicked,
-            //   setIsCreateChatClicked,
-            //   string,
-            // }} /> :
-            // null
             <>
               <input type="text" className={'create-chat-title'} name="team-name" placeholder='Please, add a title...' required defaultValue='' onChange={(e) => setTitle(e.target.value.trim())} />
               <button className='create-a-team' onClick={createTeam}>Create a Team</button>
