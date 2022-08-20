@@ -44,8 +44,7 @@ const Channel = ({ currentChannel }: ChannelProps) => {
 
   return (
     <div className='channel-container'>
-      <h4>Channel's title: {currentChannel.title}</h4>
-      <hr />
+      <h2>{currentChannel.title}</h2>
 
       <div className='messages-container'>
         {
