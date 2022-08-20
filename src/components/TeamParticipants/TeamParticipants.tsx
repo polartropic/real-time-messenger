@@ -1,18 +1,29 @@
 import { useEffect, useState } from 'react';
 import { uid } from 'uid';
-import { TeamParticipantsProps } from '../../types/Interfaces';
+import { getAllUsers } from '../../services/users.services';
+import { TeamParticipantsProps, User } from '../../types/Interfaces';
+import UserComponent from '../User/User';
 
 const TeamParticipants = ({ team }: TeamParticipantsProps): JSX.Element => {
-  const [members, setMembers] = useState<string[]>([]);
-
+  const [members, setMembers] = useState<User[]>([]);
+  const [owner, setOwner] = useState<User>();
   useEffect(() => {
     if (team) {
-      setMembers(team.members);
+      getAllUsers()
+        .then((snapshot) => {
+          const allUsers: User[] = Object.values(snapshot.val());
+          const teamMembers: string [] = team.members;
+          const currentChannelUsers = allUsers.filter((user) =>
+            teamMembers.includes(user.username));
+
+          setMembers(currentChannelUsers);
+          setOwner(allUsers.find((user) => user.username === team.owner));
+        });
     }
   }, [team]);
-  const mappingParticipants = (participant: string, key: string) => {
+  const mappingParticipants = (participant: User, key: string) => {
     return <div key={key}>
-      <p className='participant-item'>{participant}</p>
+      <UserComponent props={{ user: participant }}/>
     </div>;
   };
 
@@ -20,7 +31,7 @@ const TeamParticipants = ({ team }: TeamParticipantsProps): JSX.Element => {
     <div className="participants-list">
 
       <h4>Owner:</h4>
-      <h5>{team?.owner}</h5>
+      <UserComponent props={{ user: owner! }}/>
 
       <h4>Participants of team:</h4>
       <div className='participants'>
