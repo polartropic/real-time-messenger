@@ -91,13 +91,12 @@ const MyTeam = (): JSX.Element => {
         const usersObj: object = snapshot.val();
         const allUsersInTeam = Object.values(usersObj)
           .filter((userA) => [...members].includes(userA.username));
-        const ownerOfTeam: User [] = Object.values(usersObj)
+        const ownerOfTeam: User[] = Object.values(usersObj)
           .filter((user: User) => user.username === teamProps?.owner);
         setTeamMembersObject(allUsersInTeam);
         setUsersToRemove(allUsersInTeam);
         setInitialChatParticipants(allUsersInTeam);
         setOwnerObject(ownerOfTeam[0]);
-
 
         const allUsersOutOfTeam: User[] = Object.values(usersObj)
           .filter((userA) => ![...members, teamProps?.owner].includes(userA.username));
@@ -113,7 +112,6 @@ const MyTeam = (): JSX.Element => {
       })
       .then(() => toast.success('You have succesfully updated your team!'))
       .catch((err) => toast.warning(err));
-    // TODO not finished. I need to update somehow the teams of the deleted or added users...
   };
 
   const createChatFunc = () => {
@@ -188,7 +186,8 @@ const MyTeam = (): JSX.Element => {
             setIsDetailedChatClicked={setIsDetailedChatClicked}
             setIsDetailedTeamClicked={setIsDetailedTeamClicked}
             allUsers={teamMembersObjects} /> :
-          <TeamParticipants owner={ownerObj!} allUsers={teamMembersObjects} />
+          ownerObj && teamMembersObjects &&
+          <TeamParticipants owner={ownerObj} allUsers={teamMembersObjects} />
       }
 
     </div >
