@@ -1,6 +1,14 @@
 body {
   margin: 0px;
   background-color: rgb(245, 247, 251);
+  font-family: 'Baloo 2', cursive;
+}
+button{
+  font-family: 'Baloo 2', cursive;
+}
+
+h3, h4, h5 {
+  text-decoration: none;
 }
 
 button:hover,
@@ -40,3 +48,5 @@ a:hover {
   background: transparent;
   margin-top: 10px;
 }
+
+
