@@ -133,6 +133,7 @@ export interface SelectedMeetingProps {
     participants: string[],
     id: string,
   },
+  setModalState: Dispatch<boolean>,
 }
 
 export interface ReceivedMeeting {
