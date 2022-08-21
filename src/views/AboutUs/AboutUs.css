@@ -7,6 +7,20 @@
   background-color: white;
   border-radius: 20px;
   color: rgba(47, 69, 93, 1);
+  position: relative;
+}
+
+.descriptions {
+  display: grid;
+  grid-template-columns: 1fr 1fr 1fr;
+  gap: 50px;
+  position: absolute;
+  width: 95.6%;
+}
+
+.single p {
+  text-align: justify;
+  text-justify: inter-word;
 }
 
 .about-us img {
