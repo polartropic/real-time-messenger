@@ -58,7 +58,6 @@ const Register = (): JSX.Element => {
       return toast.warning('The username must be between 5 and 35 symbols');
     }
 
-
     getUserByUsername(regDetails.username)
       .then((snapshot) => {
         if (snapshot.exists()) {
@@ -126,7 +125,7 @@ const Register = (): JSX.Element => {
           <br />
           <h3>Already have an account?
             <Link to={'/login'}>
-              <button id="sign-in-btn">Sign in</button>
+              <span id="sign-in-btn"> Sign in</span>
             </Link>
           </h3>
           <button id="sign-up-btn">Sign up</button>
