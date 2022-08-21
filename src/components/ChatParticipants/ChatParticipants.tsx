@@ -84,10 +84,10 @@ const ChatParticipants = ({ currentChannel,
               <label htmlFor='content'></label>
               <input type="text" required placeholder="Input meeting's name" value={name} onChange={(e) => setName(e.target.value)} />
             </p>
-            <p>Meeting start:
+            <p id='meeting-start'>Meeting start:
               <DateTimePicker onChange={setStart} value={start} />
             </p>
-            <p>Meeting end:
+            <p id='meeting-end'>Meeting end:
               <DateTimePicker onChange={setEnd} value={end} />
             </p>
             <button className="view-users-btn">Schedule meeting</button>

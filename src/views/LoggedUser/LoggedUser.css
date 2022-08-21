@@ -22,8 +22,9 @@
   grid-row: 2 / 3;
   padding: 20px 3px 20px 7px;
   text-align: center;
-  background-color: white;
+  background-color: rgba(47, 69, 93, 0.85);
   border-radius: 10px;
+  color: white;
 }
 
 .chats {
@@ -47,21 +48,23 @@
 .manage-participants-btns button,
 .view-users-btn, 
 .create-a-team {
-  background-color: rgba(47, 69, 93, 1);
-  border: 1px solid white;
-  border-radius: 20px;
-  padding: 12px;
-  color: white;
-  transition: border-color 0.5s, background-color 0.5s, color 0.5s;
-  margin: 0.5em;
+  background-image: linear-gradient(to right, #16222A 0%, #2f455d 51%, #16222A  100%);
+  margin-bottom: 7px; 
+  padding: 11px;
+  text-align: center;
+  transition: 0.5s;
+  background-size: 200% auto;
+  color: white;            
+  border-radius: 20px;   
+  border: 1px solid black;
 }
 
 .add-btn:hover,
 .view-users-btn:hover,
 .create-a-team:hover {
-  background-color: white;
-  border-color: rgba(47, 69, 93, 1);
-  color: rgba(47, 69, 93, 1);
+  background-position: right center; 
+  color: #fff;
+  text-decoration: none;
 }
 
 .leave-btn:hover {
@@ -78,8 +81,8 @@
 }
 
 .chat-item {
-  background-color: #f2f1ec;
-  border: 1px solid #f2f1ec;
+  background-color: rgba(47, 69, 93, 0.9);
+  color: white;
   padding: 7px;
   border-radius: 8px;
   cursor: pointer;
