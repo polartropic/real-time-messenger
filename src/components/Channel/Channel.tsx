@@ -49,7 +49,7 @@ const Channel = ({ currentChannel }: ChannelProps) => {
       <div className='messages-container'>
         {
           messages.length === 0 ?
-            <p>No messages to show.</p> :
+            <p>Be the first to start a conversation</p> :
             messages.map((message, key) => <Message currentChannel={currentChannel}
               message={message} handleEditMessage={handleEditMessage} key={key} />)
         }

@@ -2,12 +2,17 @@
   height: calc(100vh - 160px);
   display: flex;
   flex-direction: column;
-  justify-content: space-between;
   border-radius: 10px;
+  position: relative;
+}
+
+.channel-container h2 {
+  margin-top: 0;
 }
 
 .messages-container {
   overflow-y: auto;
   width: 90%;
   margin: 0 auto;
+  height: calc(100vh - 320px);
 }
