@@ -46,7 +46,7 @@ const ManiPulateUsersLists = ({ leftSide, setLeftSide, rightSide, setRightSide }
       <button onClick={() => {
         handleAddUser(user);
       }} id='add-remove-user-btn'>
-        <img src="https://img.icons8.com/color/48/000000/add--v1.png" alt='add-btn' />
+        <img src="https://cdn-icons-png.flaticon.com/128/189/189689.png" alt='add-btn' />
       </button>;
     if (user.username !== currentUser) {
       return <div key={uid()}>
@@ -60,7 +60,7 @@ const ManiPulateUsersLists = ({ leftSide, setLeftSide, rightSide, setRightSide }
       <button onClick={() => {
         handleRemoveUser(user);
       }} id='add-remove-user-btn'>
-        <img src="https://img.icons8.com/color/48/000000/delete-forever.png" alt='remove-btn' />
+        <img src="https://cdn-icons-png.flaticon.com/128/1168/1168643.png" alt='remove-btn' />
       </button>;
     if (user.username !== currentUser) {
       return <div key={uid()}>

@@ -16,11 +16,11 @@
 
 .create-team-wrapper,
 .list-of-added-participants {
-  border: 1px solid rgba(47, 69, 93, 1);
   height: calc(80vh - 170px);
-  border-radius: 10px;
+  border-radius: 20px;
   padding: 10%;
-  background-color: rgba(47, 69, 93, 0.1);
+  background-color: rgba(240, 248, 255, 0.6);
+  box-shadow: rgba(0, 0, 0, 0.35) 0px 5px 15px;
 }
 
 input {
@@ -35,7 +35,7 @@ input {
 .users-container,
 .users-container-added {
   overflow-y: auto;
-  height: calc(65vh - 170px);
+  height: calc(65vh - 142px);
   padding-right: 10px;
   border-radius: 10px;
 }
