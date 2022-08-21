@@ -82,7 +82,8 @@
 .chat-item {
   background-color: rgba(47, 69, 93, 0.9);
   color: white;
-  padding: 7px;
+  padding: 6px;
+  border: 1px solid rgba(47, 69, 93, 0.9);
   border-radius: 8px;
   cursor: pointer;
   margin-right: 5px;
