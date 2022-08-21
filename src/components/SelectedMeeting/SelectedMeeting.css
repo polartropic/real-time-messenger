@@ -1,15 +1,38 @@
-#meeting-details {
-    text-align: center;
-    width: 100%;
-    border: 1px solid;
-    padding-top: 10px;
-    padding-bottom: 10px;
+#modal-container {
+  width: 20%;
+  height: fit-content;
+  border-radius: 12px;
+  background-color: rgb(255,255,255, 0.9);
+  box-shadow: rgba(0, 0, 0, 0.35) 0px 5px 15px;
+  display: flex;
+  text-align: center;
+  flex-direction: column;
+  padding: 25px;
+  z-index: 100;
+  position: absolute;
+  margin-left: 37%;
+  margin-top: 10%;
 }
 
 #meeting-details-title {
-    color: #2f455d;
-    margin-top: 2px;
-    margin-bottom: 6px;
-    font-size: 17px;
-    text-decoration: underline;
+  color: #2f455d;
+  margin-top: 2px;
+  margin-bottom: 6px;
+  font-size: 17px;
+  text-decoration: underline;
+  text-align: center;
+}
+
+.close-btn {
+  display: flex;
+  justify-content: flex-end;
+  margin: 0px;
+}
+
+.close-btn button {
+  background-color: transparent;
+  border: none;
+  font-size: 20px;
+  cursor: pointer;
+  margin-right: 5px;
 }

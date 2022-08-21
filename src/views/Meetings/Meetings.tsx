@@ -52,7 +52,7 @@ const Meetings = (): JSX.Element => {
 
   return <div>
     {modalState === true ?
-      <SelectedMeeting selectedEvent={selectedEvent}/> :
+      <SelectedMeeting selectedEvent={selectedEvent} setModalState={setModalState}/> :
       null}
     <Calendar
       localizer={localizer}
