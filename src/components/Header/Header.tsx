@@ -11,6 +11,7 @@ import { ToastContainer, toast } from 'react-toastify';
 import 'react-toastify/dist/ReactToastify.css';
 import { uid } from 'uid';
 import { Team } from '../../types/Interfaces';
+import InitialsAvatar from 'react-initials-avatar';
 
 const Header = (): JSX.Element => {
   const { appState,
@@ -102,8 +103,17 @@ const Header = (): JSX.Element => {
                 <button className='header-btn' id='my-meetings'>My meetings</button>
               </Link>
               <button onClick={handleLogOut} className='header-btn'>Log out</button>
-              <Link to={'/edit-profile'}>
-                <img className="default-avatar" src={DefaultAvatar} alt="default-avatar" />
+              <Link to={'/edit-profile'} style={{ textDecoration: 'none' }}>
+                {appState.userData?.imgURL ?
+
+                  <img src={appState.userData?.imgURL} alt="avatar" /> :
+
+                  <InitialsAvatar
+                    name={`${appState.userData?.firstName} ${appState.userData?.lastName}`}
+                    className={'avatar-default-header'} />
+
+                }
+
               </Link>
             </> :
             null

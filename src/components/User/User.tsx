@@ -1,9 +1,9 @@
 import { FC, useState } from 'react';
 // import AppContext from '../../providers/AppContext';
-import DefaultAvatar from '../../assets/images/Default-avatar.jpg';
 import './User.css';
 import { UserProps } from '../../types/Interfaces';
 import { Tooltip } from '@mui/material';
+import InitialsAvatar from 'react-initials-avatar';
 
 const UserComponent: FC<UserProps> = ({ props }): JSX.Element => {
   const [open, setOpen] = useState(false);
@@ -25,9 +25,18 @@ const UserComponent: FC<UserProps> = ({ props }): JSX.Element => {
         </div>
       }>
       <div className="user-box" id="user-box">
-        <div>
-          {<img src={props?.user.imgURL} alt="avatar" /> && <img src={DefaultAvatar} alt="avatar" />} @{props?.user.username}
-        </div>
+        {props?.user.imgURL ?
+          <div>
+            <img src={props?.user.imgURL} alt="avatar" /> {`@${props?.user.username}`}
+          </div> :
+          <>
+            <InitialsAvatar
+              name={`${props.user.firstName} ${props.user.lastName}`}
+              className={'avatar-default'} /> {`@${props?.user.username}`}
+          </>
+        }
+
+
         <div>
           {props?.buttonEl}
         </div>

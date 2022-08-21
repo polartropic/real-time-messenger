@@ -24,7 +24,7 @@
   flex-wrap: wrap;
 }
 
-#stats > h4 {
+#stats>h4 {
   margin-left: 10px;
   margin-right: 10px;
   align-self: center;
@@ -64,28 +64,28 @@
 }
 
 #create-a-team-btn-header {
-  background-image: linear-gradient(to right, #16222A 0%, #2f455d 51%, #16222A  100%);
-  margin-bottom: 7px; 
+  background-image: linear-gradient(to right, #16222A 0%, #2f455d 51%, #16222A 100%);
+  margin-bottom: 7px;
   padding: 11px;
   text-align: center;
   transition: 0.5s;
   background-size: 200% auto;
-  color: white;            
-  border-radius: 15px;   
+  color: white;
+  border-radius: 15px;
   border: 1px solid black;
-  position: sticky;      
+  position: sticky;
 }
 
 #create-a-team-btn-header:hover {
-  background-position: right center; 
+  background-position: right center;
   color: #fff;
   text-decoration: none;
 }
 
-.team-item{
+.team-item {
   background-color: rgba(47, 69, 93, 0.9);
   color: white;
-  text-decoration: none!;
+  text-decoration: none !;
   border-radius: 12px;
   padding: 8px;
   margin: 10px 6px 10px 6px;
@@ -109,7 +109,22 @@
   display: flexbox;
 }
 
-#mapping-teams{
+#mapping-teams {
   overflow-y: auto;
   height: 270px;
+}
+
+.avatar-default-header {
+  background-color: #f3d679;
+  opacity: none;
+  height: 50px;
+  width: 50px;
+  border-radius: 50%;
+  align-self: center;
+  margin: 10px;
+  object-fit: cover;
+  font-size: 30px;
+  color: rgba(47, 69, 93, 0.9);
+  text-align: center;
+  padding-top: 2px;
 }
