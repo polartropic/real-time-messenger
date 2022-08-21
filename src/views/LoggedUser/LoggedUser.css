@@ -49,7 +49,6 @@
 .view-users-btn, 
 .create-a-team {
   background-image: linear-gradient(to right, #16222A 0%, #2f455d 51%, #16222A  100%);
-  margin-bottom: 7px; 
   padding: 11px;
   text-align: center;
   transition: 0.5s;
