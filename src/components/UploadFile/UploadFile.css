@@ -1,0 +1,9 @@
+img.sample-upload {
+  max-width: 200px;
+  max-height: 200px;
+  border-radius: 5px;
+}
+
+input {
+  max-width: 150px;
+}

@@ -9,6 +9,7 @@ import { MIN_PASSWORD_LENGTH } from '../../common/constants';
 import { User } from '../../types/Interfaces';
 import { ToastContainer, toast } from 'react-toastify';
 import 'react-toastify/dist/ReactToastify.css';
+import { ImageUpload } from '../../components/UploadFile/UploadFile';
 
 const EditProfile = (): JSX.Element => {
   const navigate = useNavigate();
@@ -143,11 +144,14 @@ const EditProfile = (): JSX.Element => {
           <input type="password" id="new-password" placeholder="new password" onChange={(e) => setPassword(e.target.value)} />
           <input type="submit" className="change-button-edit" value="Change" />
         </form>
+        <ImageUpload />
         <button className="go-back-btn" onClick={() => navigate('/')}>
           <img src="https://firebasestorage.googleapis.com/v0/b/thunderteam-99849.appspot.com/o/icons8-go-back-48.png?alt=media&token=7bdfef4c-cf94-4147-8f4d-fc55fd086b4a" alt='go-back-icon' />
         </button>
       </div>
-      <ToastContainer />
+      <>
+        <ToastContainer />
+      </>
     </div>
   );
 };
