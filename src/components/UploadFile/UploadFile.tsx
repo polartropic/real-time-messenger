@@ -1,9 +1,14 @@
 import './UploadFile.css';
-import { useState, useEffect, FormEvent } from 'react';
+import { useState, useEffect, useContext } from 'react';
+import { uploadImage } from '../../services/storage.services';
+import AppContext from '../../providers/AppContext';
+
 
 export const ImageUpload = () => {
   const [selectedFile, setSelectedFile] = useState<File>();
   const [preview, setPreview] = useState<string>();
+  const { appState } = useContext(AppContext);
+  const userName = appState.userData?.username;
 
   // create a preview as a side effect, whenever selected file is changed
   useEffect(() => {
@@ -29,7 +34,10 @@ export const ImageUpload = () => {
     setSelectedFile(event.currentTarget.files[0]);
   };
 
-  const handleUploadFile = (event: FormEvent<HTMLFormElement>) => {
+  const handleUploadFile = (event: any) => {
+    event.preventDefault();
+    const file: File = event.target[0].files[0];
+    uploadImage(file, userName!);
   };
 
   return (

@@ -66,6 +66,13 @@ export const updateUserTeams = (username: string, teamName: string) => {
   return update(ref(db), updateTeams);
 };
 
+export const updateUserAvatar = (username: string, imgURL: string) => {
+  const updateImgURL: { [index: string]: string } = {};
+  updateImgURL[`/users/${username}/imgURL`] = imgURL;
+  return update(ref(db), updateImgURL);
+};
+
+
 export const deleteUsersTeam = (username: string, teamName: string) => {
   const updateTeams: { [index: string]: boolean | null } = {};
   updateTeams[`/users/${username}/teams/${teamName}`] = null;
