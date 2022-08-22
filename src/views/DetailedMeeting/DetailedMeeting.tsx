@@ -9,7 +9,7 @@ import AppContext from '../../providers/AppContext';
 import { ReceivedMeeting } from '../../types/Interfaces';
 import Loading from '../../assets/images/Loading.gif';
 import './DetailedMeeting.css';
-import { dyteMeetingFunc, dyteParticipantFunc } from '../../services/dyte.services';
+import { dyteMeetingClosureFunc, dyteMeetingFunc, dyteParticipantFunc } from '../../services/dyte.services';
 
 const DetailedMeeting = (): JSX.Element => {
   const { meetingID } = useParams();
@@ -81,18 +81,9 @@ const DetailedMeeting = (): JSX.Element => {
         meeting.meta.on('disconnected', () => {
           meeting.leaveRoom();
 
-          const options = {
-            method: 'PUT',
-            url: `https://api.cluster.dyte.in/v1/organizations/${ORGANIZATION_ID}/meetings/${meetingID}`,
-            headers: { 'Content-Type': 'application/json', 'Authorization': `${API_KEY}`, 'Access-Control-Allow-Origin': '*' },
-            data: { title: receivedMeeting.title, status: 'CLOSED' },
-          };
-
-          axios.request(options).then(function(response) {
-            console.log(response.data);
-          }).catch(function(error) {
-            console.error(error);
-          });
+          axios.request(dyteMeetingClosureFunc(BASE_URL, ORGANIZATION_ID, meetingID, API_KEY, receivedMeeting.title))
+            .then((response) => console.log(response.data))
+            .catch((error) => console.error(error));
         });
       }
     }, [meeting]);

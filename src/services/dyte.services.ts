@@ -37,3 +37,13 @@ export const dyteMeetingCreationFunc = (baseURL: string, orgID: string, apiKey: 
   return meetingCreation;
 };
 
+export const dyteMeetingClosureFunc = (baseURL: string, orgID: string, meetingID: string | undefined, apiKey: string, title: string) => {
+  const dyteMeetingClosure = {
+    method: 'PUT',
+    url: `${baseURL}/organizations/${orgID}/meetings/${meetingID}`,
+    headers: { 'Content-Type': 'application/json', 'Authorization': `${apiKey}`, 'Access-Control-Allow-Origin': '*' },
+    data: { title: title, status: 'CLOSED' },
+  };
+  return dyteMeetingClosure;
+};
+
