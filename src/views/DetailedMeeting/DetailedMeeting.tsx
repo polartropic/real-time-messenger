@@ -2,8 +2,9 @@ import { DyteMeeting, provideDyteDesignSystem } from '@dytesdk/react-ui-kit';
 import { DyteProvider, useDyteClient, useDyteMeeting } from '@dytesdk/react-web-core';
 import axios from 'axios';
 import { useContext, useEffect, useState } from 'react';
-import { useParams } from 'react-router-dom';
+import { useNavigate, useParams } from 'react-router-dom';
 import { API_KEY, BASE_URL, ORGANIZATION_ID } from '../../common/constants';
+import { ToastContainer, toast } from 'react-toastify';
 import AppContext from '../../providers/AppContext';
 import { ReceivedMeeting } from '../../types/Interfaces';
 import Loading from '../../assets/images/Loading.gif';
@@ -14,6 +15,7 @@ const DetailedMeeting = (): JSX.Element => {
   const { meetingID } = useParams();
   const { appState } = useContext(AppContext);
   const userData = appState.userData;
+  const navigate = useNavigate();
   const [receivedMeeting, setReceivedMeeting] = useState<ReceivedMeeting>({
     createdAt: '',
     id: '',
@@ -48,6 +50,10 @@ const DetailedMeeting = (): JSX.Element => {
         },
       });
     }
+    if (receivedMeeting.status === 'CLOSED') {
+      toast.warning('The meeting is already closed! Please create a new one.');
+      navigate('/my-meetings');
+    }
   }, [addedUser, receivedMeeting.roomName]);
 
   const MyMeeting = () => {
@@ -72,8 +78,21 @@ const DetailedMeeting = (): JSX.Element => {
           },
           borderRadius: 'extra-rounded',
         });
-        meeting.meta.on('roomLeft', () => {
+        meeting.meta.on('disconnected', () => {
           meeting.leaveRoom();
+
+          const options = {
+            method: 'PUT',
+            url: `https://api.cluster.dyte.in/v1/organizations/${ORGANIZATION_ID}/meetings/${meetingID}`,
+            headers: { 'Content-Type': 'application/json', 'Authorization': `${API_KEY}`, 'Access-Control-Allow-Origin': '*' },
+            data: { title: receivedMeeting.title, status: 'CLOSED' },
+          };
+
+          axios.request(options).then(function(response) {
+            console.log(response.data);
+          }).catch(function(error) {
+            console.error(error);
+          });
         });
       }
     }, [meeting]);
@@ -92,6 +111,7 @@ const DetailedMeeting = (): JSX.Element => {
       </>:
       <DyteProvider value={meeting}>
         <MyMeeting />
+        <ToastContainer />
       </DyteProvider>
   );
 };
