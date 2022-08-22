@@ -49,6 +49,7 @@ const ChatParticipants = ({ currentChannel,
     deleteUserFromChat(userUsername, currentChannel.title)
       .then(() => {
         toast.success(`You have successfully been removed from chat ${currentChannel.title}!`);
+        setIsDetailedChatClicked(false);
       });
 
     const currentUserIndex = currentChannel.participants.indexOf(userUsername!);
