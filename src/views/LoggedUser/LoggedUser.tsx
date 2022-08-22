@@ -40,16 +40,17 @@ const LoggedUser = (): JSX.Element => {
   const [initialParticipants, setInitialParticipants] = useState<User[]>([]);
   const [addedParticipants, setAddedParticipants] = useState<User[]>([]);
   const [title, setTitle] = useState<string>('');
-  const [loggedUser, setLoggedUser] = useState<string>('');
+
   const navigate = useNavigate();
   useEffect(() => {
-    setLoggedUser(appState.userData?.username!);
-    const unsubscribe = getLiveChannelsByUsername(appState.userData?.username!,
-      (snapshot) => {
-        setChannels(Object.keys(snapshot.val()));
-      });
-    return () => unsubscribe();
-  }, [appState.userData?.username!, loggedUser]);
+    if (appState.userData?.username) {
+      const unsubscribe = getLiveChannelsByUsername(appState.userData.username,
+        (snapshot) => {
+          setChannels(Object.keys(snapshot.val()));
+        });
+      return () => unsubscribe();
+    }
+  }, [appState.userData?.username]);
 
   useEffect(() => {
     getAllUsers()
@@ -70,7 +71,8 @@ const LoggedUser = (): JSX.Element => {
     }
     const userIDs = addedParticipants.map((user) => user.username);
     createChat(title, [...userIDs, userDetails?.username!])
-      .then(() => {
+      .then((res) => {
+        setCurrentChat(res);
         toast.success('Successful chat creation!');
         setIsCreateChatClicked(!isCreateChatClicked);
         [...userIDs, userDetails?.username!].map((participant) => updateUserChats(participant, title));
