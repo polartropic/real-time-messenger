@@ -27,7 +27,8 @@ const UserComponent: FC<UserProps> = ({ props }): JSX.Element => {
       <div className="user-box" id="user-box">
         {props?.user.imgURL ?
           <div>
-            <img src={props?.user.imgURL} alt="avatar" /> {`@${props?.user.username}`}
+            <img src={props?.user.imgURL}
+              alt="avatar" className='user-avatar' /> {`@${props?.user.username}`}
           </div> :
           <>
             <InitialsAvatar

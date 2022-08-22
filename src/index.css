@@ -38,6 +38,24 @@ a:hover {
   padding-top: 4px;
 }
 
+img.user-avatar{
+  height: 33px;
+  width: 33px;
+  border-radius: 50%;
+  align-self: center;
+  margin: 5px;
+  object-fit: cover;
+}
+
+img.user-avatar-header{
+  height: 40px;
+  width: 40px;
+  border-radius: 50%;
+  align-self: center;
+  margin: 17px;
+  object-fit: cover;
+}
+
 ::-webkit-scrollbar {
   width: 5px;
 }

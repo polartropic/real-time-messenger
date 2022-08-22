@@ -1,5 +1,4 @@
 import { ReactNode, useContext, useEffect, useState } from 'react';
-import DefaultAvatar from '../../assets/images/Default-avatar.jpg';
 import ThunderTeamLogo from '../../assets/images/ThunderTeamLogo-noBackground.png';
 import { logOut } from '../../services/auth.services';
 import AppContext from '../../providers/AppContext';
@@ -106,7 +105,9 @@ const Header = (): JSX.Element => {
               <Link to={'/edit-profile'} style={{ textDecoration: 'none' }}>
                 {appState.userData?.imgURL ?
 
-                  <img src={appState.userData?.imgURL} alt="avatar" /> :
+                  <img src={appState.userData?.imgURL}
+                    alt="avatar"
+                    className='user-avatar-header' /> :
 
                   <InitialsAvatar
                     name={`${appState.userData?.firstName} ${appState.userData?.lastName}`}

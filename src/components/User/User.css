@@ -12,13 +12,13 @@
   box-shadow: rgba(0, 0, 0, 0.35) 0px 2px 3px;
 }
 
-.user-box img {
-  height: 20px;
-  width: 20px;
+/* img.user-box  {
+  height: 33px;
+  width: 33px;
   border-radius: 50%;
   object-fit: cover;
   vertical-align: middle;
-}
+} */
 
 .user-box p {
   line-height: 14px;
