@@ -47,8 +47,12 @@ const Login = (): JSX.Element => {
             .catch((e) => {
               if (e.message.includes('wrong-password')) {
                 toast.warning('Wrong password!');
+              } if (e.message.includes('missing-email')) {
+                toast.warning('Please provide your username.');
+              } if (e.message.includes('auth/internal-error')) {
+                toast.warning('Please provide your password.');
               } else {
-                toast.error(e.message);
+                console.error(e.message);
               }
             });
         } else {
