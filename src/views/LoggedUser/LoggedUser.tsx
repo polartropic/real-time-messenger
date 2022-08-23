@@ -11,7 +11,7 @@ import ChannelsList from '../../components/ChannelsList/ChannelsList';
 import ManiPulateUsersLists from '../../components/ManipulateUsersLists/ManiPulateUsersLists';
 import { MAX_CHANNEL_NAME_LENGTH, MAX_TEAM_NAME_LENGTH, MIN_CHANNEL_NAME_LENGTH, MIN_NUMBER_OF_CHAT_PARTICIPANTS, MIN_TEAM_NAME_LENGTH } from '../../common/constants';
 import { toast } from 'react-toastify';
-import { createChat } from '../../services/channels.services';
+import { createChat, getChatByName } from '../../services/channels.services';
 import { getTeamByName, addTeamToDB } from '../../services/teams.services';
 import { useNavigate } from 'react-router-dom';
 
@@ -70,18 +70,25 @@ const LoggedUser = (): JSX.Element => {
       return toast.warning('Please add at least one participant in the chat!');
     }
     const userIDs = addedParticipants.map((user) => user.username);
-    createChat(title, [...userIDs, userDetails?.username!])
-      .then((res) => {
-        setCurrentChat(res);
-        toast.success('Successful chat creation!');
-        setIsCreateChatClicked(!isCreateChatClicked);
-        [...userIDs, userDetails?.username!].map((participant) => updateUserChats(participant, title));
-      })
-      .catch((err) => toast.warning(`Something went wrong  ${err.message}`));
-    setInitialParticipants(allUsers);
-    setAddedParticipants([]);
-    setIsDetailedChatClicked(true);
-    setTitle('');
+    getChatByName(title)
+      .then((snapshot) => {
+        if (snapshot.exists()) {
+          return toast.warning('This chat name is already taken! Please choose a different one.');
+        } else {
+          createChat(title, [...userIDs, userDetails?.username!])
+            .then((res) => {
+              setCurrentChat(res);
+              toast.success('Successful chat creation!');
+              setIsCreateChatClicked(!isCreateChatClicked);
+              [...userIDs, userDetails?.username!].map((participant) => updateUserChats(participant, title));
+            })
+            .catch((err) => toast.warning(`Something went wrong  ${err.message}`));
+          setInitialParticipants(allUsers);
+          setAddedParticipants([]);
+          setIsDetailedChatClicked(true);
+          setTitle('');
+        }
+      });
   };
 
   const createTeam = () => {
