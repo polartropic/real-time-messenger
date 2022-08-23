@@ -1,9 +1,9 @@
 import { FC, useState } from 'react';
-// import AppContext from '../../providers/AppContext';
-import './User.css';
 import { UserProps } from '../../types/Interfaces';
 import InitialsAvatar from 'react-initials-avatar';
 import { Tooltip } from '@mui/material';
+import UserStatus from '../UserStatus/UserStatus';
+import './User.css';
 
 const UserComponent: FC<UserProps> = ({ props }): JSX.Element => {
   const [open, setOpen] = useState(false);
@@ -15,17 +15,8 @@ const UserComponent: FC<UserProps> = ({ props }): JSX.Element => {
   const handleOpen = () => {
     setOpen(true);
   };
-  const toolTipStyle = {
-    bgcolor: 'red',
-    boxShadow: 1,
-    borderRadius: 20,
-    p: 2,
-    minWidth: 300,
-  };
-
   return (
-
-    <Tooltip open={open} onClose={handleClose} onOpen={handleOpen} className='toolTip'
+    <Tooltip open={open} onClose={handleClose} onOpen={handleOpen}
       title={
         <>
           <p>{props.user.firstName} {props.user.lastName}</p>
@@ -64,12 +55,12 @@ const UserComponent: FC<UserProps> = ({ props }): JSX.Element => {
           </>
         }
 
-
         <div>
           {props?.buttonEl}
         </div>
-      </div>
 
+        <UserStatus />
+      </div>
     </Tooltip>
   );
 };

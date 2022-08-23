@@ -7,9 +7,9 @@
   font-size: 14px;
   border-radius: 10px;
   background-color: rgba(236, 243, 252, 0.93);
-
   color: black;
   box-shadow: rgba(0, 0, 0, 0.35) 0px 2px 3px;
+  position: relative;
 }
 
 /* img.user-box  {

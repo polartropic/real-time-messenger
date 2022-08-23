@@ -18,6 +18,17 @@
   padding-right: 30px;
 }
 
+.header-avatar {
+  position: relative;
+}
+
+.header-avatar .user-status {
+  top: 10px;
+  left: 5px;
+  height: 12px;
+  width: 12px;
+}
+
 #stats,
 #navigation {
   display: flex;

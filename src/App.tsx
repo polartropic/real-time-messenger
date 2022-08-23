@@ -1,6 +1,5 @@
 import { useEffect, useState } from 'react';
 import { BrowserRouter, Routes, Route, Navigate } from 'react-router-dom';
-import './App.css';
 import AboutUs from './views/AboutUs/AboutUs';
 import Header from './components/Header/Header';
 import AppContext from './providers/AppContext';
@@ -16,6 +15,8 @@ import MyTeam from './views/Team/Team';
 import { iAppState } from './types/Interfaces';
 import Meetings from './views/Meetings/Meetings';
 import DetailedMeeting from './views/DetailedMeeting/DetailedMeeting';
+import { IdleTimerProvider } from 'react-idle-timer';
+import './App.css';
 
 function App() {
   const [appState, setState] = useState<iAppState>({
@@ -59,18 +60,20 @@ function App() {
           setIsDetailedChatClicked,
           isDetailedChatClicked,
         }}>
-          <Header />
-          <Routes>
-            <Route path="/" element={<Navigate to="/home-page" />} />
-            <Route path="home-page" element={<HomePage />} />
-            <Route path="login" element={<Login />} />
-            <Route path="about-us" element={<AboutUs />} />
-            <Route path="edit-profile" element={<Authenticated><EditProfile /></Authenticated>} />
-            <Route path="teams/:name" element={<Authenticated><MyTeam /></Authenticated>} />
-            <Route path="my-meetings/:meetingID" element={<Authenticated><DetailedMeeting /></Authenticated>} />
-            <Route path="my-meetings" element={<Authenticated><Meetings /></Authenticated>} />
-            <Route path="*" element={<NotFound />} />
-          </Routes>
+          <IdleTimerProvider>
+            <Header />
+            <Routes>
+              <Route path="/" element={<Navigate to="/home-page" />} />
+              <Route path="home-page" element={<HomePage />} />
+              <Route path="login" element={<Login />} />
+              <Route path="about-us" element={<AboutUs />} />
+              <Route path="edit-profile" element={<Authenticated><EditProfile /></Authenticated>} />
+              <Route path="teams/:name" element={<Authenticated><MyTeam /></Authenticated>} />
+              <Route path="my-meetings/:meetingID" element={<Authenticated><DetailedMeeting /></Authenticated>} />
+              <Route path="my-meetings" element={<Authenticated><Meetings /></Authenticated>} />
+              <Route path="*" element={<NotFound />} />
+            </Routes>
+          </IdleTimerProvider>
         </AppContext.Provider>
       </BrowserRouter>
     </div>
