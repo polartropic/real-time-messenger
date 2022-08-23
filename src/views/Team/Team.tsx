@@ -53,6 +53,7 @@ const MyTeam = (): JSX.Element => {
     email: '',
     phoneNumber: '',
     imgURL: '',
+    status: '',
     teams: [],
     channels: [],
     uid: '',
