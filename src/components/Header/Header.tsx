@@ -9,6 +9,7 @@ import { ToastContainer, toast } from 'react-toastify';
 import { uid } from 'uid';
 import { Team, User } from '../../types/Interfaces';
 import InitialsAvatar from 'react-initials-avatar';
+import UserStatus from '../UserStatus/UserStatus';
 import 'react-toastify/dist/ReactToastify.css';
 import './Header.css';
 
@@ -127,18 +128,21 @@ const Header = (): JSX.Element => {
               <Link to={'/my-meetings'} id='link-to-meetings'>
                 <button className='header-btn' id='my-meetings'>My meetings</button>
               </Link>
-              <button onClick={handleLogOut} className='header-btn'>Log out</button>
-              <Link to={'/edit-profile'} style={{ textDecoration: 'none' }}>
-                {userData.imgURL ?
-                  <img src={userData.imgURL}
-                    alt="avatar"
-                    className='user-avatar-header' /> :
+              <button onClick={handleLogOut} className='header-btn' id='logout-btn'>Log out</button>
+              <div className='header-avatar'>
+                <Link to={'/edit-profile'} style={{ textDecoration: 'none' }}>
+                  {userData.imgURL ?
+                    <img src={userData.imgURL}
+                      alt="avatar"
+                      className='user-avatar-header' /> :
 
-                  <InitialsAvatar
-                    name={`${userData.firstName} ${userData.lastName}`}
-                    className={'avatar-default-header'} />
-                }
-              </Link>
+                    <InitialsAvatar
+                      name={`${userData.firstName} ${userData.lastName}`}
+                      className={'avatar-default-header'} />
+                  }
+                </Link>
+                <UserStatus />
+              </div>
             </> :
             null
           }

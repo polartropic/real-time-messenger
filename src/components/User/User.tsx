@@ -1,9 +1,9 @@
 import { FC, useState } from 'react';
-// import AppContext from '../../providers/AppContext';
-import './User.css';
 import { UserProps } from '../../types/Interfaces';
 import { Tooltip } from '@mui/material';
 import InitialsAvatar from 'react-initials-avatar';
+import UserStatus from '../UserStatus/UserStatus';
+import './User.css';
 
 const UserComponent: FC<UserProps> = ({ props }): JSX.Element => {
   const [open, setOpen] = useState(false);
@@ -15,8 +15,8 @@ const UserComponent: FC<UserProps> = ({ props }): JSX.Element => {
   const handleOpen = () => {
     setOpen(true);
   };
-  return (
 
+  return (
     <Tooltip open={open} onClose={handleClose} onOpen={handleOpen}
       title={
         <div>
@@ -24,6 +24,7 @@ const UserComponent: FC<UserProps> = ({ props }): JSX.Element => {
           <p>{props.user.email}</p>
         </div>
       }>
+
       <div className="user-box" id="user-box">
         {props?.user.imgURL ?
           <div>
@@ -37,12 +38,12 @@ const UserComponent: FC<UserProps> = ({ props }): JSX.Element => {
           </>
         }
 
-
         <div>
           {props?.buttonEl}
         </div>
-      </div>
 
+        <UserStatus />
+      </div>
     </Tooltip>
   );
 };
