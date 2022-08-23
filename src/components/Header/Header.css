@@ -100,8 +100,14 @@
   word-break: break-all;
 }
 
-#my-meetings {
-  padding-top: 20px;
+/* #my-meetings {
+  margin-top: 20px;
+} */
+
+#link-to-meetings {
+  width: fit-content;
+  height: fit-content;
+  align-self: center;
 }
 
 .main-logo {
