@@ -32,8 +32,8 @@
   overflow-y: auto;
 }
 
-.participants {
-  height: calc(100vh - 485px);
+div.participants {
+  height: calc(100vh - 445px);
   overflow-y: auto;
 }
 

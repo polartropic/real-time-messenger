@@ -43,6 +43,10 @@ export const addMemberToTeam = (teamID: string, userName: string, index: number)
   });
 };
 
+export const getLiveTeamChannels = (teamID: string, listen: (_snapshot: DataSnapshot) => void) => {
+  return onValue(ref(db, `teams/${teamID}/channels`), listen);
+};
+
 export const deleteMemberFromTeam = (teamID: string, userIndex: number | null) => {
   return update(ref(db), {
     [`teams/${teamID}/members/${userIndex}`]: null,

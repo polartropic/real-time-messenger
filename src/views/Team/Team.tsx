@@ -2,7 +2,7 @@ import { useContext, useEffect, useState } from 'react';
 import { useParams } from 'react-router-dom';
 import ChannelsList from '../../components/ChannelsList/ChannelsList';
 import ChatParticipants from '../../components/ChatParticipants/ChatParticipants';
-import { getTeamByName, manageTeamMembersUpdateUsers, updateTeamMembers } from '../../services/teams.services';
+import { getLiveTeamChannels, getTeamByName, manageTeamMembersUpdateUsers, updateTeamMembers } from '../../services/teams.services';
 import { Team, User } from '../../types/Interfaces';
 import Channel from '../../components/Channel/Channel';
 import { Channel as IChannel } from '../../types/Interfaces';
@@ -35,7 +35,12 @@ const MyTeam = (): JSX.Element => {
   const [teamMembersObjects, setTeamMembersObject] = useState<User[]>([]);
   const [addedToChat, setAddedToChat] = useState<User[]>([]);
   const [initialChatParticipants, setInitialChatParticipants] = useState<User[]>([]);
-  const [teamProps, setTeamProps] = useState<Team>();
+  const [teamProps, setTeamProps] = useState<Team>({
+    name: '',
+    owner: '',
+    members: [],
+    channels: [],
+  });
   const { name } = useParams<{ name: string }>();
   const { appState } = useContext(AppContext);
   const [outerUsers, setOuterUsers] = useState<User[]>([]);
@@ -59,16 +64,20 @@ const MyTeam = (): JSX.Element => {
   const teamID = Object.keys(team)[0];
 
   useEffect(() => {
-    const unsubscribe = getLiveChannelsByUsername(appState.userData?.username!,
-      (snapshot) => {
-        const allUserChannels = Object.keys(snapshot.val());
-        const inTeamUserChannels = allUserChannels
-          .filter((channel) => Object.keys(teamProps?.channels!).includes(channel));
-        setChannels(inTeamUserChannels);
-      });
-
+    const unsubscribe = getLiveTeamChannels(teamID!, (snapshot) => {
+      if (snapshot.exists()) {
+        const allTeamChannels = Object.keys(snapshot.val());
+        const unsubscribe2 = getLiveChannelsByUsername(appState.userData!.username,
+          (snapshotUC) => {
+            const channelsToDisplay = allTeamChannels
+              .filter((teamChan) => Object.keys(snapshotUC.val()).includes(teamChan));
+            setChannels(channelsToDisplay);
+          });
+        return () => unsubscribe2();
+      }
+    });
     return () => unsubscribe();
-  }, [appState.userData?.username, teamProps?.channels]);
+  }, [appState.userData, appState?.userData?.username, teamID]);
 
   useEffect(() => {
     getAllUsers()
