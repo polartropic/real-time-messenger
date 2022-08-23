@@ -113,7 +113,8 @@ const ChatParticipants = ({ currentChannel,
         </div>
         <ToastContainer />
       </div> :
-      null
+      <div className="participants-list">
+      </div>
   );
 };
 
