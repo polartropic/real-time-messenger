@@ -4,6 +4,7 @@ img.sample-upload {
   border-radius: 5px;
 }
 
-input {
-  max-width: 150px;
+input[type='file'] {
+  max-width: 163px;
+  padding: 5px;
 }
