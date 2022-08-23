@@ -17,7 +17,7 @@ const TeamParticipants = ({ owner,
       <UserComponent props={{ user: owner }} />
 
       <h4>Participants of team:</h4>
-      <div className='participants'>
+      <div className='participants-team'>
         {allUsers.map((participant) => mappingParticipants(participant, uid()))}
       </div>
 

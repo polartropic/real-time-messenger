@@ -47,6 +47,11 @@ export const getLiveTeamChannels = (teamID: string, listen: (_snapshot: DataSnap
   return onValue(ref(db, `teams/${teamID}/channels`), listen);
 };
 
+export const getLiveTeamMembers = (teamID: string, listen: (_snapshot: DataSnapshot) => void) => {
+  return onValue(ref(db, `teams/${teamID}/members`), listen);
+};
+
+
 export const deleteMemberFromTeam = (teamID: string, userIndex: number | null) => {
   return update(ref(db), {
     [`teams/${teamID}/members/${userIndex}`]: null,
