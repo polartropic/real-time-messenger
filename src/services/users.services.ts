@@ -1,10 +1,11 @@
 import { set, ref, get, query, orderByChild, equalTo, update, onValue, DataSnapshot } from 'firebase/database';
+import { userStatus } from '../common/user-status.enum';
 import { db } from '../config/firebase-config';
 
 export const createUserByUsername = (firstName: string, lastName: string, phoneNumber: string,
   username: string, email: string | null, uid: string) => {
   return set(ref(db, `users/${username}`),
-    { firstName, lastName, phoneNumber, username, email, uid, teams: [], channels: [], friends: [] },
+    { firstName, lastName, phoneNumber, username, email, uid, status: userStatus.OFFLINE, teams: [], channels: [], friends: [] },
   );
 };
 
@@ -93,4 +94,10 @@ export const updateUserMessages = (username: string, messageID: string) => {
   const updateMessages: { [index: string]: boolean } = {};
   updateMessages[`/users/${username}/messages/${messageID}`] = true;
   return update(ref(db), updateMessages);
+};
+
+export const updateUserStatus = (username: string | undefined, status: string) => {
+  return update(ref(db), {
+    [`users/${username}/status`]: status,
+  });
 };

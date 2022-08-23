@@ -1,4 +1,3 @@
-import './EditProfile.css';
 import { useNavigate } from 'react-router-dom';
 import { useContext, useEffect, useState } from 'react';
 import AppContext from '../../providers/AppContext';
@@ -7,13 +6,16 @@ import { updateUserEmail, updateUserPassword } from '../../services/auth.service
 import { MIN_PASSWORD_LENGTH } from '../../common/constants';
 import { User } from '../../types/Interfaces';
 import { ToastContainer, toast } from 'react-toastify';
-import 'react-toastify/dist/ReactToastify.css';
 import { ImageUpload } from '../../components/UploadFile/UploadFile';
+import 'react-toastify/dist/ReactToastify.css';
+import './EditProfile.css';
 
 const EditProfile = (): JSX.Element => {
   const navigate = useNavigate();
+
   const { appState, setState } = useContext(AppContext);
   const user = appState.userData;
+
   const [firstName, setFirstName] = useState('');
   const [lastName, setLastName] = useState('');
   const [phoneNumber, setPhoneNumber] = useState('');
@@ -26,17 +28,19 @@ const EditProfile = (): JSX.Element => {
     email: '',
     phoneNumber: '',
     imgURL: '',
+    status: '',
     teams: [],
     channels: [],
     uid: '',
   });
-  console.log(appState);
+
   useEffect(() => {
     if (appState.userData?.username) {
       const unsubscribe = getLiveUserByUsername(appState.userData.username,
         (snapshot) => {
           setUserData((snapshot.val()));
         });
+
       return () => unsubscribe();
     }
   }, [appState.userData?.username]);
@@ -54,6 +58,7 @@ const EditProfile = (): JSX.Element => {
           user: appState.user,
           userData: { ...userData, firstName },
         });
+
         toast.success('Successful change!');
       })
       .catch((error) => {
@@ -74,6 +79,7 @@ const EditProfile = (): JSX.Element => {
           user: appState.user,
           userData: { ...userData, lastName },
         });
+
         toast.success('Successful change!');
       })
       .catch((error) => {
@@ -94,6 +100,7 @@ const EditProfile = (): JSX.Element => {
           user: appState.user,
           userData: { ...userData, phoneNumber },
         });
+
         toast.success('Successful change!');
       })
       .catch((error) => {
@@ -115,6 +122,7 @@ const EditProfile = (): JSX.Element => {
             user: appState.user,
             userData: { ...userData, email },
           });
+
           updateEmail(user!.username, email);
           toast.success('Successful change!');
         })
@@ -150,27 +158,33 @@ const EditProfile = (): JSX.Element => {
           <input type="text" id="first-name" placeholder="first name" defaultValue={userData.firstName} onChange={(e) => setFirstName(e.target.value)} />
           <input type="submit" className="change-button-edit" value="Change" />
         </form>
+
         <form className="edit-form" onSubmit={updateLastNameFunc}>
           <label className="labels-edit" htmlFor="last-name">Last name:</label> <br />
           <input type="text" id="last-name" placeholder="last name" defaultValue={userData.lastName} onChange={(e) => setLastName(e.target.value)} />
           <input type="submit" className="change-button-edit" value="Change" />
         </form>
+
         <form className="edit-form" onSubmit={updatePhoneFunc}>
           <label className="labels-edit" htmlFor="last-name">Phone number:</label> <br />
           <input type="text" id="phone-number" placeholder="phone number" defaultValue={userData.phoneNumber} onChange={(e) => setPhoneNumber(e.target.value)} />
           <input type="submit" className="change-button-edit" value="Change" />
         </form>
+
         <form className="edit-form" onSubmit={updateEmailFunc}>
           <label className="labels-edit" htmlFor="e-mail">E-mail:</label> <br />
           <input type="email" id="e-mail" placeholder="e-mail" defaultValue={userData.email} onChange={(e) => setEmail(e.target.value)} />
           <input type="submit" className="change-button-edit" value="Change" />
         </form>
+
         <form className="edit-form" onSubmit={updatePasswordFunc}>
           <label className="labels-edit" htmlFor="new-password">New Password:</label> <br />
           <input type="password" id="new-password" placeholder="new password" onChange={(e) => setPassword(e.target.value)} />
           <input type="submit" className="change-button-edit" value="Change" />
         </form>
+
         <ImageUpload />
+
         <button className="go-back-btn" onClick={() => navigate('/')}>
           <img src="https://firebasestorage.googleapis.com/v0/b/thunderteam-99849.appspot.com/o/icons8-go-back-48.png?alt=media&token=7bdfef4c-cf94-4147-8f4d-fc55fd086b4a" alt='go-back-icon' />
         </button>

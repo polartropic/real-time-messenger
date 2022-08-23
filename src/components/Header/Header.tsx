@@ -5,12 +5,12 @@ import AppContext from '../../providers/AppContext';
 import { useNavigate } from 'react-router-dom';
 import { getLiveTeamsByUsername, getLiveUserByUsername } from '../../services/users.services';
 import { Link } from 'react-router-dom';
-import './Header.css';
 import { ToastContainer, toast } from 'react-toastify';
-import 'react-toastify/dist/ReactToastify.css';
 import { uid } from 'uid';
 import { Team, User } from '../../types/Interfaces';
 import InitialsAvatar from 'react-initials-avatar';
+import 'react-toastify/dist/ReactToastify.css';
+import './Header.css';
 
 const Header = (): JSX.Element => {
   const { appState,
@@ -21,6 +21,7 @@ const Header = (): JSX.Element => {
   } = useContext(AppContext);
   const user = appState.user;
   const userUsername = appState.userData?.username;
+
   const [isOpen, setIsOpen] = useState(false);
   const [teams, setTeams] = useState<Team[]>([]);
   const [userData, setUserData] = useState<User>({
@@ -30,10 +31,12 @@ const Header = (): JSX.Element => {
     email: '',
     phoneNumber: '',
     imgURL: '',
+    status: '',
     teams: [],
     channels: [],
     uid: '',
   });
+
   const navigate = useNavigate();
 
   useEffect(() => {
@@ -42,6 +45,7 @@ const Header = (): JSX.Element => {
         (snapshot) => {
           setUserData((snapshot.val()));
         });
+
       return () => unsubscribe();
     }
   }, [appState.userData?.username]);
@@ -51,6 +55,7 @@ const Header = (): JSX.Element => {
       const unsubscribe = getLiveTeamsByUsername(userUsername, (snapshot) => {
         setTeams(snapshot.val());
       });
+
       return () => unsubscribe();
     }
   }, [userUsername]);
@@ -84,6 +89,7 @@ const Header = (): JSX.Element => {
     setIsCreateTeamView(true);
     setIsCreateChatClicked(false);
     setIsDetailedChatClicked(false);
+
     if (!URL.includes('home-page')) {
       navigate('/');
     };
@@ -117,7 +123,6 @@ const Header = (): JSX.Element => {
                     {teams !== null ? Object.keys(teams).map((team) => mappingTeam(team, uid())) : <p>No teams to show</p>}
                   </div>
                 </div>
-
               }
               <Link to={'/my-meetings'} id='link-to-meetings'>
                 <button className='header-btn' id='my-meetings'>My meetings</button>
@@ -125,7 +130,6 @@ const Header = (): JSX.Element => {
               <button onClick={handleLogOut} className='header-btn'>Log out</button>
               <Link to={'/edit-profile'} style={{ textDecoration: 'none' }}>
                 {userData.imgURL ?
-
                   <img src={userData.imgURL}
                     alt="avatar"
                     className='user-avatar-header' /> :
@@ -133,9 +137,7 @@ const Header = (): JSX.Element => {
                   <InitialsAvatar
                     name={`${userData.firstName} ${userData.lastName}`}
                     className={'avatar-default-header'} />
-
                 }
-
               </Link>
             </> :
             null

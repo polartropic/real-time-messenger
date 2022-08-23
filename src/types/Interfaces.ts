@@ -31,6 +31,7 @@ export interface User {
   email: string,
   phoneNumber: string,
   imgURL: string,
+  status: string,
   teams: string[],
   channels: string[],
   uid: string,
