@@ -99,6 +99,10 @@ const Register = (): JSX.Element => {
       <div id='register-div'>
         <form id="register-form" onSubmit={register}>
           <h4 id="sign-up">Sign up</h4>
+          <div>
+            <p className='stats'> Join the ThunderTeam community!</p>
+            <p className='stats'>Registered users: {usersCount}   Teams: {teamsCount}</p>
+          </div>
           <label htmlFor="first-name">First Name:</label>
           <br />
           <input type="text" className="register-field" name="first-name" placeholder="first name" required value={regDetails.firstName} onChange={updateForm('firstName')} />
@@ -126,17 +130,12 @@ const Register = (): JSX.Element => {
           <label htmlFor="confirm-password">Confirm Password:</label>
           <br />
           <input type="password" className="register-field" name="confirm-password" placeholder="confirm-password" required value={regDetails.confirmPassword} onChange={updateForm('confirmPassword')} />
-          <br />
-          <h3>Already have an account?
+          <h3 id='already-have-acc'>Already have an account?
             <Link to={'/login'}>
               <span id="sign-in-btn"> Sign in</span>
             </Link>
           </h3>
           <button id="sign-up-btn">Sign up</button>
-          <div>
-            <p className='stats'> Join the ThunderTeam community!</p>
-            <p className='stats'>Registered users: {usersCount}   Teams: {teamsCount}</p>
-          </div>
         </form>
       </div>
       <ToastContainer />

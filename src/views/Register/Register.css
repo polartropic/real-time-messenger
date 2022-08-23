@@ -6,8 +6,8 @@
   padding-right: 30px;
   padding-bottom: 20px;
   border-radius: 20px;
-  margin-top: 70px;
-  margin-bottom: 70px;
+  margin-top: 30px;
+  /* margin-bottom: 70px; */
   text-align: center;
 }
 
@@ -28,6 +28,8 @@
   color: rgba(47, 69, 93, 1);
   font-size: 20px;
   font-weight: bold;
+  margin-top: 10px;
+  margin-bottom: 5px;
 }
 
 #sign-up-btn {
@@ -45,4 +47,12 @@
   text-decoration: underline;
   background-color: white;
   color: black;
+}
+
+.stats{
+  margin:0px;
+}
+
+#already-have-acc {
+  margin: 7px;
 }
