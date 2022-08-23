@@ -10,6 +10,7 @@ import { uid } from 'uid';
 import { Team, User } from '../../types/Interfaces';
 import InitialsAvatar from 'react-initials-avatar';
 import UserStatus from '../UserStatus/UserStatus';
+import OutsideClickHandler from 'react-outside-click-handler';
 import 'react-toastify/dist/ReactToastify.css';
 import './Header.css';
 
@@ -119,10 +120,13 @@ const Header = (): JSX.Element => {
               <button className='header-btn' onClick={toggling}>My teams</button>
               {isOpen &&
                 <div id='dropdown-menu-myteams'>
-                  <button id='create-a-team-btn-header' onClick={handleCreateTeam}>Create a team</button>
-                  <div id='mapping-teams'>
-                    {teams !== null ? Object.keys(teams).map((team) => mappingTeam(team, uid())) : <p>No teams to show</p>}
-                  </div>
+                  <OutsideClickHandler
+                    onOutsideClick={() => setIsOpen(false)}>
+                    <button id='create-a-team-btn-header' onClick={handleCreateTeam}>Create a team</button>
+                    <div id='mapping-teams'>
+                      {teams !== null ? Object.keys(teams).map((team) => mappingTeam(team, uid())) : <p>No teams to show</p>}
+                    </div>
+                  </OutsideClickHandler>
                 </div>
               }
               <Link to={'/my-meetings'} id='link-to-meetings'>
