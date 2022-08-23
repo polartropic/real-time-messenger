@@ -76,13 +76,14 @@ const Login = (): JSX.Element => {
         <br />
         <button id="sign-in-button" className='user-btn'>Sign in</button>
         <br />
-        <h3 id='dont-have-acc'>Don't have an account yet?
+        <div id='go-back-h3'>
+          <h3 id='dont-have-acc'>Don't have an account yet? </h3>
           <Link to={'/home-page'}>
             <button id="go-back-register-btn" className='go-back-btn'>
               <img src="https://firebasestorage.googleapis.com/v0/b/thunderteam-99849.appspot.com/o/icons8-go-back-48.png?alt=media&token=7bdfef4c-cf94-4147-8f4d-fc55fd086b4a" alt='go-back-icon' />
             </button>
           </Link>
-        </h3>
+        </div>
         <br />
       </form>
       <ToastContainer />

@@ -5,11 +5,12 @@
 }
 
 #login-form {
-  width: 300px;
+  width: 275px;
   height: fit-content;
   background-color: white;
   padding-left: 30px;
   padding-right: 30px;
+  padding-bottom: 30px;
   border-radius: 20px;
   margin-top: 70px;
   text-align: center;
@@ -42,4 +43,12 @@
   font-weight: bold;
   text-decoration: underline;
   background-color: white;
+  margin-top:7px;
+  float:right;
+}
+
+#dont-have-acc {
+  padding: 0px;
+  margin-top: 20px;
+  float:left;
 }
