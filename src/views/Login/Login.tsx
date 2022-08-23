@@ -8,7 +8,7 @@ import { ToastContainer, toast } from 'react-toastify';
 import 'react-toastify/dist/ReactToastify.css';
 
 const Login = (): JSX.Element => {
-  const { setState } = useContext(AppContext);
+  const { setState, setIsDetailedChatClicked } = useContext(AppContext);
   const navigate = useNavigate();
 
   const [logInDetails, updateLogInDetails] = useState({
@@ -39,6 +39,7 @@ const Login = (): JSX.Element => {
                       user: u.user,
                       userData: snapshot.val()[Object.keys(snapshot.val())[0]],
                     });
+                    setIsDetailedChatClicked(false);
                     toast.success('Successful sign in!');
                     navigate('/');
                   }

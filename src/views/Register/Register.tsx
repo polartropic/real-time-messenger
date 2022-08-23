@@ -1,6 +1,6 @@
 import './Register.css';
 import { Link } from 'react-router-dom';
-import { useState, useEffect } from 'react';
+import { useState, useEffect, useContext } from 'react';
 import { createUserByUsername, getUserByUsername } from '../../services/users.services';
 import { createUser } from '../../services/auth.services';
 import React from 'react';
@@ -9,9 +9,12 @@ import { ToastContainer, toast } from 'react-toastify';
 import 'react-toastify/dist/ReactToastify.css';
 import { getAllTeamsLive } from '../../services/teams.services';
 import { getAllUsersLive } from '../../services/users.services';
+import AppContext from '../../providers/AppContext';
 
 
 const Register = (): JSX.Element => {
+  const { setIsDetailedChatClicked } = useContext(AppContext);
+
   const [regDetails, setRegDetails] = useState({
     firstName: '',
     lastName: '',
@@ -69,6 +72,7 @@ const Register = (): JSX.Element => {
             createUserByUsername(regDetails.firstName, regDetails.lastName,
               regDetails.phoneNumber, regDetails.username, u.user.email, u.user.uid)
               .then(() => {
+                setIsDetailedChatClicked(false);
                 toast.success('Successful sign up!');
               })
               .catch(console.error);
