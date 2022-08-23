@@ -3,13 +3,13 @@ import ThunderTeamLogo from '../../assets/images/ThunderTeamLogo-noBackground.pn
 import { logOut } from '../../services/auth.services';
 import AppContext from '../../providers/AppContext';
 import { useNavigate } from 'react-router-dom';
-import { getLiveTeamsByUsername } from '../../services/users.services';
+import { getLiveTeamsByUsername, getLiveUserByUsername } from '../../services/users.services';
 import { Link } from 'react-router-dom';
 import './Header.css';
 import { ToastContainer, toast } from 'react-toastify';
 import 'react-toastify/dist/ReactToastify.css';
 import { uid } from 'uid';
-import { Team } from '../../types/Interfaces';
+import { Team, User } from '../../types/Interfaces';
 import InitialsAvatar from 'react-initials-avatar';
 
 const Header = (): JSX.Element => {
@@ -23,7 +23,28 @@ const Header = (): JSX.Element => {
   const userUsername = appState.userData?.username;
   const [isOpen, setIsOpen] = useState(false);
   const [teams, setTeams] = useState<Team[]>([]);
+  const [userData, setUserData] = useState<User>({
+    firstName: '',
+    lastName: '',
+    username: '',
+    email: '',
+    phoneNumber: '',
+    imgURL: '',
+    teams: [],
+    channels: [],
+    uid: '',
+  });
   const navigate = useNavigate();
+
+  useEffect(() => {
+    if (appState.userData?.username) {
+      const unsubscribe = getLiveUserByUsername(appState.userData.username,
+        (snapshot) => {
+          setUserData((snapshot.val()));
+        });
+      return () => unsubscribe();
+    }
+  }, [appState.userData?.username]);
 
   useEffect(() => {
     if (userUsername !== undefined) {
@@ -103,14 +124,14 @@ const Header = (): JSX.Element => {
               </Link>
               <button onClick={handleLogOut} className='header-btn'>Log out</button>
               <Link to={'/edit-profile'} style={{ textDecoration: 'none' }}>
-                {appState.userData?.imgURL ?
+                {userData.imgURL ?
 
-                  <img src={appState.userData?.imgURL}
+                  <img src={userData.imgURL}
                     alt="avatar"
                     className='user-avatar-header' /> :
 
                   <InitialsAvatar
-                    name={`${appState.userData?.firstName} ${appState.userData?.lastName}`}
+                    name={`${userData.firstName} ${userData.lastName}`}
                     className={'avatar-default-header'} />
 
                 }

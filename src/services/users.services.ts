@@ -20,6 +20,10 @@ export const getLiveTeamsByUsername = (username: string, listen: (_snapshot: Dat
   return onValue(ref(db, `users/${username}/teams`), listen);
 };
 
+export const getLiveUserByUsername = (username: string, listen: (_snapshot: DataSnapshot) => void) => {
+  return onValue(ref(db, `users/${username}`), listen);
+};
+
 export const getUserData = (uid: string) => {
   return get(query(ref(db, 'users'), orderByChild('uid'), equalTo(uid)));
 };
