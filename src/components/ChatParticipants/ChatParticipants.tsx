@@ -17,7 +17,7 @@ const ChatParticipants = ({ currentChannel,
   setIsDetailedChatClicked,
   setIsDetailedTeamClicked,
   setIsCreateChatClicked,
-  allUsers }: ChatParticipantsProps): JSX.Element | null => {
+  allUsers, owner }: ChatParticipantsProps): JSX.Element | null => {
   const { appState } = useContext(AppContext);
   const userUsername = appState.userData?.username;
 
@@ -27,9 +27,9 @@ const ChatParticipants = ({ currentChannel,
   const [end, setEnd] = useState<Date>(new Date());
 
   const URL = window.location.href;
-  if (currentChannel.participants.includes(userUsername!) &&
-  allUsers.every((user) => user.username !== userUsername)) {
-    allUsers = [...allUsers, appState.userData!];
+  if (owner && currentChannel.participants.includes(owner?.username) &&
+    allUsers.every((user) => user.username !== owner?.username)) {
+    allUsers = [...allUsers, owner];
   }
 
   const handleCreateMeeting = (e: React.FormEvent<HTMLFormElement>) => {

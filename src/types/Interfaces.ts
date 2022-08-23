@@ -77,6 +77,8 @@ export interface ChatParticipantsProps {
   setIsDetailedChatClicked: Dispatch<boolean>,
   setIsDetailedTeamClicked?: Dispatch<boolean>,
   setIsCreateChatClicked?: Dispatch<boolean>,
+  owner?: User,
+
 }
 
 export interface TeamParticipantsProps {

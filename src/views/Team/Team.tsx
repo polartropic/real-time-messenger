@@ -2,7 +2,7 @@ import { useContext, useEffect, useState } from 'react';
 import { useParams } from 'react-router-dom';
 import ChannelsList from '../../components/ChannelsList/ChannelsList';
 import ChatParticipants from '../../components/ChatParticipants/ChatParticipants';
-import { getLiveTeamChannels, getTeamByName, manageTeamMembersUpdateUsers, updateTeamMembers } from '../../services/teams.services';
+import { getLiveTeamChannels, getLiveTeamMembers, getTeamByName, manageTeamMembersUpdateUsers, updateTeamMembers } from '../../services/teams.services';
 import { Team, User } from '../../types/Interfaces';
 import Channel from '../../components/Channel/Channel';
 import { Channel as IChannel } from '../../types/Interfaces';
@@ -46,7 +46,17 @@ const MyTeam = (): JSX.Element => {
   const [outerUsers, setOuterUsers] = useState<User[]>([]);
   const [usersToRemove, setUsersToRemove] = useState<User[]>([]);
   const currentUser = appState.userData?.username;
-  const [ownerObj, setOwnerObject] = useState<User>();
+  const [ownerObj, setOwnerObject] = useState<User>({
+    firstName: '',
+    lastName: '',
+    username: '',
+    email: '',
+    phoneNumber: '',
+    imgURL: '',
+    teams: [],
+    channels: [],
+    uid: '',
+  });
 
   useEffect(() => {
     getTeamByName(name!)
@@ -80,24 +90,31 @@ const MyTeam = (): JSX.Element => {
   }, [appState.userData, appState?.userData?.username, teamID]);
 
   useEffect(() => {
-    getAllUsers()
-      .then((snapshot) => {
-        const usersObj: object = snapshot.val();
-        const allUsersInTeam = Object.values(usersObj)
-          .filter((userA) => [...members].includes(userA.username));
-        const ownerOfTeam: User[] = Object.values(usersObj)
-          .filter((user: User) => user.username === teamProps?.owner);
-        setTeamMembersObject(allUsersInTeam);
-        setUsersToRemove(allUsersInTeam);
-        setInitialChatParticipants(allUsersInTeam);
-        setOwnerObject(ownerOfTeam[0]);
-
-        const allUsersOutOfTeam: User[] = Object.values(usersObj)
-          .filter((userA) => ![...members, teamProps?.owner].includes(userA.username));
-        setOuterUsers(allUsersOutOfTeam);
-      })
-      .catch(console.error);
-  }, [members, teamProps?.owner]);
+    getLiveTeamMembers(teamID, (snapshot) => {
+      if (snapshot.exists()) {
+        getAllUsers()
+          .then((snapshot2) => {
+            const usersObj: object = snapshot2.val();
+            const allUsersInTeam = Object.values(usersObj)
+              .filter((userA) => snapshot.val().includes(userA.username));
+            const ownerOfTeam: User[] = Object.values(usersObj)
+              .filter((user: User) => user.username === teamProps?.owner);
+            setTeamMembersObject(allUsersInTeam);
+            setUsersToRemove(allUsersInTeam);
+            setOwnerObject(ownerOfTeam[0]);
+            if (ownerOfTeam[0].username !== appState.userData?.username) {
+              setInitialChatParticipants([...allUsersInTeam, ownerOfTeam[0]]);
+            } else {
+              setInitialChatParticipants(allUsersInTeam);
+            }
+            const allUsersOutOfTeam: User[] = Object.values(usersObj)
+              .filter((userA) => ![...snapshot.val(), teamProps?.owner].includes(userA.username));
+            setOuterUsers(allUsersOutOfTeam);
+          })
+          .catch(console.error);
+      };
+    });
+  }, [appState.userData?.username, teamID, teamProps?.owner]);
 
   useEffect(() => {
     if (isCreateChatClicked) {
@@ -126,6 +143,8 @@ const MyTeam = (): JSX.Element => {
 
   const createChatFunc = () => {
     setIsDetailedTeamClicked(false);
+    setAddedToChat([]);
+
     if (title.length < MIN_CHANNEL_NAME_LENGTH || title.length > MAX_CHANNEL_NAME_LENGTH) {
       return toast.warning(`The name of the chat must be between ${MIN_CHANNEL_NAME_LENGTH} and ${MAX_CHANNEL_NAME_LENGTH} symbols`);
     }
@@ -139,7 +158,6 @@ const MyTeam = (): JSX.Element => {
         .then(() => {
           toast.success('Successful chat creation!');
           [...members, currentUser!].map((participant) => updateUserChats(participant, title));
-          setAddedToChat([]);
           setInitialChatParticipants(teamMembersObjects);
         });
     }
@@ -170,19 +188,18 @@ const MyTeam = (): JSX.Element => {
           }
           {isDetailedChatClicked ?
             <Channel currentChannel={currentChat} /> :
-            null
-          }
-          {isDetailedTeamClicked && Object.values(team)[0].owner === currentUser ?
-            <>
-              <h4 id='team-title-name'>{teamProps?.name}</h4>
-              <button className='create-a-team' onClick={updateTeam}>Update users</button>
-              <ManiPulateUsersLists
-                leftSide={outerUsers}
-                setLeftSide={setOuterUsers}
-                rightSide={usersToRemove}
-                setRightSide={setUsersToRemove} />
-            </> :
-            null}
+
+            isDetailedTeamClicked && Object.values(team)[0].owner === currentUser ?
+              <>
+                <h4 id='team-title-name'>{teamProps?.name}</h4>
+                <button className='create-a-team' onClick={updateTeam}>Update users</button>
+                <ManiPulateUsersLists
+                  leftSide={outerUsers}
+                  setLeftSide={setOuterUsers}
+                  rightSide={usersToRemove}
+                  setRightSide={setUsersToRemove} />
+              </> :
+              null}
         </>
       </div>
       {
@@ -191,7 +208,7 @@ const MyTeam = (): JSX.Element => {
             isDetailedChatClicked={isDetailedChatClicked}
             setIsDetailedChatClicked={setIsDetailedChatClicked}
             setIsDetailedTeamClicked={setIsDetailedTeamClicked}
-            allUsers={teamMembersObjects} /> :
+            allUsers={teamMembersObjects} owner={ownerObj} /> :
           ownerObj && teamMembersObjects &&
           <TeamParticipants owner={ownerObj} allUsers={teamMembersObjects} />
       }

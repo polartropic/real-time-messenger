@@ -33,9 +33,16 @@
 }
 
 div.participants {
-  height: calc(100vh - 445px);
+  height: calc(100vh - 485px);
   overflow-y: auto;
 }
+
+div.participants-team {
+  height: calc(100vh - 395px);
+  overflow-y: auto;
+}
+
+
 
 .chats-channels-list {
   grid-column: 1;
