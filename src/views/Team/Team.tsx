@@ -13,8 +13,7 @@ import { toast } from 'react-toastify';
 import { MIN_CHANNEL_NAME_LENGTH, MAX_CHANNEL_NAME_LENGTH, MIN_NUMBER_OF_CHAT_PARTICIPANTS } from '../../common/constants';
 import { createTeamChat } from '../../services/channels.services';
 import AppContext from '../../providers/AppContext';
-
-// import './Team.css'
+import './Team.css';
 
 const MyTeam = (): JSX.Element => {
   const [team, setTeam] = useState<object>({});
@@ -166,7 +165,7 @@ const MyTeam = (): JSX.Element => {
           }
           {isDetailedTeamClicked && Object.values(team)[0].owner === currentUser ?
             <>
-              <h4>{teamProps?.name}</h4>
+              <h4 id='team-title-name'>{teamProps?.name}</h4>
               <button className='create-a-team' onClick={updateTeam}>Update users</button>
               <ManiPulateUsersLists
                 leftSide={outerUsers}
