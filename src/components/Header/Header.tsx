@@ -3,14 +3,15 @@ import ThunderTeamLogo from '../../assets/images/ThunderTeamLogo-noBackground.pn
 import { logOut } from '../../services/auth.services';
 import AppContext from '../../providers/AppContext';
 import { useNavigate } from 'react-router-dom';
-import { getLiveTeamsByUsername, getLiveUserByUsername } from '../../services/users.services';
+import { getLiveTeamsByUsername, getLiveUserByUsername, updateUserStatus } from '../../services/users.services';
 import { Link } from 'react-router-dom';
 import { ToastContainer, toast } from 'react-toastify';
 import { uid } from 'uid';
 import { Team, User } from '../../types/Interfaces';
 import InitialsAvatar from 'react-initials-avatar';
-import UserStatus from '../UserStatus/UserStatus';
+import UserStatusIndicator from '../UserStatusIndicator/UserStatusIndicator';
 import OutsideClickHandler from 'react-outside-click-handler';
+import { UserStatus } from '../../common/user-status.enum';
 import 'react-toastify/dist/ReactToastify.css';
 import './Header.css';
 
@@ -69,6 +70,7 @@ const Header = (): JSX.Element => {
     });
 
     logOut();
+    updateUserStatus(userUsername!, UserStatus.OFFLINE);
 
     toast.success('Successful sign out!');
     navigate('/');
@@ -145,7 +147,7 @@ const Header = (): JSX.Element => {
                       className={'avatar-default-header'} />
                   }
                 </Link>
-                <UserStatus />
+                <UserStatusIndicator user={appState.userData!} />
               </div>
             </> :
             null
