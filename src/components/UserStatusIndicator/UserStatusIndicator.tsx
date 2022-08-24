@@ -29,4 +29,3 @@ const UserStatusIndicator = ({ user }: UserStatusProps) => {
 };
 
 export default UserStatusIndicator;
-

@@ -66,7 +66,7 @@ export interface ChannelProps {
 }
 
 export interface CreateMessageProps {
-  handleSubmit: (message: string) => void,
+  handleSubmit: (_message: string) => void,
   existingMessage: string | undefined,
 }
 
@@ -113,7 +113,7 @@ export interface Message {
 export interface MessageProps {
   message: Message,
   currentChannel: Channel,
-  handleEditMessage: (message: Message) => void,
+  handleEditMessage: (_message: Message) => void,
 }
 
 export interface emojiObject {
