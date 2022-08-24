@@ -1,5 +1,6 @@
 import { useContext, useEffect, useState } from 'react';
 import InitialsAvatar from 'react-initials-avatar';
+import { Reaction } from '../../common/reactions.enum';
 import AppContext from '../../providers/AppContext';
 import { reactWithHeart, reactWithNo, reactWithYes } from '../../services/messages.services';
 import { getUserByUsername } from '../../services/users.services';
@@ -9,6 +10,7 @@ import './Message.css';
 const Message = ({ message, currentChannel, handleEditMessage }: MessageProps): JSX.Element => {
   const { appState } = useContext(AppContext);
   const currentUser = appState.userData;
+
   const [author, setAuthor] = useState<User>({
     firstName: '',
     lastName: '',
@@ -61,9 +63,7 @@ const Message = ({ message, currentChannel, handleEditMessage }: MessageProps): 
           <img src={author.imgURL}
             alt="avatar"
             className='user-avatar-message' /> :
-          <InitialsAvatar
-            name={`${author.firstName} ${author.lastName}`}
-            className={'avatar-default-header'} />
+          <InitialsAvatar name={`${author.firstName} ${author.lastName}`} className={'avatar-default-header'} />
         }
       </div>
 
@@ -77,9 +77,9 @@ const Message = ({ message, currentChannel, handleEditMessage }: MessageProps): 
         </div>
 
         <div className='react-btns'>
-          <button onClick={isCurrentUserAuthor ? undefined : handleYes} className={reactionsClassName}>{`👍${message.reactions.yes}`}</button>
-          <button onClick={isCurrentUserAuthor ? undefined : handleNo} className={reactionsClassName}>{`👎${message.reactions.no}`}</button>
-          <button onClick={isCurrentUserAuthor ? undefined : handleHeart} className={reactionsClassName}>{`❤️${message.reactions.heart}`}</button>
+          <button onClick={isCurrentUserAuthor ? undefined : handleYes} className={reactionsClassName}>{`${Reaction.YES} ${message.reactions.yes}`}</button>
+          <button onClick={isCurrentUserAuthor ? undefined : handleNo} className={reactionsClassName}>{`${Reaction.NO} ${message.reactions.no}`}</button>
+          <button onClick={isCurrentUserAuthor ? undefined : handleHeart} className={reactionsClassName}>{`${Reaction.HEART} ${message.reactions.heart}`}</button>
         </div>
       </div>
     </div>
