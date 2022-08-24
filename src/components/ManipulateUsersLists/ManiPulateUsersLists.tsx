@@ -3,7 +3,7 @@ import { uid } from 'uid';
 import AppContext from '../../providers/AppContext';
 import { User, UsersListProps } from '../../types/Interfaces';
 import UserComponent from '../User/User';
-import './../Create/Create.css';
+import './ManiPulateUsersLists.css';
 
 const ManiPulateUsersLists = ({ leftSide, setLeftSide, rightSide, setRightSide }: UsersListProps): JSX.Element => {
   const [searchTermLeft, setSearchTermLeft] = useState<string>('');

@@ -1,6 +1,7 @@
 import { uid } from 'uid';
 import { TeamParticipantsProps, User } from '../../types/Interfaces';
 import UserComponent from '../User/User';
+import './TeamParticipants.css';
 
 const TeamParticipants = ({ owner,
   allUsers }: TeamParticipantsProps): JSX.Element | null => {
