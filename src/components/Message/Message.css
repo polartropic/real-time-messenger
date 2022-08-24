@@ -59,7 +59,7 @@
 /* CURRENT USER'S MESSAGES */
 .my-message {
   color: white;
-  background-color: rgba(47, 69, 93, 1);
+  background-color: rgba(47, 69, 93, 0.85);
 }
 
 .edit-my-message {
