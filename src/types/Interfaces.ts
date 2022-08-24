@@ -8,12 +8,12 @@ export interface iAppState {
 
 export interface ApplicationContext {
   appState: iAppState,
-  isCreateTeamView: boolean,
+  isTeamView: boolean,
   isDetailedChatClicked: boolean,
   isCreateChatClicked: boolean,
-  setIsCreateChatClicked: Dispatch<boolean>,
-  setIsDetailedChatClicked: Dispatch<boolean>,
-  setIsCreateTeamView: Dispatch<boolean>,
+  setIsCreateChatClicked: Dispatch<SetStateAction<boolean>>,
+  setIsDetailedChatClicked: Dispatch<SetStateAction<boolean>>,
+  setIsTeamView: Dispatch<SetStateAction<boolean>>,
   setState: Dispatch<SetStateAction<iAppState>>,
 }
 
@@ -73,11 +73,6 @@ export interface CreateMessageProps {
 export interface ChatParticipantsProps {
   currentChannel: Channel,
   allUsers: User [],
-  isDetailedChatClicked: boolean,
-  isDetailedTeamClicked?: boolean,
-  setIsDetailedChatClicked: Dispatch<boolean>,
-  setIsDetailedTeamClicked?: Dispatch<boolean>,
-  setIsCreateChatClicked?: Dispatch<boolean>,
   owner?: User,
 
 }
@@ -90,11 +85,7 @@ export interface TeamParticipantsProps {
 export interface ChannelsListProps {
   props: {
     channels?: string[],
-    setIsCreateChatClicked: Dispatch<boolean>,
-    setIsDetailedChatClicked: Dispatch<boolean>,
-    setIsCreateTeamView?: Dispatch<boolean>,
     setCurrentChat: Dispatch<SetStateAction<Channel>>,
-    setIsDetailedTeamClicked?: Dispatch<boolean>,
   },
 }
 

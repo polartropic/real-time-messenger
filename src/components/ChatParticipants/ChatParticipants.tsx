@@ -12,13 +12,15 @@ import './ChatParticipants.css';
 import { API_KEY, BASE_URL, ORGANIZATION_ID } from '../../common/constants';
 import UserComponent from '../User/User';
 
-const ChatParticipants = ({ currentChannel,
-  isDetailedChatClicked,
-  setIsDetailedChatClicked,
-  setIsDetailedTeamClicked,
-  setIsCreateChatClicked,
-  allUsers, owner }: ChatParticipantsProps): JSX.Element | null => {
-  const { appState } = useContext(AppContext);
+const ChatParticipants = ({ currentChannel, allUsers, owner }: ChatParticipantsProps): JSX.Element | null => {
+  const { appState,
+    isTeamView,
+    isDetailedChatClicked,
+    setIsCreateChatClicked,
+    setIsDetailedChatClicked,
+    setIsTeamView,
+  } = useContext(AppContext);
+
   const userUsername = appState.userData?.username;
 
   const [isMeetingClicked, setIsMeetingClicked] = useState(false);
@@ -68,8 +70,8 @@ const ChatParticipants = ({ currentChannel,
     if (setIsCreateChatClicked) {
       setIsCreateChatClicked(false);
     }
-    if (setIsDetailedTeamClicked) {
-      setIsDetailedTeamClicked(true);
+    if (isTeamView) {
+      setIsTeamView(true);
     }
   };
   const currentChannelUsers = allUsers

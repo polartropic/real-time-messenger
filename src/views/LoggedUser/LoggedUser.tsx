@@ -4,8 +4,6 @@ import { getAllUsers, getLiveChannelsByUsername, updateUserChats, updateUserStat
 import AppContext from '../../providers/AppContext';
 import Channel from '../../components/Channel/Channel';
 import { Channel as IChannel, User } from '../../types/Interfaces';
-
-// import Create from '../../components/Create/Create';
 import ChatParticipants from '../../components/ChatParticipants/ChatParticipants';
 import ChannelsList from '../../components/ChannelsList/ChannelsList';
 import ManiPulateUsersLists from '../../components/ManipulateUsersLists/ManiPulateUsersLists';
@@ -20,12 +18,12 @@ import { UserStatus } from '../../common/user-status.enum';
 
 const LoggedUser = (): JSX.Element => {
   const { appState,
-    isCreateTeamView,
+    isTeamView,
     isDetailedChatClicked,
     isCreateChatClicked,
     setIsCreateChatClicked,
     setIsDetailedChatClicked,
-    setIsCreateTeamView,
+    setIsTeamView,
   } = useContext(AppContext);
   const userDetails: User = appState.userData!;
 
@@ -115,7 +113,7 @@ const LoggedUser = (): JSX.Element => {
         }
       })
       .then(() => {
-        setIsCreateTeamView(!isCreateTeamView);
+        setIsTeamView(!isTeamView);
         setTitle('');
         navigate(`/teams/${title}`);
       })
@@ -125,7 +123,7 @@ const LoggedUser = (): JSX.Element => {
 
   return (
     <div className="landing-page">
-      <ChannelsList props={{ channels, setIsCreateChatClicked, setIsDetailedChatClicked, setIsCreateTeamView, setCurrentChat }} />
+      <ChannelsList props={{ channels, setCurrentChat }} />
 
       {/* DYNAMIC DIV TO SHOW RESULTS FROM SEARCH AND VIEWING CHATS */}
       <div className="main-container">
@@ -146,7 +144,7 @@ const LoggedUser = (): JSX.Element => {
             <Channel currentChannel={currentChat} /> :
             null
           }
-          {isCreateTeamView ?
+          {isTeamView ?
             <>
               <input type="text" className={'create-chat-title'} name="team-name" placeholder='Please, add a title...' required defaultValue='' onChange={(e) => setTitle(e.target.value.trim())} />
               <button className='create-a-team' onClick={createTeam}>Create a Team</button>
@@ -161,8 +159,7 @@ const LoggedUser = (): JSX.Element => {
           }
         </>
       </div>
-      <ChatParticipants currentChannel={currentChat} isDetailedChatClicked={isDetailedChatClicked}
-        setIsDetailedChatClicked={setIsDetailedChatClicked} allUsers={allUsers} />
+      <ChatParticipants currentChannel={currentChat} allUsers={allUsers} />
     </div>
   );
 };
