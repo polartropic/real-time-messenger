@@ -61,6 +61,10 @@ const Register = (): JSX.Element => {
       return toast.warning('The username must be between 5 and 35 symbols');
     }
 
+    if (!Number.isNaN(Number(regDetails.phoneNumber)) === false) {
+      return toast.warning('The entered phone number is not valid.');
+    }
+
     getUserByUsername(regDetails.username)
       .then((snapshot) => {
         if (snapshot.exists()) {
