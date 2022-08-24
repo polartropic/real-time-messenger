@@ -1,0 +1,14 @@
+.participants-team {
+  height: calc(100vh - 395px);
+  overflow-y: auto;
+}
+
+.participants-list {
+  grid-row: 2 / 3;
+  grid-column: 3;
+  padding: 20px 3px 20px 7px;
+  text-align: center;
+  background-color: rgba(47, 69, 93, 0.85);
+  border-radius: 10px;
+  color: white;
+}

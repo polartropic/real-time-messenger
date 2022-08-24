@@ -1,6 +1,7 @@
 import { uid } from 'uid';
 import { getChatById, getChatByName } from '../../services/channels.services';
 import { ChannelsListProps } from '../../types/Interfaces';
+import './ChannelsList.css';
 
 const ChannelsList = (
   { props }: ChannelsListProps) => {

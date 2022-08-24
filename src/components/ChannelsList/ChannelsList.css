@@ -1,0 +1,29 @@
+.chats-channels-list {
+  grid-row: 2 / 3;
+  grid-column: 1;
+  padding: 20px 3px 20px 7px;
+  text-align: center;
+  background-color: rgba(47, 69, 93, 0.85);
+  border-radius: 10px;
+  color: white;
+}
+
+.chats {
+  height: calc(100vh - 285px);
+  overflow-y: auto;
+}
+
+.chat-item {
+  background-color: rgba(47, 69, 93, 0.9);
+  color: white;
+  padding: 6px;
+  border: 1px solid rgba(47, 69, 93, 0.9);
+  border-radius: 8px;
+  cursor: pointer;
+  margin-right: 5px;
+}
+
+.chat-item:hover {
+  border: 1px solid black;
+  font-weight: bold;
+}
