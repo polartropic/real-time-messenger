@@ -14,7 +14,6 @@ import UserComponent from '../User/User';
 
 const ChatParticipants = ({ currentChannel, allUsers, owner }: ChatParticipantsProps): JSX.Element | null => {
   const { appState,
-    isTeamView,
     isDetailedChatClicked,
     setIsCreateChatClicked,
     setIsDetailedChatClicked,
@@ -67,12 +66,8 @@ const ChatParticipants = ({ currentChannel, allUsers, owner }: ChatParticipantsP
 
   const loadTeamDetails = () => {
     setIsDetailedChatClicked(false);
-    if (setIsCreateChatClicked) {
-      setIsCreateChatClicked(false);
-    }
-    if (isTeamView) {
-      setIsTeamView(true);
-    }
+    setIsCreateChatClicked(false);
+    setIsTeamView(true);
   };
   const currentChannelUsers = allUsers
     .filter((user) => currentChannel.participants.includes(user.username));

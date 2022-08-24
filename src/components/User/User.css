@@ -3,6 +3,7 @@
   justify-content: space-between;
   align-items: center;
   width: auto;
+  cursor: default;
   margin: 10px;
   font-size: 14px;
   border-radius: 10px;
@@ -11,14 +12,6 @@
   box-shadow: rgba(0, 0, 0, 0.35) 0px 2px 3px;
   position: relative;
 }
-
-/* img.user-box  {
-  height: 33px;
-  width: 33px;
-  border-radius: 50%;
-  object-fit: cover;
-  vertical-align: middle;
-} */
 
 .user-box p {
   line-height: 14px;
