@@ -28,7 +28,6 @@ const MyTeam = (): JSX.Element => {
   const [isDetailedChatClicked, setIsDetailedChatClicked] = useState(false);
   const [isCreateChatClicked, setIsCreateChatClicked] = useState(false);
   const [channels, setChannels] = useState<string[]>([]);
-  const [members, setMembers] = useState<string[]>([]);
   const [title, setTitle] = useState<string>('');
   const [isDetailedTeamClicked, setIsDetailedTeamClicked] = useState<boolean>(false);
 
@@ -65,7 +64,6 @@ const MyTeam = (): JSX.Element => {
         if (snapshot.exists()) {
           const team: object = snapshot.val();
           setTeam(team);
-          setMembers(Object.values(team)[0].members);
           setTeamProps(Object.values(team)[0]);
         }
       })
@@ -149,7 +147,7 @@ const MyTeam = (): JSX.Element => {
     if (title.length < MIN_CHANNEL_NAME_LENGTH || title.length > MAX_CHANNEL_NAME_LENGTH) {
       return toast.warning(`The name of the chat must be between ${MIN_CHANNEL_NAME_LENGTH} and ${MAX_CHANNEL_NAME_LENGTH} symbols`);
     }
-    if (members.length === MIN_NUMBER_OF_CHAT_PARTICIPANTS) {
+    if (addedToChat.length === MIN_NUMBER_OF_CHAT_PARTICIPANTS) {
       return toast.warning('Please add at least one participant in the chat!');
     }
     if (teamID) {
@@ -158,7 +156,7 @@ const MyTeam = (): JSX.Element => {
       createTeamChat(teamID, title, [...membersToAdd, currentUser!])
         .then(() => {
           toast.success('Successful chat creation!');
-          [...members, currentUser!].map((participant) => updateUserChats(participant, title));
+          [...membersToAdd, currentUser!].map((participant) => updateUserChats(participant, title));
           setInitialChatParticipants(teamMembersObjects);
         });
     }

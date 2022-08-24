@@ -17,42 +17,6 @@
   border-radius: 20px;
 }
 
-.chats-channels-list,
-.participants-list {
-  grid-row: 2 / 3;
-  padding: 20px 3px 20px 7px;
-  text-align: center;
-  background-color: rgba(47, 69, 93, 0.85);
-  border-radius: 10px;
-  color: white;
-}
-
-.chats {
-  height: calc(100vh - 285px);
-  overflow-y: auto;
-}
-
-div.participants {
-  height: calc(100vh - 485px);
-  overflow-y: auto;
-}
-
-div.participants-team {
-  height: calc(100vh - 395px);
-  overflow-y: auto;
-}
-
-
-
-.chats-channels-list {
-  grid-column: 1;
-}
-
-.participants-list {
-  grid-column: 3;
-}
-
-.manage-participants-btns button,
 .view-users-btn, 
 .create-a-team {
   background-image: linear-gradient(to right, #16222A 0%, #2f455d 51%, #16222A  100%);
@@ -86,17 +50,3 @@ div.participants-team {
   padding: 15px;
 }
 
-.chat-item {
-  background-color: rgba(47, 69, 93, 0.9);
-  color: white;
-  padding: 6px;
-  border: 1px solid rgba(47, 69, 93, 0.9);
-  border-radius: 8px;
-  cursor: pointer;
-  margin-right: 5px;
-}
-
-.chat-item:hover {
-  border: 1px solid black;
-  font-weight: bold;
-}
