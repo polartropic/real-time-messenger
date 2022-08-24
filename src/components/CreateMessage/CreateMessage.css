@@ -22,13 +22,20 @@
 .emoji-btn,
 .send-btn {
   background-color: rgba(47, 69, 93, 1);
+  height: 51px;
+  min-width: 51px;
+  padding: 10px;
+  margin: 0;
   border: none;
   border-radius: 50%;
-  font-size: 22pt;
-  width: 1.8em;
-  height: 1.8em;
   color: rgba(245, 247, 251, 1);
   transition: border-color 0.5s, background-color 0.5s, color 0.5s;
+}
+
+.emoji-btn i,
+.send-btn i {
+  font-size: 15pt;
+  text-align: center;
 }
 
 .emoji-btn:hover,
