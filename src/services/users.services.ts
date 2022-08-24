@@ -96,8 +96,12 @@ export const updateUserMessages = (username: string, messageID: string) => {
   return update(ref(db), updateMessages);
 };
 
-export const updateUserStatus = (username: string | undefined, status: string) => {
+export const updateUserStatus = (username: string, status: string) => {
   return update(ref(db), {
     [`users/${username}/status`]: status,
   });
+};
+
+export const getLiveStatus = (username: string, listen: (_snapshot: DataSnapshot) => void) => {
+  return onValue(ref(db, `users/${username}/status`), listen);
 };

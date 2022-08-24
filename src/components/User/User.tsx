@@ -1,8 +1,10 @@
-import { FC, useState } from 'react';
+import { FC, useContext, useEffect, useState } from 'react';
 import { UserProps } from '../../types/Interfaces';
 import InitialsAvatar from 'react-initials-avatar';
 import { Tooltip } from '@mui/material';
-import UserStatus from '../UserStatus/UserStatus';
+import UserStatusIndicator from '../UserStatusIndicator/UserStatusIndicator';
+import { getLiveStatus } from '../../services/users.services';
+import AppContext from '../../providers/AppContext';
 import './User.css';
 
 const UserComponent: FC<UserProps> = ({ props }): JSX.Element => {
@@ -49,9 +51,9 @@ const UserComponent: FC<UserProps> = ({ props }): JSX.Element => {
               alt="avatar" className='user-avatar' /> {`@${props?.user.username}`}
           </div> :
           <>
-            <InitialsAvatar
-              name={`${props.user.firstName} ${props.user.lastName}`}
-              className={'avatar-default'} /> {`@${props?.user.username}`}
+            <InitialsAvatar name={`${props.user.firstName} ${props.user.lastName}`}
+              className={'avatar-default'} />
+            {`@${props?.user.username}`}
           </>
         }
 
@@ -59,7 +61,7 @@ const UserComponent: FC<UserProps> = ({ props }): JSX.Element => {
           {props?.buttonEl}
         </div>
 
-        <UserStatus />
+        <UserStatusIndicator user={props.user}/>
       </div>
     </Tooltip>
   );

@@ -1,6 +1,6 @@
 import './LoggedUser.css';
 import { useContext, useEffect, useState } from 'react';
-import { getAllUsers, getLiveChannelsByUsername, updateUserChats, updateUserTeams } from '../../services/users.services';
+import { getAllUsers, getLiveChannelsByUsername, updateUserChats, updateUserStatus, updateUserTeams } from '../../services/users.services';
 import AppContext from '../../providers/AppContext';
 import Channel from '../../components/Channel/Channel';
 import { Channel as IChannel, User } from '../../types/Interfaces';
@@ -14,6 +14,8 @@ import { toast } from 'react-toastify';
 import { createChat, getChatByName } from '../../services/channels.services';
 import { getTeamByName, addTeamToDB } from '../../services/teams.services';
 import { useNavigate } from 'react-router-dom';
+import { useIdleTimer } from 'react-idle-timer';
+import { UserStatus } from '../../common/user-status.enum';
 
 
 const LoggedUser = (): JSX.Element => {
@@ -25,7 +27,7 @@ const LoggedUser = (): JSX.Element => {
     setIsDetailedChatClicked,
     setIsCreateTeamView,
   } = useContext(AppContext);
-  const userDetails: User | null = appState.userData;
+  const userDetails: User = appState.userData!;
 
   const [currentChat, setCurrentChat] = useState<IChannel>({
     id: '',
@@ -42,6 +44,8 @@ const LoggedUser = (): JSX.Element => {
   const [title, setTitle] = useState<string>('');
 
   const navigate = useNavigate();
+  useStatusTracking(userDetails);
+
   useEffect(() => {
     if (appState.userData?.username) {
       const unsubscribe = getLiveChannelsByUsername(appState.userData.username,
@@ -164,3 +168,27 @@ const LoggedUser = (): JSX.Element => {
 };
 
 export default LoggedUser;
+
+function useStatusTracking(loggedInUser: User) {
+  useIdleTimer({
+    onIdle: onIdle,
+    onActive: onActive,
+    onAction: onAction,
+    timeout: 1000 * 5 });
+
+  function onIdle() {
+    updateUserStatus(loggedInUser.username, UserStatus.AWAY);
+  };
+
+  function onActive() {
+    if (loggedInUser.status !== UserStatus.ONLINE) {
+      updateUserStatus(loggedInUser.username, UserStatus.ONLINE);
+    }
+  };
+
+  function onAction() {
+    if (loggedInUser.status !== UserStatus.DO_NOT_DISTURB) {
+      updateUserStatus(loggedInUser.username, UserStatus.ONLINE);
+    }
+  };
+}
