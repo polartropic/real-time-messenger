@@ -1,13 +1,31 @@
-import { useContext } from 'react';
-import DefaultAvatar from '../../assets/images/Default-avatar.jpg';
+import { useContext, useEffect, useState } from 'react';
+import InitialsAvatar from 'react-initials-avatar';
 import AppContext from '../../providers/AppContext';
 import { reactWithHeart, reactWithNo, reactWithYes } from '../../services/messages.services';
-import { MessageProps } from '../../types/Interfaces';
+import { getUserByUsername } from '../../services/users.services';
+import { MessageProps, User } from '../../types/Interfaces';
 import './Message.css';
 
 const Message = ({ message, currentChannel, handleEditMessage }: MessageProps): JSX.Element => {
   const { appState } = useContext(AppContext);
   const currentUser = appState.userData;
+  const [author, setAuthor] = useState<User>({
+    firstName: '',
+    lastName: '',
+    username: '',
+    email: '',
+    phoneNumber: '',
+    imgURL: '',
+    status: '',
+    teams: [],
+    channels: [],
+    uid: '',
+  });
+
+  useEffect(() => {
+    getUserByUsername(message.author)
+      .then((res) => setAuthor(res.val()));
+  }, [message.author]);
 
   const handleYes = () => {
     reactWithYes(currentChannel.id, message.id, (message.reactions.yes + 1));
@@ -39,7 +57,14 @@ const Message = ({ message, currentChannel, handleEditMessage }: MessageProps): 
       {isCurrentUserAuthor ? editButton : null}
 
       <div className='message-avatar'>
-        <img src={DefaultAvatar} alt='avatar' className='default-avatar' />
+        {author.imgURL ?
+          <img src={author.imgURL}
+            alt="avatar"
+            className='user-avatar-message' /> :
+          <InitialsAvatar
+            name={`${author.firstName} ${author.lastName}`}
+            className={'avatar-default-header'} />
+        }
       </div>
 
       <div className={isCurrentUserAuthor ? 'my-message' : 'others-message'}>
