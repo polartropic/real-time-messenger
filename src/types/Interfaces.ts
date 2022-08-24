@@ -148,3 +148,8 @@ export interface ReceivedMeeting {
   status: string,
   title: string,
 }
+
+export interface MyMeetingProps {
+    meetingID: string,
+    receivedMeetingTitle: string,
+}
