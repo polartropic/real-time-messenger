@@ -96,9 +96,6 @@ const ChatParticipants = ({ currentChannel,
           null
         }
 
-        <h4>Chat:</h4>
-        <h5>{currentChannel.title}</h5>
-
         <h4>Participants of chat:</h4>
         <div className='participants'>
           {currentChannelUsers.map((participant) => mappingParticipants(participant, uid()))}
