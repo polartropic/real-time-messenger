@@ -24,7 +24,7 @@ function App() {
     userData: null,
   });
 
-  const [isCreateTeamView, setIsCreateTeamView] = useState(false);
+  const [isTeamView, setIsTeamView] = useState(false);
   const [isDetailedChatClicked, setIsDetailedChatClicked] = useState(false);
   const [isCreateChatClicked, setIsCreateChatClicked] = useState(false);
 
@@ -53,8 +53,8 @@ function App() {
         <AppContext.Provider value={{
           appState,
           setState,
-          isCreateTeamView,
-          setIsCreateTeamView,
+          isTeamView,
+          setIsTeamView,
           setIsCreateChatClicked,
           isCreateChatClicked,
           setIsDetailedChatClicked,

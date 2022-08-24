@@ -1,10 +1,19 @@
+import { useContext } from 'react';
 import { uid } from 'uid';
+import AppContext from '../../providers/AppContext';
 import { getChatById, getChatByName } from '../../services/channels.services';
 import { ChannelsListProps } from '../../types/Interfaces';
 import './ChannelsList.css';
 
 const ChannelsList = (
   { props }: ChannelsListProps) => {
+  const {
+    isTeamView,
+    setIsCreateChatClicked,
+    setIsDetailedChatClicked,
+    setIsTeamView,
+  } = useContext(AppContext);
+
   const mappingChats = (chatName: string, key: string) => {
     return <div key={key}>
       <p onClick={() => openDetailedChat(chatName)} className='chat-item'>{chatName}</p>
@@ -12,25 +21,25 @@ const ChannelsList = (
   };
 
   const openCreateChat = () => {
-    props.setIsCreateChatClicked(true);
-    props.setIsDetailedChatClicked(false);
-    if (props.setIsDetailedTeamClicked) {
-      props.setIsDetailedTeamClicked(false);
+    setIsCreateChatClicked(true);
+    setIsDetailedChatClicked(false);
+    if (isTeamView) {
+      setIsTeamView(false);
     }
-    if (props.setIsCreateTeamView) {
-      props.setIsCreateTeamView(false);
+    if (setIsTeamView) {
+      setIsTeamView(false);
     }
   };
 
   const openDetailedChat = (chatName: string) => {
-    props.setIsDetailedChatClicked(true);
-    props.setIsCreateChatClicked(false);
-    if (props.setIsDetailedTeamClicked) {
-      props.setIsDetailedTeamClicked(false);
+    setIsDetailedChatClicked(true);
+    setIsCreateChatClicked(false);
+    if (setIsTeamView) {
+      setIsTeamView(false);
     }
 
-    if (props.setIsCreateTeamView) {
-      props.setIsCreateTeamView(false);
+    if (setIsTeamView) {
+      setIsTeamView(false);
     }
 
     getChatByName(chatName)

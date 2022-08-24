@@ -18,7 +18,7 @@ import './Header.css';
 const Header = (): JSX.Element => {
   const { appState,
     setState,
-    setIsCreateTeamView,
+    setIsTeamView,
     setIsCreateChatClicked,
     setIsDetailedChatClicked,
   } = useContext(AppContext);
@@ -90,7 +90,7 @@ const Header = (): JSX.Element => {
 
   const handleCreateTeam = () => {
     setIsOpen(!isOpen);
-    setIsCreateTeamView(true);
+    setIsTeamView(true);
     setIsCreateChatClicked(false);
     setIsDetailedChatClicked(false);
 
@@ -101,7 +101,7 @@ const Header = (): JSX.Element => {
 
   const handleGoToHomPage = () => {
     setIsDetailedChatClicked(false);
-    setIsCreateTeamView(false);
+    setIsTeamView(false);
     setIsCreateChatClicked(false);
     navigate('/');
   };

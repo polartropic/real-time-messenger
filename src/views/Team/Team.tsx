@@ -16,6 +16,15 @@ import AppContext from '../../providers/AppContext';
 import './Team.css';
 
 const MyTeam = (): JSX.Element => {
+  const { appState,
+    isTeamView,
+    isDetailedChatClicked,
+    isCreateChatClicked,
+    setIsCreateChatClicked,
+    setIsDetailedChatClicked,
+    setIsTeamView,
+  } = useContext(AppContext);
+
   const [team, setTeam] = useState<object>({});
   const [currentChat, setCurrentChat] = useState<IChannel>({
     id: '',
@@ -25,12 +34,8 @@ const MyTeam = (): JSX.Element => {
     isPublic: false,
     teamID: '',
   });
-  const [isDetailedChatClicked, setIsDetailedChatClicked] = useState(false);
-  const [isCreateChatClicked, setIsCreateChatClicked] = useState(false);
   const [channels, setChannels] = useState<string[]>([]);
   const [title, setTitle] = useState<string>('');
-  const [isDetailedTeamClicked, setIsDetailedTeamClicked] = useState<boolean>(false);
-
   const [teamMembersObjects, setTeamMembersObject] = useState<User[]>([]);
   const [addedToChat, setAddedToChat] = useState<User[]>([]);
   const [initialChatParticipants, setInitialChatParticipants] = useState<User[]>([]);
@@ -41,7 +46,6 @@ const MyTeam = (): JSX.Element => {
     channels: [],
   });
   const { name } = useParams<{ name: string }>();
-  const { appState } = useContext(AppContext);
   const [outerUsers, setOuterUsers] = useState<User[]>([]);
   const [usersToRemove, setUsersToRemove] = useState<User[]>([]);
   const currentUser = appState.userData?.username;
@@ -118,17 +122,17 @@ const MyTeam = (): JSX.Element => {
   useEffect(() => {
     if (isCreateChatClicked) {
       setIsDetailedChatClicked(false);
-      setIsDetailedTeamClicked(false);
+      setIsTeamView(false);
     }
     if (isDetailedChatClicked) {
       setIsCreateChatClicked(false);
-      setIsDetailedTeamClicked(false);
+      setIsTeamView(false);
     }
-    if (isDetailedTeamClicked) {
+    if (isTeamView) {
       setIsDetailedChatClicked(false);
       setIsCreateChatClicked(false);
     }
-  }, [isCreateChatClicked, isDetailedChatClicked, isDetailedTeamClicked]);
+  }, [isCreateChatClicked, isDetailedChatClicked, isTeamView, setIsCreateChatClicked, setIsDetailedChatClicked, setIsTeamView]);
 
   const updateTeam = () => {
     const stringMembers = usersToRemove.map((member) => member.username);
@@ -136,12 +140,12 @@ const MyTeam = (): JSX.Element => {
       .then(() => {
         manageTeamMembersUpdateUsers(outerUsers, usersToRemove, Object.values(team)[0], teamID);
       })
-      .then(() => toast.success('You have succesfully updated your team!'))
+      .then(() => toast.success('You have successfully updated your team!'))
       .catch((err) => toast.warning(err));
   };
 
   const createChatFunc = () => {
-    setIsDetailedTeamClicked(false);
+    setIsTeamView(false);
     setAddedToChat([]);
 
     if (title.length < MIN_CHANNEL_NAME_LENGTH || title.length > MAX_CHANNEL_NAME_LENGTH) {
@@ -166,10 +170,7 @@ const MyTeam = (): JSX.Element => {
     <div className='landing-page'>
       {channels && <ChannelsList props={{
         channels,
-        setIsCreateChatClicked,
-        setIsDetailedChatClicked,
         setCurrentChat,
-        setIsDetailedTeamClicked,
       }} />
       }
 
@@ -177,18 +178,24 @@ const MyTeam = (): JSX.Element => {
         <>
           {isCreateChatClicked ?
             <>
-              <input type="text" className={'create-chat-title'} name="team-name" placeholder='Please, add a title...' required defaultValue='' onChange={(e) => setTitle(e.target.value.trim())} />
-              <button className='create-a-team' onClick={createChatFunc}>Create a Chat</button>
-              <ManiPulateUsersLists leftSide={initialChatParticipants}
+              <input type="text" className={'create-chat-title'}
+                name="team-name" placeholder='Please, add a title...'
+                required
+                defaultValue=''
+                onChange={(e) => setTitle(e.target.value.trim())} />
+              <button className='create-a-team'
+                onClick={createChatFunc}>Create a Chat</button>
+              <ManiPulateUsersLists
+                leftSide={initialChatParticipants}
                 setLeftSide={setInitialChatParticipants}
-                rightSide={addedToChat} setRightSide={setAddedToChat} />
+                rightSide={addedToChat}
+                setRightSide={setAddedToChat} />
             </> :
             null
           }
           {isDetailedChatClicked ?
             <Channel currentChannel={currentChat} /> :
-
-            isDetailedTeamClicked && Object.values(team)[0].owner === currentUser ?
+            isTeamView && Object.values(team)[0].owner === currentUser ?
               <>
                 <h4 id='team-title-name'>{teamProps?.name}</h4>
                 <button className='create-a-team' onClick={updateTeam}>Update users</button>
@@ -203,11 +210,10 @@ const MyTeam = (): JSX.Element => {
       </div>
       {
         isDetailedChatClicked ?
-          <ChatParticipants currentChannel={currentChat}
-            isDetailedChatClicked={isDetailedChatClicked}
-            setIsDetailedChatClicked={setIsDetailedChatClicked}
-            setIsDetailedTeamClicked={setIsDetailedTeamClicked}
-            allUsers={teamMembersObjects} owner={ownerObj} /> :
+          <ChatParticipants
+            currentChannel={currentChat}
+            allUsers={teamMembersObjects}
+            owner={ownerObj} /> :
           ownerObj && teamMembersObjects &&
           <TeamParticipants owner={ownerObj} allUsers={teamMembersObjects} />
       }
