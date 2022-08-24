@@ -1,5 +1,4 @@
-import { DyteMeeting, provideDyteDesignSystem } from '@dytesdk/react-ui-kit';
-import { DyteProvider, useDyteClient, useDyteMeeting } from '@dytesdk/react-web-core';
+import { DyteProvider, useDyteClient } from '@dytesdk/react-web-core';
 import axios from 'axios';
 import { useContext, useEffect, useState } from 'react';
 import { useNavigate, useParams } from 'react-router-dom';
@@ -9,7 +8,8 @@ import AppContext from '../../providers/AppContext';
 import { ReceivedMeeting } from '../../types/Interfaces';
 import Loading from '../../assets/images/Loading.gif';
 import './DetailedMeeting.css';
-import { dyteMeetingClosureFunc, dyteMeetingFunc, dyteParticipantFunc } from '../../services/dyte.services';
+import { dyteMeetingFunc, dyteParticipantFunc } from '../../services/dyte.services';
+import MyMeeting from '../../components/MyMeeting/MyMeeting';
 
 const DetailedMeeting = (): JSX.Element => {
   const { meetingID } = useParams();
@@ -56,52 +56,13 @@ const DetailedMeeting = (): JSX.Element => {
     }
   }, [addedUser, receivedMeeting.roomName]);
 
-  const MyMeeting = () => {
-    const { meeting } = useDyteMeeting();
-
-    useEffect(() => {
-      if (meeting) {
-        meeting.meta.on('roomJoined', () => {
-          meeting.joinRoom();
-        });
-
-        provideDyteDesignSystem(document.body, {
-          theme: 'light',
-          colors: {
-            'danger': '#2f455d',
-            'brand': {
-              300: '#2f455d',
-            },
-            'text': '#071428',
-            'text-on-brand': '#ffffff',
-            'video-bg': '#E5E7EB',
-          },
-          borderRadius: 'extra-rounded',
-        });
-        meeting.meta.on('disconnected', () => {
-          meeting.leaveRoom();
-
-          axios.request(dyteMeetingClosureFunc(BASE_URL, ORGANIZATION_ID, meetingID, API_KEY, receivedMeeting.title))
-            .then((response) => console.log(response.data))
-            .catch((error) => console.error(error));
-        });
-      }
-    }, [meeting]);
-
-    return (
-      <div style={{ height: '91vh' }}>
-        <DyteMeeting showSetupScreen={true} mode="fill" meeting={meeting!} />
-      </div>
-    );
-  };
-
   return (
     !meeting?
       <>
         <img id="loader" src={Loading} alt='loader'></img>
       </>:
       <DyteProvider value={meeting}>
-        <MyMeeting />
+        <MyMeeting meetingID={meetingID!} receivedMeetingTitle={receivedMeeting.title}/>
         <ToastContainer />
       </DyteProvider>
   );
