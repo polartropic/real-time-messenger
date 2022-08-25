@@ -18,9 +18,9 @@ const MyMeeting = ({ meetingID, receivedMeetingTitle }: MyMeetingProps) => {
       provideDyteDesignSystem(document.body, {
         theme: 'light',
         colors: {
-          'danger': '#2f455d',
+          'danger': '#4558cf',
           'brand': {
-            300: '#2f455d',
+            300: '#4558cf',
           },
           'text': '#071428',
           'text-on-brand': '#ffffff',
