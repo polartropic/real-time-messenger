@@ -79,7 +79,10 @@ const ChatParticipants = ({ currentChannel, allUsers, owner }: ChatParticipantsP
   return (
     isDetailedChatClicked ?
       <div className='participants-list'>
-        <button onClick={() => setIsMeetingClicked(!isMeetingClicked)} className='view-users-btn'>Create a meeting</button>
+        {isMeetingClicked?
+          <button onClick={() => setIsMeetingClicked(!isMeetingClicked)} className='view-users-btn'>See chat participants</button>:
+          <button onClick={() => setIsMeetingClicked(!isMeetingClicked)} className='view-users-btn'>Create a meeting</button>
+        }
         {isMeetingClicked ?
           <form id='create-a-meeting' onSubmit={handleCreateMeeting}>
             <h4>Create a meeting with chat participants:</h4>
