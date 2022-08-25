@@ -131,22 +131,21 @@ const Header = (): JSX.Element => {
                   </OutsideClickHandler>
                 </div>
               }
+
               <Link to={'/my-meetings'} id='link-to-meetings'>
                 <button className='header-btn' id='my-meetings'>My meetings</button>
               </Link>
+
               <button onClick={handleLogOut} className='header-btn' id='logout-btn'>Log out</button>
+
               <div className='header-avatar'>
                 <Link to={'/edit-profile'} style={{ textDecoration: 'none' }}>
                   {userData.imgURL ?
-                    <img src={userData.imgURL}
-                      alt="avatar"
-                      className='user-avatar-header' /> :
-
-                    <InitialsAvatar
-                      name={`${userData.firstName} ${userData.lastName}`}
-                      className={'avatar-default-header'} />
+                    <img src={userData.imgURL} alt='avatar' className='user-avatar-header' /> :
+                    <InitialsAvatar name={`${userData.firstName} ${userData.lastName}`} className={'avatar-default-header'} />
                   }
                 </Link>
+
                 <UserStatusIndicator user={appState.userData!} />
               </div>
             </> :
