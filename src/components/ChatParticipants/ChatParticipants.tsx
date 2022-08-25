@@ -14,7 +14,6 @@ import './ChatParticipants.css';
 
 const ChatParticipants = ({ currentChannel, allUsers, owner }: ChatParticipantsProps): JSX.Element | null => {
   const { appState,
-    isTeamView,
     isDetailedChatClicked,
     setIsCreateChatClicked,
     setIsDetailedChatClicked,

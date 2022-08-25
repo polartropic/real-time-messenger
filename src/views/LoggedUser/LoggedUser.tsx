@@ -26,7 +26,6 @@ const LoggedUser = (): JSX.Element => {
     setIsTeamView,
   } = useContext(AppContext);
   const userDetails: User = appState.userData!;
-
   const [currentChat, setCurrentChat] = useState<IChannel>({
     id: '',
     title: '',
@@ -35,7 +34,7 @@ const LoggedUser = (): JSX.Element => {
     isPublic: false,
     teamID: '',
   });
-  const [channels, setChannels] = useState<string[]>([]);
+  const [channels, setChannels] = useState<IChannel[]>([]);
   const [allUsers, setAllUsers] = useState<User[]>([]);
   const [initialParticipants, setInitialParticipants] = useState<User[]>([]);
   const [addedParticipants, setAddedParticipants] = useState<User[]>([]);
@@ -48,7 +47,16 @@ const LoggedUser = (): JSX.Element => {
     if (appState.userData?.username) {
       const unsubscribe = getLiveChannelsByUsername(appState.userData.username,
         (snapshot) => {
-          setChannels(Object.keys(snapshot.val()));
+          const userChatsNames = Object.keys(snapshot.val());
+          const channelsObjPr = userChatsNames.map((chatName) => {
+            return getChatByName(chatName)
+              .then((snapshotChanObj) => {
+                const arr: IChannel[] = Object.values(snapshotChanObj.val());
+                return arr[0];
+              });
+          });
+          Promise.all(channelsObjPr)
+            .then((values) => setChannels(values));
         });
       return () => unsubscribe();
     }
@@ -171,7 +179,8 @@ function useStatusTracking(loggedInUser: User) {
     onIdle: onIdle,
     onActive: onActive,
     onAction: onAction,
-    timeout: 1000 * 5 });
+    timeout: 1000 * 5 * 60,
+  });
 
   function onIdle() {
     updateUserStatus(loggedInUser.username, UserStatus.AWAY);

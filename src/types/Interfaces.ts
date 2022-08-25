@@ -84,7 +84,7 @@ export interface TeamParticipantsProps {
 
 export interface ChannelsListProps {
   props: {
-    channels?: string[],
+    channels?: Channel[],
     setCurrentChat: Dispatch<SetStateAction<Channel>>,
   },
 }

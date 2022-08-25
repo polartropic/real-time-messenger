@@ -11,7 +11,7 @@ import ManiPulateUsersLists from '../../components/ManipulateUsersLists/ManiPula
 import { getAllUsers, getLiveChannelsByUsername, updateUserChats } from '../../services/users.services';
 import { toast } from 'react-toastify';
 import { MIN_CHANNEL_NAME_LENGTH, MAX_CHANNEL_NAME_LENGTH, MIN_NUMBER_OF_CHAT_PARTICIPANTS } from '../../common/constants';
-import { createTeamChat } from '../../services/channels.services';
+import { createTeamChat, getChatByName } from '../../services/channels.services';
 import AppContext from '../../providers/AppContext';
 import './Team.css';
 
@@ -34,7 +34,7 @@ const MyTeam = (): JSX.Element => {
     isPublic: false,
     teamID: '',
   });
-  const [channels, setChannels] = useState<string[]>([]);
+  const [channels, setChannels] = useState<IChannel[]>([]);
   const [title, setTitle] = useState<string>('');
   const [teamMembersObjects, setTeamMembersObject] = useState<User[]>([]);
   const [addedToChat, setAddedToChat] = useState<User[]>([]);
@@ -84,7 +84,16 @@ const MyTeam = (): JSX.Element => {
           (snapshotUC) => {
             const channelsToDisplay = allTeamChannels
               .filter((teamChan) => Object.keys(snapshotUC.val()).includes(teamChan));
-            setChannels(channelsToDisplay);
+
+            const channelsObjPr = channelsToDisplay.map((chatName) => {
+              return getChatByName(chatName)
+                .then((snapshotChanObj) => {
+                  const arr: IChannel[] = Object.values(snapshotChanObj.val());
+                  return arr[0];
+                });
+            });
+            Promise.all(channelsObjPr)
+              .then((values) => setChannels(values));
           });
         return () => unsubscribe2();
       }
