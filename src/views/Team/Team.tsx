@@ -205,7 +205,7 @@ const MyTeam = (): JSX.Element => {
           }
           {isDetailedChatClicked ?
             <Channel currentChannel={currentChat} /> :
-            isTeamView && Object.values(team)[0].owner === currentUser ?
+            isTeamView && ownerObj.username === currentUser ?
               <>
                 <h4 id='team-title-name'>{teamProps?.name}</h4>
                 <button className='create-a-team' onClick={updateTeam}>Update users</button>

@@ -26,7 +26,6 @@ const Channel = ({ currentChannel }: ChannelProps) => {
 
     return () => unsubscribe();
   }, [currentChannel.id]);
-  console.log(currentChannel);
 
   const handleEditMessage = (currentMessage: IMessage) => {
     setIsInEditMode(true);

@@ -42,6 +42,8 @@ const Header = (): JSX.Element => {
 
   const navigate = useNavigate();
 
+  const [activeButton, setActiveButton] = useState<HTMLElement>();
+
   useEffect(() => {
     if (appState.userData?.username) {
       const unsubscribe = getLiveUserByUsername(appState.userData.username,
@@ -63,6 +65,10 @@ const Header = (): JSX.Element => {
     }
   }, [userUsername]);
 
+  useEffect(() => {
+    activeButton?.classList.add('active-header-button');
+  }, [activeButton?.classList]);
+
   const handleLogOut = () => {
     setState({
       user: null,
@@ -78,6 +84,12 @@ const Header = (): JSX.Element => {
 
   const toggling = () => setIsOpen(!isOpen);
 
+  const handleMyTeamsClick = (e: React.MouseEvent<HTMLElement>) => {
+    activeButton?.classList.remove('active-header-button');
+    setActiveButton(e.currentTarget);
+    toggling();
+  };
+
   const URL = window.location.href;
 
   const mappingTeam = (team: ReactNode, key: string | number) => {
@@ -88,7 +100,9 @@ const Header = (): JSX.Element => {
     </div>;
   };
 
-  const handleCreateTeam = () => {
+  const handleCreateTeam = (e: React.MouseEvent<HTMLElement>) => {
+    activeButton?.classList.remove('active-header-button');
+    setActiveButton(e.currentTarget);
     setIsOpen(!isOpen);
     setIsTeamView(true);
     setIsCreateChatClicked(false);
@@ -99,11 +113,25 @@ const Header = (): JSX.Element => {
     };
   };
 
-  const handleGoToHomPage = () => {
+  const handleGoToHomPage = (e: React.MouseEvent<HTMLElement>) => {
+    activeButton?.classList.remove('active-header-button');
+    setActiveButton(e.currentTarget);
     setIsDetailedChatClicked(false);
     setIsTeamView(false);
     setIsCreateChatClicked(false);
     navigate('/');
+  };
+
+  const handleAboutUs = (e: React.MouseEvent<HTMLElement>) => {
+    activeButton?.classList.remove('active-header-button');
+    setActiveButton(e.currentTarget);
+    navigate('/about-us');
+  };
+
+  const handleMyMeetingsClick = (e: React.MouseEvent<HTMLElement>) => {
+    activeButton?.classList.remove('active-header-button');
+    setActiveButton(e.currentTarget);
+    navigate('/my-meetings');
   };
 
   return (
@@ -115,11 +143,11 @@ const Header = (): JSX.Element => {
 
         <div id='navigation'>
           <button className='header-btn' onClick={handleGoToHomPage}>Home</button>
-          <button className='header-btn' onClick={() => navigate('/about-us')}>About us</button>
+          <button className='header-btn' onClick={handleAboutUs}>About us</button>
 
           {user ?
             <>
-              <button className='header-btn' onClick={toggling}>My teams</button>
+              <button className='header-btn' onClick={handleMyTeamsClick}>My teams</button>
               {isOpen &&
                 <div id='dropdown-menu-myteams'>
                   <OutsideClickHandler
@@ -132,9 +160,7 @@ const Header = (): JSX.Element => {
                 </div>
               }
 
-              <Link to={'/my-meetings'} id='link-to-meetings'>
-                <button className='header-btn' id='my-meetings'>My meetings</button>
-              </Link>
+              <button className='header-btn' id='my-meetings' onClick={handleMyMeetingsClick}>My meetings</button>
 
               <button onClick={handleLogOut} className='header-btn' id='logout-btn'>Log out</button>
 

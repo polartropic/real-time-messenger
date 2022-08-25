@@ -1,4 +1,4 @@
-import { useContext } from 'react';
+import { useContext, useState } from 'react';
 import { uid } from 'uid';
 import AppContext from '../../providers/AppContext';
 import { getChatByName, getChatById } from '../../services/channels.services';
@@ -13,9 +13,26 @@ const ChannelsList = (
     setIsTeamView,
   } = useContext(AppContext);
 
+  const [activeChannel, setActiveChannel] = useState<Channel>({
+    id: '',
+    title: '',
+    participants: [], // UserIDs
+    messages: [],
+    isPublic: false,
+    teamID: '',
+    lastActivity: new Date(),
+  });
+
+  const handleOpenChannel = (chanObj: Channel) => {
+    openDetailedChat(chanObj);
+    setActiveChannel(chanObj);
+  };
+
   const mappingChats = (chanObj: Channel, key: string) => {
     return <div key={key}>
-      <p onClick={() => openDetailedChat(chanObj)} className='chat-item'>{chanObj.title}</p>
+      {activeChannel.title === chanObj.title ?
+        <p onClick={() => handleOpenChannel(chanObj)} className='chat-item-active'>{chanObj.title}</p> :
+        <p onClick={() => handleOpenChannel(chanObj)} className='chat-item'>{chanObj.title}</p>}
     </div>;
   };
 

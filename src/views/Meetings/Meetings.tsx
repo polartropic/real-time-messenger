@@ -31,7 +31,6 @@ const Meetings = (): JSX.Element => {
   useEffect(() => {
     const personalMeetings =
     (Object.values(events).filter((event) => event.participants.includes(userUsername!)));
-    console.log(personalMeetings);
     const result = personalMeetings.map((meeting) => {
       return {
         title: meeting.title,

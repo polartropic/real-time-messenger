@@ -129,8 +129,6 @@ const LoggedUser = (): JSX.Element => {
       .catch(console.error);
   };
 
-  console.log(channels);
-
   return (
     <div className="landing-page">
       <ChannelsList props={{ channels, setCurrentChat }} />
