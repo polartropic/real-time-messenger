@@ -27,7 +27,7 @@
 .react-datetime-picker__inputGroup {
   min-width: calc(4px + (4px * 3) +  0.54em * 6  +  0.217em * 2);
   flex-grow: 1;
-  padding: 0 2px;
+  padding: 0 1px;
   color: black important!;
 }
 .react-datetime-picker__inputGroup__divider {
@@ -64,7 +64,7 @@
 .react-datetime-picker__button {
   border: 0;
   background: transparent;
-  padding: 4px 6px;
+  padding: 1px 2px;
 }
 .react-datetime-picker__button:enabled {
   cursor: pointer;
