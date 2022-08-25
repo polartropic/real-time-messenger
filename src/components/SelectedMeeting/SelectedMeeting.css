@@ -41,11 +41,9 @@
   background-color: rgba(243, 214, 121, 1);
   padding: 5px;
   text-align: center;
-  transition: border-color 0.5s, background-color 0.5s, color 0.5s;
-  background-size: 200% auto;
-  color: black;            
+  color:rgba(69, 88, 207, 1);;            
   border-radius: 10px;   
-  border: 1px solid rgba(243, 214, 121, 1);
+  border: none;
   font-size: 12pt;
   font-weight: 500;
 }
