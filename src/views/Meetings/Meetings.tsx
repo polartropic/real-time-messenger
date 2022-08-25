@@ -5,7 +5,6 @@ import { useContext, useEffect, useState } from 'react';
 import { getAllMeetings } from '../../services/meetings.services';
 import AppContext from '../../providers/AppContext';
 import { Meeting } from '../../types/Interfaces';
-import './Meetings.css';
 import SelectedMeeting from '../../components/SelectedMeeting/SelectedMeeting';
 
 const localizer = momentLocalizer(moment);

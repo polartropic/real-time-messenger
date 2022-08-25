@@ -36,7 +36,6 @@ button.rbc-input::-moz-focus-inner {
       -ms-flex-align: stretch;
           align-items: stretch;
   height: 100%;
-  /* margin-top: 5px; */
 
   animation-name: fade-in;
   animation-duration: 0.5s;
@@ -97,7 +96,7 @@ button.rbc-input::-moz-focus-inner {
   font-size: 90%;
   min-height: 0;
   border-bottom: 1px solid #ddd;
-  background-color: rgba(47, 69, 93, 0.85);
+  background-color: rgba(69, 88, 207, 0.9);
   color: white;
   border-radius: 2px;
 }
@@ -173,7 +172,7 @@ button.rbc-input::-moz-focus-inner {
       -ms-flex-align: center;
           align-items: center;
   font-size: 16px;
-  background-color: rgba(47, 69, 93, 0.85);
+  background-color: rgba(121, 136, 220, 1);
   color: white;
 }
 .rbc-toolbar .rbc-toolbar-label {
@@ -184,7 +183,7 @@ button.rbc-input::-moz-focus-inner {
   text-align: center;
 }
 .rbc-toolbar button {
-  background-image: linear-gradient(to right, #16222A 0%, #2f455d 51%, #16222A  100%);
+  background-color:  rgba(69, 88, 207, 1);
   margin-bottom: 7px; 
   padding: 11px;
   text-align: center;
@@ -192,7 +191,7 @@ button.rbc-input::-moz-focus-inner {
   background-size: 200% auto;
   color: white;            
   border-radius: 3px;   
-  border: 1px solid black;
+  border: 0.5px solid darkblue;
   position: sticky;
   display: inline-block;
   margin: 0;
@@ -203,17 +202,17 @@ button.rbc-input::-moz-focus-inner {
   
 }
 .rbc-toolbar button:active, .rbc-toolbar button.rbc-active {
-  background-image: linear-gradient(to right, #2f455d 0%, #182848  51%, #4b6cb7  100%);
+  background-color:  rgba(69, 88, 207, 1);
   text-align: center;
   transition: 0.5s;
   background-size: 200% auto;
   color: white;            
   border-radius: 15px;
-  border-color: black;
+  border: 0.5px solid darkblue;
 }
 .rbc-toolbar button:active:hover, .rbc-toolbar button:active:focus, .rbc-toolbar button.rbc-active:hover, .rbc-toolbar button.rbc-active:focus {
   color: white;
-  background-color: #d4d4d4;
+  background-color:  rgba(121, 136, 220, 1);
   border-color: #8c8c8c;
 }
 .rbc-toolbar button:focus {
@@ -223,7 +222,7 @@ button.rbc-input::-moz-focus-inner {
 }
 .rbc-toolbar button:hover {
   color: white;
-  background-color: #e6e6e6;
+  background-color: rgba(121, 136, 220, 1);
   border-color: #adadad;
 }
 
@@ -276,17 +275,17 @@ button.rbc-input::-moz-focus-inner {
   cursor: pointer;
   width: 100%;
   text-align: left;
-  background-color: #5788b3;
+  background-color:  rgba(243, 214, 121, 1);
 }
 .rbc-slot-selecting .rbc-event, .rbc-slot-selecting .rbc-day-slot .rbc-background-event, .rbc-day-slot .rbc-slot-selecting .rbc-background-event {
   cursor: inherit;
   pointer-events: none;
 }
 .rbc-event.rbc-selected, .rbc-day-slot .rbc-selected.rbc-background-event {
-  background-color: #265985;
+  background-color: rgba(243, 214, 121, 0.7);
 }
 .rbc-event:focus, .rbc-day-slot .rbc-background-event:focus {
-  outline: 5px auto #3b99fc;
+  outline: 5px auto white;
 }
 
 .rbc-event-label {

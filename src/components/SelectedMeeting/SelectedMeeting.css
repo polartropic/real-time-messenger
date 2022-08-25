@@ -15,12 +15,11 @@
 }
 
 #meeting-details-title {
-  color: #2f455d;
-  margin-top: 2px;
-  margin-bottom: 6px;
-  font-size: 17px;
+  font-weight: bold;
+  color: rgba(69, 88, 207, 1);
   text-decoration: underline;
-  text-align: center;
+  margin-top: 0px;
+  margin-bottom: 5px;
 }
 
 .close-btn {
@@ -35,4 +34,18 @@
   font-size: 20px;
   cursor: pointer;
   margin-right: 5px;
+}
+
+#join-meeting-btn {
+  margin-top: 13px;
+  background-color: rgba(243, 214, 121, 1);
+  padding: 5px;
+  text-align: center;
+  transition: border-color 0.5s, background-color 0.5s, color 0.5s;
+  background-size: 200% auto;
+  color: black;            
+  border-radius: 10px;   
+  border: 1px solid rgba(243, 214, 121, 1);
+  font-size: 12pt;
+  font-weight: 500;
 }
