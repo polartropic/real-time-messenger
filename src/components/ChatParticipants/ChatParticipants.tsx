@@ -24,7 +24,6 @@ const ChatParticipants = ({ currentChannel, allUsers, owner }: ChatParticipantsP
 
   const userUsername = appState.userData?.username;
 
-  // const [isMeetingClicked, setIsMeetingClicked] = useState(false);
   const [name, setName] = useState<string>('');
   const [start, setStart] = useState<Date>(new Date());
   const [end, setEnd] = useState<Date>(new Date());
