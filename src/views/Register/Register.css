@@ -46,7 +46,7 @@
   font-weight: bold;
   text-decoration: underline;
   background-color: white;
-  color: black;
+  color: rgba(69, 88, 207, 1);
 }
 
 .stats {
