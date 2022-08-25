@@ -3,33 +3,37 @@
   justify-content: center;
   margin-top: 20px;
   overflow-y: auto;
-
+  height: calc(100vh - 190px);
 }
 
 .create-team-view {
   display: grid;
   grid-template-columns: 1fr 1fr;
   grid-template-rows: auto;
-  grid-gap: 15px;
+  /* grid-gap: 15px; */
   margin: 0 auto;
 }
 
 .create-team-wrapper,
 .list-of-added-participants {
-  height: calc(80vh - 170px);
-  border-radius: 20px;
+  height: calc(100vh - 420px);
+  /* border-radius: 20px; */
   padding: 10%;
-  background-color:rgba(47, 69, 93, .7);
-  box-shadow: rgba(0, 0, 0, 0.35) 0px 5px 15px;
+  /* background-color: rgba(69, 88, 207, 0.2); */
+  /* box-shadow: rgba(0, 0, 0, 0.35) 0px 5px 15px; */
+  margin-top: 20px;
+}
+
+.list-of-added-participants {
+  border-left: 2px solid rgba(69, 88, 207, 1);
 }
 
 input {
-  border: none;
-  border-radius: 10px;
+  border-radius: 5px;
   background-color: rgba(245, 247, 251, 1);
   padding: 10px;
   margin-bottom: 15px;
-  border: 1px solid rgba(47, 69, 93, 1);
+  border: 1px solid rgba(69, 88, 207, 1);
 }
 
 .users-container,
