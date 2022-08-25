@@ -7,6 +7,7 @@ import { addMessage } from '../../services/messages.services';
 import AppContext from '../../providers/AppContext';
 import './Channel.css';
 import { updateChannelLastActivity } from '../../services/channels.services';
+import { toast, ToastContainer } from 'react-toastify';
 
 const Channel = ({ currentChannel }: ChannelProps) => {
   const { appState } = useContext(AppContext);
@@ -33,14 +34,19 @@ const Channel = ({ currentChannel }: ChannelProps) => {
   };
 
   const handleSubmit = (message: string) => {
-    if (isInEditMode) {
-      setIsInEditMode(false);
-      editMessage(currentChannel?.id, messageToBeEdited?.id!, message)
-        .catch(console.error);
+    console.log(message);
+    if (message.trim().length > 0) {
+      if (isInEditMode) {
+        setIsInEditMode(false);
+        editMessage(currentChannel?.id, messageToBeEdited?.id!, message)
+          .catch(console.error);
+      } else {
+        addMessage(currentChannel.id, user?.username!, message)
+          .then(() => updateChannelLastActivity(currentChannel.id, Date.now()))
+          .catch(console.error);
+      }
     } else {
-      addMessage(currentChannel.id, user?.username!, message)
-        .then(() => updateChannelLastActivity(currentChannel.id, Date.now()))
-        .catch(console.error);
+      toast.warning('Please enter a message!');
     }
   };
 
@@ -58,6 +64,7 @@ const Channel = ({ currentChannel }: ChannelProps) => {
       </div>
 
       <CreateMessage handleSubmit={handleSubmit} existingMessage={messageToBeEdited?.content} />
+      <ToastContainer/>
     </div>
   );
 };

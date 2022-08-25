@@ -11,6 +11,7 @@ const ChannelsList = (
     setIsCreateChatClicked,
     setIsDetailedChatClicked,
     setIsTeamView,
+    setIsMeetingClicked,
   } = useContext(AppContext);
 
   const [activeChannel, setActiveChannel] = useState<Channel>({
@@ -46,6 +47,7 @@ const ChannelsList = (
     setIsDetailedChatClicked(true);
     setIsCreateChatClicked(false);
     setIsTeamView(false);
+    setIsMeetingClicked(false);
     getChatByName(chanObj.title)
       .then((res) => Object.keys(res.val()))
       .then((res) => getChatById(res[0]))

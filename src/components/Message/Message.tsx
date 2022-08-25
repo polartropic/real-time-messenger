@@ -60,9 +60,7 @@ const Message = ({ message, currentChannel, handleEditMessage }: MessageProps): 
 
       <div className='message-avatar'>
         {author.imgURL ?
-          <img src={author.imgURL}
-            alt="avatar"
-            className='user-avatar-message' /> :
+          <img src={author.imgURL} alt='avatar' className='user-avatar-message' /> :
           <InitialsAvatar name={`${author.firstName} ${author.lastName}`} className={'avatar-default-header'} />
         }
       </div>

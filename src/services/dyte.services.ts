@@ -9,7 +9,8 @@ export const dyteMeetingFunc = (baseURL: string, orgID: string, meetingID: strin
 };
 
 export const dyteParticipantFunc =
-(baseURL: string, orgID: string, meetingID: string | undefined, apiKey: string, username: string | undefined, name: string | undefined) => {
+(baseURL: string, orgID: string, meetingID: string | undefined, apiKey: string, username: string | undefined,
+  name: string | undefined, imgURL: string) => {
   const dyteParticipantCreation = {
     method: 'POST',
     url: `${baseURL}/organizations/${orgID}/meetings/${meetingID}/participant`,
@@ -18,7 +19,7 @@ export const dyteParticipantFunc =
       clientSpecificId: username,
       userDetails: {
         name: name,
-        picture: 'https://images.rawpixel.com/image_png_600/czNmcy1wcml2YXRlL3Jhd3BpeGVsX2ltYWdlcy93ZWJzaXRlX2NvbnRlbnQvbHIvdjc5MS10YW5nLTEzLnBuZw.png',
+        picture: imgURL,
       },
       roleName: 'host',
     },
