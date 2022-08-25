@@ -17,6 +17,7 @@ const UserComponent: FC<UserProps> = ({ props }): JSX.Element => {
   const handleOpen = () => {
     setOpen(true);
   };
+
   return (
     <Tooltip open={open} onClose={handleClose} onOpen={handleOpen}
       title={
@@ -24,7 +25,6 @@ const UserComponent: FC<UserProps> = ({ props }): JSX.Element => {
           <p>{props.user.firstName} {props.user.lastName}</p>
           <p>{props.user.email}</p>
           <p>{props.user.phoneNumber}</p>
-
         </>
       }
       placement={'left'}
@@ -44,15 +44,14 @@ const UserComponent: FC<UserProps> = ({ props }): JSX.Element => {
           },
         },
       }}>
-      <div className="user-box" id="user-box">
+
+      <div className='user-box' id='user-box'>
         {props?.user.imgURL ?
           <div>
-            <img src={props?.user.imgURL}
-              alt="avatar" className='user-avatar' /> {`@${props?.user.username}`}
+            <img src={props?.user.imgURL} alt='avatar' className='user-avatar' /> {`@${props?.user.username}`}
           </div> :
           <>
-            <InitialsAvatar name={`${props.user.firstName} ${props.user.lastName}`}
-              className={'avatar-default'} />
+            <InitialsAvatar name={`${props.user.firstName} ${props.user.lastName}`} className={'avatar-default'} />
             {`@${props?.user.username}`}
           </>
         }
