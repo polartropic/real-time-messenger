@@ -19,6 +19,12 @@
   font-family: 'Baloo 2', Arial, Helvetica, sans-serif;
 }
 
+.user-avatar-message {
+  width: 54px;
+  height: 54px;
+  border-radius: 50%;
+}
+
 .message-author {
   grid-column: 2;
   grid-row: 1;
@@ -96,11 +102,4 @@
 .my-reactions {
   color: white;
   margin-top: 5px;
-}
-
-.user-avatar-message {
-  width: 54px;
-  height: 54px;
-  border-radius: 60%;
-  padding-top: 5px;
 }
