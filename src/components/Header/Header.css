@@ -13,6 +13,31 @@
   position: relative;
 }
 
+.user-avatar-header {
+  height: 50px;
+  width: 50px;
+  border-radius: 50%;
+  align-self: center;
+  margin: 10px;
+  object-fit: cover;
+  vertical-align: middle;
+  position: relative;
+}
+
+.avatar-default-header {
+  background-color: rgba(243, 214, 121, 1);
+  opacity: none;
+  height: 50px;
+  width: 50px;
+  border-radius: 50%;
+  align-self: center;
+  margin: 10px;
+  object-fit: cover;
+  font-size: 30px;
+  color: rgba(69, 88, 207, 1);
+  text-align: center;
+}
+
 .header-avatar .user-status {
   top: 10px;
   left: 10px;
@@ -108,19 +133,4 @@
 #mapping-teams {
   overflow-y: auto;
   height: 270px;
-}
-
-.avatar-default-header {
-  background-color: rgba(243, 214, 121, 1);
-  opacity: none;
-  height: 50px;
-  width: 50px;
-  border-radius: 50%;
-  align-self: center;
-  margin: 10px;
-  object-fit: cover;
-  font-size: 30px;
-  color: rgba(69, 88, 207, 1);
-  text-align: center;
-  padding-top: 2px;
 }
