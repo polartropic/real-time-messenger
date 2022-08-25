@@ -11,9 +11,11 @@ export interface ApplicationContext {
   isTeamView: boolean,
   isDetailedChatClicked: boolean,
   isCreateChatClicked: boolean,
+  isMeetingClicked: boolean,
   setIsCreateChatClicked: Dispatch<SetStateAction<boolean>>,
   setIsDetailedChatClicked: Dispatch<SetStateAction<boolean>>,
   setIsTeamView: Dispatch<SetStateAction<boolean>>,
+  setIsMeetingClicked: Dispatch<SetStateAction<boolean>>,
   setState: Dispatch<SetStateAction<iAppState>>,
 }
 

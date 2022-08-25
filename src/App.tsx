@@ -27,6 +27,7 @@ function App() {
   const [isTeamView, setIsTeamView] = useState(false);
   const [isDetailedChatClicked, setIsDetailedChatClicked] = useState(false);
   const [isCreateChatClicked, setIsCreateChatClicked] = useState(false);
+  const [isMeetingClicked, setIsMeetingClicked] = useState(false);
 
   const [user]: AuthStateHook = useAuthState(auth);
 
@@ -59,6 +60,8 @@ function App() {
           isCreateChatClicked,
           setIsDetailedChatClicked,
           isDetailedChatClicked,
+          isMeetingClicked,
+          setIsMeetingClicked,
         }}>
           <IdleTimerProvider>
             <Header />
