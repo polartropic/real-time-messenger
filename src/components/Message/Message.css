@@ -3,6 +3,7 @@
   grid-template-columns: 70px 1fr 5fr 1fr;
   grid-template-rows: 1fr 1fr 1fr;
   margin: 10px;
+  font-family: 'Roboto', Arial, Helvetica, sans-serif;
 }
 
 .message-avatar {
@@ -12,6 +13,10 @@
 
 .message-avatar img {
   margin: 0;
+}
+
+.message-avatar .avatar-default-header {
+  font-family: 'Baloo 2', Arial, Helvetica, sans-serif;
 }
 
 .message-author {
@@ -42,6 +47,7 @@
   background-color: transparent;
   border: 0px;
   font-size: 12px;
+  font-family: 'Roboto', Arial, Helvetica, sans-serif;
 }
 
 .my-message,
@@ -55,13 +61,13 @@
 /* OTHER USERS' MESSAGES */
 .others-message {
   color: black;
-  background-color: #f2f1ec;
+  background-color: rgba(242, 241, 236, 1);
 }
 
 /* CURRENT USER'S MESSAGES */
 .my-message {
   color: white;
-  background-color: rgba(47, 69, 93, 1);
+  background-color: rgba(69, 88, 207, 1);
 }
 
 .edit-my-message {
@@ -73,11 +79,12 @@
 }
 
 .edit-message-btn {
-  background-color: rgba(47, 69, 93, 1);
+  background-color: transparent;
   border: 1px solid white;
   border-radius: 20px;
   color: white;
   transition: border-color 0.5s, background-color 0.5s, color 0.5s;
+  font-family: 'Roboto';
 }
 
 .edit-message-btn:hover {
