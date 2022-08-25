@@ -23,8 +23,6 @@ export const fromMessagesDocument = (snapshot: DataSnapshot): Message[] => {
 };
 
 export const addMessage = (chatId: string, username: string, content: string) => {
-  console.log(chatId);
-
   return push(ref(db, `channels/${chatId}/messages`), {
     author: username,
     content,

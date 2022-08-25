@@ -33,6 +33,7 @@ const LoggedUser = (): JSX.Element => {
     messages: [],
     isPublic: false,
     teamID: '',
+    lastActivity: new Date(),
   });
   const [channels, setChannels] = useState<IChannel[]>([]);
   const [allUsers, setAllUsers] = useState<User[]>([]);

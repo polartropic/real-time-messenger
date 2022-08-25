@@ -68,3 +68,10 @@ export const removeUserFromChannel = (channelID: string, userIndex: number) => {
     [`channels/${channelID}/participants/${userIndex}`]: null,
   });
 };
+
+export const updateChannelLastActivity = (channelID: string, date: number) => {
+  return update(ref(db), {
+    [`channels/${channelID}/lastActivity`]: date,
+  });
+};
+

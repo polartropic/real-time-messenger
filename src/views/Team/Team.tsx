@@ -33,6 +33,7 @@ const MyTeam = (): JSX.Element => {
     messages: [],
     isPublic: false,
     teamID: '',
+    lastActivity: new Date(),
   });
   const [channels, setChannels] = useState<IChannel[]>([]);
   const [title, setTitle] = useState<string>('');

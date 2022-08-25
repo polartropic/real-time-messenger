@@ -6,6 +6,7 @@ import Message from '../Message/Message';
 import { addMessage } from '../../services/messages.services';
 import AppContext from '../../providers/AppContext';
 import './Channel.css';
+import { updateChannelLastActivity } from '../../services/channels.services';
 
 const Channel = ({ currentChannel }: ChannelProps) => {
   const { appState } = useContext(AppContext);
@@ -38,8 +39,8 @@ const Channel = ({ currentChannel }: ChannelProps) => {
       editMessage(currentChannel?.id, messageToBeEdited?.id!, message)
         .catch(console.error);
     } else {
-      console.log(currentChannel.id);
       addMessage(currentChannel.id, user?.username!, message)
+        .then(() => updateChannelLastActivity(currentChannel.id, Date.now()))
         .catch(console.error);
     }
   };

@@ -44,6 +44,8 @@ export interface Channel {
   messages: Message[],
   isPublic: boolean,
 
+  lastActivity: Date,
+
   teamID?: string,
 }
 
