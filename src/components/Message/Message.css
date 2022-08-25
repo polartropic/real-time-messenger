@@ -90,7 +90,7 @@
   border-radius: 20px;
   color: white;
   transition: border-color 0.5s, background-color 0.5s, color 0.5s;
-  font-family: 'Roboto';
+  font-family: 'Roboto', Arial, Helvetica, sans-serif;
 }
 
 .edit-message-btn:hover {
