@@ -1,11 +1,12 @@
 #create-a-meeting {
-    padding-bottom: 30px;
-    padding-top: 20px;
-    border-radius: 20px;
+  padding-bottom: 30px;
+  padding-top: 20px;
+  border-radius: 20px;
 }
 
-#meeting-start, #meeting-end {
-    color: black;
+#meeting-start,
+#meeting-end {
+  color: black;
 }
 
 .participants-list {
@@ -13,24 +14,27 @@
   grid-column: 3;
   padding: 20px 3px 20px 7px;
   text-align: center;
-  background-color: rgba(47, 69, 93, 0.85);
-  border-radius: 10px;
+  background-color: rgba(69, 88, 207, 0.7);
+  border-radius: 5px;
   color: white;
   box-shadow: rgba(0, 0, 0, 0.35) 0px 5px 15px;
+  height: calc(100vh - 170px);
+  max-height: calc(100vh - 170px);
+  position: relative;
 }
 
 .participants {
-  height: calc(100vh - 485px);
+  height: calc(100vh - 100px);
+  max-height: calc(100vh - 390px);
   overflow-y: auto;
 }
 
-.manage-participants-btns button {
-  background-image: linear-gradient(to right, #16222A 0%, #2f455d 51%, #16222A  100%);
-  padding: 11px;
-  text-align: center;
-  transition: 0.5s;
-  background-size: 200% auto;
-  color: white;            
-  border-radius: 20px;   
-  border: 1px solid black;
+.manage-participants-btns {
+  position: absolute;
+  bottom: 20px;
+  width: 96%;
+}
+
+.add-btn {
+  margin-bottom: 10px;
 }
