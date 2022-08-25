@@ -68,13 +68,8 @@ const ChatParticipants = ({ currentChannel, allUsers, owner }: ChatParticipantsP
 
   const loadTeamDetails = () => {
     setIsDetailedChatClicked(false);
-    if (setIsCreateChatClicked) {
-      setIsCreateChatClicked(false);
-    }
-
-    if (isTeamView) {
-      setIsTeamView(true);
-    }
+    setIsCreateChatClicked(false);
+    setIsTeamView(true);
   };
 
   const currentChannelUsers = allUsers
