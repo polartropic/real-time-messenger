@@ -3,12 +3,15 @@
   overflow-y: auto;
 }
 
-.participants-list {
+/* .participants-list {
   grid-row: 2 / 3;
   grid-column: 3;
   padding: 20px 3px 20px 7px;
   text-align: center;
-  background-color: rgba(47, 69, 93, 0.85);
+  background-color: rgba(69, 88, 207, 0.7);
   border-radius: 10px;
   color: white;
-}
+  height: calc(100vh - 170px);
+  max-height: calc(100vh - 170px);
+  position: relative;
+} */
