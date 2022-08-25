@@ -37,6 +37,14 @@ button.rbc-input::-moz-focus-inner {
           align-items: stretch;
   height: 100%;
   /* margin-top: 5px; */
+
+  animation-name: fade-in;
+  animation-duration: 0.5s;
+  animation-timing-function: normal;
+  animation-delay: 0s;
+  animation-iteration-count: 1;
+  animation-direction: normal;
+  animation-fill-mode: none;
 }
 
 .rbc-calendar *,

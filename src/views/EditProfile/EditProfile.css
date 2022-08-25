@@ -16,6 +16,14 @@
   margin-bottom: 70px;
   text-align: center;
   box-shadow: rgba(0, 0, 0, 0.35) 0px 5px 15px;
+
+  animation-name: fade-in;
+  animation-duration: 0.5s;
+  animation-timing-function: normal;
+  animation-delay: 0s;
+  animation-iteration-count: 1;
+  animation-direction: normal;
+  animation-fill-mode: none;
 } 
 
 .change-button-edit {

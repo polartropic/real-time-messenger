@@ -6,6 +6,14 @@
   max-width: 96%;
   margin: 0 auto;
   max-height: calc(100vh - 100px);
+
+  animation-name: fade-in;
+  animation-duration: 0.5s;
+  animation-timing-function: normal;
+  animation-delay: 0s;
+  animation-iteration-count: 1;
+  animation-direction: normal;
+  animation-fill-mode: none;
 }
 
 .main-container {
