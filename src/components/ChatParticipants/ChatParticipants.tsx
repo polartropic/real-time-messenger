@@ -11,6 +11,7 @@ import DateTimePicker from 'react-datetime-picker';
 import { API_KEY, BASE_URL, ORGANIZATION_ID } from '../../common/constants';
 import UserComponent from '../User/User';
 import './ChatParticipants.css';
+import './DateTimePicker.css';
 
 const ChatParticipants = ({ currentChannel, allUsers, owner }: ChatParticipantsProps): JSX.Element | null => {
   const { appState,
