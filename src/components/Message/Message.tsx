@@ -7,7 +7,7 @@ import { getUserByUsername } from '../../services/users.services';
 import { MessageProps, User } from '../../types/Interfaces';
 import './Message.css';
 
-const Message = ({ message, currentChannel, handleEditMessage }: MessageProps): JSX.Element => {
+const Message = ({ message, currentChannel, handleEditMessage, toBeEdited }: MessageProps): JSX.Element => {
   const { appState } = useContext(AppContext);
   const currentUser = appState.userData;
 
@@ -55,7 +55,7 @@ const Message = ({ message, currentChannel, handleEditMessage }: MessageProps): 
   );
 
   return (
-    <div className='message'>
+    <div className={toBeEdited ? 'edit' : 'message'}>
       {isCurrentUserAuthor ? editButton : null}
 
       <div className='message-avatar'>
@@ -80,7 +80,7 @@ const Message = ({ message, currentChannel, handleEditMessage }: MessageProps): 
           <button onClick={isCurrentUserAuthor ? undefined : handleHeart} className={reactionsClassName}>{`${Reaction.HEART} ${message.reactions.heart}`}</button>
         </div>
       </div>
-    </div>
+    </div >
   );
 };
 

@@ -109,6 +109,7 @@ export interface MessageProps {
   message: Message,
   currentChannel: Channel,
   handleEditMessage: (_message: Message) => void,
+  toBeEdited: boolean,
 }
 
 export interface emojiObject {

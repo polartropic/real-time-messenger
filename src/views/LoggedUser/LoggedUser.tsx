@@ -48,16 +48,18 @@ const LoggedUser = (): JSX.Element => {
     if (appState.userData?.username) {
       const unsubscribe = getLiveChannelsByUsername(appState.userData.username,
         (snapshot) => {
-          const userChatsNames = Object.keys(snapshot.val());
-          const channelsObjPr = userChatsNames.map((chatName) => {
-            return getChatByName(chatName)
-              .then((snapshotChanObj) => {
-                const arr: IChannel[] = Object.values(snapshotChanObj.val());
-                return arr[0];
-              });
-          });
-          Promise.all(channelsObjPr)
-            .then((values) => setChannels(values));
+          if (snapshot.exists()) {
+            const userChatsNames = Object.keys(snapshot.val());
+            const channelsObjPr = userChatsNames.map((chatName) => {
+              return getChatByName(chatName)
+                .then((snapshotChanObj) => {
+                  const arr: IChannel[] = Object.values(snapshotChanObj.val());
+                  return arr[0];
+                });
+            });
+            Promise.all(channelsObjPr)
+              .then((values) => setChannels(values));
+          }
         });
       return () => unsubscribe();
     }
