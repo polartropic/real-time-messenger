@@ -6,11 +6,10 @@ export const getLiveMessages = (chatId: string, listen: (_snapshot: DataSnapshot
   return onValue(ref(db, `channels/${chatId}/messages`), listen);
 };
 
-export const fromMessagesDocument = (snapshot: DataSnapshot): Message [] => {
+export const fromMessagesDocument = (snapshot: DataSnapshot): Message[] => {
   if (!snapshot.exists()) return [];
 
   const messagesDocument = snapshot.val();
-
   return Object.keys(messagesDocument).map((key) => {
     const message = messagesDocument[key];
 
@@ -24,6 +23,8 @@ export const fromMessagesDocument = (snapshot: DataSnapshot): Message [] => {
 };
 
 export const addMessage = (chatId: string, username: string, content: string) => {
+  console.log(chatId);
+
   return push(ref(db, `channels/${chatId}/messages`), {
     author: username,
     content,

@@ -41,7 +41,7 @@ export interface Channel {
   id: string,
   title: string,
   participants: string[], // UserIDs
-  messages: Object[],
+  messages: Message[],
   isPublic: boolean,
 
   teamID?: string,

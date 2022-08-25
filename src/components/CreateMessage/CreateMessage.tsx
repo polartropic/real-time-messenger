@@ -6,24 +6,27 @@ import './CreateMessage.css';
 const CreateMessage = ({ handleSubmit, existingMessage }: CreateMessageProps) => {
   const [showPicker, setShowPicker] = useState(false);
   const [message, setMessage] = useState('');
+  useEffect(() => {
+    if (existingMessage) setMessage(existingMessage);
+  }, [existingMessage]);
+
+  const sendMessage = () => {
+    console.log(message);
+
+    handleSubmit(message);
+    setMessage('');
+  };
 
   const handleKeyDown = (e: React.KeyboardEvent) => {
     if (e.key === 'Enter') sendMessage();
   };
 
-  useEffect(() => {
-    if (existingMessage) setMessage(existingMessage);
-  }, [existingMessage]);
 
   const onEmojiClick = (_: React.MouseEvent<Element, MouseEvent>, emojiObject: emojiObject) => {
     setMessage((previousInput) => previousInput + emojiObject.emoji);
     setShowPicker(false);
   };
 
-  const sendMessage = () => {
-    handleSubmit(message);
-    setMessage('');
-  };
 
   return (
     <div className='message-box'>

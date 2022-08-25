@@ -1,6 +1,7 @@
 import { useContext } from 'react';
 import { uid } from 'uid';
 import AppContext from '../../providers/AppContext';
+import { getChatByName, getChatById } from '../../services/channels.services';
 import { Channel, ChannelsListProps } from '../../types/Interfaces';
 import './ChannelsList.css';
 
@@ -28,7 +29,11 @@ const ChannelsList = (
     setIsDetailedChatClicked(true);
     setIsCreateChatClicked(false);
     setIsTeamView(false);
-    props.setCurrentChat(chanObj);
+    getChatByName(chanObj.title)
+      .then((res) => Object.keys(res.val()))
+      .then((res) => getChatById(res[0]))
+      .then((res) => props.setCurrentChat(res))
+      .catch(console.error);
   };
 
   return (

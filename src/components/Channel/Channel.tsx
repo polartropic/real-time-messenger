@@ -11,7 +11,7 @@ const Channel = ({ currentChannel }: ChannelProps) => {
   const { appState } = useContext(AppContext);
   const user = appState.userData;
 
-  const [messages, setMessages] = useState<IMessage []>([]);
+  const [messages, setMessages] = useState<IMessage[]>([]);
   const [messageToBeEdited, setMessageToBeEdited] = useState<IMessage>();
   const [isInEditMode, setIsInEditMode] = useState(false);
 
@@ -24,7 +24,8 @@ const Channel = ({ currentChannel }: ChannelProps) => {
     });
 
     return () => unsubscribe();
-  });
+  }, [currentChannel.id]);
+  console.log(currentChannel);
 
   const handleEditMessage = (currentMessage: IMessage) => {
     setIsInEditMode(true);
@@ -37,7 +38,8 @@ const Channel = ({ currentChannel }: ChannelProps) => {
       editMessage(currentChannel?.id, messageToBeEdited?.id!, message)
         .catch(console.error);
     } else {
-      addMessage(currentChannel?.id, user?.username!, message)
+      console.log(currentChannel.id);
+      addMessage(currentChannel.id, user?.username!, message)
         .catch(console.error);
     }
   };
