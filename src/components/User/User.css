@@ -12,13 +12,15 @@
   position: relative;
 }
 
-/* img.user-box  {
+.user-avatar {
   height: 33px;
   width: 33px;
   border-radius: 50%;
-  object-fit: cover;
+  align-self: center;
   vertical-align: middle;
-} */
+  margin: 5px;
+  object-fit: cover;
+}
 
 .user-box p {
   line-height: 14px;
