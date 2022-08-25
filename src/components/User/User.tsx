@@ -34,12 +34,12 @@ const UserComponent: FC<UserProps> = ({ props }): JSX.Element => {
           sx: {
             'color': 'white',
             'marginTop': '10px !important',
-            'bgcolor': 'rgba(47, 69, 93, 0.8)',
+            'bgcolor': 'rgba(69, 88, 207, 0.8)',
             'borderRadius': '10px',
-            'fontSize': 10,
+            'fontSize': 11,
             'z-index': 'tool-tip: 1000',
             '& .MuiTooltip-arrow': {
-              'color': 'rgba(47, 69, 93, 0.8)',
+              'color': 'rgba(69, 88, 207, 0.8)',
             },
           },
         },
