@@ -5,6 +5,7 @@
   grid-gap: 30px;
   max-width: 96%;
   margin: 0 auto;
+  max-height: calc(100vh - 100px);
 }
 
 .main-container {
@@ -14,28 +15,35 @@
   height: calc(100vh - 170px);
   padding: 20px 30px;
   text-align: center;
-  border-radius: 20px;
+  border-radius: 5px;
   box-shadow: rgba(0, 0, 0, 0.35) 0px 5px 15px;
 }
 
 .view-users-btn, 
-.create-a-team {
-  background-image: linear-gradient(to right, #16222A 0%, #2f455d 51%, #16222A  100%);
-  padding: 11px;
+.create-a-team,
+.add-btn,
+.leave-btn,
+#create-a-team-btn-header {
+  background-color: rgba(243, 214, 121, 1);
+  padding: 5px;
   text-align: center;
-  transition: 0.5s;
+  transition: border-color 0.5s, background-color 0.5s, color 0.5s;
   background-size: 200% auto;
-  color: white;            
-  border-radius: 20px;   
-  border: 1px solid black;
+  color: black;            
+  border-radius: 10px;   
+  border: 1px solid rgba(243, 214, 121, 1);
+  font-size: 12pt;
+  font-weight: 500;
 }
 
-.add-btn:hover,
 .view-users-btn:hover,
-.create-a-team:hover {
-  background-position: right center; 
-  color: #fff;
+.create-a-team:hover,
+.add-btn:hover,
+#create-a-team-btn-header:hover {
+  color: rgba(243, 214, 121, 1);
   text-decoration: none;
+  border: 1px solid rgba(243, 214, 121, 1);
+  background-color: transparent;
 }
 
 .leave-btn:hover {
@@ -46,8 +54,11 @@
 
 .search-users > input {
   border: none;
-  border-radius: 20px;
+  border-radius: 5px;
   background-color: rgba(245, 247, 251, 1);
   padding: 15px;
 }
 
+.create-a-team {
+  margin-left: 10px;
+}
