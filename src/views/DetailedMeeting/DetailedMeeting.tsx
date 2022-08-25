@@ -31,11 +31,11 @@ const DetailedMeeting = (): JSX.Element => {
     axios.request(dyteMeetingFunc(BASE_URL, ORGANIZATION_ID, meetingID, API_KEY ))
       .then((response) => setReceivedMeeting(response.data.data.meeting))
       .then(() =>
-        axios.request(dyteParticipantFunc(BASE_URL, ORGANIZATION_ID, meetingID, API_KEY, userData?.username, userData?.firstName))
+        axios.request(dyteParticipantFunc(BASE_URL, ORGANIZATION_ID, meetingID, API_KEY, userData?.username, userData?.firstName, userData?.imgURL!))
           .then((response)=> setAddedUser(response.data.data.authResponse.authToken))
           .catch((error) => console.error(error)))
       .catch((error) => console.error(error));
-  }, [meetingID, userData?.firstName, userData?.username]);
+  }, [meetingID, userData?.firstName, userData?.imgURL, userData?.username]);
 
   const [meeting, initMeeting] = useDyteClient();
 
