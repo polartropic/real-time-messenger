@@ -1,5 +1,4 @@
 import { useContext, useState } from 'react';
-import { uid } from 'uid';
 import AppContext from '../../providers/AppContext';
 import { getChatByName, getChatById } from '../../services/channels.services';
 import { Channel, ChannelsListProps } from '../../types/Interfaces';
@@ -29,17 +28,10 @@ const ChannelsList = ({ props }: ChannelsListProps) => {
     setActiveChannel(chanObj);
   };
 
-  const mappingChats = (chanObj: Channel, key: string) => {
+  const mappingChats = (chanObj: Channel, key: number) => {
     return <div key={key} className='chat-items'>
-      {activeChannel.title === chanObj.title ?
-        <>
-          <p onClick={() => handleOpenChannel(chanObj)} className='chat-item-active'>{chanObj.title}</p>
-          <Notifications currentChannel={chanObj} />
-        </> :
-        <>
-          <p onClick={() => handleOpenChannel(chanObj)} className='chat-item'>{chanObj.title}</p>
-          <Notifications currentChannel={chanObj} />
-        </>}
+      <p onClick={() => handleOpenChannel(chanObj)} className={activeChannel.title === chanObj.title ? 'chat-item-active' : 'chat-item'}>{chanObj.title}</p>
+      <Notifications currentChannel={chanObj} activeChannel={activeChannel} />
     </div>;
   };
 
@@ -66,7 +58,7 @@ const ChannelsList = ({ props }: ChannelsListProps) => {
       <button onClick={openCreateChat} className='view-users-btn'>Create a Chat</button>
       <h4>Chats:</h4>
       <div className='chats'>
-        {props.channels && props.channels.map((chanObj) => mappingChats(chanObj, uid()))}
+        {props.channels && props.channels.map((chanObj, index) => mappingChats(chanObj, index))}
       </div>
     </div>
   );

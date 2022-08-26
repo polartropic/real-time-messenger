@@ -11,8 +11,6 @@ const CreateMessage = ({ handleSubmit, existingMessage }: CreateMessageProps) =>
   }, [existingMessage]);
 
   const sendMessage = () => {
-    console.log(message);
-
     handleSubmit(message);
     setMessage('');
   };
