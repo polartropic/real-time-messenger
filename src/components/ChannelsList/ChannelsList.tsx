@@ -24,6 +24,14 @@ const ChannelsList = ({ props }: ChannelsListProps) => {
     lastActivity: new Date(),
   });
 
+  const [searchTerm, setSearchTerm] = useState<string>('');
+
+  const getChannelsBySearchTerm = (searchTerm: string, channels: Channel[]) => {
+    return channels.filter((channel) =>
+      channel.title.toLowerCase().includes(searchTerm));
+  };
+  const result = getChannelsBySearchTerm(searchTerm, props.channels!);
+
   const handleOpenChannel = (chanObj: Channel) => {
     openDetailedChat(chanObj);
     setActiveChannel(chanObj);
@@ -65,8 +73,10 @@ const ChannelsList = ({ props }: ChannelsListProps) => {
     <div className='chats-channels-list'>
       <button onClick={openCreateChat} className='view-users-btn'>Create a Chat</button>
       <h4>Chats:</h4>
+      <input type="text" defaultValue="" placeholder='search chats...' onChange={(event) => setSearchTerm(event.target.value)} />
+
       <div className='chats'>
-        {props.channels && props.channels.map((chanObj) => mappingChats(chanObj, uid()))}
+        {props.channels && result.map((chanObj) => mappingChats(chanObj, uid()))}
       </div>
     </div>
   );
