@@ -99,6 +99,8 @@ export interface Message {
   author: string,
   createdOn: Date,
   likedBy: string[],
+  fileURL?: string,
+  image?: boolean,
 }
 
 export interface MessageProps {

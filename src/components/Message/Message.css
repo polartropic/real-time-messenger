@@ -110,3 +110,10 @@
   border-color: rgba(47, 69, 93, 1);
   color: rgba(47, 69, 93, 1);
 }
+
+.img-in-message{
+  display:flex;
+  width: 70%;
+  border-radius: 10px;
+  margin: 10px auto;
+}

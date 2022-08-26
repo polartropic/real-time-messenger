@@ -34,6 +34,21 @@ export const addMessage = (chatId: string, username: string, content: string) =>
     });
 };
 
+export const addMessageImage = (chatId: string, username: string, fileURL: string) => {
+  return push(ref(db, `channels/${chatId}/messages`), {
+    author: username,
+    content: '',
+    fileURL: fileURL,
+    createdOn: Date.now(),
+    likedBy: [],
+    image: true,
+  })
+    .then((res) => {
+      return getMessageById(chatId, res.key);
+    });
+};
+
+
 export const editMessage = (chatId: string, messageId: string, content: string) => {
   return update(ref(db), {
     [`channels/${chatId}/messages/${messageId}/content`]: content,

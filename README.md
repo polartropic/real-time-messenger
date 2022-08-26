@@ -26,14 +26,27 @@ ThunderTeam is a work collaboration application, offering the ability to:
 
 ## Views
 - Register
+![image](/src/assets/readme-images/Register.PNG)
 - Login
+![image](/src/assets/readme-images/Login.PNG)
 - Edit profile
+![image](/src/assets/readme-images/Edit-profile.PNG)
 - Home page
-- About us
+![image](/src/assets/readme-images/Home-page.PNG)
+- Create a chat
+![image](/src/assets/readme-images/Create-a-chat.PNG)
+- Create a team
+![image](/src/assets/readme-images/Create-a-team.PNG)
+- Team details
+![image](/src/assets/readme-images/Team-details.PNG)
 - Detailed meeting
+![image](/src/assets/readme-images/Detailed-meeting.PNG)
 - Meetings
+![image](/src/assets/readme-images/Meetings-calendar.PNG)
 - Not found
-- Team
+![image](/src/assets/readme-images/Not-found.PNG)
+- About us
+
 ## Link to the hosted project
 
 ## Authors

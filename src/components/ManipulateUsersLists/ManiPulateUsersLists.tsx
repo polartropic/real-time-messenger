@@ -3,6 +3,8 @@ import { uid } from 'uid';
 import AppContext from '../../providers/AppContext';
 import { User, UsersListProps } from '../../types/Interfaces';
 import UserComponent from '../User/User';
+import Add from '../../assets/images/Add.png';
+import Delete from '../../assets/images/Delete.png';
 import './ManiPulateUsersLists.css';
 
 const ManiPulateUsersLists = ({ leftSide, setLeftSide, rightSide, setRightSide }: UsersListProps): JSX.Element => {
@@ -46,7 +48,7 @@ const ManiPulateUsersLists = ({ leftSide, setLeftSide, rightSide, setRightSide }
       <button onClick={() => {
         handleAddUser(user);
       }} id='add-remove-user-btn'>
-        <img src="https://cdn-icons-png.flaticon.com/128/189/189689.png" alt='add-btn' />
+        <img src={Add} alt='add-btn' />
       </button>;
     if (user.username !== currentUser) {
       return <div key={uid()}>
@@ -60,7 +62,7 @@ const ManiPulateUsersLists = ({ leftSide, setLeftSide, rightSide, setRightSide }
       <button onClick={() => {
         handleRemoveUser(user);
       }} id='add-remove-user-btn'>
-        <img src="https://cdn-icons-png.flaticon.com/128/1168/1168643.png" alt='remove-btn' />
+        <img src={Delete} alt='remove-btn' />
       </button>;
     if (user.username !== currentUser) {
       return <div key={uid()}>

@@ -88,13 +88,16 @@ const ChatParticipants = ({ currentChannel, allUsers, owner }: ChatParticipantsP
           <form id='create-a-meeting' onSubmit={handleCreateMeeting}>
             <h4>Create a meeting with chat participants:</h4>
             <p id='meeting-name'>Meeting name:
+              <br />
               <label htmlFor='content'></label>
               <input type='text' required placeholder="Input meeting's name" value={name} onChange={(e) => setName(e.target.value)} />
             </p>
             <p id='meeting-start'>Meeting start:
+              <br />
               <DateTimePicker format='dd-MM-yy HH:mm' onChange={setStart} value={start} />
             </p>
             <p id='meeting-end'>Meeting end:
+              <br />
               <DateTimePicker format='dd-MM-yy HH:mm' onChange={setEnd} value={end} />
             </p>
             <button className='view-users-btn'>Schedule meeting</button>
