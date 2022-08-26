@@ -68,31 +68,31 @@ const Register = (): JSX.Element => {
     getUserByUsername(regDetails.username)
       .then((snapshot) => {
         if (snapshot.exists()) {
-          return alert(`The username ${regDetails.username} already exists!`);
+          toast.warning(`The username ${regDetails.username} already exists!`);
+        } else {
+          return createUser(regDetails.email, regDetails.password)
+            .then((u) => {
+              createUserByUsername(regDetails.firstName, regDetails.lastName,
+                regDetails.phoneNumber, regDetails.username, u.user.email, u.user.uid)
+                .then(() => {
+                  setIsDetailedChatClicked(false);
+                  toast.success('Successful sign up!');
+                })
+                .catch(console.error);
+            })
+            .catch((event) => {
+              if (event.message.includes('email-already-in-use')) {
+                toast.warning(`The e-mail ${regDetails.email} is already in use!`);
+              } else if (event.message.includes('invalid-email')) {
+                toast.warning(`The e-mail ${regDetails.email} is invalid`);
+              } else if (event.message.includes('weak-password')) {
+                toast.warning('The password is too weak! Please use a password with at least 6 characters.');
+              } else {
+                toast.warning(event.message);
+              }
+            },
+            );
         }
-
-        return createUser(regDetails.email, regDetails.password)
-          .then((u) => {
-            createUserByUsername(regDetails.firstName, regDetails.lastName,
-              regDetails.phoneNumber, regDetails.username, u.user.email, u.user.uid)
-              .then(() => {
-                setIsDetailedChatClicked(false);
-                toast.success('Successful sign up!');
-              })
-              .catch(console.error);
-          })
-          .catch((event) => {
-            if (event.message.includes('email-already-in-use')) {
-              toast.warning(`The e-mail ${regDetails.email} is already in use!`);
-            } else if (event.message.includes('invalid-email')) {
-              toast.warning(`The e-mail ${regDetails.email} is invalid`);
-            } else if (event.message.includes('weak-password')) {
-              toast.warning('The password is too week! Please use a password with at least 6 characters.');
-            } else {
-              toast.warning(event.message);
-            }
-          },
-          );
       })
       .catch(console.error);
   };
