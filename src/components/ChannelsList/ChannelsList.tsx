@@ -3,10 +3,10 @@ import { uid } from 'uid';
 import AppContext from '../../providers/AppContext';
 import { getChatByName, getChatById } from '../../services/channels.services';
 import { Channel, ChannelsListProps } from '../../types/Interfaces';
+import Notifications from '../Notifications/Notifications';
 import './ChannelsList.css';
 
-const ChannelsList = (
-  { props }: ChannelsListProps) => {
+const ChannelsList = ({ props }: ChannelsListProps) => {
   const {
     setIsCreateChatClicked,
     setIsDetailedChatClicked,
@@ -30,10 +30,16 @@ const ChannelsList = (
   };
 
   const mappingChats = (chanObj: Channel, key: string) => {
-    return <div key={key}>
+    return <div key={key} className='chat-items'>
       {activeChannel.title === chanObj.title ?
-        <p onClick={() => handleOpenChannel(chanObj)} className='chat-item-active'>{chanObj.title}</p> :
-        <p onClick={() => handleOpenChannel(chanObj)} className='chat-item'>{chanObj.title}</p>}
+        <>
+          <p onClick={() => handleOpenChannel(chanObj)} className='chat-item-active'>{chanObj.title}</p>
+          <Notifications currentChannel={chanObj} />
+        </> :
+        <>
+          <p onClick={() => handleOpenChannel(chanObj)} className='chat-item'>{chanObj.title}</p>
+          <Notifications currentChannel={chanObj} />
+        </>}
     </div>;
   };
 

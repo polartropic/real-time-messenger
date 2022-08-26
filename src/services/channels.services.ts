@@ -1,6 +1,7 @@
-import { ref, get, push, update, query, equalTo, orderByChild } from 'firebase/database';
+import { ref, get, push, update, query, equalTo, orderByChild, DataSnapshot, onValue } from 'firebase/database';
 import { db } from '../config/firebase-config';
 import { Team, User } from '../types/Interfaces';
+
 export const getAllChannels = () => {
   return get(query(ref(db, 'channels')));
 };
@@ -25,6 +26,7 @@ export const getChatById = (id: string | null) => {
       return chat;
     });
 };
+
 export const createChat = (title: string, participants: string[] | User[]) => {
   return push(ref(db, 'channels'), {
     title,
@@ -34,9 +36,11 @@ export const createChat = (title: string, participants: string[] | User[]) => {
   })
     .then((result) => getChatById(result.key));
 };
+
 export const createTeamChat = (teamID: string, title: string, participants: string[]) => {
   const updateTeamChats: { [index: string]: boolean } = {};
   updateTeamChats[`/teams/${teamID}/channels/${title}`] = true;
+
   return update(ref(db), updateTeamChats)
     .then(() => push(ref(db, 'channels'), {
       title,
@@ -60,9 +64,11 @@ export const deleteUserFromChat = (username: string | undefined, chatName: strin
     [`users/${username}/channels/${chatName}`]: null,
   });
 };
+
 export const getChatByName = (chatName: string) => {
   return get(query(ref(db, 'channels'), orderByChild('title'), equalTo(chatName)));
 };
+
 export const removeUserFromChannel = (channelID: string, userIndex: number) => {
   return update(ref(db), {
     [`channels/${channelID}/participants/${userIndex}`]: null,
@@ -75,3 +81,6 @@ export const updateChannelLastActivity = (channelID: string, date: number) => {
   });
 };
 
+export const getLiveNotifications = (chatId: string, listen: (_snapshot: DataSnapshot) => void) => {
+  return onValue(ref(db, `channels/${chatId}/lastActivity`), listen);
+};

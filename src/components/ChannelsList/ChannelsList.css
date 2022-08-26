@@ -14,6 +14,10 @@
   overflow-y: auto;
 }
 
+.chat-items {
+  position: relative;
+}
+
 .chat-item {
   background-color: rgba(228, 236, 250, 1);
   color: black;
