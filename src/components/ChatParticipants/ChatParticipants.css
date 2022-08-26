@@ -9,6 +9,10 @@
   color: white;
 }
 
+#meeting-end {
+  padding-bottom: 20px;
+}
+
 .participants-list {
   grid-row: 2 / 3;
   grid-column: 3;
@@ -37,4 +41,8 @@
 
 .add-btn {
   margin-bottom: 10px;
+}
+
+#meeting-name, #meeting-name > input {
+  margin-bottom: 0px;
 }

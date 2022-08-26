@@ -87,7 +87,7 @@ const ChatParticipants = ({ currentChannel, allUsers, owner }: ChatParticipantsP
         {isMeetingClicked ?
           <form id='create-a-meeting' onSubmit={handleCreateMeeting}>
             <h4>Create a meeting with chat participants:</h4>
-            <p>Meeting name:
+            <p id='meeting-name'>Meeting name:
               <label htmlFor='content'></label>
               <input type='text' required placeholder="Input meeting's name" value={name} onChange={(e) => setName(e.target.value)} />
             </p>

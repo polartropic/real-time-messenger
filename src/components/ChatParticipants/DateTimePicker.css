@@ -18,17 +18,19 @@
   display: flex;
   flex-grow: 1;
   flex-shrink: 0;
-  border: thin solid gray;
+  border: thin solid rgba(69, 88, 207, 1);
   background-color: rgba(228, 236, 250, 1);
   color: black;
   width: 80%;
   max-height: 50px;
+  border-radius: 5px;
 }
 .react-datetime-picker__inputGroup {
   min-width: calc(4px + (4px * 3) +  0.54em * 6  +  0.217em * 2);
   flex-grow: 1;
   padding: 0 1px;
   color: black important!;
+  border-radius: 3px;
 }
 .react-datetime-picker__inputGroup__divider {
   padding: 1px 0;
