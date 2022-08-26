@@ -37,16 +37,16 @@ const ChannelsList = ({ props }: ChannelsListProps) => {
     setActiveChannel(chanObj);
   };
 
-  const mappingChats = (chanObj: Channel, key: number) => {
+  const mappingChats = (chanObj: Channel, key: string) => {
     return <div key={key} className='chat-items'>
       {activeChannel.title === chanObj.title ?
         <>
           <p onClick={() => handleOpenChannel(chanObj)} className='chat-item-active'>{chanObj.title}</p>
-          <Notifications currentChannel={chanObj} />
+          <Notifications currentChannel={chanObj} activeChannel={activeChannel} />
         </> :
         <>
           <p onClick={() => handleOpenChannel(chanObj)} className='chat-item'>{chanObj.title}</p>
-          <Notifications currentChannel={chanObj} />
+          <Notifications currentChannel={chanObj} activeChannel={activeChannel} />
         </>}
     </div>;
   };
