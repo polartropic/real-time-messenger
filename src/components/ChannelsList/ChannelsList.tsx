@@ -37,7 +37,7 @@ const ChannelsList = ({ props }: ChannelsListProps) => {
     setActiveChannel(chanObj);
   };
 
-  const mappingChats = (chanObj: Channel, key: string) => {
+  const mappingChats = (chanObj: Channel, key: number) => {
     return <div key={key} className='chat-items'>
       {activeChannel.title === chanObj.title ?
         <>

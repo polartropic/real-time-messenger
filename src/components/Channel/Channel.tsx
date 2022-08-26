@@ -1,26 +1,28 @@
 import { ChannelProps, Message as IMessage } from '../../types/Interfaces';
-import { useContext, useEffect, useState } from 'react';
+import { useContext, useEffect, useRef, useState } from 'react';
 import { editMessage, fromMessagesDocument, getLiveMessages } from '../../services/messages.services';
 import CreateMessage from '../CreateMessage/CreateMessage';
 import Message from '../Message/Message';
 import { addMessage } from '../../services/messages.services';
 import AppContext from '../../providers/AppContext';
-import './Channel.css';
 import { updateChannelLastActivity } from '../../services/channels.services';
 import { toast, ToastContainer } from 'react-toastify';
 import Dropzone from 'react-dropzone';
 import { uploadImageMessage } from '../../services/storage.services';
+import './Channel.css';
 
 
 const Channel = ({ currentChannel }: ChannelProps) => {
   const { appState } = useContext(AppContext);
   const user = appState.userData;
+
   const [messages, setMessages] = useState<IMessage[]>([]);
   const [messageToBeEdited, setMessageToBeEdited] = useState<IMessage>();
   const [isInEditMode, setIsInEditMode] = useState(false);
   const [selectedFile, setSelectedFile] = useState<File>();
   const [preview, setPreview] = useState<string>();
 
+  const messagesEndRef = useRef<HTMLDivElement>(null);
 
   useEffect(() => {
     if (currentChannel.id === '') return;
@@ -62,6 +64,9 @@ const Channel = ({ currentChannel }: ChannelProps) => {
     }
   };
 
+  useEffect(() => {
+    scrollToBottom();
+  }, [messages]);
 
   const handleEditMessage = (currentMessage: IMessage) => {
     setIsInEditMode(true);
@@ -84,6 +89,10 @@ const Channel = ({ currentChannel }: ChannelProps) => {
     }
   };
 
+  const scrollToBottom = () => {
+    messagesEndRef.current?.scrollIntoView({ behavior: 'smooth' });
+  };
+
   return (
     <div className='channel-container'>
       <h2>{currentChannel.title}</h2>
@@ -92,9 +101,13 @@ const Channel = ({ currentChannel }: ChannelProps) => {
         {
           messages.length === 0 ?
             <p>Be the first to start a conversation</p> :
-            messages.map((message, key) => <Message currentChannel={currentChannel}
-              message={message} handleEditMessage={handleEditMessage} key={key}
-              toBeEdited={messageToBeEdited === message} />)
+            <>
+              {messages.map((message, key) => <Message currentChannel={currentChannel}
+                message={message} handleEditMessage={handleEditMessage} key={key}
+                toBeEdited={messageToBeEdited === message} />)}
+
+              <div ref={messagesEndRef}></div>
+            </>
         }
       </div>
       {selectedFile &&

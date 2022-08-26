@@ -1,4 +1,3 @@
-import './LoggedUser.css';
 import { useContext, useEffect, useState } from 'react';
 import { getAllUsers, getLiveChannelsByUsername, updateUserChats, updateUserStatus, updateUserTeams } from '../../services/users.services';
 import AppContext from '../../providers/AppContext';
@@ -14,7 +13,7 @@ import { getTeamByName, addTeamToDB } from '../../services/teams.services';
 import { useNavigate } from 'react-router-dom';
 import { useIdleTimer } from 'react-idle-timer';
 import { UserStatus } from '../../common/user-status.enum';
-
+import './LoggedUser.css';
 
 const LoggedUser = (): JSX.Element => {
   const { appState,
@@ -26,6 +25,7 @@ const LoggedUser = (): JSX.Element => {
     setIsTeamView,
   } = useContext(AppContext);
   const userDetails: User = appState.userData!;
+
   const [currentChat, setCurrentChat] = useState<IChannel>({
     id: '',
     title: '',
@@ -35,6 +35,7 @@ const LoggedUser = (): JSX.Element => {
     teamID: '',
     lastActivity: new Date(),
   });
+
   const [channels, setChannels] = useState<IChannel[]>([]);
   const [allUsers, setAllUsers] = useState<User[]>([]);
   const [initialParticipants, setInitialParticipants] = useState<User[]>([]);
@@ -53,14 +54,20 @@ const LoggedUser = (): JSX.Element => {
             const channelsObjPr = userChatsNames.map((chatName) => {
               return getChatByName(chatName)
                 .then((snapshotChanObj) => {
-                  const arr: IChannel[] = Object.values(snapshotChanObj.val());
-                  return arr[0];
+                  const dbObject = snapshotChanObj.val();
+                  const id: string = Object.keys(dbObject)[0];
+                  const channel: any = Object.values(dbObject)[0];
+
+                  channel.id = id;
+                  return channel;
                 });
             });
+
             Promise.all(channelsObjPr)
               .then((values) => setChannels(values));
           }
         });
+
       return () => unsubscribe();
     }
   }, [appState.userData?.username]);
@@ -79,10 +86,13 @@ const LoggedUser = (): JSX.Element => {
     if (title.length < MIN_CHANNEL_NAME_LENGTH || title.length > MAX_CHANNEL_NAME_LENGTH) {
       return toast.warning(`The name of the chat must be between ${MIN_CHANNEL_NAME_LENGTH} and ${MAX_CHANNEL_NAME_LENGTH} symbols`);
     }
+
     if (addedParticipants.length === MIN_NUMBER_OF_CHAT_PARTICIPANTS) {
       return toast.warning('Please add at least one participant in the chat!');
     }
+
     const userIDs = addedParticipants.map((user) => user.username);
+
     getChatByName(title)
       .then((snapshot) => {
         if (snapshot.exists()) {
@@ -96,6 +106,7 @@ const LoggedUser = (): JSX.Element => {
               [...userIDs, userDetails?.username!].map((participant) => updateUserChats(participant, title));
             })
             .catch((err) => toast.warning(`Something went wrong  ${err.message}`));
+
           setInitialParticipants(allUsers);
           setAddedParticipants([]);
           setIsDetailedChatClicked(true);
@@ -108,7 +119,9 @@ const LoggedUser = (): JSX.Element => {
     if (title.length < MIN_TEAM_NAME_LENGTH || title.length > MAX_TEAM_NAME_LENGTH) {
       return toast.warning(`The name of the team must be between ${MIN_TEAM_NAME_LENGTH} and ${MAX_TEAM_NAME_LENGTH} symbols`);
     }
+
     const owner = userDetails?.username;
+
     getTeamByName(title)
       .then((snapshot) => {
         if (snapshot.exists()) {
