@@ -8,6 +8,9 @@ import AppContext from '../../providers/AppContext';
 import './Channel.css';
 import { updateChannelLastActivity } from '../../services/channels.services';
 import { toast, ToastContainer } from 'react-toastify';
+import Dropzone from 'react-dropzone';
+import { uploadImageMessage } from '../../services/storage.services';
+
 
 const Channel = ({ currentChannel }: ChannelProps) => {
   const { appState } = useContext(AppContext);
@@ -15,6 +18,9 @@ const Channel = ({ currentChannel }: ChannelProps) => {
   const [messages, setMessages] = useState<IMessage[]>([]);
   const [messageToBeEdited, setMessageToBeEdited] = useState<IMessage>();
   const [isInEditMode, setIsInEditMode] = useState(false);
+  const [selectedFile, setSelectedFile] = useState<File>();
+  const [preview, setPreview] = useState<string>();
+
 
   useEffect(() => {
     if (currentChannel.id === '') return;
@@ -26,6 +32,36 @@ const Channel = ({ currentChannel }: ChannelProps) => {
 
     return () => unsubscribe();
   }, [currentChannel.id]);
+
+  useEffect(() => {
+    if (!selectedFile) {
+      setPreview(undefined);
+      return;
+    }
+
+    const objectUrl = URL.createObjectURL(selectedFile);
+    setPreview(objectUrl);
+
+    // free memory when ever this component is unmounted
+    return () => URL.revokeObjectURL(objectUrl);
+  }, [selectedFile]);
+
+  const onSelectFile = (acceptedFiles: File[]) => {
+    if (acceptedFiles.length === 0) {
+      setSelectedFile(undefined);
+      return;
+    }
+    // I've kept this example simple by using the first image instead of multiple
+    setSelectedFile(acceptedFiles[0]);
+  };
+
+  const handleUploadFile = () => {
+    if (selectedFile) {
+      uploadImageMessage(selectedFile, currentChannel.id, user?.username!);
+      setSelectedFile(undefined);
+    }
+  };
+
 
   const handleEditMessage = (currentMessage: IMessage) => {
     setIsInEditMode(true);
@@ -61,9 +97,26 @@ const Channel = ({ currentChannel }: ChannelProps) => {
               toBeEdited={messageToBeEdited === message} />)
         }
       </div>
+      {selectedFile &&
+        <div>
+          <img src={preview} alt='selected file' className='sample-upload' />
+          <button type='submit' className='send-btn' value='' onClick={() => handleUploadFile()}>
+            <i className="fa-solid fa-check"></i>
+          </button>
 
+        </div>}
+      <Dropzone onDrop={onSelectFile}>
+        {({ getRootProps, getInputProps }) => (
+          <section>
+            <div {...getRootProps()}>
+              <input {...getInputProps()} />
+              <p className='drag-n-drop'>Drag 'n' drop some files here, or click to select files</p>
+            </div>
+          </section>
+        )}
+      </Dropzone><br /><br />
       <CreateMessage handleSubmit={handleSubmit} existingMessage={messageToBeEdited?.content} />
-      <ToastContainer/>
+      <ToastContainer />
     </div>
   );
 };

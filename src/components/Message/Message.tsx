@@ -68,13 +68,18 @@ const Message = ({ message, currentChannel, handleEditMessage, toBeEdited }: Mes
         <div className='message-author'>
           @{message.author}
         </div>
-
-        <div className='message-content'>
-          {message.content}
-        </div>
+        {message.image ?
+          <img src={message.fileURL} className='img-in-message' alt='message-img' /> :
+          <div className='message-content'>
+            {message.content}
+          </div>
+        }
 
         <div className='react-btns'>
-          <button onClick={isMessageLikedByAuthor? handleDislike : handleLike } className='reactions'>{`${isMessageLikedByAuthor?Reaction.HEART2 : Reaction.HEART1} ${Object.values(message.likedBy).length}`}</button>
+          <button
+            onClick={isMessageLikedByAuthor ? handleDislike : handleLike}
+            className='reactions'>{`${isMessageLikedByAuthor ? Reaction.HEART2 : Reaction.HEART1} ${Object.values(message.likedBy).length}`}
+          </button>
         </div>
       </div>
     </div >
