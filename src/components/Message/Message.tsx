@@ -2,7 +2,7 @@ import { useContext, useEffect, useState } from 'react';
 import InitialsAvatar from 'react-initials-avatar';
 import { Reaction } from '../../common/reactions.enum';
 import AppContext from '../../providers/AppContext';
-import { reactWithHeart, reactWithNo, reactWithYes } from '../../services/messages.services';
+import { likeMessage, unlikeMessage } from '../../services/messages.services';
 import { getUserByUsername } from '../../services/users.services';
 import { MessageProps, User } from '../../types/Interfaces';
 import './Message.css';
@@ -10,6 +10,8 @@ import './Message.css';
 const Message = ({ message, currentChannel, handleEditMessage, toBeEdited }: MessageProps): JSX.Element => {
   const { appState } = useContext(AppContext);
   const currentUser = appState.userData;
+
+  const [isMessageLikedByAuthor, setIsMessageLikedByAuthor] = useState(Object.values(message.likedBy).includes(currentUser?.username!));
 
   const [author, setAuthor] = useState<User>({
     firstName: '',
@@ -29,16 +31,14 @@ const Message = ({ message, currentChannel, handleEditMessage, toBeEdited }: Mes
       .then((res) => setAuthor(res.val()));
   }, [message.author]);
 
-  const handleYes = () => {
-    reactWithYes(currentChannel.id, message.id, (message.reactions.yes + 1));
+  const handleLike = () => {
+    likeMessage(currentChannel.id, message.id, currentUser?.username!);
+    setIsMessageLikedByAuthor(true);
   };
 
-  const handleNo = () => {
-    reactWithNo(currentChannel.id, message.id, (message.reactions.no + 1));
-  };
-
-  const handleHeart = () => {
-    reactWithHeart(currentChannel.id, message.id, (message.reactions.heart + 1));
+  const handleDislike = () => {
+    unlikeMessage(currentChannel.id, message.id, currentUser?.username!);
+    setIsMessageLikedByAuthor(false);
   };
 
   const handleEdit = () => {
@@ -46,7 +46,6 @@ const Message = ({ message, currentChannel, handleEditMessage, toBeEdited }: Mes
   };
 
   const isCurrentUserAuthor = currentUser?.username === message.author;
-  const reactionsClassName = isCurrentUserAuthor ? 'my-reactions' : 'others-reactions';
 
   const editButton = (
     <div className='edit-my-message'>
@@ -75,9 +74,7 @@ const Message = ({ message, currentChannel, handleEditMessage, toBeEdited }: Mes
         </div>
 
         <div className='react-btns'>
-          <button onClick={isCurrentUserAuthor ? undefined : handleYes} className={reactionsClassName}>{`${Reaction.YES} ${message.reactions.yes}`}</button>
-          <button onClick={isCurrentUserAuthor ? undefined : handleNo} className={reactionsClassName}>{`${Reaction.NO} ${message.reactions.no}`}</button>
-          <button onClick={isCurrentUserAuthor ? undefined : handleHeart} className={reactionsClassName}>{`${Reaction.HEART} ${message.reactions.heart}`}</button>
+          <button onClick={isMessageLikedByAuthor? handleDislike : handleLike } className='reactions'>{`${isMessageLikedByAuthor?Reaction.HEART2 : Reaction.HEART1} ${Object.values(message.likedBy).length}`}</button>
         </div>
       </div>
     </div >

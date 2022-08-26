@@ -61,8 +61,7 @@
   float: right;
 }
 
-.my-reactions,
-.others-reactions {
+.reactions {
   background-color: transparent;
   border: 0px;
   font-size: 12px;
@@ -110,9 +109,4 @@
   background-color: white;
   border-color: rgba(47, 69, 93, 1);
   color: rgba(47, 69, 93, 1);
-}
-
-.my-reactions {
-  color: white;
-  margin-top: 5px;
 }

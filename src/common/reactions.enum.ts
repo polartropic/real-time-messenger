@@ -1,5 +1,4 @@
 export enum Reaction {
-  YES = '👍',
-  NO = '👎',
-  HEART = '❤️',
+  HEART1 = '🤍',
+  HEART2 = '❤️',
 }

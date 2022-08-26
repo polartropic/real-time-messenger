@@ -98,11 +98,7 @@ export interface Message {
   content: string,
   author: string,
   createdOn: Date,
-  reactions: {
-    yes: number,
-    no: number,
-    heart: number,
-  },
+  likedBy: string[],
 }
 
 export interface MessageProps {

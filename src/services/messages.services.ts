@@ -27,11 +27,7 @@ export const addMessage = (chatId: string, username: string, content: string) =>
     author: username,
     content,
     createdOn: Date.now(),
-    reactions: {
-      yes: 0,
-      no: 0,
-      heart: 0,
-    },
+    likedBy: [],
   })
     .then((res) => {
       return getMessageById(chatId, res.key);
@@ -87,7 +83,6 @@ export const likeMessage = (chatId: string, messageId: string, username: string)
   const updateLikes: { [index: string]: boolean } = {};
 
   updateLikes[`channels/${chatId}/messages/${messageId}/likedBy/${username}`] = true;
-  updateLikes[`users/${username}/likedMessages/${messageId}`] = true;
 
   return update(ref(db), updateLikes);
 };
@@ -96,25 +91,6 @@ export const unlikeMessage = (chatId: string, messageId: string, username: strin
   const updateLikes: { [index: string]: boolean | null } = {};
 
   updateLikes[`channels/${chatId}/messages/${messageId}/likedBy/${username}`] = null;
-  updateLikes[`users/${username}/likedMessages/${messageId}`] = null;
 
   return update(ref(db), updateLikes);
-};
-
-export const reactWithYes = (chatID: string, messageID: string, count: number) => {
-  return update(ref(db), {
-    [`channels/${chatID}/messages/${messageID}/reactions/yes`]: count,
-  });
-};
-
-export const reactWithNo = (chatID: string, messageID: string, count: number) => {
-  return update(ref(db), {
-    [`channels/${chatID}/messages/${messageID}/reactions/no`]: count,
-  });
-};
-
-export const reactWithHeart = (chatID: string, messageID: string, count: number) => {
-  return update(ref(db), {
-    [`channels/${chatID}/messages/${messageID}/reactions/heart`]: count,
-  });
 };
