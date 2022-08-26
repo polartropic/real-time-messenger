@@ -90,12 +90,18 @@ const Header = (): JSX.Element => {
     toggling();
   };
 
+  const openATeam = () => {
+    setIsOpen(!isOpen);
+    setIsDetailedChatClicked(false);
+    setIsCreateChatClicked(false);
+  };
+
   const URL = window.location.href;
 
   const mappingTeam = (team: ReactNode, key: string | number) => {
     return <div key={key}>
-      <Link to={`/teams/${team}`} >
-        <p key={key} onClick={() => setIsOpen(!isOpen)} className='team-item'>{team}</p>
+      <Link to={`/teams/${team}`}>
+        <p key={key} onClick={openATeam} className='team-item'>{team}</p>
       </Link>
     </div>;
   };
