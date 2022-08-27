@@ -10,7 +10,7 @@
 }
 
 .chats {
-  height: calc(100vh - 285px);
+  height: calc(100vh - 330px);
   overflow-y: auto;
 }
 
