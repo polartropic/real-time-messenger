@@ -30,6 +30,7 @@ const ChatParticipants = ({ currentChannel, allUsers, owner }: ChatParticipantsP
   const [end, setEnd] = useState<Date>(new Date());
 
   const URL = window.location.href;
+
   if (owner && currentChannel.participants.includes(owner?.username) &&
     allUsers.every((user) => user.username !== owner?.username)) {
     allUsers = [...allUsers, owner];
@@ -84,6 +85,7 @@ const ChatParticipants = ({ currentChannel, allUsers, owner }: ChatParticipantsP
           <button onClick={() => setIsMeetingClicked(!isMeetingClicked)} className='view-users-btn'>See chat participants</button>:
           <button onClick={() => setIsMeetingClicked(!isMeetingClicked)} className='view-users-btn'>Create a meeting</button>
         }
+
         {isMeetingClicked ?
           <form id='create-a-meeting' onSubmit={handleCreateMeeting}>
             <h4>Create a meeting with chat participants:</h4>
@@ -92,6 +94,7 @@ const ChatParticipants = ({ currentChannel, allUsers, owner }: ChatParticipantsP
               <label htmlFor='content'></label>
               <input type='text' required placeholder="Input meeting's name" value={name} onChange={(e) => setName(e.target.value)} />
             </p>
+
             <p id='meeting-start'>Meeting start:
               <br />
               <DateTimePicker format='dd-MM-yy HH:mm' onChange={setStart} value={start} />
@@ -100,17 +103,22 @@ const ChatParticipants = ({ currentChannel, allUsers, owner }: ChatParticipantsP
               <br />
               <DateTimePicker format='dd-MM-yy HH:mm' onChange={setEnd} value={end} />
             </p>
+
             <button className='view-users-btn'>Schedule meeting</button>
           </form> :
-          <><h4>Participants of chat:</h4><div className='participants'>
-            {currentChannelUsers.map((participant) => mappingParticipants(participant, uid()))}
-          </div><div className='manage-participants-btns'>
-            {URL.includes('/teams/') ?
-              <button className='add-btn' onClick={() => loadTeamDetails()}><span>Team details</span></button> :
-              null}
-            <br />
-            <button onClick={() => leaveChat()} className='leave-btn'>Leave channel</button>
-          </div></>
+          <>
+            <h4>Participants of chat:</h4><div className='participants'>
+              {currentChannelUsers.map((participant) => mappingParticipants(participant, uid()))}
+            </div>
+
+            <div className='manage-participants-btns'>
+              {URL.includes('/teams/') ?
+                <button className='add-btn' onClick={() => loadTeamDetails()}><span>Team details</span></button> :
+                null}
+              <br />
+              <button onClick={() => leaveChat()} className='leave-btn'>Leave channel</button>
+            </div>
+          </>
         }
         <ToastContainer />
       </div> :

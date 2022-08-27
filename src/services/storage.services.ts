@@ -41,4 +41,3 @@ export const uploadImageMessage = (file: File, channelID: string, username: stri
         .catch((error) => toast.error(error));
     });
 };
-

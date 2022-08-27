@@ -51,26 +51,29 @@ export const getLiveTeamMembers = (teamID: string, listen: (_snapshot: DataSnaps
   return onValue(ref(db, `teams/${teamID}/members`), listen);
 };
 
-
 export const deleteMemberFromTeam = (teamID: string, userIndex: number | null) => {
   return update(ref(db), {
     [`teams/${teamID}/members/${userIndex}`]: null,
   })
     .catch(console.error);
 };
+
 export const manageTeamMembersUpdateUsers = (usersOut: User[], usersIn: User[], team: Team, teamID: string) => {
   const usersToUpdate = usersOut.filter((user) => user.username !== team.owner);
+
   usersToUpdate.forEach((user) => {
     deleteUsersTeam(user.username, team.name)
       .catch((err) => {
         throw new Error(err.message);
       });
+
     Object.keys(user.channels).forEach((channel) => {
       if (Object.keys(team.channels).includes(channel)) {
         deleteUserFromChat(user.username, channel)
           .catch((err) => {
             throw new Error(err.message);
           });
+
         getChatByName(channel)
           .then((res) => {
             const object: object = res.val();
@@ -84,6 +87,7 @@ export const manageTeamMembersUpdateUsers = (usersOut: User[], usersIn: User[], 
           });
       }
     });
+
     const name: string = user.username;
     const index = team.members.find((el: string, index: number) => {
       if (el === name) {
@@ -97,15 +101,17 @@ export const manageTeamMembersUpdateUsers = (usersOut: User[], usersIn: User[], 
     // Adding the users from the "left"
     usersIn.forEach(((user) => {
       const userTeams = Object.keys(user.teams);
+
       if (!userTeams.includes(team.name)) {
         updateUserTeams(user.username, team.name);
       }
+
       const username = user.username;
       const members: string[] = team.members;
+
       if (!members.includes(username)) {
         addMemberToTeam(teamID, username, team.members.length);
       };
     }));
   });
 };
-

@@ -1,17 +1,18 @@
 import { Calendar, momentLocalizer } from 'react-big-calendar';
 import moment from 'moment';
-import './react-big-calendar.css';
 import { useContext, useEffect, useState } from 'react';
 import { getAllMeetings } from '../../services/meetings.services';
 import AppContext from '../../providers/AppContext';
 import { Meeting } from '../../types/Interfaces';
 import SelectedMeeting from '../../components/SelectedMeeting/SelectedMeeting';
+import './react-big-calendar.css';
 
 const localizer = momentLocalizer(moment);
 
 const Meetings = (): JSX.Element => {
   const { appState } = useContext(AppContext);
   const userUsername = appState.userData?.username;
+
   const [events, setEvents] = useState<Meeting[]>([]);
   const [myMeetings, setMyMeetings] = useState<Meeting[]>([]);
   const [selectedEvent, setSelectedEvent] = useState<Meeting>({
@@ -29,8 +30,8 @@ const Meetings = (): JSX.Element => {
   }, []);
 
   useEffect(() => {
-    const personalMeetings =
-    (Object.values(events).filter((event) => event.participants.includes(userUsername!)));
+    const personalMeetings = (Object.values(events).filter((event) => event.participants.includes(userUsername!)));
+
     const result = personalMeetings.map((meeting) => {
       return {
         title: meeting.title,
@@ -52,7 +53,9 @@ const Meetings = (): JSX.Element => {
   return <div>
     {modalState === true ?
       <SelectedMeeting selectedEvent={selectedEvent} setModalState={setModalState}/> :
-      null}
+      null
+    }
+
     <Calendar
       localizer={localizer}
       events={myMeetings}

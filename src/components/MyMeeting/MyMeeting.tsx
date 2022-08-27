@@ -28,6 +28,7 @@ const MyMeeting = ({ meetingID, receivedMeetingTitle }: MyMeetingProps) => {
         },
         borderRadius: 'extra-rounded',
       });
+
       meeting.meta.on('disconnected', () => {
         meeting.leaveRoom();
 
@@ -44,4 +45,5 @@ const MyMeeting = ({ meetingID, receivedMeetingTitle }: MyMeetingProps) => {
     </div>
   );
 };
+
 export default MyMeeting;

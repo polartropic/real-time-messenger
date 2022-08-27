@@ -12,7 +12,6 @@ const ManiPulateUsersLists = ({ leftSide, setLeftSide, rightSide, setRightSide }
   const [searchTermRight, setSearchTermRight] = useState<string>('');
 
   const { appState } = useContext(AppContext);
-
   const currentUser = appState.userData?.username;
 
   const getUsersBySearchTerm = (searchTerm: string, users: User[]) => {
@@ -26,17 +25,18 @@ const ManiPulateUsersLists = ({ leftSide, setLeftSide, rightSide, setRightSide }
   const leftResult = getUsersBySearchTerm(searchTermLeft, leftSide);
   const rightResult = getUsersBySearchTerm(searchTermRight, rightSide);
 
-
   const handleAddUser = (user: User): void => {
     setRightSide([
       ...rightSide,
       user,
     ]);
+
     setLeftSide(leftSide.filter((u) => u.uid !== user.uid));
   };
 
   const handleRemoveUser = (user: User): void => {
     setRightSide(rightSide.filter((u) => u.uid !== user.uid));
+
     setLeftSide([
       ...leftSide,
       user,
@@ -71,7 +71,6 @@ const ManiPulateUsersLists = ({ leftSide, setLeftSide, rightSide, setRightSide }
     }
   };
 
-
   return (
     <div className='create-team-view'>
       <div className='create-team-wrapper'>
@@ -80,6 +79,7 @@ const ManiPulateUsersLists = ({ leftSide, setLeftSide, rightSide, setRightSide }
             <input type="text" defaultValue="" placeholder='search Users...' onChange={(event) => setSearchTermLeft(event.target.value)} />
           </div>
         </div>
+
         {/* LEFT SIDE */}
         <div className='users-container'>
           {searchTermLeft ?
@@ -90,6 +90,7 @@ const ManiPulateUsersLists = ({ leftSide, setLeftSide, rightSide, setRightSide }
           }
         </div>
       </div >
+
       {/* RIGHT SIDE */}
       <div className='list-of-added-participants'>
         <input type="text" defaultValue="" placeholder='search Users...' onChange={(event) => setSearchTermRight(event.target.value)} />

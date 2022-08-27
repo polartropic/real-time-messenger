@@ -76,6 +76,7 @@ const LoggedUser = (): JSX.Element => {
     getAllUsers()
       .then((snapshot) => {
         const allUsers: User[] = Object.values(snapshot.val());
+
         setAllUsers(allUsers);
         setInitialParticipants(allUsers);
       })
@@ -103,6 +104,7 @@ const LoggedUser = (): JSX.Element => {
               setCurrentChat(res);
               toast.success('Successful chat creation!');
               setIsCreateChatClicked(!isCreateChatClicked);
+
               [...userIDs, userDetails?.username!].map((participant) => updateUserChats(participant, title));
             })
             .catch((err) => toast.warning(`Something went wrong  ${err.message}`));
@@ -128,6 +130,7 @@ const LoggedUser = (): JSX.Element => {
           return toast.warning(`This name ${title} already exists!`);
         } else {
           const membersIds = addedParticipants.map((user) => user.username);
+
           addTeamToDB(title.trim(), owner!, membersIds)
             .then(() => {
               [...membersIds, owner].forEach((username) => updateUserTeams(username!, title));
@@ -148,7 +151,6 @@ const LoggedUser = (): JSX.Element => {
     <div className="landing-page">
       <ChannelsList props={{ channels, setCurrentChat }} />
 
-      {/* DYNAMIC DIV TO SHOW RESULTS FROM SEARCH AND VIEWING CHATS */}
       <div className="main-container">
         <>
           {isCreateChatClicked ?
@@ -163,10 +165,12 @@ const LoggedUser = (): JSX.Element => {
             </> :
             null
           }
+
           {isDetailedChatClicked ?
             <Channel currentChannel={currentChat} /> :
             null
           }
+
           {isTeamView ?
             <>
               <input type="text" className={'create-chat-title'} name="team-name" placeholder='Please, add a title...' required defaultValue='' onChange={(e) => setTitle(e.target.value.trim())} />
@@ -178,7 +182,6 @@ const LoggedUser = (): JSX.Element => {
                 setRightSide={setAddedParticipants} />
             </> :
             null
-
           }
         </>
       </div>

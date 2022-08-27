@@ -1,10 +1,8 @@
-import { FC, /* useContext, useEffect,*/ useState } from 'react';
+import { FC, useState } from 'react';
 import { UserProps } from '../../types/Interfaces';
 import InitialsAvatar from 'react-initials-avatar';
 import { Tooltip } from '@mui/material';
 import UserStatusIndicator from '../UserStatusIndicator/UserStatusIndicator';
-// import { getLiveStatus } from '../../services/users.services';
-// import AppContext from '../../providers/AppContext';
 import './User.css';
 
 const UserComponent: FC<UserProps> = ({ props }): JSX.Element => {

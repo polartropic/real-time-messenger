@@ -1,4 +1,3 @@
-import './Register.css';
 import { Link } from 'react-router-dom';
 import { useState, useEffect, useContext } from 'react';
 import { createUserByUsername, getUserByUsername } from '../../services/users.services';
@@ -6,11 +5,11 @@ import { createUser } from '../../services/auth.services';
 import React from 'react';
 import { MAX_USERNAME_LENGTH, MIN_USERNAME_LENGTH } from '../../common/constants';
 import { ToastContainer, toast } from 'react-toastify';
-import 'react-toastify/dist/ReactToastify.css';
 import { getAllTeamsLive } from '../../services/teams.services';
 import { getAllUsersLive } from '../../services/users.services';
 import AppContext from '../../providers/AppContext';
-
+import 'react-toastify/dist/ReactToastify.css';
+import './Register.css';
 
 const Register = (): JSX.Element => {
   const { setIsDetailedChatClicked } = useContext(AppContext);
@@ -32,6 +31,7 @@ const Register = (): JSX.Element => {
     const unsubscribe = getAllUsersLive((snapshot) => {
       setUsersCount(snapshot.size);
     });
+
     return () => unsubscribe();
   }, []);
 
@@ -39,9 +39,9 @@ const Register = (): JSX.Element => {
     const unsubscribe = getAllTeamsLive((snapshot) => {
       setTeamsCount(snapshot.size);
     });
+
     return () => unsubscribe();
   }, []);
-
 
   const updateForm = (prop: string) => (e: React.FormEvent<HTMLInputElement>) => {
     setRegDetails({
@@ -134,6 +134,7 @@ const Register = (): JSX.Element => {
           <label htmlFor="confirm-password">Confirm Password:</label>
           <br />
           <input type="password" className="register-field" name="confirm-password" placeholder="confirm-password" required value={regDetails.confirmPassword} onChange={updateForm('confirmPassword')} />
+
           <h3 id='already-have-acc'>Already have an account?
             <Link to={'/login'}>
               <span id="sign-in-btn"> Sign in</span>

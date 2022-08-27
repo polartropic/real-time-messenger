@@ -11,7 +11,6 @@ import Dropzone from 'react-dropzone';
 import { uploadImageMessage } from '../../services/storage.services';
 import './Channel.css';
 
-
 const Channel = ({ currentChannel }: ChannelProps) => {
   const { appState } = useContext(AppContext);
   const user = appState.userData;
@@ -44,7 +43,6 @@ const Channel = ({ currentChannel }: ChannelProps) => {
     const objectUrl = URL.createObjectURL(selectedFile);
     setPreview(objectUrl);
 
-    // free memory when ever this component is unmounted
     return () => URL.revokeObjectURL(objectUrl);
   }, [selectedFile]);
 
@@ -53,7 +51,7 @@ const Channel = ({ currentChannel }: ChannelProps) => {
       setSelectedFile(undefined);
       return;
     }
-    // I've kept this example simple by using the first image instead of multiple
+
     setSelectedFile(acceptedFiles[0]);
   };
 
@@ -98,18 +96,18 @@ const Channel = ({ currentChannel }: ChannelProps) => {
       <h2>{currentChannel.title}</h2>
 
       <div className='messages-container'>
-        {
-          messages.length === 0 ?
-            <p>Be the first to start a conversation</p> :
-            <>
-              {messages.map((message, key) => <Message currentChannel={currentChannel}
-                message={message} handleEditMessage={handleEditMessage} key={key}
-                toBeEdited={messageToBeEdited === message} />)}
+        {messages.length === 0 ?
+          <p>Be the first to start a conversation</p> :
+          <>
+            {messages.map((message, key) => <Message currentChannel={currentChannel}
+              message={message} handleEditMessage={handleEditMessage} key={key}
+              toBeEdited={messageToBeEdited === message} />)}
 
-              <div ref={messagesEndRef}></div>
-            </>
+            <div ref={messagesEndRef}></div>
+          </>
         }
       </div>
+
       {selectedFile &&
         <div>
           <img src={preview} alt='selected file' className='sample-upload' />
@@ -117,7 +115,9 @@ const Channel = ({ currentChannel }: ChannelProps) => {
             <i className="fa-solid fa-check"></i>
           </button>
 
-        </div>}
+        </div>
+      }
+
       <Dropzone onDrop={onSelectFile}>
         {({ getRootProps, getInputProps }) => (
           <section>
@@ -128,6 +128,7 @@ const Channel = ({ currentChannel }: ChannelProps) => {
           </section>
         )}
       </Dropzone><br /><br />
+
       <CreateMessage handleSubmit={handleSubmit} existingMessage={messageToBeEdited?.content} />
       <ToastContainer />
     </div>

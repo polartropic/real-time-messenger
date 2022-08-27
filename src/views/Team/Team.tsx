@@ -24,6 +24,7 @@ const MyTeam = (): JSX.Element => {
     setIsDetailedChatClicked,
     setIsTeamView,
   } = useContext(AppContext);
+  const currentUser = appState.userData?.username;
 
   const [team, setTeam] = useState<object>({});
   const [currentChat, setCurrentChat] = useState<IChannel>({
@@ -35,6 +36,7 @@ const MyTeam = (): JSX.Element => {
     teamID: '',
     lastActivity: new Date(),
   });
+
   const [channels, setChannels] = useState<IChannel[]>([]);
   const [title, setTitle] = useState<string>('');
   const [teamMembersObjects, setTeamMembersObject] = useState<User[]>([]);
@@ -46,10 +48,11 @@ const MyTeam = (): JSX.Element => {
     members: [],
     channels: [],
   });
+
   const { name } = useParams<{ name: string }>();
+
   const [outerUsers, setOuterUsers] = useState<User[]>([]);
   const [usersToRemove, setUsersToRemove] = useState<User[]>([]);
-  const currentUser = appState.userData?.username;
   const [ownerObj, setOwnerObject] = useState<User>({
     firstName: '',
     lastName: '',
@@ -68,6 +71,7 @@ const MyTeam = (): JSX.Element => {
       .then((snapshot) => {
         if (snapshot.exists()) {
           const team: object = snapshot.val();
+
           setTeam(team);
           setTeamProps(Object.values(team)[0]);
         }
@@ -93,12 +97,15 @@ const MyTeam = (): JSX.Element => {
                   return arr[0];
                 });
             });
+
             Promise.all(channelsObjPr)
               .then((values) => setChannels(values));
           });
+
         return () => unsubscribe2();
       }
     });
+
     return () => unsubscribe();
   }, [appState.userData, appState?.userData?.username, teamID]);
 
@@ -112,14 +119,17 @@ const MyTeam = (): JSX.Element => {
               .filter((userA) => snapshot.val().includes(userA.username));
             const ownerOfTeam: User[] = Object.values(usersObj)
               .filter((user: User) => user.username === teamProps?.owner);
+
             setTeamMembersObject(allUsersInTeam);
             setUsersToRemove(allUsersInTeam);
             setOwnerObject(ownerOfTeam[0]);
+
             if (ownerOfTeam[0].username !== appState.userData?.username) {
               setInitialChatParticipants([...allUsersInTeam, ownerOfTeam[0]]);
             } else {
               setInitialChatParticipants(allUsersInTeam);
             }
+
             const allUsersOutOfTeam: User[] = Object.values(usersObj)
               .filter((userA) => ![...snapshot.val(), teamProps?.owner].includes(userA.username));
             setOuterUsers(allUsersOutOfTeam);
@@ -134,10 +144,12 @@ const MyTeam = (): JSX.Element => {
       setIsDetailedChatClicked(false);
       setIsTeamView(false);
     }
+
     if (isDetailedChatClicked) {
       setIsCreateChatClicked(false);
       setIsTeamView(false);
     }
+
     if (isTeamView) {
       setIsDetailedChatClicked(false);
       setIsCreateChatClicked(false);
@@ -161,9 +173,11 @@ const MyTeam = (): JSX.Element => {
     if (title.length < MIN_CHANNEL_NAME_LENGTH || title.length > MAX_CHANNEL_NAME_LENGTH) {
       return toast.warning(`The name of the chat must be between ${MIN_CHANNEL_NAME_LENGTH} and ${MAX_CHANNEL_NAME_LENGTH} symbols`);
     }
+
     if (addedToChat.length === MIN_NUMBER_OF_CHAT_PARTICIPANTS) {
       return toast.warning('Please add at least one participant in the chat!');
     }
+
     if (teamID) {
       const membersToAdd = addedToChat.map((m) => m.username);
 
@@ -203,6 +217,7 @@ const MyTeam = (): JSX.Element => {
             </> :
             null
           }
+
           {isDetailedChatClicked ?
             <Channel currentChannel={currentChat} /> :
             isTeamView && ownerObj.username === currentUser ?
@@ -215,17 +230,17 @@ const MyTeam = (): JSX.Element => {
                   rightSide={usersToRemove}
                   setRightSide={setUsersToRemove} />
               </> :
-              null}
+              null
+          }
         </>
       </div>
-      {
-        isDetailedChatClicked ?
-          <ChatParticipants
-            currentChannel={currentChat}
-            allUsers={teamMembersObjects}
-            owner={ownerObj} /> :
-          ownerObj && teamMembersObjects &&
-          <TeamParticipants owner={ownerObj} allUsers={teamMembersObjects} />
+      {isDetailedChatClicked ?
+        <ChatParticipants
+          currentChannel={currentChat}
+          allUsers={teamMembersObjects}
+          owner={ownerObj} /> :
+        ownerObj && teamMembersObjects &&
+        <TeamParticipants owner={ownerObj} allUsers={teamMembersObjects} />
       }
 
     </div >

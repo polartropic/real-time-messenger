@@ -6,7 +6,7 @@
   font-family: 'Roboto', Arial, Helvetica, sans-serif;
 }
 
-.edit{
+.edit {
   display: grid;
   grid-template-columns: 70px 1fr 5fr 1fr;
   grid-template-rows: 1fr 1fr 1fr;
@@ -15,8 +15,6 @@
   background-color: rgba(243, 214, 121, 1);
   border-radius: 10px;
   border: 3px solid rgba(243, 214, 121, 1);
-  ;
-
 }
 
 .message-avatar {
@@ -111,8 +109,8 @@
   color: rgba(47, 69, 93, 1);
 }
 
-.img-in-message{
-  display:flex;
+.img-in-message {
+  display: flex;
   width: 70%;
   border-radius: 10px;
   margin: 10px auto;

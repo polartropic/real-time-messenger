@@ -12,30 +12,30 @@
 }
 
 #register-div {
-    display: flex;
-    flex-wrap: wrap;
-    justify-content: center;
+  display: flex;
+  flex-wrap: wrap;
+  justify-content: center;
 }
 
 #sign-up {
-    color: #2f455d;
-    font-size: 20px;
-    font-weight: bold;
+  color: #2f455d;
+  font-size: 20px;
+  font-weight: bold;
 }
 
 #sign-up-btn {
-    padding: 10px;
-    border-radius: 10px;
-    border: 1px solid;
-    background-color: #2f455d;
-    color: #ffffff;
-    cursor: pointer;
+  padding: 10px;
+  border-radius: 10px;
+  border: 1px solid;
+  background-color: #2f455d;
+  color: #ffffff;
+  cursor: pointer;
 }
 
 #sign-in-btn {
-    border: none;
-    font-size: 18px;
-    font-weight: bold;
-    cursor: pointer;
-    text-decoration: underline;
+  border: none;
+  font-size: 18px;
+  font-weight: bold;
+  cursor: pointer;
+  text-decoration: underline;
 }

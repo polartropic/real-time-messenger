@@ -1,4 +1,4 @@
-import { ref, get, push, update, query, equalTo, orderByChild, DataSnapshot, onValue } from 'firebase/database';
+import { ref, get, push, update, query, equalTo, orderByChild } from 'firebase/database';
 import { db } from '../config/firebase-config';
 import { Team, User } from '../types/Interfaces';
 
@@ -57,7 +57,6 @@ export const getChatsByTeam = (team: Team) => {
   return getAllChannels()
     .then((snapshot) => console.log(Object.values(snapshot.val())
       .filter((ch: any) => Object.keys(team.channels).includes(ch.title))));
-  // .filter((ch: Channel) => Object.keys(team.channels).includes(ch.title)));
 };
 
 export const deleteUserFromChat = (username: string | undefined, chatName: string) => {
@@ -80,8 +79,4 @@ export const updateChannelLastActivity = (channelID: string, date: number) => {
   return update(ref(db), {
     [`channels/${channelID}/lastActivity`]: date,
   });
-};
-
-export const getLiveNotifications = (chatId: string, listen: (_snapshot: DataSnapshot) => void) => {
-  return onValue(ref(db, `channels/${chatId}/lastActivity`), listen);
 };

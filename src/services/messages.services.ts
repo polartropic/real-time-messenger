@@ -48,7 +48,6 @@ export const addMessageImage = (chatId: string, username: string, fileURL: strin
     });
 };
 
-
 export const editMessage = (chatId: string, messageId: string, content: string) => {
   return update(ref(db), {
     [`channels/${chatId}/messages/${messageId}/content`]: content,

@@ -51,7 +51,7 @@
   flex-wrap: wrap;
 }
 
-#stats>h4 {
+#stats > h4 {
   margin-left: 10px;
   margin-right: 10px;
   align-self: center;
@@ -73,7 +73,6 @@
 }
 
 .header-btn:hover,
-/* .header-btn:focus, */
 .active-header-button {
   border: 1px solid rgba(243, 214, 121, 1);
   border-radius: 5px;

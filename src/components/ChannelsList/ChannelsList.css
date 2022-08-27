@@ -26,10 +26,11 @@
   border-radius: 8px;
   cursor: pointer;
   margin-right: 5px;
-  box-shadow: rgb(0 0 0 / 35%) 0px 2px 3px;
+  box-shadow: rgba(0, 0, 0, 35%) 0px 2px 3px;
 }
 
-.chat-item:hover, .chat-item-active {
+.chat-item:hover,
+.chat-item-active {
   background-color: rgba(243, 214, 121, 1);
   border: 1px solid rgba(69, 88, 207, 1);
   padding: 6px;
@@ -37,5 +38,4 @@
   font-weight: bold;
   color: rgba(69, 88, 207, 1);
   cursor: pointer;
-
 }

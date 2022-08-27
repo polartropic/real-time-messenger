@@ -45,9 +45,7 @@ export interface Channel {
   participants: string[], // UserIDs
   messages: Message[],
   isPublic: boolean,
-
   lastActivity: Date,
-
   teamID?: string,
 }
 
@@ -78,7 +76,6 @@ export interface ChatParticipantsProps {
   currentChannel: Channel,
   allUsers: User [],
   owner?: User,
-
 }
 
 export interface TeamParticipantsProps {
@@ -144,6 +141,6 @@ export interface ReceivedMeeting {
 }
 
 export interface MyMeetingProps {
-    meetingID: string,
-    receivedMeetingTitle: string,
+  meetingID: string,
+  receivedMeetingTitle: string,
 }

@@ -1,4 +1,3 @@
-import './Login.css';
 import { Link, useNavigate } from 'react-router-dom';
 import AppContext from '../../providers/AppContext';
 import { useContext, useState } from 'react';
@@ -6,6 +5,7 @@ import { getUserByUsername, getUserData } from '../../services/users.services';
 import { signIn } from '../../services/auth.services';
 import { ToastContainer, toast } from 'react-toastify';
 import 'react-toastify/dist/ReactToastify.css';
+import './Login.css';
 
 const Login = (): JSX.Element => {
   const { setState, setIsDetailedChatClicked } = useContext(AppContext);
@@ -23,7 +23,6 @@ const Login = (): JSX.Element => {
     });
   };
 
-
   const handleLogIn: React.FormEventHandler<HTMLFormElement> = (e: React.FormEvent<HTMLFormElement>) => {
     e.preventDefault();
 
@@ -39,6 +38,7 @@ const Login = (): JSX.Element => {
                       user: u.user,
                       userData: snapshot.val()[Object.keys(snapshot.val())[0]],
                     });
+
                     setIsDetailedChatClicked(false);
                     toast.success('Successful sign in!');
                     navigate('/');

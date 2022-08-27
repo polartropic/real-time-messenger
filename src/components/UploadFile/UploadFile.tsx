@@ -1,8 +1,7 @@
-import './UploadFile.css';
 import { useState, useEffect, useContext } from 'react';
 import { uploadImage } from '../../services/storage.services';
 import AppContext from '../../providers/AppContext';
-
+import './UploadFile.css';
 
 export const ImageUpload = () => {
   const [selectedFile, setSelectedFile] = useState<File>();
@@ -10,7 +9,6 @@ export const ImageUpload = () => {
   const { appState } = useContext(AppContext);
   const userName = appState.userData?.username;
 
-  // create a preview as a side effect, whenever selected file is changed
   useEffect(() => {
     if (!selectedFile) {
       setPreview(undefined);
@@ -20,7 +18,6 @@ export const ImageUpload = () => {
     const objectUrl = URL.createObjectURL(selectedFile);
     setPreview(objectUrl);
 
-    // free memory when ever this component is unmounted
     return () => URL.revokeObjectURL(objectUrl);
   }, [selectedFile]);
 
@@ -30,7 +27,6 @@ export const ImageUpload = () => {
       return;
     }
 
-    // I've kept this example simple by using the first image instead of multiple
     setSelectedFile(event.currentTarget.files[0]);
   };
 

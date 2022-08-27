@@ -7,15 +7,19 @@ import { ToastContainer, toast } from 'react-toastify';
 import AppContext from '../../providers/AppContext';
 import { ReceivedMeeting } from '../../types/Interfaces';
 import Loading from '../../assets/images/Loading.gif';
-import './DetailedMeeting.css';
 import { dyteMeetingFunc, dyteParticipantFunc } from '../../services/dyte.services';
 import MyMeeting from '../../components/MyMeeting/MyMeeting';
+import './DetailedMeeting.css';
 
 const DetailedMeeting = (): JSX.Element => {
   const { meetingID } = useParams();
+
   const { appState } = useContext(AppContext);
   const userData = appState.userData;
+
   const navigate = useNavigate();
+
+  const [addedUser, setAddedUser] = useState('');
   const [receivedMeeting, setReceivedMeeting] = useState<ReceivedMeeting>({
     createdAt: '',
     id: '',
@@ -25,7 +29,6 @@ const DetailedMeeting = (): JSX.Element => {
     status: '',
     title: '',
   });
-  const [addedUser, setAddedUser] = useState('');
 
   useEffect(() => {
     axios.request(dyteMeetingFunc(BASE_URL, ORGANIZATION_ID, meetingID, API_KEY ))
@@ -50,6 +53,7 @@ const DetailedMeeting = (): JSX.Element => {
         },
       });
     }
+
     if (receivedMeeting.status === 'CLOSED') {
       toast.warning('The meeting is already closed! Please create a new one.');
       navigate('/my-meetings');
