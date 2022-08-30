@@ -54,17 +54,33 @@ const LoggedUser = (): JSX.Element => {
             const channelsObjPr = userChatsNames.map((chatName) => {
               return getChatByName(chatName)
                 .then((snapshotChanObj) => {
-                  const dbObject = snapshotChanObj.val();
-                  const id: string = Object.keys(dbObject)[0];
-                  const channel: any = Object.values(dbObject)[0];
+                  if (snapshot.exists()) {
+                    const dbObject: object = snapshotChanObj.val();
+                    const id: string = Object.keys(dbObject)[0];
+                    const channel: IChannel = Object.values(dbObject)[0];
 
-                  channel.id = id;
-                  return channel;
+                    channel.id = id;
+                    return channel;
+                  } else {
+                    return {
+                      id: '',
+                      title: '',
+                      participants: [], // UserIDs
+                      messages: [],
+                      isPublic: false,
+                      teamID: '',
+                      lastActivity: new Date(),
+                    };
+                  }
                 });
             });
 
             Promise.all(channelsObjPr)
-              .then((values) => setChannels(values));
+              .then((values) => {
+                const sortedChannels: IChannel[] = values
+                  .sort((chan1, chan2) => +chan1.lastActivity < +chan2.lastActivity ? 1 : -1);
+                setChannels(sortedChannels);
+              });
           }
         });
 
@@ -82,6 +98,7 @@ const LoggedUser = (): JSX.Element => {
       })
       .catch(console.error);
   }, []);
+
 
   const createChatFunc = () => {
     if (title.length < MIN_CHANNEL_NAME_LENGTH || title.length > MAX_CHANNEL_NAME_LENGTH) {

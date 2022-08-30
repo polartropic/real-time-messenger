@@ -32,7 +32,7 @@ export const createChat = (title: string, participants: string[] | User[]) => {
     title,
     participants,
     messages: [],
-    lastActivity: new Date(),
+    lastActivity: Date.now(),
     isPublic: false,
   })
     .then((result) => getChatById(result.key));

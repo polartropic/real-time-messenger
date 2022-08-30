@@ -58,6 +58,7 @@ const Channel = ({ currentChannel }: ChannelProps) => {
   const handleUploadFile = () => {
     if (selectedFile) {
       uploadImageMessage(selectedFile, currentChannel.id, user?.username!);
+      updateChannelLastActivity(currentChannel.id, Date.now());
       setSelectedFile(undefined);
     }
   };
