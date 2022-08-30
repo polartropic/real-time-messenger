@@ -19,7 +19,7 @@ const DetailedMeeting = (): JSX.Element => {
 
   const navigate = useNavigate();
 
-  const [addedUser, setAddedUser] = useState('');
+  const [authToken, setAuthToken] = useState('');
   const [receivedMeeting, setReceivedMeeting] = useState<ReceivedMeeting>({
     createdAt: '',
     id: '',
@@ -35,7 +35,7 @@ const DetailedMeeting = (): JSX.Element => {
       .then((response) => setReceivedMeeting(response.data.data.meeting))
       .then(() =>
         axios.request(dyteParticipantFunc(BASE_URL, ORGANIZATION_ID, meetingID, API_KEY, userData?.username, userData?.firstName, userData?.imgURL!))
-          .then((response)=> setAddedUser(response.data.data.authResponse.authToken))
+          .then((response)=> setAuthToken(response.data.data.authResponse.authToken))
           .catch((error) => console.error(error)))
       .catch((error) => console.error(error));
   }, [meetingID, userData?.firstName, userData?.imgURL, userData?.username]);
@@ -43,10 +43,10 @@ const DetailedMeeting = (): JSX.Element => {
   const [meeting, initMeeting] = useDyteClient();
 
   useEffect(() => {
-    if (addedUser && receivedMeeting.roomName) {
+    if (authToken && receivedMeeting.roomName) {
       initMeeting({
         roomName: receivedMeeting.roomName,
-        authToken: addedUser,
+        authToken: authToken,
         defaults: {
           audio: true,
           video: false,
@@ -59,7 +59,7 @@ const DetailedMeeting = (): JSX.Element => {
       navigate('/my-meetings');
     }
   // eslint-disable-next-line react-hooks/exhaustive-deps
-  }, [addedUser, receivedMeeting.roomName]);
+  }, [authToken, receivedMeeting.roomName]);
 
   return (
     !meeting?
