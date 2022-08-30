@@ -27,25 +27,25 @@ ThunderTeam is a work collaboration application, offering the ability to:
 
 ## Views
 - Register
-![image](/src/assets/readme-images/Register.JPG)
+![image](/src/assets/readme-images/Register.jpg)
 - Login
-![image](/src/assets/readme-images/Login.JPG)
+![image](/src/assets/readme-images/Login.jpg)
 - Edit profile
-![image](/src/assets/readme-images/Edit-profile.JPG)
+![image](/src/assets/readme-images/Edit-profile.jpg)
 - Home page
-![image](/src/assets/readme-images/Home-page.JPG)
+![image](/src/assets/readme-images/Home-page.jpg)
 - Create a chat
-![image](/src/assets/readme-images/Create-a-chat.JPG)
+![image](/src/assets/readme-images/Create-a-chat.jpg)
 - Create a team
-![image](/src/assets/readme-images/Create-a-team.JPG)
+![image](/src/assets/readme-images/Create-a-team.jpg)
 - Team details
-![image](/src/assets/readme-images/Team-details.JPG)
+![image](/src/assets/readme-images/Team-details.jpg)
 - Detailed meeting
-![image](/src/assets/readme-images/Detailed-meeting.JPG)
+![image](/src/assets/readme-images/Detailed-meeting.jpg)
 - Meetings
-![image](/src/assets/readme-images/Meetings-calendar.JPG)
+![image](/src/assets/readme-images/Meetings-calendar.jpg)
 - Not found
-![image](/src/assets/readme-images/Not-found.JPG)
+![image](/src/assets/readme-images/Not-found.jpg)
 
 ## Link to the hosted project
 
