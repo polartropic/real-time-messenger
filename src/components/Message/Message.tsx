@@ -11,8 +11,6 @@ const Message = ({ message, currentChannel, handleEditMessage, toBeEdited }: Mes
   const { appState } = useContext(AppContext);
   const currentUser = appState.userData;
 
-  const [isMessageLikedByAuthor, setIsMessageLikedByAuthor] = useState(Object.values(message.likedBy).includes(currentUser?.username!));
-
   const [author, setAuthor] = useState<User>({
     firstName: '',
     lastName: '',
@@ -33,12 +31,10 @@ const Message = ({ message, currentChannel, handleEditMessage, toBeEdited }: Mes
 
   const handleLike = () => {
     likeMessage(currentChannel.id, message.id, currentUser?.username!);
-    setIsMessageLikedByAuthor(true);
   };
 
   const handleDislike = () => {
     unlikeMessage(currentChannel.id, message.id, currentUser?.username!);
-    setIsMessageLikedByAuthor(false);
   };
 
   const handleEdit = () => {
@@ -77,8 +73,8 @@ const Message = ({ message, currentChannel, handleEditMessage, toBeEdited }: Mes
 
         <div className='react-btns'>
           <button
-            onClick={isMessageLikedByAuthor ? handleDislike : handleLike}
-            className='reactions'>{`${isMessageLikedByAuthor ? Reaction.HEART2 : Reaction.HEART1} ${Object.values(message.likedBy).length}`}
+            onClick={Object.values(message.likedBy).includes(currentUser?.username!) ? handleDislike : handleLike}
+            className='reactions'>{`${Object.values(message.likedBy).includes(currentUser?.username!) ? Reaction.HEART2 : Reaction.HEART1} ${Object.values(message.likedBy).length}`}
           </button>
         </div>
       </div>
