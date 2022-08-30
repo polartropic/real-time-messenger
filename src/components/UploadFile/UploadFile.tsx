@@ -2,6 +2,7 @@ import { useState, useEffect, useContext } from 'react';
 import { uploadImage } from '../../services/storage.services';
 import AppContext from '../../providers/AppContext';
 import './UploadFile.css';
+import { toast } from 'react-toastify';
 
 export const ImageUpload = () => {
   const [selectedFile, setSelectedFile] = useState<File>();
@@ -24,6 +25,9 @@ export const ImageUpload = () => {
   const onSelectFile = (event: React.FormEvent<HTMLInputElement>) => {
     if (!event.currentTarget.files || event.currentTarget.files.length === 0) {
       setSelectedFile(undefined);
+      return;
+    } else if (!event.currentTarget.files![0].type.includes('image')) {
+      toast.error('Sorry, only image files permitted! At least for now :)');
       return;
     }
 

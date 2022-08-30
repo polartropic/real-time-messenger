@@ -39,16 +39,19 @@ const Channel = ({ currentChannel }: ChannelProps) => {
       setPreview(undefined);
       return;
     }
-
     const objectUrl = URL.createObjectURL(selectedFile);
     setPreview(objectUrl);
-
     return () => URL.revokeObjectURL(objectUrl);
+    // }
   }, [selectedFile]);
 
   const onSelectFile = (acceptedFiles: File[]) => {
     if (acceptedFiles.length === 0) {
       setSelectedFile(undefined);
+      return;
+    } else if (!acceptedFiles[0].type.includes('image')) {
+      setSelectedFile(undefined);
+      toast.error('Sorry, only image files permitted! At least for now :)');
       return;
     }
 
