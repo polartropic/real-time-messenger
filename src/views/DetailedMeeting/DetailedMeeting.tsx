@@ -58,6 +58,7 @@ const DetailedMeeting = (): JSX.Element => {
       toast.warning('The meeting is already closed! Please create a new one.');
       navigate('/my-meetings');
     }
+  // eslint-disable-next-line react-hooks/exhaustive-deps
   }, [addedUser, receivedMeeting.roomName]);
 
   return (
