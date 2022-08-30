@@ -63,7 +63,7 @@ const Meetings = (): JSX.Element => {
       endAccessor="end"
       selectable
       onSelectEvent={(e) => onSelectEvent(e)}
-      style={{ height: 500 }} />
+      style={{ height: 'calc(100vh - 80px)' }} />
   </div>;
 };
 
