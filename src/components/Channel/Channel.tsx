@@ -127,7 +127,7 @@ const Channel = ({ currentChannel }: ChannelProps) => {
           <section>
             <div {...getRootProps()}>
               <input {...getInputProps()} />
-              <p className='drag-n-drop'>Drag 'n' drop some files here, or click to select files</p>
+              <p className='drag-n-drop'>Drag 'n' drop your picture, or click to select one!</p>
             </div>
           </section>
         )}
