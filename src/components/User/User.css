@@ -1,6 +1,6 @@
 .user-box {
   display: flex;
-  justify-content: space-between;
+  justify-content:left;
   align-items: center;
   width: auto;
   margin: 10px;
