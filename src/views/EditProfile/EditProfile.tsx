@@ -22,18 +22,7 @@ const EditProfile = (): JSX.Element => {
   const [phoneNumber, setPhoneNumber] = useState('');
   const [email, setEmail] = useState('');
   const [password, setPassword] = useState('');
-  const [userData, setUserData] = useState<User>({
-    firstName: '',
-    lastName: '',
-    username: '',
-    email: '',
-    phoneNumber: '',
-    imgURL: '',
-    status: '',
-    teams: [],
-    channels: [],
-    uid: '',
-  });
+  const [userData, setUserData] = useState<User>({} as User);
 
   useEffect(() => {
     if (appState.userData?.username) {
@@ -192,7 +181,6 @@ const EditProfile = (): JSX.Element => {
         {userData.imgURL ?
           <> <button className='change-button-edit' id='delete-img' onClick={manageDeleteFile}>Delete current avatar</button> <br /></> :
           <ImageUpload />}
-
 
         <button className="go-back-btn" onClick={() => navigate('/')}>
           <img src="https://firebasestorage.googleapis.com/v0/b/thunderteam-99849.appspot.com/o/icons8-go-back-48.png.png?alt=media&token=8ce74f60-5dea-4e0f-9260-9102f6b30071" alt='go-back-icon' />

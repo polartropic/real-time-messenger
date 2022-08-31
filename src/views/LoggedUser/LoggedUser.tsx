@@ -29,7 +29,7 @@ const LoggedUser = (): JSX.Element => {
   const [currentChat, setCurrentChat] = useState<IChannel>({
     id: '',
     title: '',
-    participants: [], // UserIDs
+    participants: [],
     messages: [],
     isPublic: false,
     teamID: '',
@@ -62,15 +62,7 @@ const LoggedUser = (): JSX.Element => {
                     channel.id = id;
                     return channel;
                   } else {
-                    return {
-                      id: '',
-                      title: '',
-                      participants: [], // UserIDs
-                      messages: [],
-                      isPublic: false,
-                      teamID: '',
-                      lastActivity: new Date(),
-                    };
+                    return {} as IChannel;
                   }
                 });
             });
@@ -99,6 +91,7 @@ const LoggedUser = (): JSX.Element => {
       .catch(console.error);
   }, []);
 
+  console.log(channels);
 
   const createChatFunc = () => {
     if (title.length < MIN_CHANNEL_NAME_LENGTH || title.length > MAX_CHANNEL_NAME_LENGTH) {

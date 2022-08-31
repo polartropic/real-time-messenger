@@ -29,10 +29,6 @@ export const getUserData = (uid: string) => {
   return get(query(ref(db, 'users'), orderByChild('uid'), equalTo(uid)));
 };
 
-export const getUserChannels = (username: string) => {
-  return get(query(ref(db, `users/${username}/channels`)));
-};
-
 export const getAllUsers = () => {
   return get(query(ref(db, 'users')));
 };
@@ -87,12 +83,6 @@ export const updateUserChats = (username: string, chatName: string) => {
   const updateChats: { [index: string]: boolean } = {};
   updateChats[`/users/${username}/channels/${chatName}`] = true;
   return update(ref(db), updateChats);
-};
-
-export const updateUserMessages = (username: string, messageID: string) => {
-  const updateMessages: { [index: string]: boolean } = {};
-  updateMessages[`/users/${username}/messages/${messageID}`] = true;
-  return update(ref(db), updateMessages);
 };
 
 export const updateUserStatus = (username: string, status: string) => {
