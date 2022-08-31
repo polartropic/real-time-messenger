@@ -1,4 +1,4 @@
-import { getStorage, ref, uploadBytesResumable, getDownloadURL } from 'firebase/storage';
+import { getStorage, ref, uploadBytesResumable, getDownloadURL, deleteObject } from 'firebase/storage';
 import { toast } from 'react-toastify';
 import { addMessageImage } from './messages.services';
 import { updateUserAvatar } from './users.services';
@@ -41,3 +41,13 @@ export const uploadImageMessage = (file: File, channelID: string, username: stri
         .catch((error) => toast.error(error));
     });
 };
+
+export const deleteUserFile = (username: string, url: string) => {
+  const refToDelete = ref(storage, url);
+  return deleteObject(refToDelete)
+    .then(() => {
+      return updateUserAvatar(username, '');
+    })
+    .catch(console.error);
+};
+

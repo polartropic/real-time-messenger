@@ -81,7 +81,7 @@ const Login = (): JSX.Element => {
           <h3 id='dont-have-acc'>Don't have an account yet? </h3>
           <Link to={'/home-page'}>
             <button id="go-back-register-btn" className='go-back-btn'>
-              <img src="https://firebasestorage.googleapis.com/v0/b/thunderteam-99849.appspot.com/o/icons8-go-back-48.png?alt=media&token=7bdfef4c-cf94-4147-8f4d-fc55fd086b4a" alt='go-back-icon' />
+              <img src="https://firebasestorage.googleapis.com/v0/b/thunderteam-99849.appspot.com/o/icons8-go-back-48.png.png?alt=media&token=8ce74f60-5dea-4e0f-9260-9102f6b30071" alt='go-back-icon' />
             </button>
           </Link>
         </div>

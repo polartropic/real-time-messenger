@@ -9,6 +9,7 @@ import { ToastContainer, toast } from 'react-toastify';
 import { ImageUpload } from '../../components/UploadFile/UploadFile';
 import 'react-toastify/dist/ReactToastify.css';
 import './EditProfile.css';
+import { deleteUserFile } from '../../services/storage.services';
 
 const EditProfile = (): JSX.Element => {
   const navigate = useNavigate();
@@ -149,6 +150,12 @@ const EditProfile = (): JSX.Element => {
       .catch(console.error);
   };
 
+  const manageDeleteFile = () => {
+    const url = userData.imgURL;
+    deleteUserFile(userData.username, url)
+      .then(() => toast.success('You deleted you avatar successfully!'));
+  };
+
   return (
     <div className="edit-profile">
       <div className="edit-profile-forms">
@@ -182,11 +189,13 @@ const EditProfile = (): JSX.Element => {
           <input type="password" id="new-password" placeholder="new password" onChange={(e) => setPassword(e.target.value)} />
           <input type="submit" className="change-button-edit" value="Change" />
         </form>
+        {userData.imgURL ?
+          <> <button className='change-button-edit' id='delete-img' onClick={manageDeleteFile}>Delete current avatar</button> <br /></> :
+          <ImageUpload />}
 
-        <ImageUpload />
 
         <button className="go-back-btn" onClick={() => navigate('/')}>
-          <img src="https://firebasestorage.googleapis.com/v0/b/thunderteam-99849.appspot.com/o/icons8-go-back-48.png?alt=media&token=7bdfef4c-cf94-4147-8f4d-fc55fd086b4a" alt='go-back-icon' />
+          <img src="https://firebasestorage.googleapis.com/v0/b/thunderteam-99849.appspot.com/o/icons8-go-back-48.png.png?alt=media&token=8ce74f60-5dea-4e0f-9260-9102f6b30071" alt='go-back-icon' />
         </button>
       </div>
       <>
