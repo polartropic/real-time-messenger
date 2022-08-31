@@ -1,5 +1,5 @@
 import { useContext, useEffect, useState } from 'react';
-import { getAllUsers, getLiveChannelsByUsername, updateUserChats, updateUserStatus, updateUserTeams } from '../../services/users.services';
+import { getAllUsers, getLiveChannelsByUsername, updateUserChats, updateUserTeams } from '../../services/users.services';
 import AppContext from '../../providers/AppContext';
 import Channel from '../../components/Channel/Channel';
 import { Channel as IChannel, User } from '../../types/Interfaces';
@@ -11,8 +11,7 @@ import { toast } from 'react-toastify';
 import { createChat, getChatByName } from '../../services/channels.services';
 import { getTeamByName, addTeamToDB } from '../../services/teams.services';
 import { useNavigate } from 'react-router-dom';
-import { useIdleTimer } from 'react-idle-timer';
-import { UserStatus } from '../../common/user-status.enum';
+import useStatusTracking from '../../hooks/useStatusTracking';
 import './LoggedUser.css';
 
 const LoggedUser = (): JSX.Element => {
@@ -199,32 +198,3 @@ const LoggedUser = (): JSX.Element => {
 };
 
 export default LoggedUser;
-
-function useStatusTracking(loggedInUser: User) {
-  useIdleTimer({
-    onIdle: onIdle,
-    onActive: onActive,
-    onAction: onAction,
-    timeout: 1000 * 5 * 60,
-  });
-
-  function onIdle() {
-    if (loggedInUser.status !== UserStatus.DO_NOT_DISTURB) {
-      updateUserStatus(loggedInUser.username, UserStatus.AWAY).catch(console.error);
-    }
-  };
-
-  function onActive() {
-    if (loggedInUser.status !== UserStatus.DO_NOT_DISTURB && loggedInUser.status !== UserStatus.ONLINE) {
-      updateUserStatus(loggedInUser.username, UserStatus.ONLINE).catch(console.error);
-    }
-  };
-
-  function onAction() {
-    if (loggedInUser.status === UserStatus.DO_NOT_DISTURB) {
-      updateUserStatus(loggedInUser.username, UserStatus.DO_NOT_DISTURB);
-    } else {
-      updateUserStatus(loggedInUser.username, UserStatus.ONLINE).catch(console.error);
-    }
-  };
-}
