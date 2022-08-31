@@ -26,15 +26,16 @@ const Message = ({ message, currentChannel, handleEditMessage, toBeEdited }: Mes
 
   useEffect(() => {
     getUserByUsername(message.author)
-      .then((res) => setAuthor(res.val()));
+      .then((res) => setAuthor(res.val()))
+      .catch(console.error);
   }, [message.author]);
 
   const handleLike = () => {
-    likeMessage(currentChannel.id, message.id, currentUser?.username!);
+    likeMessage(currentChannel.id, message.id, currentUser?.username!).catch(console.error);
   };
 
   const handleDislike = () => {
-    unlikeMessage(currentChannel.id, message.id, currentUser?.username!);
+    unlikeMessage(currentChannel.id, message.id, currentUser?.username!).catch(console.error);
   };
 
   const handleEdit = () => {

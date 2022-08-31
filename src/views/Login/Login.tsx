@@ -43,7 +43,8 @@ const Login = (): JSX.Element => {
                     toast.success('Successful sign in!');
                     navigate('/');
                   }
-                });
+                })
+                .catch(console.error);
             })
             .catch((e) => {
               if (e.message.includes('wrong-password')) {

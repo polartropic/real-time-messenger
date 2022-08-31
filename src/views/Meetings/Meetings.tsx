@@ -26,7 +26,8 @@ const Meetings = (): JSX.Element => {
 
   useEffect(() => {
     getAllMeetings()
-      .then((res) => setEvents(res.val()));
+      .then((res) => setEvents(res.val()))
+      .catch(console.error);
   }, []);
 
   useEffect(() => {

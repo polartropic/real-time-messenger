@@ -45,7 +45,7 @@ function App() {
           userData: snapshot.val()[Object.keys(snapshot.val())[0]],
         });
       })
-      .catch((e) => console.log(e));
+      .catch(console.error);
   }, [user]);
 
   return (

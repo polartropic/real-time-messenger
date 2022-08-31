@@ -218,18 +218,22 @@ function useStatusTracking(loggedInUser: User) {
   });
 
   function onIdle() {
-    updateUserStatus(loggedInUser.username, UserStatus.AWAY);
+    if (loggedInUser.status !== UserStatus.DO_NOT_DISTURB) {
+      updateUserStatus(loggedInUser.username, UserStatus.AWAY).catch(console.error);
+    }
   };
 
   function onActive() {
-    if (loggedInUser.status !== UserStatus.ONLINE) {
-      updateUserStatus(loggedInUser.username, UserStatus.ONLINE);
+    if (loggedInUser.status !== UserStatus.DO_NOT_DISTURB && loggedInUser.status !== UserStatus.ONLINE) {
+      updateUserStatus(loggedInUser.username, UserStatus.ONLINE).catch(console.error);
     }
   };
 
   function onAction() {
-    if (loggedInUser.status !== UserStatus.DO_NOT_DISTURB) {
-      updateUserStatus(loggedInUser.username, UserStatus.ONLINE);
+    if (loggedInUser.status === UserStatus.DO_NOT_DISTURB) {
+      updateUserStatus(loggedInUser.username, UserStatus.DO_NOT_DISTURB);
+    } else {
+      updateUserStatus(loggedInUser.username, UserStatus.ONLINE).catch(console.error);
     }
   };
 }

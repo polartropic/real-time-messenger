@@ -39,10 +39,11 @@ const Channel = ({ currentChannel }: ChannelProps) => {
       setPreview(undefined);
       return;
     }
+
     const objectUrl = URL.createObjectURL(selectedFile);
     setPreview(objectUrl);
+
     return () => URL.revokeObjectURL(objectUrl);
-    // }
   }, [selectedFile]);
 
   const onSelectFile = (acceptedFiles: File[]) => {
@@ -61,7 +62,7 @@ const Channel = ({ currentChannel }: ChannelProps) => {
   const handleUploadFile = () => {
     if (selectedFile) {
       uploadImageMessage(selectedFile, currentChannel.id, user?.username!);
-      updateChannelLastActivity(currentChannel.id, Date.now());
+      updateChannelLastActivity(currentChannel.id, Date.now()).catch(console.error);
       setSelectedFile(undefined);
     }
   };
@@ -83,7 +84,7 @@ const Channel = ({ currentChannel }: ChannelProps) => {
           .catch(console.error);
       } else {
         addMessage(currentChannel.id, user?.username!, message)
-          .then(() => updateChannelLastActivity(currentChannel.id, Date.now()))
+          .then(() => updateChannelLastActivity(currentChannel.id, Date.now()).catch(console.error))
           .catch(console.error);
       }
     } else {

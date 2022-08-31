@@ -39,15 +39,8 @@ const ChannelsList = ({ props }: ChannelsListProps) => {
 
   const mappingChats = (chanObj: Channel, key: string) => {
     return <div key={key} className='chat-items'>
-      {activeChannel.title === chanObj.title ?
-        <>
-          <p onClick={() => handleOpenChannel(chanObj)} className='chat-item-active'>{chanObj.title}</p>
-          <Notifications currentChannel={chanObj} activeChannel={activeChannel} />
-        </> :
-        <>
-          <p onClick={() => handleOpenChannel(chanObj)} className='chat-item'>{chanObj.title}</p>
-          <Notifications currentChannel={chanObj} activeChannel={activeChannel} />
-        </>}
+      <p onClick={() => handleOpenChannel(chanObj)} className={activeChannel.title === chanObj.title ?'chat-item-active' : 'chat-item'}>{chanObj.title}</p>
+      <Notifications currentChannel={chanObj} activeChannel={activeChannel} />
     </div>;
   };
 
@@ -64,7 +57,7 @@ const ChannelsList = ({ props }: ChannelsListProps) => {
     setIsMeetingClicked(false);
     getChatByName(chanObj.title)
       .then((res) => Object.keys(res.val()))
-      .then((res) => getChatById(res[0]))
+      .then((res) => getChatById(res[0]).catch(console.error))
       .then((res) => props.setCurrentChat(res))
       .catch(console.error);
   };

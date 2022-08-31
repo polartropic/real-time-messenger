@@ -36,10 +36,9 @@ const EditProfile = (): JSX.Element => {
 
   useEffect(() => {
     if (appState.userData?.username) {
-      const unsubscribe = getLiveUserByUsername(appState.userData.username,
-        (snapshot) => {
-          setUserData((snapshot.val()));
-        });
+      const unsubscribe = getLiveUserByUsername(appState.userData.username, (snapshot) => {
+        setUserData((snapshot.val()));
+      });
 
       return () => unsubscribe();
     }
@@ -146,7 +145,8 @@ const EditProfile = (): JSX.Element => {
     updateUserPassword(password)
       .then(() => {
         toast.success('Successful change!');
-      });
+      })
+      .catch(console.error);
   };
 
   return (
