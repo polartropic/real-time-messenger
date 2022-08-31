@@ -1,4 +1,4 @@
-import { ReactNode, useContext, useEffect, useState } from 'react';
+import React, { ReactNode, useContext, useEffect, useState } from 'react';
 import ThunderTeamLogo from '../../assets/images/ThunderTeamLogo-noBackground.png';
 import { logOut } from '../../services/auth.services';
 import AppContext from '../../providers/AppContext';
@@ -25,7 +25,8 @@ const Header = (): JSX.Element => {
   const user = appState.user;
   const userUsername = appState.userData?.username;
 
-  const [isOpen, setIsOpen] = useState(false);
+  const [isTeamsOpen, setIsTeamsOpen] = useState(false);
+  const [isStatusOpen, setIsStatusOpen] = useState(false);
   const [teams, setTeams] = useState<Team[]>([]);
   const [userData, setUserData] = useState<User>({
     firstName: '',
@@ -75,23 +76,21 @@ const Header = (): JSX.Element => {
       userData: null,
     });
 
-    logOut();
-    updateUserStatus(userUsername!, UserStatus.OFFLINE);
+    logOut().catch(console.error);
+    updateUserStatus(userUsername!, UserStatus.OFFLINE).catch(console.error);
 
     toast.success('Successful sign out!');
     navigate('/');
   };
 
-  const toggling = () => setIsOpen(!isOpen);
-
   const handleMyTeamsClick = (e: React.MouseEvent<HTMLElement>) => {
     activeButton?.classList.remove('active-header-button');
     setActiveButton(e.currentTarget);
-    toggling();
+    setIsTeamsOpen(!isTeamsOpen);
   };
 
   const openATeam = () => {
-    setIsOpen(!isOpen);
+    setIsTeamsOpen(!isTeamsOpen);
     setIsDetailedChatClicked(false);
     setIsCreateChatClicked(false);
   };
@@ -109,7 +108,7 @@ const Header = (): JSX.Element => {
   const handleCreateTeam = (e: React.MouseEvent<HTMLElement>) => {
     activeButton?.classList.remove('active-header-button');
     setActiveButton(e.currentTarget);
-    setIsOpen(!isOpen);
+    setIsTeamsOpen(!isTeamsOpen);
     setIsTeamView(true);
     setIsCreateChatClicked(false);
     setIsDetailedChatClicked(false);
@@ -140,6 +139,20 @@ const Header = (): JSX.Element => {
     navigate('/my-meetings');
   };
 
+  const handleStatusClick = (e: React.MouseEvent<HTMLElement>) => {
+    activeButton?.classList.remove('active-header-button');
+    setActiveButton(e.currentTarget);
+    setIsStatusOpen(!isStatusOpen);
+  };
+
+  const handleBusy = () => {
+    updateUserStatus(userUsername!, UserStatus.DO_NOT_DISTURB).catch(console.error);
+  };
+
+  const handleOnline = () => {
+    updateUserStatus(userUsername!, UserStatus.ONLINE).catch(console.error);
+  };
+
   return (
     <>
       <header id='header'>
@@ -154,10 +167,10 @@ const Header = (): JSX.Element => {
           {user ?
             <>
               <button className='header-btn' onClick={handleMyTeamsClick}>My teams</button>
-              {isOpen &&
+              {isTeamsOpen &&
                 <div id='dropdown-menu-myteams'>
                   <OutsideClickHandler
-                    onOutsideClick={() => setIsOpen(false)}>
+                    onOutsideClick={() => setIsTeamsOpen(false)}>
                     <button id='create-a-team-btn-header' onClick={handleCreateTeam}>Create a team</button>
                     <div id='mapping-teams'>
                       {teams !== null ? Object.keys(teams).map((team) => mappingTeam(team, uid())) : <p>No teams to show</p>}
@@ -178,7 +191,16 @@ const Header = (): JSX.Element => {
                   }
                 </Link>
 
-                <UserStatusIndicator user={appState.userData!} />
+                <button className='set-status-btn' onClick={handleStatusClick}><UserStatusIndicator user={appState.userData!} /></button>
+                {isStatusOpen &&
+                  <div className='dropdown-menu-status'>
+                    <OutsideClickHandler
+                      onOutsideClick={() => setIsStatusOpen(false)}>
+                      <button onClick={handleBusy}>Busy</button>
+                      <button onClick={handleOnline}>Online</button>
+                    </OutsideClickHandler>
+                  </div>
+                }
               </div>
             </> :
             null

@@ -1,19 +1,23 @@
 import { DyteMeeting, provideDyteDesignSystem } from '@dytesdk/react-ui-kit';
 import { useDyteMeeting } from '@dytesdk/react-web-core';
 import axios from 'axios';
-import { useEffect } from 'react';
+import { useContext, useEffect } from 'react';
 import { BASE_URL, ORGANIZATION_ID, API_KEY } from '../../common/constants';
+import { UserStatus } from '../../common/user-status.enum';
+import AppContext from '../../providers/AppContext';
 import { dyteMeetingClosureFunc } from '../../services/dyte.services';
+import { updateUserStatus } from '../../services/users.services';
 import { MyMeetingProps } from '../../types/Interfaces';
 
 const MyMeeting = ({ meetingID, receivedMeetingTitle }: MyMeetingProps) => {
   const { meeting } = useDyteMeeting();
 
+  const { appState } = useContext(AppContext);
+  const username = appState?.userData?.username!;
+
   useEffect(() => {
     if (meeting) {
-      meeting.meta.on('roomJoined', () => {
-        meeting.joinRoom();
-      });
+      updateUserStatus(username, UserStatus.IN_A_MEETING).catch(console.error);
 
       provideDyteDesignSystem(document.body, {
         theme: 'light',
@@ -30,13 +34,15 @@ const MyMeeting = ({ meetingID, receivedMeetingTitle }: MyMeetingProps) => {
       });
 
       meeting.meta.on('disconnected', () => {
-        meeting.leaveRoom();
+        meeting.leaveRoom().catch(console.error);
+
+        updateUserStatus(username, UserStatus.ONLINE).catch(console.error);
 
         axios.request(dyteMeetingClosureFunc(BASE_URL, ORGANIZATION_ID, meetingID, API_KEY, receivedMeetingTitle))
           .catch((error) => console.error(error));
       });
     }
-  }, [meeting, meetingID, receivedMeetingTitle]);
+  }, [meeting, meetingID, receivedMeetingTitle, username]);
 
   return (
     <div style={{ height: '91vh' }}>

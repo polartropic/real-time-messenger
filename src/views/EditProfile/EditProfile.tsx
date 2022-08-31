@@ -10,6 +10,7 @@ import { ImageUpload } from '../../components/UploadFile/UploadFile';
 import 'react-toastify/dist/ReactToastify.css';
 import './EditProfile.css';
 import { deleteUserFile } from '../../services/storage.services';
+import useStatusTracking from '../../hooks/useStatusTracking';
 
 const EditProfile = (): JSX.Element => {
   const navigate = useNavigate();
@@ -23,6 +24,8 @@ const EditProfile = (): JSX.Element => {
   const [email, setEmail] = useState('');
   const [password, setPassword] = useState('');
   const [userData, setUserData] = useState<User>({} as User);
+
+  useStatusTracking(user!);
 
   useEffect(() => {
     if (appState.userData?.username) {

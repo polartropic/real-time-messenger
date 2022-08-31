@@ -13,7 +13,7 @@ const UserStatusIndicator = ({ user }: UserStatusProps) => {
 
   useEffect(() => {
     const unsubscribe = getLiveStatus(user.username, (snapshot) => {
-      const currentStatusInDB = snapshot.val();
+      const currentStatusInDB: UserStatusEnum = snapshot.val();
 
       if (currentStatusInDB === UserStatusEnum.ONLINE) setColor('#83D350');
       if (currentStatusInDB === UserStatusEnum.AWAY) setColor('#FBCE02');
