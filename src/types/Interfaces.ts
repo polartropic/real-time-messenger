@@ -150,3 +150,6 @@ export interface NotificationProps {
   activeChannel: Channel,
 }
 
+export interface ScheduleMeetingProps {
+  currentChannel: Channel,
+}
