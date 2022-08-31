@@ -14,15 +14,7 @@ const ChannelsList = ({ props }: ChannelsListProps) => {
     setIsMeetingClicked,
   } = useContext(AppContext);
 
-  const [activeChannel, setActiveChannel] = useState<Channel>({
-    id: '',
-    title: '',
-    participants: [], // UserIDs
-    messages: [],
-    isPublic: false,
-    teamID: '',
-    lastActivity: new Date(),
-  });
+  const [activeChannel, setActiveChannel] = useState<Channel>({} as Channel);
 
   const [searchTerm, setSearchTerm] = useState<string>('');
 
