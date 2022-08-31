@@ -26,7 +26,15 @@ const LoggedUser = (): JSX.Element => {
   } = useContext(AppContext);
   const userDetails: User = appState.userData!;
 
-  const [currentChat, setCurrentChat] = useState<IChannel>({} as IChannel);
+  const [currentChat, setCurrentChat] = useState<IChannel>({
+    id: '',
+    title: '',
+    participants: [],
+    messages: [],
+    isPublic: false,
+    teamID: '',
+    lastActivity: new Date(),
+  });
 
   const [channels, setChannels] = useState<IChannel[]>([]);
   const [allUsers, setAllUsers] = useState<User[]>([]);
@@ -83,6 +91,7 @@ const LoggedUser = (): JSX.Element => {
       .catch(console.error);
   }, []);
 
+  console.log(channels);
 
   const createChatFunc = () => {
     if (title.length < MIN_CHANNEL_NAME_LENGTH || title.length > MAX_CHANNEL_NAME_LENGTH) {
