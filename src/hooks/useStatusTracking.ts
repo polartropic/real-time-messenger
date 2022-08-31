@@ -12,7 +12,7 @@ export default function useStatusTracking(loggedInUser: User) {
     onIdle: onIdle,
     onActive: onActive,
     onAction: onAction,
-    timeout: 1000 * 3,
+    timeout: 1000 * 5 * 60,
   });
 
   useEffect(() => {
