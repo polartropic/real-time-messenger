@@ -4,16 +4,8 @@ import { Channel, Team, User } from '../types/Interfaces';
 import { deleteUserFromChat, getChatByName, removeUserFromChannel } from './channels.services';
 import { deleteUsersTeam, updateUserTeams } from './users.services';
 
-export const getAllTeams = () => {
-  return get(query(ref(db, 'teams')));
-};
-
 export const getAllTeamsLive = (listen: (_snapshot: DataSnapshot) => void) => {
   return onValue(ref(db, 'teams'), listen);
-};
-
-export const getTeamByID = (id: string) => {
-  return get(query(ref(db, `teams/${id}`)));
 };
 
 export const getTeamByName = (name: string) => {
@@ -78,7 +70,7 @@ export const manageTeamMembersUpdateUsers = (usersOut: User[], usersIn: User[], 
           .then((res) => {
             const object: object = res.val();
             const channel: Channel = Object.values(object)[0];
-            const channelID = Object.keys(res.val())[0];
+            const channelID = Object.keys(object)[0];
             const currentUserIndex = channel.participants.indexOf(user.username);
             removeUserFromChannel(channelID, Number(currentUserIndex));
           })

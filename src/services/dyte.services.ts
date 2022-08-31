@@ -31,8 +31,7 @@ export const dyteMeetingCreationFunc = (baseURL: string, orgID: string, apiKey: 
   const meetingCreation = {
     method: 'POST',
     url: `${baseURL}/organizations/${orgID}/meeting`,
-    // eslint-disable-next-line quote-props
-    headers: { 'Content-Type': 'application/json', Authorization: `${apiKey}` },
+    headers: { 'Content-Type': 'application/json', 'Authorization': `${apiKey}` },
     data: { title: name, authorization: { waitingRoom: false } },
   };
   return meetingCreation;

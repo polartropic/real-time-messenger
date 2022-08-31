@@ -42,7 +42,7 @@ export interface User {
 export interface Channel {
   id: string,
   title: string,
-  participants: string[], // UserIDs
+  participants: string[],
   messages: Message[],
   isPublic: boolean,
   lastActivity: Date,
@@ -51,9 +51,9 @@ export interface Channel {
 
 export interface Team {
   name: string,
-  owner: string | undefined, // UserID
-  members: string[] | [], // UserIDs
-  channels: string[], // ChannelIDs
+  owner: string | undefined,
+  members: string[] | [],
+  channels: string[],
 }
 
 export interface UserProps {
@@ -85,7 +85,7 @@ export interface TeamParticipantsProps {
 
 export interface ChannelsListProps {
   props: {
-    channels?: Channel[],
+    channels: Channel[],
     setCurrentChat: Dispatch<SetStateAction<Channel>>,
   },
 }

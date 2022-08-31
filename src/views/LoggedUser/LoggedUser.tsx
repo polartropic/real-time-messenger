@@ -26,15 +26,7 @@ const LoggedUser = (): JSX.Element => {
   } = useContext(AppContext);
   const userDetails: User = appState.userData!;
 
-  const [currentChat, setCurrentChat] = useState<IChannel>({
-    id: '',
-    title: '',
-    participants: [], // UserIDs
-    messages: [],
-    isPublic: false,
-    teamID: '',
-    lastActivity: new Date(),
-  });
+  const [currentChat, setCurrentChat] = useState<IChannel>({} as IChannel);
 
   const [channels, setChannels] = useState<IChannel[]>([]);
   const [allUsers, setAllUsers] = useState<User[]>([]);
@@ -62,15 +54,7 @@ const LoggedUser = (): JSX.Element => {
                     channel.id = id;
                     return channel;
                   } else {
-                    return {
-                      id: '',
-                      title: '',
-                      participants: [], // UserIDs
-                      messages: [],
-                      isPublic: false,
-                      teamID: '',
-                      lastActivity: new Date(),
-                    };
+                    return {} as IChannel;
                   }
                 });
             });

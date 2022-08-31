@@ -9,10 +9,9 @@ const HomePage = (): JSX.Element => {
 
   return (
     <>
-      {user ?
-        <LoggedUser /> :
-        <Register />
-      }
+      {!user ?
+        <Register /> :
+        <LoggedUser />}
     </>
   );
 };

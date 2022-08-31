@@ -1,4 +1,4 @@
-import { DataSnapshot, equalTo, get, onValue, orderByChild, push, query, ref, update } from 'firebase/database';
+import { DataSnapshot, get, onValue, push, ref, update } from 'firebase/database';
 import { db } from '../config/firebase-config';
 import { Message } from '../types/Interfaces';
 
@@ -72,24 +72,6 @@ export const getMessageById = (chatId: string, messageId: string | null) => {
       }
 
       return message;
-    });
-};
-
-export const getMessagesByAuthor = (chatId: string, username: string) => {
-  return get(query(ref(db, `channels/${chatId}/messages`), orderByChild('author'), equalTo(username)))
-    .then((snapshot: DataSnapshot) => {
-      if (!snapshot.exists()) return [];
-
-      return fromMessagesDocument(snapshot);
-    });
-};
-
-export const getMessagesInChat = (chatId: string) => {
-  return get(query(ref(db, `channels/${chatId}/messages`)))
-    .then((snapshot) => {
-      if (!snapshot.exists()) return [];
-
-      return fromMessagesDocument(snapshot);
     });
 };
 

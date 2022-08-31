@@ -2,7 +2,7 @@ import { DyteProvider, useDyteClient } from '@dytesdk/react-web-core';
 import axios from 'axios';
 import { useContext, useEffect, useState } from 'react';
 import { useNavigate, useParams } from 'react-router-dom';
-import { API_KEY, BASE_URL, ORGANIZATION_ID } from '../../common/constants';
+import { API_KEY, BASE_URL, CLOSED_MEETING_STATUS, ORGANIZATION_ID } from '../../common/constants';
 import { ToastContainer, toast } from 'react-toastify';
 import AppContext from '../../providers/AppContext';
 import { ReceivedMeeting } from '../../types/Interfaces';
@@ -20,15 +20,7 @@ const DetailedMeeting = (): JSX.Element => {
   const navigate = useNavigate();
 
   const [authToken, setAuthToken] = useState('');
-  const [receivedMeeting, setReceivedMeeting] = useState<ReceivedMeeting>({
-    createdAt: '',
-    id: '',
-    liveStreamOnStart: false,
-    recordOnStart: false,
-    roomName: '',
-    status: '',
-    title: '',
-  });
+  const [receivedMeeting, setReceivedMeeting] = useState<ReceivedMeeting>({} as ReceivedMeeting);
 
   useEffect(() => {
     axios.request(dyteMeetingFunc(BASE_URL, ORGANIZATION_ID, meetingID, API_KEY ))
@@ -42,6 +34,7 @@ const DetailedMeeting = (): JSX.Element => {
 
   const [meeting, initMeeting] = useDyteClient();
 
+
   useEffect(() => {
     if (authToken && receivedMeeting.roomName) {
       initMeeting({
@@ -54,7 +47,7 @@ const DetailedMeeting = (): JSX.Element => {
       });
     }
 
-    if (receivedMeeting.status === 'CLOSED') {
+    if (receivedMeeting.status === CLOSED_MEETING_STATUS) {
       toast.warning('The meeting is already closed! Please create a new one.');
       navigate('/my-meetings');
     }

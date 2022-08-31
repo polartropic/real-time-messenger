@@ -1,11 +1,11 @@
-import { FC, useState } from 'react';
+import { useState } from 'react';
 import { UserProps } from '../../types/Interfaces';
 import InitialsAvatar from 'react-initials-avatar';
 import { Tooltip } from '@mui/material';
 import UserStatusIndicator from '../UserStatusIndicator/UserStatusIndicator';
 import './User.css';
 
-const UserComponent: FC<UserProps> = ({ props }): JSX.Element => {
+const UserComponent = ({ props }: UserProps): JSX.Element => {
   const [open, setOpen] = useState(false);
 
   const handleClose = () => {

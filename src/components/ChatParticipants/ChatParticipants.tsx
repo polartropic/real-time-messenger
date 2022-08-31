@@ -56,11 +56,14 @@ const ChatParticipants = ({ currentChannel, allUsers, owner }: ChatParticipantsP
       .then(() => {
         toast.success(`You have successfully been removed from chat ${currentChannel.title}!`);
         setIsDetailedChatClicked(false);
-      });
+        const currentUserIndex = currentChannel.participants.indexOf(userUsername!);
 
-    const currentUserIndex = currentChannel.participants.indexOf(userUsername!);
-
-    removeUserFromChannel(currentChannel.id, currentUserIndex);
+        removeUserFromChannel(currentChannel.id, currentUserIndex);
+      })
+      .catch(((err) => {
+        toast.error('Sorry, something went wrong with leaving the chat!');
+        console.error(err.message);
+      }));
   };
 
   const mappingParticipants = (participant: User, key: string) => {
@@ -81,8 +84,8 @@ const ChatParticipants = ({ currentChannel, allUsers, owner }: ChatParticipantsP
   return (
     isDetailedChatClicked ?
       <div className='participants-list'>
-        {isMeetingClicked?
-          <button onClick={() => setIsMeetingClicked(!isMeetingClicked)} className='view-users-btn'>See chat participants</button>:
+        {isMeetingClicked ?
+          <button onClick={() => setIsMeetingClicked(!isMeetingClicked)} className='view-users-btn'>See chat participants</button> :
           <button onClick={() => setIsMeetingClicked(!isMeetingClicked)} className='view-users-btn'>Create a meeting</button>
         }
 

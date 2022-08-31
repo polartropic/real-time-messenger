@@ -35,6 +35,10 @@ const Channel = ({ currentChannel }: ChannelProps) => {
   }, [currentChannel.id]);
 
   useEffect(() => {
+    scrollToBottom();
+  }, [messages]);
+
+  useEffect(() => {
     if (!selectedFile) {
       setPreview(undefined);
       return;
@@ -45,6 +49,7 @@ const Channel = ({ currentChannel }: ChannelProps) => {
 
     return () => URL.revokeObjectURL(objectUrl);
   }, [selectedFile]);
+
 
   const onSelectFile = (acceptedFiles: File[]) => {
     if (acceptedFiles.length === 0) {
@@ -67,10 +72,6 @@ const Channel = ({ currentChannel }: ChannelProps) => {
     }
   };
 
-  useEffect(() => {
-    scrollToBottom();
-  }, [messages]);
-
   const handleEditMessage = (currentMessage: IMessage) => {
     setIsInEditMode(true);
     setMessageToBeEdited(currentMessage);
@@ -84,8 +85,11 @@ const Channel = ({ currentChannel }: ChannelProps) => {
           .catch(console.error);
       } else {
         addMessage(currentChannel.id, user?.username!, message)
-          .then(() => updateChannelLastActivity(currentChannel.id, Date.now()).catch(console.error))
-          .catch(console.error);
+          .then(() => updateChannelLastActivity(currentChannel.id, Date.now()))
+          .catch((err) => {
+            toast.error('Sorry, something went wrong');
+            console.error(err);
+          });
       }
     } else {
       toast.warning('Please enter a message!');
