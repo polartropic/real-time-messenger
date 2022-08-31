@@ -46,17 +46,18 @@ const UserComponent = ({ props }: UserProps): JSX.Element => {
       <div className='user-box' id='user-box'>
         {props?.user.imgURL ?
           <>
-            <img src={props?.user.imgURL} alt='avatar' className='user-avatar' /> {`@${props?.user.username}`}
+            <img src={props?.user.imgURL} alt='avatar' className='user-avatar' />
+            <div className='username-button'>
+              {`@${props?.user.username}`} {props?.buttonEl}
+            </div>
           </> :
           <>
             <InitialsAvatar name={`${props.user.firstName} ${props.user.lastName}`} className={'avatar-default'} />
-            {`@${props?.user.username}`}
+            <div className='username-button'>
+              {`@${props?.user.username}`} {props?.buttonEl}
+            </div>
           </>
         }
-
-        <div>
-          {props?.buttonEl}
-        </div>
 
         <UserStatusIndicator user={props.user} />
       </div>
