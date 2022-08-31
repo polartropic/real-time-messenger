@@ -2,6 +2,8 @@ import { useNavigate } from 'react-router-dom';
 import DefaultAvatar from '../../assets/images/Default-avatar.jpg';
 import Gitlab from '../../assets/images/Gitlab-icon.png';
 import Stefani from '../../assets/images/Stefani.jpg';
+import Emil from '../../assets/images/Emil-Botev.jpg';
+
 import './AboutUs.css';
 
 const AboutUs = (): JSX.Element => {
@@ -17,7 +19,7 @@ const AboutUs = (): JSX.Element => {
 
       <div className='descriptions'>
         <div className='single'>
-          <img className='avatar-about-us' src={DefaultAvatar} alt='Avatar of creator' />
+          <img className='avatar-about-us' src={Emil} alt='Avatar of creator' />
           <h3>Emil Botev</h3>
           <a href="https://gitlab.com/emilebotev" target="_blank" rel="noreferrer noopener">
             <img className='gitlab-icon' src={Gitlab} alt="gitlab-icon" />
