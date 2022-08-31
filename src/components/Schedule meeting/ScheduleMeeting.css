@@ -1,0 +1,21 @@
+#create-a-meeting {
+  padding-bottom: 30px;
+  padding-top: 20px;
+  border-radius: 20px;
+  overflow-y: auto;
+  max-height: calc(100vh - 250px);
+}
+
+#meeting-start,
+#meeting-end {
+  color: white;
+}
+
+#meeting-end {
+  padding-bottom: 20px;
+}
+
+#meeting-name,
+#meeting-name > input {
+  margin-bottom: 0px;
+}

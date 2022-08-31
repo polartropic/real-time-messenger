@@ -1,17 +1,12 @@
-import axios from 'axios';
 import { deleteUserFromChat, removeUserFromChannel } from '../../services/channels.services';
-import { dyteMeetingCreationFunc } from '../../services/dyte.services';
-import { createMeeting } from '../../services/meetings.services';
 import { ToastContainer, toast } from 'react-toastify';
 import { ChatParticipantsProps, User } from '../../types/Interfaces';
-import { useContext, useState } from 'react';
+import { useContext } from 'react';
 import AppContext from '../../providers/AppContext';
 import { uid } from 'uid';
-import DateTimePicker from 'react-datetime-picker';
-import { API_KEY, BASE_URL, ORGANIZATION_ID } from '../../common/constants';
 import UserComponent from '../User/User';
 import './ChatParticipants.css';
-import './DateTimePicker.css';
+import ScheduleMeeting from '../Schedule meeting/ScheduleMeeting';
 
 const ChatParticipants = ({ currentChannel, allUsers, owner }: ChatParticipantsProps): JSX.Element | null => {
   const { appState,
@@ -25,31 +20,12 @@ const ChatParticipants = ({ currentChannel, allUsers, owner }: ChatParticipantsP
 
   const userUsername = appState.userData?.username;
 
-  const [name, setName] = useState<string>('');
-  const [start, setStart] = useState<Date>(new Date());
-  const [end, setEnd] = useState<Date>(new Date());
-
   const URL = window.location.href;
 
   if (owner && currentChannel.participants.includes(owner?.username) &&
     allUsers.every((user) => user.username !== owner?.username)) {
     allUsers = [...allUsers, owner];
   }
-
-  const handleCreateMeeting = (e: React.FormEvent<HTMLFormElement>) => {
-    e.preventDefault();
-
-    axios.request(dyteMeetingCreationFunc(BASE_URL, ORGANIZATION_ID, API_KEY, name))
-      .then((response) => {
-        const convertedStart = start.toISOString();
-        const convertedEnd = end.toISOString();
-
-        createMeeting(name, convertedStart, convertedEnd, currentChannel.participants, response.data.data.meeting.id)
-          .then(() => toast.success('Successfully scheduled meeting!'))
-          .then(() => setIsMeetingClicked(false));
-      })
-      .catch((error) => console.error(error));
-  };
 
   const leaveChat = () => {
     deleteUserFromChat(userUsername, currentChannel.title)
@@ -90,25 +66,7 @@ const ChatParticipants = ({ currentChannel, allUsers, owner }: ChatParticipantsP
         }
 
         {isMeetingClicked ?
-          <form id='create-a-meeting' onSubmit={handleCreateMeeting}>
-            <h4>Create a meeting with chat participants:</h4>
-            <p id='meeting-name'>Meeting name:
-              <br />
-              <label htmlFor='content'></label>
-              <input type='text' required placeholder="Input meeting's name" value={name} onChange={(e) => setName(e.target.value)} />
-            </p>
-
-            <p id='meeting-start'>Meeting start:
-              <br />
-              <DateTimePicker format='dd-MM-yy HH:mm' onChange={setStart} value={start} />
-            </p>
-            <p id='meeting-end'>Meeting end:
-              <br />
-              <DateTimePicker format='dd-MM-yy HH:mm' onChange={setEnd} value={end} />
-            </p>
-
-            <button className='view-users-btn'>Schedule meeting</button>
-          </form> :
+          <ScheduleMeeting currentChannel={currentChannel}/> :
           <>
             <h4>Participants of chat:</h4><div className='participants'>
               {currentChannelUsers.map((participant) => mappingParticipants(participant, uid()))}
