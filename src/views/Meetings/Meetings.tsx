@@ -6,6 +6,7 @@ import AppContext from '../../providers/AppContext';
 import { Meeting } from '../../types/Interfaces';
 import SelectedMeeting from '../../components/SelectedMeeting/SelectedMeeting';
 import './react-big-calendar.css';
+import useStatusTracking from '../../hooks/useStatusTracking';
 
 const localizer = momentLocalizer(moment);
 
@@ -17,6 +18,8 @@ const Meetings = (): JSX.Element => {
   const [myMeetings, setMyMeetings] = useState<Meeting[]>([]);
   const [selectedEvent, setSelectedEvent] = useState<Meeting>({} as Meeting);
   const [modalState, setModalState] = useState(false);
+
+  useStatusTracking(appState.userData!);
 
   useEffect(() => {
     getAllMeetings()

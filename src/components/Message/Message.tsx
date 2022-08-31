@@ -12,18 +12,7 @@ const Message = ({ message, currentChannel, handleEditMessage, toBeEdited }: Mes
   const { appState } = useContext(AppContext);
   const currentUser = appState.userData;
 
-  const [author, setAuthor] = useState<User>({
-    firstName: '',
-    lastName: '',
-    username: '',
-    email: '',
-    phoneNumber: '',
-    imgURL: '',
-    status: '',
-    teams: [],
-    channels: [],
-    uid: '',
-  });
+  const [author, setAuthor] = useState<User>({} as User);
 
   const [open, setOpen] = useState(false);
 

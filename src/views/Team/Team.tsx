@@ -30,7 +30,7 @@ const MyTeam = (): JSX.Element => {
   const [currentChat, setCurrentChat] = useState<IChannel>({
     id: '',
     title: '',
-    participants: [], // UserIDs
+    participants: [],
     messages: [],
     isPublic: false,
     teamID: '',

@@ -1,4 +1,4 @@
-import { ReactNode, useContext, useEffect, useState } from 'react';
+import React, { ReactNode, useContext, useEffect, useState } from 'react';
 import ThunderTeamLogo from '../../assets/images/ThunderTeamLogo-noBackground.png';
 import { logOut } from '../../services/auth.services';
 import AppContext from '../../providers/AppContext';
@@ -24,20 +24,11 @@ const Header = (): JSX.Element => {
   } = useContext(AppContext);
   const user = appState.user;
   const userUsername = appState.userData?.username;
-  const [isOpen, setIsOpen] = useState(false);
+
+  const [isTeamsOpen, setIsTeamsOpen] = useState(false);
+  const [isStatusOpen, setIsStatusOpen] = useState(false);
   const [teams, setTeams] = useState<Team[]>([]);
-  const [userData, setUserData] = useState<User>({
-    firstName: '',
-    lastName: '',
-    username: '',
-    email: '',
-    phoneNumber: '',
-    imgURL: '',
-    status: '',
-    teams: [],
-    channels: [],
-    uid: '',
-  });
+  const [userData, setUserData] = useState<User>({} as User);
 
   const navigate = useNavigate();
   const [activeButton, setActiveButton] = useState<HTMLElement>();
@@ -92,19 +83,20 @@ const Header = (): JSX.Element => {
       userData: null,
     });
 
-    logOut();
-    updateUserStatus(userUsername!, UserStatus.OFFLINE);
+    logOut().catch(console.error);
+    updateUserStatus(userUsername!, UserStatus.OFFLINE).catch(console.error);
 
     toast.success('Successful sign out!');
     navigate('/');
   };
 
-  const toggle = () => setIsOpen(!isOpen);
+  const toggle = () =>setIsTeamsOpen(!isTeamsOpen)
 
   const handleMyTeamsClick = (e: React.MouseEvent<HTMLElement>) => {
     toggle();
     activeButton?.classList.remove('active-header-button');
     setActiveButton(e.currentTarget);
+    setIsTeamsOpen(!isTeamsOpen);
   };
 
   const openATeam = () => {
@@ -175,6 +167,20 @@ const Header = (): JSX.Element => {
     }
 
     navigate('/my-meetings');
+  };
+
+  const handleStatusClick = (e: React.MouseEvent<HTMLElement>) => {
+    activeButton?.classList.remove('active-header-button');
+    setActiveButton(e.currentTarget);
+    setIsStatusOpen(!isStatusOpen);
+  };
+
+  const handleBusy = () => {
+    updateUserStatus(userUsername!, UserStatus.DO_NOT_DISTURB).catch(console.error);
+  };
+
+  const handleOnline = () => {
+    updateUserStatus(userUsername!, UserStatus.ONLINE).catch(console.error);
   };
 
   return (
