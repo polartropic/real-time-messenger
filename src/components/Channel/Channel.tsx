@@ -24,6 +24,11 @@ const Channel = ({ currentChannel }: ChannelProps) => {
   const messagesEndRef = useRef<HTMLDivElement>(null);
 
   useEffect(() => {
+    setIsInEditMode(false);
+    setMessageToBeEdited({} as IMessage);
+  }, [currentChannel]);
+
+  useEffect(() => {
     if (currentChannel.id === '') return;
 
     const unsubscribe = getLiveMessages(currentChannel.id, (snapshot) => {

@@ -8,7 +8,11 @@ const CreateMessage = ({ handleSubmit, existingMessage }: CreateMessageProps) =>
   const [message, setMessage] = useState('');
 
   useEffect(() => {
-    if (existingMessage) setMessage(existingMessage);
+    if (existingMessage) {
+      setMessage(() => existingMessage);
+    } else {
+      setMessage(() => '');
+    }
   }, [existingMessage]);
 
   const sendMessage = () => {
