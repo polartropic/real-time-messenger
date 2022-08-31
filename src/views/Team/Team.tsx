@@ -163,6 +163,14 @@ const MyTeam = (): JSX.Element => {
       return toast.warning('Please add at least one participant in the chat!');
     }
 
+    getChatByName(title)
+      .then((snapshot) => {
+        if (snapshot.exists()) {
+          return toast.warning('This chat name is already taken! Please choose a different one.');
+        }
+      });
+
+
     if (teamID) {
       const membersToAdd = addedToChat.map((m) => m.username);
 
