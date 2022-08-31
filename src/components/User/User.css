@@ -1,7 +1,5 @@
 .user-box {
   display: flex;
-  justify-content:left;
-  align-items: center;
   width: auto;
   margin: 10px;
   font-size: 14px;
@@ -23,12 +21,12 @@
   object-fit: cover;
 }
 
-.user-box p {
-  line-height: 14px;
-  height: 25px;
-  display: table-cell;
-  padding: 10px;
-  text-align: justify;
+.username-button {
+ padding: 0px;
+  display: flex;
+  justify-content: space-between;
+  width: 100%;
+  align-items: center;
 }
 
 .search-users {
