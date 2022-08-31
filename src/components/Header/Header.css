@@ -134,7 +134,7 @@
 
 #mapping-teams {
   overflow-y: auto;
-  height: 270px;
+  max-height: 270px;
 }
 
 .dropdown-menu-status {

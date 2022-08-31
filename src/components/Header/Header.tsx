@@ -28,18 +28,7 @@ const Header = (): JSX.Element => {
   const [isTeamsOpen, setIsTeamsOpen] = useState(false);
   const [isStatusOpen, setIsStatusOpen] = useState(false);
   const [teams, setTeams] = useState<Team[]>([]);
-  const [userData, setUserData] = useState<User>({
-    firstName: '',
-    lastName: '',
-    username: '',
-    email: '',
-    phoneNumber: '',
-    imgURL: '',
-    status: '',
-    teams: [],
-    channels: [],
-    uid: '',
-  });
+  const [userData, setUserData] = useState<User>({} as User);
 
   const navigate = useNavigate();
 
