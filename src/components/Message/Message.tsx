@@ -1,3 +1,4 @@
+import { Tooltip } from '@mui/material';
 import { useContext, useEffect, useState } from 'react';
 import InitialsAvatar from 'react-initials-avatar';
 import { Reaction } from '../../common/reactions.enum';
@@ -24,12 +25,21 @@ const Message = ({ message, currentChannel, handleEditMessage, toBeEdited }: Mes
     uid: '',
   });
 
+  const [open, setOpen] = useState(false);
+
   useEffect(() => {
     getUserByUsername(message.author)
       .then((res) => setAuthor(res.val()))
       .catch(console.error);
   }, [message.author]);
 
+  const handleClose = () => {
+    setOpen(false);
+  };
+
+  const handleOpen = () => {
+    setOpen(true);
+  };
   const handleLike = () => {
     likeMessage(currentChannel.id, message.id, currentUser?.username!).catch(console.error);
   };
@@ -60,25 +70,50 @@ const Message = ({ message, currentChannel, handleEditMessage, toBeEdited }: Mes
           <InitialsAvatar name={`${author.firstName} ${author.lastName}`} className={'avatar-default-header'} />
         }
       </div>
+      <Tooltip open={open} onClose={handleClose} onOpen={handleOpen}
+        title={
 
-      <div className={isCurrentUserAuthor ? 'my-message' : 'others-message'}>
-        <div className='message-author'>
-          @{message.author}
-        </div>
-        {message.image ?
-          <img src={message.fileURL} className='img-in-message' alt='message-img' /> :
-          <div className='message-content'>
-            {message.content}
-          </div>
+          <p>{message.createdOn.toLocaleDateString() + ' ' +
+            message.createdOn.toLocaleTimeString()}</p>
+
         }
+        placement={'top'}
+        arrow
+        componentsProps={{
+          tooltip: {
+            sx: {
+              'color': 'white',
+              'marginTop': '10px !important',
+              'bgcolor': 'rgba(69, 88, 207, 0.8)',
+              'borderRadius': '10px',
+              'fontSize': 11,
+              'z-index': 'tool-tip: 1000',
+              '& .MuiTooltip-arrow': {
+                'color': 'rgba(69, 88, 207, 0.8)',
+              },
+            },
+          },
+        }}>
 
-        <div className='react-btns'>
-          <button
-            onClick={Object.values(message.likedBy).includes(currentUser?.username!) ? handleDislike : handleLike}
-            className='reactions'>{`${Object.values(message.likedBy).includes(currentUser?.username!) ? Reaction.HEART2 : Reaction.HEART1} ${Object.values(message.likedBy).length}`}
-          </button>
+        <div className={isCurrentUserAuthor ? 'my-message' : 'others-message'}>
+          <div className='message-author'>
+            @{message.author}
+          </div>
+          {message.image ?
+            <img src={message.fileURL} className='img-in-message' alt='message-img' /> :
+            <div className='message-content'>
+              {message.content}
+            </div>
+          }
+
+          <div className='react-btns'>
+            <button
+              onClick={Object.values(message.likedBy).includes(currentUser?.username!) ? handleDislike : handleLike}
+              className='reactions'>{`${Object.values(message.likedBy).includes(currentUser?.username!) ? Reaction.HEART2 : Reaction.HEART1} ${Object.values(message.likedBy).length}`}
+            </button>
+          </div>
         </div>
-      </div>
+      </Tooltip>
     </div >
   );
 };
