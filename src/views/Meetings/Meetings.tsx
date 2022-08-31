@@ -15,13 +15,7 @@ const Meetings = (): JSX.Element => {
 
   const [events, setEvents] = useState<Meeting[]>([]);
   const [myMeetings, setMyMeetings] = useState<Meeting[]>([]);
-  const [selectedEvent, setSelectedEvent] = useState<Meeting>({
-    title: '',
-    start: new Date(),
-    end: new Date(),
-    participants: [],
-    id: '',
-  });
+  const [selectedEvent, setSelectedEvent] = useState<Meeting>({} as Meeting);
   const [modalState, setModalState] = useState(false);
 
   useEffect(() => {
@@ -52,7 +46,7 @@ const Meetings = (): JSX.Element => {
   };
 
   return <div>
-    {modalState === true ?
+    {modalState ?
       <SelectedMeeting selectedEvent={selectedEvent} setModalState={setModalState}/> :
       null
     }

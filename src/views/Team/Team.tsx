@@ -42,29 +42,13 @@ const MyTeam = (): JSX.Element => {
   const [teamMembersObjects, setTeamMembersObject] = useState<User[]>([]);
   const [addedToChat, setAddedToChat] = useState<User[]>([]);
   const [initialChatParticipants, setInitialChatParticipants] = useState<User[]>([]);
-  const [teamProps, setTeamProps] = useState<Team>({
-    name: '',
-    owner: '',
-    members: [],
-    channels: [],
-  });
+  const [teamProps, setTeamProps] = useState<Team>({} as Team);
 
   const { name } = useParams<{ name: string }>();
 
   const [outerUsers, setOuterUsers] = useState<User[]>([]);
   const [usersToRemove, setUsersToRemove] = useState<User[]>([]);
-  const [ownerObj, setOwnerObject] = useState<User>({
-    firstName: '',
-    lastName: '',
-    username: '',
-    email: '',
-    phoneNumber: '',
-    imgURL: '',
-    status: '',
-    teams: [],
-    channels: [],
-    uid: '',
-  });
+  const [ownerObj, setOwnerObject] = useState<User>({} as User);
 
   useEffect(() => {
     getTeamByName(name!)
@@ -133,11 +117,12 @@ const MyTeam = (): JSX.Element => {
             const allUsersOutOfTeam: User[] = Object.values(usersObj)
               .filter((userA) => ![...snapshot.val(), teamProps?.owner].includes(userA.username));
             setOuterUsers(allUsersOutOfTeam);
+            setIsTeamView(true);
           })
           .catch(console.error);
       };
     });
-  }, [appState.userData?.username, teamID, teamProps?.owner]);
+  }, [appState.userData?.username, setIsTeamView, teamID, teamProps?.owner]);
 
   useEffect(() => {
     if (isCreateChatClicked) {
@@ -186,7 +171,8 @@ const MyTeam = (): JSX.Element => {
           toast.success('Successful chat creation!');
           [...membersToAdd, currentUser!].map((participant) => updateUserChats(participant, title));
           setInitialChatParticipants(teamMembersObjects);
-        });
+        })
+        .catch((console.error));
     }
   };
 

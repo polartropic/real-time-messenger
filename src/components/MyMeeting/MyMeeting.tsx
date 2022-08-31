@@ -33,7 +33,6 @@ const MyMeeting = ({ meetingID, receivedMeetingTitle }: MyMeetingProps) => {
         meeting.leaveRoom();
 
         axios.request(dyteMeetingClosureFunc(BASE_URL, ORGANIZATION_ID, meetingID, API_KEY, receivedMeetingTitle))
-          .then((response) => console.log(response.data))
           .catch((error) => console.error(error));
       });
     }

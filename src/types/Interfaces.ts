@@ -144,3 +144,9 @@ export interface MyMeetingProps {
   meetingID: string,
   receivedMeetingTitle: string,
 }
+
+export interface NotificationProps {
+  currentChannel: Channel,
+  activeChannel: Channel,
+}
+

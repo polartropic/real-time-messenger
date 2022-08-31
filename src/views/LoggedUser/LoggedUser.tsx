@@ -91,8 +91,6 @@ const LoggedUser = (): JSX.Element => {
       .catch(console.error);
   }, []);
 
-  console.log(channels);
-
   const createChatFunc = () => {
     if (title.length < MIN_CHANNEL_NAME_LENGTH || title.length > MAX_CHANNEL_NAME_LENGTH) {
       return toast.warning(`The name of the chat must be between ${MIN_CHANNEL_NAME_LENGTH} and ${MAX_CHANNEL_NAME_LENGTH} symbols`);
