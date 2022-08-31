@@ -45,17 +45,13 @@
   width: 11px;
 }
 
-#stats,
-#navigation {
-  display: flex;
-  flex-wrap: wrap;
-}
+@media screen and (min-width: 1050px) {
 
-#stats > h4 {
-  margin-left: 10px;
-  margin-right: 10px;
-  align-self: center;
-  font-size: 15px;
+  #stats,
+  #navigation {
+    display: flex;
+    flex-wrap: wrap;
+  }
 }
 
 .header-btn {
@@ -70,8 +66,10 @@
   position: relative;
   display: inline-block;
   text-decoration: none;
+  transition: left 0.5s ease-in-out;
 }
 
+/* } */
 .header-btn:hover,
 .active-header-button {
   border: 1px solid rgba(243, 214, 121, 1);
@@ -133,4 +131,44 @@
 #mapping-teams {
   overflow-y: auto;
   max-height: 270px;
+}
+
+@media screen and (max-width: 1050px) {
+
+  /* #navigation-menu{
+    opacity: 0;
+  } */
+  #navigation-menu {
+    padding-top: 50px;
+    display: flex;
+    flex-direction: column;
+    z-index: 1;
+    width: 50%;
+    height: fit-content;
+    background-color: rgba(69, 88, 207, 0.7);
+    border-radius: 10px;
+    align-items: flex-end;
+    opacity: 1;
+    transition: left 0.5s ease-in-out;
+  }
+
+  .send-btn {
+    align-self: center;
+    justify-self: flex-end;
+  }
+
+  div #dropdown-menu-myteams {
+    position: relative;
+    justify-self: center;
+    margin: 0 auto;
+    padding-top: 10px;
+    padding-bottom: 10px;
+    text-align: center;
+    z-index: 11;
+    width: fit-content;
+    background-color: transparent;
+    border: none;
+
+  }
+
 }

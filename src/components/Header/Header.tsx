@@ -24,7 +24,6 @@ const Header = (): JSX.Element => {
   } = useContext(AppContext);
   const user = appState.user;
   const userUsername = appState.userData?.username;
-
   const [isOpen, setIsOpen] = useState(false);
   const [teams, setTeams] = useState<Team[]>([]);
   const [userData, setUserData] = useState<User>({
@@ -41,9 +40,27 @@ const Header = (): JSX.Element => {
   });
 
   const navigate = useNavigate();
-
   const [activeButton, setActiveButton] = useState<HTMLElement>();
+  const [width, setWidth] = useState(0);
+  const [isNavMenu, setIsNavMenu] = useState(true);
 
+  useEffect(() => {
+    const handleWidth = () => {
+      setWidth(window.innerWidth);
+    };
+
+    window.addEventListener('resize', handleWidth);
+
+    return () => window.removeEventListener('resize', handleWidth);
+  }, []);
+
+  useEffect(() => {
+    if (width < 1050) {
+      setIsNavMenu(false);
+    } else {
+      setIsNavMenu(true);
+    }
+  }, [width]);
   useEffect(() => {
     if (appState.userData?.username) {
       const unsubscribe = getLiveUserByUsername(appState.userData.username,
@@ -82,16 +99,20 @@ const Header = (): JSX.Element => {
     navigate('/');
   };
 
-  const toggling = () => setIsOpen(!isOpen);
+  const toggle = () => setIsOpen(!isOpen);
 
   const handleMyTeamsClick = (e: React.MouseEvent<HTMLElement>) => {
+    toggle();
     activeButton?.classList.remove('active-header-button');
     setActiveButton(e.currentTarget);
-    toggling();
   };
 
   const openATeam = () => {
-    setIsOpen(!isOpen);
+    if (width < 1050) {
+      setIsNavMenu(false);
+    }
+
+    toggle();
     setIsDetailedChatClicked(false);
     setIsCreateChatClicked(false);
   };
@@ -109,10 +130,14 @@ const Header = (): JSX.Element => {
   const handleCreateTeam = (e: React.MouseEvent<HTMLElement>) => {
     activeButton?.classList.remove('active-header-button');
     setActiveButton(e.currentTarget);
-    setIsOpen(!isOpen);
+    toggle();
     setIsTeamView(true);
     setIsCreateChatClicked(false);
     setIsDetailedChatClicked(false);
+    if (width < 1050) {
+      setIsNavMenu(false);
+    }
+
 
     if (!URL.includes('home-page')) {
       navigate('/');
@@ -120,6 +145,10 @@ const Header = (): JSX.Element => {
   };
 
   const handleGoToHomPage = (e: React.MouseEvent<HTMLElement>) => {
+    if (width < 1050) {
+      setIsNavMenu(false);
+    }
+
     activeButton?.classList.remove('active-header-button');
     setActiveButton(e.currentTarget);
     setIsDetailedChatClicked(false);
@@ -131,12 +160,20 @@ const Header = (): JSX.Element => {
   const handleAboutUs = (e: React.MouseEvent<HTMLElement>) => {
     activeButton?.classList.remove('active-header-button');
     setActiveButton(e.currentTarget);
+    if (width < 1050) {
+      setIsNavMenu(false);
+    }
+
     navigate('/about-us');
   };
 
   const handleMyMeetingsClick = (e: React.MouseEvent<HTMLElement>) => {
     activeButton?.classList.remove('active-header-button');
     setActiveButton(e.currentTarget);
+    if (width < 1050) {
+      setIsNavMenu(false);
+    }
+
     navigate('/my-meetings');
   };
 
@@ -146,44 +183,55 @@ const Header = (): JSX.Element => {
         <div id='stats'>
           <img src={ThunderTeamLogo} alt='logo' className='main-logo'></img>
         </div>
-
-        <div id='navigation'>
-          <button className='header-btn' onClick={handleGoToHomPage}>Home</button>
-          <button className='header-btn' onClick={handleAboutUs}>About us</button>
-
-          {user ?
+        <div id={width > 1050 ? 'navigation' : 'navigation-menu'}>
+          {isNavMenu &&
             <>
-              <button className='header-btn' onClick={handleMyTeamsClick}>My teams</button>
-              {isOpen &&
-                <div id='dropdown-menu-myteams'>
-                  <OutsideClickHandler
-                    onOutsideClick={() => setIsOpen(false)}>
-                    <button id='create-a-team-btn-header' onClick={handleCreateTeam}>Create a team</button>
-                    <div id='mapping-teams'>
-                      {teams !== null ? Object.keys(teams).map((team) => mappingTeam(team, uid())) : <p>No teams to show</p>}
+              <button className='header-btn' onClick={handleGoToHomPage}>Home</button>
+              <button className='header-btn' onClick={handleAboutUs}>About us</button>
+
+              {user ?
+                <>
+                  <button className='header-btn' onClick={handleMyTeamsClick}>My teams</button>
+                  {isOpen &&
+
+                    <div id='dropdown-menu-myteams'>
+                      <OutsideClickHandler onOutsideClick={() => setIsOpen(false)}>
+
+                        <button id='create-a-team-btn-header' onClick={handleCreateTeam}>Create a team</button>
+                        <div id='mapping-teams'>
+                          {teams !== null ? Object.keys(teams).map((team) => mappingTeam(team, uid())) : <p>No teams to show</p>}
+                        </div>
+                      </OutsideClickHandler>
                     </div>
-                  </OutsideClickHandler>
-                </div>
-              }
-
-              <button className='header-btn' id='my-meetings' onClick={handleMyMeetingsClick}>My meetings</button>
-
-              <button onClick={handleLogOut} className='header-btn' id='logout-btn'>Log out</button>
-
-              <div className='header-avatar'>
-                <Link to={'/edit-profile'} style={{ textDecoration: 'none' }}>
-                  {userData.imgURL ?
-                    <img src={userData.imgURL} alt='avatar' className='user-avatar-header' /> :
-                    <InitialsAvatar name={`${userData.firstName} ${userData.lastName}`} className={'avatar-default-header'} />
                   }
-                </Link>
 
-                <UserStatusIndicator user={appState.userData!} />
-              </div>
-            </> :
-            null
-          }
+                  <button className='header-btn' id='my-meetings' onClick={handleMyMeetingsClick}>My meetings</button>
+
+                  <button onClick={handleLogOut} className='header-btn' id='logout-btn'>Log out</button>
+                </> :
+                null
+              }
+            </>}
         </div>
+
+        {width < 1050 && user &&
+          <button className='send-btn' value='' onClick={() => setIsNavMenu(!isNavMenu)}>
+            <i className="fa-solid fa-bars  "></i>
+          </button>}
+
+        {user ?
+
+          <div className='header-avatar'>
+            <Link to={'/edit-profile'} style={{ textDecoration: 'none' }}>
+              {userData.imgURL ?
+                <img src={userData.imgURL} alt='avatar' className='user-avatar-header' /> :
+                <InitialsAvatar name={`${userData.firstName} ${userData.lastName}`} className={'avatar-default-header'} />
+              }
+            </Link>
+
+            <UserStatusIndicator user={appState.userData!} />
+          </div> :
+          null}
       </header>
       <ToastContainer />
     </>
