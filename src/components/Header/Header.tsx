@@ -90,7 +90,7 @@ const Header = (): JSX.Element => {
     navigate('/');
   };
 
-  const toggle = () =>setIsTeamsOpen(!isTeamsOpen)
+  const toggle = () => setIsTeamsOpen(!isTeamsOpen);
 
   const handleMyTeamsClick = (e: React.MouseEvent<HTMLElement>) => {
     toggle();
@@ -198,10 +198,10 @@ const Header = (): JSX.Element => {
               {user ?
                 <>
                   <button className='header-btn' onClick={handleMyTeamsClick}>My teams</button>
-                  {isOpen &&
+                  {isTeamsOpen &&
 
                     <div id='dropdown-menu-myteams'>
-                      <OutsideClickHandler onOutsideClick={() => setIsOpen(false)}>
+                      <OutsideClickHandler onOutsideClick={() => setIsTeamsOpen(false)}>
 
                         <button id='create-a-team-btn-header' onClick={handleCreateTeam}>Create a team</button>
                         <div id='mapping-teams'>
@@ -234,8 +234,17 @@ const Header = (): JSX.Element => {
                 <InitialsAvatar name={`${userData.firstName} ${userData.lastName}`} className={'avatar-default-header'} />
               }
             </Link>
+            <button className='set-status-btn' onClick={handleStatusClick}><UserStatusIndicator user={appState.userData!} /></button>
+            {isStatusOpen &&
+              <div className='dropdown-menu-status'>
+                <OutsideClickHandler
+                  onOutsideClick={() => setIsStatusOpen(false)}>
+                  <button onClick={handleBusy}>Busy</button>
+                  <button onClick={handleOnline}>Online</button>
+                </OutsideClickHandler>
+              </div>
+            }
 
-            <UserStatusIndicator user={appState.userData!} />
           </div> :
           null}
       </header>
