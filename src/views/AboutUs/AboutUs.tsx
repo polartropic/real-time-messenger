@@ -17,6 +17,8 @@ const AboutUs = (): JSX.Element => {
 
       <h1>About the developers</h1>
 
+      <p>"Successful teams don't happen by accident. They are made, not born."</p>
+
       <div className='descriptions'>
         <div className='single'>
           <img className='avatar-about-us' src={Emil} alt='Avatar of creator' />
