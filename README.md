@@ -48,7 +48,7 @@ ThunderTeam is a work collaboration application, offering the ability to:
 ![image](/src/assets/readme-images/Not-found.jpg)
 
 ## Link to the hosted project
-
+https://thunderteam-99849.web.app/home-page
 ## Authors
 - Emil Botev
 - Teodora Yaneva
