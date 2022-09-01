@@ -50,7 +50,9 @@ const ScheduleMeeting = ({ currentChannel }: ScheduleMeetingProps): JSX.Element 
       </p>
 
       <button className='view-users-btn'>Schedule meeting</button>
-      <ToastContainer />
+      <ToastContainer
+        autoClose={2000}
+      ></ToastContainer>
     </form>
   );
 };

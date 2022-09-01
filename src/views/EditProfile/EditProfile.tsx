@@ -190,7 +190,9 @@ const EditProfile = (): JSX.Element => {
         </button>
       </div>
       <>
-        <ToastContainer />
+        <ToastContainer
+          autoClose={2000}
+        ></ToastContainer>
       </>
     </div>
   );

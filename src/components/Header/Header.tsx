@@ -250,7 +250,9 @@ const Header = (): JSX.Element => {
           </div> :
           null}
       </header>
-      <ToastContainer />
+      <ToastContainer
+        autoClose={1000}
+      ></ToastContainer>
     </>
   );
 };

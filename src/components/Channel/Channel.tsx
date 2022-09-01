@@ -144,7 +144,9 @@ const Channel = ({ currentChannel }: ChannelProps) => {
       </Dropzone><br /><br />
 
       <CreateMessage handleSubmit={handleSubmit} existingMessage={messageToBeEdited?.content} />
-      <ToastContainer />
+      <ToastContainer
+        autoClose={2000}
+      ></ToastContainer>
     </div>
   );
 };

@@ -81,7 +81,9 @@ const ChatParticipants = ({ currentChannel, allUsers, owner }: ChatParticipantsP
             </div>
           </>
         }
-        <ToastContainer />
+        <ToastContainer
+          autoClose={2000}
+        ></ToastContainer>
       </div> :
       <div className='participants-list'>
       </div>

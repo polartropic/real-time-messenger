@@ -143,7 +143,9 @@ const Register = (): JSX.Element => {
           <button id="sign-up-btn">Sign up</button>
         </form>
       </div>
-      <ToastContainer />
+      <ToastContainer
+        autoClose={2000}
+      ></ToastContainer>
     </div>
   );
 };

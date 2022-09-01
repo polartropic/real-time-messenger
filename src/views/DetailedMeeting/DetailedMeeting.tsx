@@ -61,7 +61,9 @@ const DetailedMeeting = (): JSX.Element => {
       </>:
       <DyteProvider value={meeting}>
         <MyMeeting meetingID={meetingID!} receivedMeetingTitle={receivedMeeting.title}/>
-        <ToastContainer />
+        <ToastContainer
+          autoClose={2000}
+        ></ToastContainer>
       </DyteProvider>
   );
 };
