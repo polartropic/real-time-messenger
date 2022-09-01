@@ -187,7 +187,9 @@ const Header = (): JSX.Element => {
     <>
       <header id='header'>
         <div id='stats'>
-          <img src={ThunderTeamLogo} alt='logo' className='main-logo'></img>
+          <Link to={'/home-page'}>
+            <img src={ThunderTeamLogo} alt='logo' className='main-logo'></img>
+          </Link>
         </div>
         <div id={width > 1050 ? 'navigation' : 'navigation-menu'}>
           {isNavMenu &&
