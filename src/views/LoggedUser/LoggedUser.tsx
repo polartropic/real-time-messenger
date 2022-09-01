@@ -12,6 +12,7 @@ import { createChat, getChatByName } from '../../services/channels.services';
 import { getTeamByName, addTeamToDB } from '../../services/teams.services';
 import { useNavigate } from 'react-router-dom';
 import useStatusTracking from '../../hooks/useStatusTracking';
+import Logo from '../../assets/images/Logo.png';
 import './LoggedUser.css';
 
 const LoggedUser = (): JSX.Element => {
@@ -160,7 +161,11 @@ const LoggedUser = (): JSX.Element => {
 
       <div className="main-container">
         <>
-          {isCreateChatClicked ?
+          {!isCreateChatClicked && !isDetailedChatClicked && !isTeamView &&
+            <div className='main-container-bg'><img src={Logo} alt='background' /></div>
+          }
+
+          {isCreateChatClicked &&
             <>
               <input type="text" className={'create-chat-title'} name="team-name" placeholder='Please, add a title...' required defaultValue='' onChange={(e) => setTitle(e.target.value.trim())} />
               <button className='create-a-team' onClick={createChatFunc}>Create a Chat</button>
@@ -169,16 +174,14 @@ const LoggedUser = (): JSX.Element => {
                 setLeftSide={setInitialParticipants}
                 rightSide={addedParticipants}
                 setRightSide={setAddedParticipants} />
-            </> :
-            null
+            </>
           }
 
-          {isDetailedChatClicked ?
-            <Channel currentChannel={currentChat} /> :
-            null
+          {isDetailedChatClicked &&
+            <Channel currentChannel={currentChat} />
           }
 
-          {isTeamView ?
+          {isTeamView &&
             <>
               <input type="text" className={'create-chat-title'} name="team-name" placeholder='Please, add a title...' required defaultValue='' onChange={(e) => setTitle(e.target.value.trim())} />
               <button className='create-a-team' onClick={createTeam}>Create a Team</button>
@@ -187,8 +190,7 @@ const LoggedUser = (): JSX.Element => {
                 setLeftSide={setInitialParticipants}
                 rightSide={addedParticipants}
                 setRightSide={setAddedParticipants} />
-            </> :
-            null
+            </>
           }
         </>
       </div>

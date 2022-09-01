@@ -13,6 +13,7 @@ import { toast } from 'react-toastify';
 import { MIN_CHANNEL_NAME_LENGTH, MAX_CHANNEL_NAME_LENGTH, MIN_NUMBER_OF_CHAT_PARTICIPANTS } from '../../common/constants';
 import { createTeamChat, getChatByName } from '../../services/channels.services';
 import AppContext from '../../providers/AppContext';
+import Logo from '../../assets/images/Logo.png';
 import './Team.css';
 
 const MyTeam = (): JSX.Element => {
@@ -194,7 +195,7 @@ const MyTeam = (): JSX.Element => {
 
       <div className='main-container'>
         <>
-          {isCreateChatClicked ?
+          {isCreateChatClicked &&
             <>
               <input type="text" className={'create-chat-title'}
                 name="team-name" placeholder='Please, add a title...'
@@ -208,8 +209,7 @@ const MyTeam = (): JSX.Element => {
                 setLeftSide={setInitialChatParticipants}
                 rightSide={addedToChat}
                 setRightSide={setAddedToChat} />
-            </> :
-            null
+            </>
           }
 
           {isDetailedChatClicked ?
@@ -224,7 +224,7 @@ const MyTeam = (): JSX.Element => {
                   rightSide={usersToRemove}
                   setRightSide={setUsersToRemove} />
               </> :
-              null
+              <div className='main-container-bg'><img src={Logo} alt='background' /></div>
           }
         </>
       </div>
