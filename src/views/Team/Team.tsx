@@ -195,7 +195,13 @@ const MyTeam = (): JSX.Element => {
 
       <div className='main-container'>
         <>
-          {isCreateChatClicked && !ownerObj &&
+
+          {!isCreateChatClicked && !isDetailedChatClicked && currentUser !== ownerObj.username ?
+            <div className='main-container-bg'><img src={Logo} alt='background' /></div>:
+            null
+          }
+
+          {isCreateChatClicked &&
             <>
               <input type="text" className={'create-chat-title'}
                 name="team-name" placeholder='Please, add a title...'
@@ -224,7 +230,7 @@ const MyTeam = (): JSX.Element => {
                   rightSide={usersToRemove}
                   setRightSide={setUsersToRemove} />
               </> :
-              <div className='main-container-bg'><img src={Logo} alt='background' /></div>
+              null
           }
         </>
       </div>
