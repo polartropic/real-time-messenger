@@ -24,6 +24,7 @@
 
 .message-avatar img {
   margin: 0;
+  object-fit: cover;
 }
 
 .message-avatar .avatar-default-header {
