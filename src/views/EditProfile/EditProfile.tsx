@@ -50,8 +50,6 @@ const EditProfile = (): JSX.Element => {
           user: appState.user,
           userData: { ...userData, firstName },
         });
-
-        toast.success('Successful change!');
       })
       .catch((error) => {
         toast.error(error.message);
@@ -71,8 +69,6 @@ const EditProfile = (): JSX.Element => {
           user: appState.user,
           userData: { ...userData, lastName },
         });
-
-        toast.success('Successful change!');
       })
       .catch((error) => {
         toast.error(error.message);
@@ -92,8 +88,6 @@ const EditProfile = (): JSX.Element => {
           user: appState.user,
           userData: { ...userData, phoneNumber },
         });
-
-        toast.success('Successful change!');
       })
       .catch((error) => {
         toast.error(error.message);
@@ -116,7 +110,6 @@ const EditProfile = (): JSX.Element => {
           });
 
           updateEmail(user!.username, email);
-          toast.success('Successful change!');
         })
         .catch((error) => {
           if (error.message.includes('already-in-use')) {
@@ -136,16 +129,15 @@ const EditProfile = (): JSX.Element => {
     }
 
     updateUserPassword(password)
-      .then(() => {
-        toast.success('Successful change!');
-      })
+      .then(() => {})
       .catch(console.error);
   };
 
   const manageDeleteFile = () => {
     const url = userData.imgURL;
     deleteUserFile(userData.username, url)
-      .then(() => toast.success('You deleted you avatar successfully!'));
+      .then(() => {})
+      .catch(console.error);
   };
 
   return (

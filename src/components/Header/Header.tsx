@@ -85,8 +85,6 @@ const Header = (): JSX.Element => {
 
     logOut().catch(console.error);
     updateUserStatus(userUsername!, UserStatus.OFFLINE).catch(console.error);
-
-    toast.success('Successful sign out!');
     navigate('/');
   };
 

@@ -40,7 +40,6 @@ const Login = (): JSX.Element => {
                     });
 
                     setIsDetailedChatClicked(false);
-                    toast.success('Successful sign in!');
                     navigate('/');
                   }
                 })
