@@ -166,22 +166,22 @@ const MyTeam = (): JSX.Element => {
     getChatByName(title)
       .then((snapshot) => {
         if (snapshot.exists()) {
-          return toast.warning('This chat name is already taken! Please choose a different one.');
+          toast.warning('This chat name is already taken! Please choose a different one.');
+          return;
+        } else {
+          if (teamID) {
+            const membersToAdd = addedToChat.map((m) => m.username);
+
+            createTeamChat(teamID, title, [...membersToAdd, currentUser!])
+              .then(() => {
+                toast.success('Successful chat creation!');
+                [...membersToAdd, currentUser!].map((participant) => updateUserChats(participant, title));
+                setInitialChatParticipants(teamMembersObjects);
+              })
+              .catch((console.error));
+          }
         }
       });
-
-
-    if (teamID) {
-      const membersToAdd = addedToChat.map((m) => m.username);
-
-      createTeamChat(teamID, title, [...membersToAdd, currentUser!])
-        .then(() => {
-          toast.success('Successful chat creation!');
-          [...membersToAdd, currentUser!].map((participant) => updateUserChats(participant, title));
-          setInitialChatParticipants(teamMembersObjects);
-        })
-        .catch((console.error));
-    }
   };
 
   return (
