@@ -88,7 +88,7 @@ const Login = (): JSX.Element => {
         <br />
       </form>
       <ToastContainer
-        autoClose={1000}
+        autoClose={2000}
       ></ToastContainer>
     </div>
   );
