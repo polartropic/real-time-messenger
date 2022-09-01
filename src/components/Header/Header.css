@@ -141,7 +141,7 @@
     padding-top: 50px;
     display: flex;
     flex-direction: column;
-    z-index: 1;
+    z-index: 11;
     width: 50%;
     height: fit-content;
     background-color: rgba(69, 88, 207, 0.7);
