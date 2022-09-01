@@ -32,7 +32,7 @@ const Header = (): JSX.Element => {
 
   const navigate = useNavigate();
   const [activeButton, setActiveButton] = useState<HTMLElement>();
-  const [width, setWidth] = useState(0);
+  const [width, setWidth] = useState(window.innerWidth);
   const [isNavMenu, setIsNavMenu] = useState(true);
 
   useEffect(() => {
