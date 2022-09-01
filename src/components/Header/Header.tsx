@@ -5,7 +5,7 @@ import AppContext from '../../providers/AppContext';
 import { useNavigate } from 'react-router-dom';
 import { getLiveTeamsByUsername, getLiveUserByUsername, updateUserStatus } from '../../services/users.services';
 import { Link } from 'react-router-dom';
-import { ToastContainer, toast } from 'react-toastify';
+import { ToastContainer } from 'react-toastify';
 import { uid } from 'uid';
 import { Team, User } from '../../types/Interfaces';
 import InitialsAvatar from 'react-initials-avatar';
