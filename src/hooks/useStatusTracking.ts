@@ -5,28 +5,22 @@ import { getLiveStatus, updateUserStatus } from '../services/users.services';
 import { useContext, useEffect } from 'react';
 import AppContext from '../providers/AppContext';
 
-export default function useStatusTracking(loggedInUser: User) {
+const useStatusTracking = (loggedInUser: User) => {
   const { setState } = useContext(AppContext);
-
-  useIdleTimer({
-    onIdle: onIdle,
-    onActive: onActive,
-    onAction: onAction,
-    timeout: 1000 * 5 * 60,
-  });
-
   useEffect(() => {
     const unsubscribe = getLiveStatus(loggedInUser.username, (snapshot) => {
-      setState((currentState) => {
-        currentState.userData!.status = snapshot.val();
-        return currentState;
-      });
+      if (snapshot.val() !== UserStatus.OFFLINE) {
+        setState((currentState) => {
+          currentState.userData!.status = snapshot.val();
+          return currentState;
+        });
+      }
     });
 
     return () => unsubscribe();
   }, [loggedInUser, setState]);
 
-  function onIdle() {
+  const onIdle = () => {
     if (loggedInUser.status === UserStatus.DO_NOT_DISTURB || loggedInUser.status === UserStatus.IN_A_MEETING) {
       return;
     }
@@ -34,7 +28,7 @@ export default function useStatusTracking(loggedInUser: User) {
     updateUserStatus(loggedInUser.username, UserStatus.AWAY).catch(console.error);
   };
 
-  function onActive() {
+  const onActive = () => {
     if (loggedInUser.status === UserStatus.DO_NOT_DISTURB || loggedInUser.status === UserStatus.IN_A_MEETING) {
       return;
     }
@@ -42,11 +36,19 @@ export default function useStatusTracking(loggedInUser: User) {
     updateUserStatus(loggedInUser.username, UserStatus.ONLINE).catch(console.error);
   };
 
-  function onAction() {
+  const onAction = () => {
     if (loggedInUser.status === UserStatus.DO_NOT_DISTURB || loggedInUser.status === UserStatus.IN_A_MEETING) {
       return;
     }
 
     updateUserStatus(loggedInUser.username, UserStatus.ONLINE).catch(console.error);
   };
-}
+
+  useIdleTimer({
+    onIdle: onIdle,
+    onActive: onActive,
+    onAction: onAction,
+    timeout: 1000 * 5 * 60,
+  });
+};
+export default useStatusTracking;
