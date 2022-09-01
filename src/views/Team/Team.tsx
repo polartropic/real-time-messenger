@@ -195,7 +195,7 @@ const MyTeam = (): JSX.Element => {
 
       <div className='main-container'>
         <>
-          {isCreateChatClicked &&
+          {isCreateChatClicked && !ownerObj &&
             <>
               <input type="text" className={'create-chat-title'}
                 name="team-name" placeholder='Please, add a title...'
